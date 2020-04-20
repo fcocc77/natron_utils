@@ -5,10 +5,10 @@ import NatronEngine
 
 
 def reload_nodes():
-    develop_plugins = '/home/pancho/Documents/GitHub/vinarender/apis/natron/tools/plugins'
+    develop_plugins = '/home/pancho/Documents/GitHub/natron_pyplugs/plugins'
     natron_plugins = '/opt/Natron2/Plugins/PyPlugs'
 
-    # recarga todos los nodos, de videovina, con el comando 'Control-R'
+    # recarga todos los nodos, de videovina, con el comando 'Control-U'
     # para poder desarrollar los plugins sin recargar el natron.
     for plugin in os.listdir(develop_plugins):
         develop_plugin = develop_plugins + '/' + plugin
@@ -25,4 +25,4 @@ def reload_nodes():
 
 
 NatronGui.natron.addMenuCommand('videovina/Reload Nodes', 'reload_nodes',
-                                QtCore.Qt.Key.Key_R, QtCore.Qt.KeyboardModifier.ControlModifier)
+                                QtCore.Qt.Key.Key_U, QtCore.Qt.KeyboardModifier.ControlModifier)

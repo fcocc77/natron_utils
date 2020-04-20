@@ -15,6 +15,8 @@ def createParam(node, name, _type=None, _range=[0, 100]):
         param = node.createSeparatorParam("sep_" + hash_generator(5), "")
     elif _type == 'button':
         param = node.createButtonParam(name + '_param', name.capitalize())
+    elif _type == 'choice':
+        param = node.createChoiceParam(name + '_param', name.capitalize())
 
     # establece el rango de la slide
     allowed = ['float', 'int']
@@ -28,3 +30,5 @@ def createParam(node, name, _type=None, _range=[0, 100]):
     # agrega el parametro a la pestania
     node.controls.addParam(param)
     # ----------------------
+
+    return param
