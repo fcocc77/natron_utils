@@ -37,6 +37,9 @@ def createInstance(app, group):
     group.controls = group.createPageParam("controls", "Controls")
 
     createParam(group, 'text', 'string')
+    createParam(group, 'font_size', 'int', [1, 500]).setValue(100)
+
+    createParam(group, 'separator')
 
     direction = createParam(group, 'direction', 'choice')
     direction.addOption('Left to Right', 'Left to Right')
@@ -130,6 +133,7 @@ def create_letter(letter, position, gap):
     text = createNode('text')
     text.autoSize.set(True)
     text.text.set(letter)
+    text.size.set(_thisNode.font_size_param.get())
     # Opacity expression
     for i in range(4):
         expression(text.color, 'opacity_param', gap, i)
