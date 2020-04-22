@@ -1,6 +1,67 @@
 from util import *
 
 
+def main(thisParam, thisNode, thisGroup, app, userEdited):
+
+    # defina la app y el nodo como variables globales,
+    # para poder acceder de otras funcciones
+    global _app
+    global _thisNode
+    _app = app
+    _thisNode = thisNode
+    # ----------------------
+
+    button_name = thisParam.getScriptName()
+    if button_name == 'text_generator':
+        delete_text_Nodes()
+        preview_text()
+        create_word()
+        letters_transform()
+    elif button_name == 'refresh_param':
+        refresh_expression(thisNode)
+    elif button_name == 'fit_to_box':
+        fit_text_to_box()
+
+    debug_show()
+
+
+def letters_transform():
+    # calcula la posicion y rotacion para las letras ya generadas
+    # con la escala del transform
+    position_x = _thisNode.title_position.translate.getValue(0)
+    position_y = _thisNode.title_position.translate.getValue(1)
+
+    preview_transform = _thisNode.General_Transform
+    scale = preview_transform.scale.getValue()
+    center_x = preview_transform.center.getValue(0)
+    center_y = preview_transform.center.getValue(1)
+    translate_x = preview_transform.translate.getValue(0)
+    translate_y = preview_transform.translate.getValue(1)
+    rotate = preview_transform.rotate.getValue()
+
+    position_added_x = position_x * scale
+    position_added_y = position_y * scale
+
+    new_position_x = position_added_x + \
+        translate_x + (center_x - (center_x * scale))
+    new_position_y = position_added_y + \
+        translate_y + (center_y - (center_y * scale))
+
+    new_center_x = (center_x * scale) - position_added_x
+    new_center_y = (center_y * scale) - position_added_y
+
+    # agrega los nuevos valores al tranformar general de las letras
+    transform = _thisNode.letter_transform
+
+    transform.translate.set(
+        new_position_x,
+        new_position_y
+    )
+    transform.center.set(new_center_x, new_center_y)
+    transform.rotate.set(rotate)
+    # --------------------------
+
+
 def fit_text_to_box():
 
     title = _thisNode.getNode("title")
@@ -49,6 +110,17 @@ def fit_text_to_box():
     subtitle_translate.setValue(
         (x / 2) - (subtitle_x / 2), 0
     )
+
+
+def get_size_font():
+    # calcula el tamanio de la fuente, despues que pasa por la escala de un 'Transform'
+
+    src_size = _thisNode.title.size.get()
+    scale = _thisNode.General_Transform.scale.getValue()
+
+    font_size = src_size * scale
+
+    return font_size
 
 
 def refresh_expression(group):
@@ -110,7 +182,7 @@ def create_letter(letter, position, gap):
     # create text
     text = createNode('text')
     text.text.set(letter)
-    text.size.set(_thisNode.font_size_param.get())
+    text.size.set(get_size_font())
     set_font(text)
 
     # las letras dependiendo de la fuente, se salen del bbox,
@@ -230,26 +302,3 @@ def create_word():
         merge.connectInput(index, transform)
         pos += letter_width
         last_letter_width = letter_width
-
-
-def update_button(thisParam, thisNode, thisGroup, app, userEdited):
-
-    # defina la app y el nodo como variables globales,
-    # para poder acceder de otras funcciones
-    global _app
-    global _thisNode
-    _app = app
-    _thisNode = thisNode
-    # ----------------------
-
-    button_name = thisParam.getScriptName()
-    if button_name == 'text_generator':
-        delete_text_Nodes()
-        preview_text()
-        create_word()
-    elif button_name == 'refresh_param':
-        refresh_expression(thisNode)
-    elif button_name == 'fit_to_box':
-        fit_text_to_box()
-
-    debug_show()
