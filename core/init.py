@@ -1,27 +1,43 @@
 import os
 import shutil
-import filecmp
+import sys
 import NatronEngine
+
+# vvPlugins modules
+import vvtext
+import util
+# --------------
 
 
 def reload_nodes():
-    develop_plugins = '/home/pancho/Documents/GitHub/natron_pyplugs/plugins'
-    natron_plugins = '/opt/Natron2/Plugins/PyPlugs'
+    repo = '/home/pancho/Documents/GitHub/natron_pyplugs'
+    natron_plugins = '/usr/share/Natron/Plugins'
 
-    # recarga todos los nodos, de videovina, con el comando 'Control-U'
-    # para poder desarrollar los plugins sin recargar el natron.
-    for plugin in os.listdir(develop_plugins):
-        develop_plugin = develop_plugins + '/' + plugin
-        natron_plugin = natron_plugins + '/' + plugin
+    plugins = repo + '/plugins'
+    core = repo + '/core'
 
-        # si el plugin no es el mismo lo copia a la
-        # carpeta de natron y lo recarga
-        if not filecmp.cmp(develop_plugin, natron_plugin):
-            shutil.copy(develop_plugin, natron_plugin)
+    # recarga los modulos de core
+    for module in os.listdir(core):
 
-            plugin = plugin.split('.')[0]
-            reload(eval(plugin))
-            print(plugin + ': has updated.')
+        develop_module = core + '/' + module
+        natron_plugin = natron_plugins + '/' + module
+
+        shutil.copy(develop_module, natron_plugin)
+
+        _module = module.split('.')[0]
+
+        # si el modulo esta cargado lo recarga
+        if _module in sys.modules:
+            reload(eval(_module))
+            print(_module + ': has updated.')
+
+    # recarga los modulos de plugins
+    for plugin in os.listdir(plugins):
+        ext = plugin.split('.')[-1]
+        plugin_name = plugin.split('.')[0]
+        if ext == 'py':
+            reload(eval(plugin_name))
+            print(plugin_name + ': has updated.')
 
 
 NatronGui.natron.addMenuCommand('videovina/Reload Nodes', 'reload_nodes',

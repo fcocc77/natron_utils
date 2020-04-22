@@ -19,6 +19,8 @@ def createParam(node, name, _type=None, _range=[0, 100]):
         param = node.createButtonParam(name + '_param', label)
     elif _type == 'choice':
         param = node.createChoiceParam(name + '_param', label)
+    elif _type == 'label':
+        param = node.createSeparatorParam(name + '_param', label)
 
     # establece el rango de la slide
     allowed = ['float', 'int']

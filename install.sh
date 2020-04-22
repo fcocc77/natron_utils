@@ -1,20 +1,8 @@
 #! /usr/bin/sh
 
-natron_core='/usr/share/Natron/Plugins'
-natron_plugins='/opt/Natron2/Plugins/PyPlugs'
+natron_plugins='/usr/share/Natron/Plugins'
 
-plugins='./plugins'
-core='./core'
-
-mkdir -p $plugins
-
-# copia plugins de python a natron
-cp 'utils/util.py' $natron_plugins
-cp $plugins'/vvtext.py' $natron_plugins
-cp $core'/natron.py' $natron_plugins
-
-# copia el init a natron
-cp $core'/init.py' $natron_core
+# copia el core a la carpeta plugins de natron
+cp core/* $natron_plugins
 
 chmod 777 -R $natron_plugins
-chmod 777 -R $natron_core
