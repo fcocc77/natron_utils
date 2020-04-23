@@ -33,15 +33,92 @@ def createInstance(app,group):
 
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = group
-    lastNode.setColor(0.7, 0.7, 0.7)
+    lastNode.setColor(0.1176, 0.3725, 0.702)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("vvtext.update_button")
+        param.setValue("vvtext.main")
         del param
 
 
     # Create the user parameters
     lastNode.controls = lastNode.createPageParam("controls", "Controls")
+    param = lastNode.createDoubleParam("resolution_scale", "Resolution Scale")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.controls.addParam(param)
+
+    # Set param properties
+    param.setHelp("La escala de resolución, como base es 1920x1080 que es igual a la escala 1.")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.resolution_scale = param
+    del param
+
+    param = lastNode.createBooleanParam("text_box", "Text Box")
+
+    # Add the param to the page
+    lastNode.controls.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.text_box = param
+    del param
+
+    param = lastNode.createButtonParam("fit_to_box", "Fit to Box")
+
+    # Add the param to the page
+    lastNode.controls.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    lastNode.fit_to_box = param
+    del param
+
+    param = lastNode.createButtonParam("text_generator", "Text Generator")
+
+    # Add the param to the page
+    lastNode.controls.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    lastNode.text_generator = param
+    del param
+
+    param = lastNode.createButtonParam("refresh_param", "Refresh")
+
+    # Add the param to the page
+    lastNode.controls.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh_param = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep1", "")
+
+    # Add the param to the page
+    lastNode.controls.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
+    del param
+
     param = lastNode.createSeparatorParam("title_param", "Title:")
 
     # Add the param to the page
@@ -64,6 +141,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("Francisco Jose")
     lastNode.text_param = param
     del param
 
@@ -77,10 +155,12 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("Cuevas")
     lastNode.subtitle_param = param
     del param
 
-    param = lastNode.createButtonParam("fit_param", "Fit to Box")
+    param = lastNode.createStringParam("custom_font", "Font")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
     # Add the param to the page
     lastNode.controls.addParam(param)
@@ -88,8 +168,9 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.fit_param = param
+    param.setAnimationEnabled(True)
+    param.setValue("/home/pancho/Documents/GitHub/videovina/static/fonts/great-vibes/Great Vibes.otf")
+    lastNode.custom_font = param
     del param
 
     param = lastNode.createIntParam("font_size_param", "Font Size")
@@ -107,7 +188,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
+    param.setValue(148, 0)
     lastNode.font_size_param = param
     del param
 
@@ -164,6 +245,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(6, 0)
     lastNode.delay_param = param
     del param
 
@@ -192,17 +274,34 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValueAtTime(1, 1.171730988690864, 0)
+    param.setValueAtTime(2, 72, 0)
     lastNode.scale_param = param
     del param
 
-    param = lastNode.createIntParam("position_y_param", "Position Y")
+    param = lastNode.createDoubleParam("position_x_param", "Position X")
     param.setMinimum(0, 0)
-    param.setMaximum(1920, 0)
+    param.setMaximum(2000, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1920, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
+    param.setDisplayMaximum(2000, 0)
+
+    # Add the param to the page
+    lastNode.controls.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValueAtTime(0, 1.171730988690864, 0)
+    param.setValueAtTime(830.0000000000011, 72.82826901130935, 0)
+    lastNode.position_x_param = param
+    del param
+
+    param = lastNode.createDoubleParam("position_y_param", "Position Y")
+    param.setMinimum(0, 0)
+    param.setMaximum(2000, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(2000, 0)
 
     # Add the param to the page
     lastNode.controls.addParam(param)
@@ -212,24 +311,6 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     lastNode.position_y_param = param
-    del param
-
-    param = lastNode.createIntParam("position_x_param", "Position X")
-    param.setMinimum(0, 0)
-    param.setMaximum(1080, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1080, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.position_x_param = param
     del param
 
     param = lastNode.createDoubleParam("rotate_param", "Rotate")
@@ -245,6 +326,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValueAtTime(0, 1.171730988690864, 0)
+    param.setValueAtTime(216.8000000000017, 72.82826901130935, 0)
     lastNode.rotate_param = param
     del param
 
@@ -261,7 +344,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValueAtTime(1, 1.171730988690864, 0)
+    param.setValueAtTime(0, 72, 0)
     lastNode.opacity_param = param
     del param
 
@@ -290,6 +374,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValueAtTime(0, 1.171730988690864, 0)
+    param.setValueAtTime(70, 72, 0)
     lastNode.blur_x_param = param
     del param
 
@@ -306,7 +392,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(70.8, 0)
+    param.setValueAtTime(0, 1.171730988690864, 0)
+    param.setValueAtTime(70, 72, 0)
     lastNode.blur_y_param = param
     del param
 
@@ -322,17 +409,6 @@ def createInstance(app,group):
     lastNode.sep_8deVl = param
     del param
 
-    param = lastNode.createButtonParam("update_param", "Update")
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    lastNode.update_param = param
-    del param
-
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['controls', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -341,8 +417,8 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output1")
-    lastNode.setPosition(-215, 198)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-29, 273)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 
@@ -353,8 +429,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
     lastNode.setScriptName("Constant1")
     lastNode.setLabel("Constant1")
-    lastNode.setPosition(-25, -107)
-    lastNode.setSize(104, 33)
+    lastNode.setPosition(-29, -385)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupConstant1 = lastNode
 
@@ -368,6 +444,7 @@ def createInstance(app,group):
         param.setValue(0.3324515819549561, 0)
         param.setValue(0.3613067865371704, 1)
         param.setValue(0.01680737361311913, 2)
+        param.setValue(1, 3)
         del param
 
     del lastNode
@@ -377,27 +454,27 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Transform")
     lastNode.setLabel("Transform")
-    lastNode.setPosition(-224, -108)
-    lastNode.setSize(104, 33)
+    lastNode.setPosition(606, -550)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupTransform = lastNode
 
     del lastNode
     # End of node "Transform"
 
-    # Start of node "Transform2"
+    # Start of node "General_Transform"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform2")
-    lastNode.setLabel("Transform2")
-    lastNode.setPosition(-25, 95)
-    lastNode.setSize(104, 33)
+    lastNode.setScriptName("General_Transform")
+    lastNode.setLabel("General_Transform")
+    lastNode.setPosition(-29, -155)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform2 = lastNode
+    groupGeneral_Transform = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(9, 0)
-        param.setValue(-18, 1)
+        param.setValue(-421, 0)
+        param.setValue(-95, 1)
         del param
 
     param = lastNode.getParam("rotate")
@@ -407,14 +484,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1, 0)
-        param.setValue(1, 1)
+        param.setValue(0.3450551791313148, 0)
+        param.setValue(0.3450551791313148, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(960, 0)
-        param.setValue(540, 1)
+        param.setValue(913, 0)
+        param.setValue(420, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -423,26 +500,666 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Transform2"
+    # End of node "General_Transform"
+
+    # Start of node "TextMerge"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("TextMerge")
+    lastNode.setLabel("TextMerge")
+    lastNode.setPosition(-348, -84)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupTextMerge = lastNode
+
+    del lastNode
+    # End of node "TextMerge"
+
+    # Start of node "Switch1"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("Switch1")
+    lastNode.setLabel("Switch1")
+    lastNode.setPosition(-29, -0)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupSwitch1 = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Switch1"
+
+    # Start of node "Backdrop1"
+    lastNode = app.createNode("fr.inria.built-in.BackDrop", 1, group)
+    lastNode.setScriptName("Backdrop1")
+    lastNode.setLabel("Backdrop1")
+    lastNode.setPosition(368, -630)
+    lastNode.setSize(497, 594)
+    lastNode.setColor(0.5098, 0.4431, 0.1647)
+    groupBackdrop1 = lastNode
+
+    param = lastNode.getParam("Label")
+    if param is not None:
+        param.setValue("<i><font size=\"30\" color=\"#000000\" face=\"Carlito\">Titles</font></i>")
+        del param
+
+    del lastNode
+    # End of node "Backdrop1"
+
+    # Start of node "title"
+    lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
+    lastNode.setScriptName("title")
+    lastNode.setLabel("title")
+    lastNode.setPosition(412, -440)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    grouptitle = lastNode
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(1041, 0)
+        param.setValue(161, 1)
+        del param
+
+    param = lastNode.getParam("interactive")
+    if param is not None:
+        param.setValue(False)
+        del param
+
+    param = lastNode.getParam("autoSize")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("centerInteract")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("markup")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("text")
+    if param is not None:
+        param.setValue("Francisco Jose")
+        del param
+
+    param = lastNode.getParam("name")
+    if param is not None:
+        param.set("G/Great Vibes")
+        del param
+
+    param = lastNode.getParam("custom")
+    if param is not None:
+        param.setValue("/home/pancho/Documents/GitHub/videovina/static/fonts/great-vibes/Great Vibes.otf")
+        del param
+
+    param = lastNode.getParam("font")
+    if param is not None:
+        param.setValue("Great Vibes")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(270, 0)
+        del param
+
+    param = lastNode.getParam("arcRadius")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "title"
+
+    # Start of node "subtitle"
+    lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
+    lastNode.setScriptName("subtitle")
+    lastNode.setLabel("subtitle")
+    lastNode.setPosition(688, -441)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupsubtitle = lastNode
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(582, 0)
+        param.setValue(187, 1)
+        del param
+
+    param = lastNode.getParam("autoSize")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("text")
+    if param is not None:
+        param.setValue(" Cuevas")
+        del param
+
+    param = lastNode.getParam("name")
+    if param is not None:
+        param.set("G/Great Vibes")
+        del param
+
+    param = lastNode.getParam("custom")
+    if param is not None:
+        param.setValue("/home/pancho/Documents/GitHub/videovina/static/fonts/great-vibes/Great Vibes.otf")
+        del param
+
+    param = lastNode.getParam("font")
+    if param is not None:
+        param.setValue("Great Vibes")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(323, 0)
+        del param
+
+    del lastNode
+    # End of node "subtitle"
+
+    # Start of node "Merge3"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge3")
+    lastNode.setLabel("Merge3")
+    lastNode.setPosition(553, -245)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge3 = lastNode
+
+    del lastNode
+    # End of node "Merge3"
+
+    # Start of node "title_position"
+    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
+    lastNode.setScriptName("title_position")
+    lastNode.setLabel("title_position")
+    lastNode.setPosition(412, -356)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    grouptitle_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(-2.5, 0)
+        param.setValue(585, 1)
+        del param
+
+    del lastNode
+    # End of node "title_position"
+
+    # Start of node "subtitle_position"
+    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
+    lastNode.setScriptName("subtitle_position")
+    lastNode.setLabel("subtitle_position")
+    lastNode.setPosition(688, -380)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupsubtitle_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(434, 0)
+        param.setValue(45, 1)
+        del param
+
+    del lastNode
+    # End of node "subtitle_position"
+
+    # Start of node "Merge1"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge1")
+    lastNode.setLabel("Merge1")
+    lastNode.setPosition(-29, -253)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge1 = lastNode
+
+    del lastNode
+    # End of node "Merge1"
+
+    # Start of node "letter_transform"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("letter_transform")
+    lastNode.setLabel("letter_transform")
+    lastNode.setPosition(-348, -15)
+    lastNode.setSize(100, 74)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupletter_transform = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(176.1019835052813, 0)
+        param.setValue(381.9341045566669, 1)
+        del param
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(315.8980164947187, 0)
+        param.setValue(-56.93410455666694, 1)
+        del param
+
+    param = lastNode.getParam("transformCenterChanged")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("interactive")
+    if param is not None:
+        param.setValue(False)
+        del param
+
+    param = lastNode.getParam("filter")
+    if param is not None:
+        param.set("bilinear")
+        del param
+
+    param = lastNode.getParam("shutter")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "letter_transform"
+
+    # Start of node "ClampResolution"
+    lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
+    lastNode.setScriptName("ClampResolution")
+    lastNode.setLabel("ClampResolution")
+    lastNode.setPosition(-29, 113)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.451, 0.2431, 0.702)
+    groupClampResolution = lastNode
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createInt2DParam("resolution", "Resolution")
+    param.setMinimum(0, 0)
+    param.setMaximum(10000, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(10000, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setMinimum(0, 1)
+    param.setMaximum(10000, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(10000, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1920, 0)
+    param.setValue(1080, 1)
+    lastNode.resolution = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "ClampResolution"
+
+    groupgroup = groupClampResolution
+    # Create all nodes in the group
+
+    # Create the parameters of the group node the same way we did for all internal nodes
+    lastNode = groupgroup
+    lastNode.setColor(0.451, 0.2431, 0.702)
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createInt2DParam("resolution", "Resolution")
+    param.setMinimum(0, 0)
+    param.setMaximum(10000, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(10000, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setMinimum(0, 1)
+    param.setMaximum(10000, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(10000, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1920, 0)
+    param.setValue(1080, 1)
+    lastNode.resolution = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+
+    # Start of node "Output1"
+    lastNode = app.createNode("fr.inria.built-in.Output", 1, groupgroup)
+    lastNode.setLabel("Output")
+    lastNode.setPosition(1046, 379)
+    lastNode.setSize(100, 29)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupgroupOutput1 = lastNode
+
+    del lastNode
+    # End of node "Output1"
+
+    # Start of node "Input1"
+    lastNode = app.createNode("fr.inria.built-in.Input", 1, groupgroup)
+    lastNode.setScriptName("Input1")
+    lastNode.setLabel("Input1")
+    lastNode.setPosition(764, 82)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupgroupInput1 = lastNode
+
+    del lastNode
+    # End of node "Input1"
+
+    # Start of node "Crop1"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, groupgroup)
+    lastNode.setScriptName("Crop1")
+    lastNode.setLabel("Crop1")
+    lastNode.setPosition(1316, 82)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupgroupCrop1 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    del lastNode
+    # End of node "Crop1"
+
+    # Start of node "Reformat1"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, groupgroup)
+    lastNode.setScriptName("Reformat1")
+    lastNode.setLabel("Reformat1")
+    lastNode.setPosition(1316, 231)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupgroupReformat1 = lastNode
+
+    param = lastNode.getParam("useRoD")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("scale")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(960, 0)
+        param.setValue(540, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Reformat1"
+
+    # Start of node "Copy_RoD1"
+    lastNode = app.createNode("fr.inria.built-in.Group", 1, groupgroup)
+    lastNode.setScriptName("Copy_RoD1")
+    lastNode.setLabel("Copy_RoD1")
+    lastNode.setPosition(1046, 231)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupgroupCopy_RoD1 = lastNode
+
+
+    # Create the user parameters
+    lastNode.custom = lastNode.createPageParam("custom", "Custom")
+    param = lastNode.createBooleanParam("crop_format", "Crop Format")
+
+    # Add the param to the page
+    lastNode.custom.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.crop_format = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['custom', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Copy_RoD1"
+
+    groupgroupgroup = groupgroupCopy_RoD1
+    # Create all nodes in the group
+
+    # Create the parameters of the group node the same way we did for all internal nodes
+    lastNode = groupgroupgroup
+    lastNode.setColor(0.7, 0.7, 0.7)
+
+    # Create the user parameters
+    lastNode.custom = lastNode.createPageParam("custom", "Custom")
+    param = lastNode.createBooleanParam("crop_format", "Crop Format")
+
+    # Add the param to the page
+    lastNode.custom.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.crop_format = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['custom', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+
+    # Start of node "Output1"
+    lastNode = app.createNode("fr.inria.built-in.Output", 1, groupgroupgroup)
+    lastNode.setLabel("Output")
+    lastNode.setPosition(805, 302)
+    lastNode.setSize(100, 29)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupgroupgroupOutput1 = lastNode
+
+    del lastNode
+    # End of node "Output1"
+
+    # Start of node "A"
+    lastNode = app.createNode("fr.inria.built-in.Input", 1, groupgroupgroup)
+    lastNode.setScriptName("A")
+    lastNode.setLabel("A")
+    lastNode.setPosition(1053, 75)
+    lastNode.setSize(100, 29)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupgroupgroupA = lastNode
+
+    del lastNode
+    # End of node "A"
+
+    # Start of node "B"
+    lastNode = app.createNode("fr.inria.built-in.Input", 1, groupgroupgroup)
+    lastNode.setScriptName("B")
+    lastNode.setLabel("B")
+    lastNode.setPosition(805, 64)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupgroupgroupB = lastNode
+
+    del lastNode
+    # End of node "B"
+
+    # Start of node "Crop1"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, groupgroupgroup)
+    lastNode.setScriptName("Crop1")
+    lastNode.setLabel("Crop1")
+    lastNode.setPosition(805, 186)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupgroupgroupCrop1 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("bottomLeft")
+    if param is not None:
+        param.setValue(118.5763218587556, 0)
+        param.setValue(356.4605942143651, 1)
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(749.5256616465257, 0)
+        param.setValue(206.9470206846037, 1)
+        del param
+
+    param = lastNode.getParam("intersect")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("blackOutside")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Crop1"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupTransform2)
-    groupTransform2.connectInput(0, groupConstant1)
+    groupgroupgroupOutput1.connectInput(0, groupgroupgroupCrop1)
+    groupgroupgroupCrop1.connectInput(0, groupgroupgroupB)
 
-    param = groupTransform2.getParam("translate")
-    param.setExpression("transform = thisGroup.getInput(0)\n\nvalue = 0\nif transform:\n\tvalue = transform.getParam(\'translate\').getValue(0)\n\nret = value", True, 0)
-    param.setExpression("transform = thisGroup.getInput(0)\n\nvalue = 0\nif transform:\n\tvalue = transform.getParam(\'translate\').getValue(1)\n\nret = value", True, 1)
+    param = groupgroupgroupCrop1.getParam("bottomLeft")
+    param.setExpression("a = thisGroup.getInput(0)\n\nx = 0\ny = 0\nif a:\n\tx = a.getRegionOfDefinition(frame, 1).x1\n\ty = a.getRegionOfDefinition(frame, 1).y1\n\nif dimension == 0:\n\tret = x\nelse:\n\tret = y", True, 0)
+    param.setExpression("a = thisGroup.getInput(0)\n\nx = 0\ny = 0\nif a:\n\tx = a.getRegionOfDefinition(frame, 1).x1\n\ty = a.getRegionOfDefinition(frame, 1).y1\n\nif dimension == 0:\n\tret = x\nelse:\n\tret = y", True, 1)
     del param
-    param = groupTransform2.getParam("rotate")
-    param.setExpression("transform = thisGroup.getInput(0)\n\nvalue = 0\nif transform:\n\tvalue = transform.getParam(\'rotate\').getValue()\n\nret = value", True, 0)
+    param = groupgroupgroupCrop1.getParam("size")
+    param.setExpression("a = thisGroup.getInput(0)\nb = thisGroup.getInput(0)\n\nx, y, w, h = 0,0,0,0\nif a:\n\tx = a.getRegionOfDefinition(frame, 1).x1\n\ty = a.getRegionOfDefinition(frame, 1).y1\n\tw = a.getRegionOfDefinition(frame, 1).x2\n\th = a.getRegionOfDefinition(frame, 1).y2\n\nif dimension == 0:\n\tret = w - x\nelse:\n\tret = h - y", True, 0)
+    param.setExpression("a = thisGroup.getInput(0)\nb = thisGroup.getInput(0)\n\nx, y, w, h = 0,0,0,0\nif a:\n\tx = a.getRegionOfDefinition(frame, 1).x1\n\ty = a.getRegionOfDefinition(frame, 1).y1\n\tw = a.getRegionOfDefinition(frame, 1).x2\n\th = a.getRegionOfDefinition(frame, 1).y2\n\nif dimension == 0:\n\tret = w - x\nelse:\n\tret = h - y", True, 1)
     del param
-    param = groupTransform2.getParam("scale")
-    param.setExpression("transform = thisGroup.getInput(0)\n\nvalue = 0\nif transform:\n\tvalue = transform.getParam(\'scale\').getValue(0)\n\nret = value", True, 0)
-    param.setExpression("transform = thisGroup.getInput(0)\n\nvalue = 0\nif transform:\n\tvalue = transform.getParam(\'scale\').getValue(0)\n\nret = value", True, 1)
+    param = groupgroupgroupCrop1.getParam("intersect")
+    param.setExpression("thisGroup.crop_format.get()", False, 0)
     del param
-    param = groupTransform2.getParam("center")
-    param.setExpression("transform = thisGroup.getInput(0)\n\nvalue = 0\nif transform:\n\tvalue = transform.getParam(\'center\').getValue(0)\n\nret = value", True, 0)
-    param.setExpression("transform = thisGroup.getInput(0)\n\nvalue = 0\nif transform:\n\tvalue = transform.getParam(\'center\').getValue(1)\n\nret = value", True, 1)
+
+
+    # Start of node "Crop_Default"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, groupgroup)
+    lastNode.setScriptName("Crop_Default")
+    lastNode.setLabel("Crop Default")
+    lastNode.setPosition(764, 231)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupgroupCrop_Default = lastNode
+
+    param = lastNode.getParam("extent")
+    if param is not None:
+        param.set("default")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    del lastNode
+    # End of node "Crop_Default"
+
+    # Now that all nodes are created we can connect them together, restore expressions
+    groupgroupOutput1.connectInput(0, groupgroupCopy_RoD1)
+    groupgroupCrop1.connectInput(0, groupgroupInput1)
+    groupgroupReformat1.connectInput(0, groupgroupCrop1)
+    groupgroupCopy_RoD1.connectInput(0, groupgroupCrop_Default)
+    groupgroupCopy_RoD1.connectInput(1, groupgroupReformat1)
+    groupgroupCrop_Default.connectInput(0, groupgroupInput1)
+
+    param = groupgroupCrop1.getParam("size")
+    param.setExpression("ret = thisGroup.resolution.getValue(dimension)", False, 0)
+    param.setExpression("ret = thisGroup.resolution.getValue(dimension)", False, 1)
+    del param
+
+    param = groupgroup.getParam("resolution")
+    param.setExpression("scale = thisGroup.resolution_scale.get()\n\nw = 1920\nh = 1080\n\nif dimension == 0:\n\n\tret = w * scale\nelse:\n\tret = h * scale", True, 0)
+    param.setExpression("scale = thisGroup.resolution_scale.get()\n\nw = 1920\nh = 1080\n\nif dimension == 0:\n\n\tret = w * scale\nelse:\n\tret = h * scale", True, 1)
+    del param
+
+    # Now that all nodes are created we can connect them together, restore expressions
+    groupOutput1.connectInput(0, groupClampResolution)
+    groupGeneral_Transform.connectInput(0, groupMerge1)
+    groupSwitch1.connectInput(0, groupletter_transform)
+    groupSwitch1.connectInput(1, groupGeneral_Transform)
+    groupMerge3.connectInput(0, groupsubtitle_position)
+    groupMerge3.connectInput(1, grouptitle_position)
+    grouptitle_position.connectInput(0, grouptitle)
+    groupsubtitle_position.connectInput(0, groupsubtitle)
+    groupMerge1.connectInput(0, groupConstant1)
+    groupMerge1.connectInput(1, groupMerge3)
+    groupletter_transform.connectInput(0, groupTextMerge)
+    groupClampResolution.connectInput(0, groupSwitch1)
+
+    param = groupGeneral_Transform.getParam("translate")
+    param.setExpression("transform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.resolution_scale.get()\n\ntranslate = 0\ncenter = 0\nif transform:\n\ttranslate = transform.getParam(\'translate\').curve(frame, dimension)\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = (translate * scale) + (center * scale) - center", True, 0)
+    param.setExpression("transform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.resolution_scale.get()\n\ntranslate = 0\ncenter = 0\nif transform:\n\ttranslate = transform.getParam(\'translate\').curve(frame, dimension)\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = (translate * scale) + (center * scale) - center", True, 1)
+    del param
+    param = groupGeneral_Transform.getParam("rotate")
+    param.setExpression("transform = thisGroup.getInput(0)\n\nif transform:\n\tret = transform.getParam(\'rotate\').curve(frame)\nelse:\n\tret = 0", True, 0)
+    del param
+    param = groupGeneral_Transform.getParam("scale")
+    param.setExpression("# si esta conectada la entrada Transform, obtiene la curva\ntransform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.resolution_scale.get()\n\nif transform:\n\tret = transform.getParam(\'scale\').curve(frame, dimension) * scale\nelse:\n\tret = 1", True, 0)
+    param.setExpression("# si esta conectada la entrada Transform, obtiene la curva\ntransform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.resolution_scale.get()\n\nif transform:\n\tret = transform.getParam(\'scale\').curve(frame, dimension) * scale\nelse:\n\tret = 1", True, 1)
+    del param
+    param = groupGeneral_Transform.getParam("center")
+    param.setExpression("transform = thisGroup.getInput(0)\n\ncenter = 0\nif transform:\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = center", True, 0)
+    param.setExpression("transform = thisGroup.getInput(0)\n\ncenter = 0\nif transform:\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = center", True, 1)
+    del param
+    param = groupSwitch1.getParam("which")
+    param.setExpression("thisGroup.text_box.getValue()", False, 0)
+    del param
+    param = groupClampResolution.getParam("resolution")
+    param.setExpression("scale = thisGroup.resolution_scale.get()\n\nw = 1920\nh = 1080\n\nif dimension == 0:\n\n\tret = w * scale\nelse:\n\tret = h * scale", True, 0)
+    param.setExpression("scale = thisGroup.resolution_scale.get()\n\nw = 1920\nh = 1080\n\nif dimension == 0:\n\n\tret = w * scale\nelse:\n\tret = h * scale", True, 1)
     del param
 
     try:

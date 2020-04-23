@@ -172,9 +172,15 @@ def delete_text_Nodes():
 
 def create_letter(letter, position, gap):
 
-    def expression(field, name, gap, dimension=0, add=0):
-        exp = 'value = thisGroup.' + name + \
-            '.curve(frame - ' + str(gap) + '*thisGroup.delay_param.get());'
+    def expression(field, name, gap, dimension=0, add=0, res_scale=True):
+        # res_scale: no todos los parametros necesitan reescalado de resolucion,
+        # solo la posicion y el desenfoque
+        exp = 'value = thisGroup.' + name
+        exp += '.curve(frame - ' + str(gap) + '*thisGroup.delay_param.get())'
+        if res_scale:
+            exp += '* thisGroup.resolution_scale.get();'
+        else:
+            exp += ';'
         exp += 'ret = value + ' + str(add)
 
         field.setExpression(exp, False, dimension)
@@ -204,7 +210,7 @@ def create_letter(letter, position, gap):
 
     # Opacity expression
     for i in range(4):
-        expression(text.color, 'opacity_param', gap, i)
+        expression(text.color, 'opacity_param', gap, i, res_scale=False)
     # ------------------------
 
     # Position para corregir el tranform del texto
@@ -226,9 +232,9 @@ def create_letter(letter, position, gap):
     # Transform expression
     expression(transform.translate, 'position_x_param', gap, 0, position)
     expression(transform.translate, 'position_y_param', gap, 1)
-    expression(transform.rotate, 'rotate_param', gap)
-    expression(transform.scale, 'scale_param', gap, 0)
-    expression(transform.scale, 'scale_param', gap, 1)
+    expression(transform.rotate, 'rotate_param', gap, res_scale=False)
+    expression(transform.scale, 'scale_param', gap, 0, res_scale=False)
+    expression(transform.scale, 'scale_param', gap, 1, res_scale=False)
     # -----------------------
 
     transform.connectInput(0, blur)
@@ -244,6 +250,7 @@ def set_font(text):
     option = basename[0] + '/' + basename
 
     text.getParam('custom').setValue(font)
+    text.getParam('custom').reloadFile()
     text.getParam('name').set(option)
 
 
