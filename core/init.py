@@ -36,8 +36,11 @@ def reload_nodes():
         ext = plugin.split('.')[-1]
         plugin_name = plugin.split('.')[0]
         if ext == 'py':
-            reload(eval(plugin_name))
-            print(plugin_name + ': has updated.')
+            try:
+                reload(eval(plugin_name))
+                print(plugin_name + ': has updated.')
+            except:
+                None
 
 
 NatronGui.natron.addMenuCommand('videovina/Reload Nodes', 'reload_nodes',

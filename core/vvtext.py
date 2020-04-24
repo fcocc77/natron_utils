@@ -16,50 +16,12 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         delete_text_Nodes()
         preview_text()
         create_word()
-        letters_transform()
     elif button_name == 'refresh_param':
         refresh_expression(thisNode)
     elif button_name == 'fit_to_box':
         fit_text_to_box()
 
     debug_show()
-
-
-def letters_transform():
-    # calcula la posicion y rotacion para las letras ya generadas
-    # con la escala del transform
-    position_x = _thisNode.title_position.translate.getValue(0)
-    position_y = _thisNode.title_position.translate.getValue(1)
-
-    preview_transform = _thisNode.General_Transform
-    scale = preview_transform.scale.getValue()
-    center_x = preview_transform.center.getValue(0)
-    center_y = preview_transform.center.getValue(1)
-    translate_x = preview_transform.translate.getValue(0)
-    translate_y = preview_transform.translate.getValue(1)
-    rotate = preview_transform.rotate.getValue()
-
-    position_added_x = position_x * scale
-    position_added_y = position_y * scale
-
-    new_position_x = position_added_x + \
-        translate_x + (center_x - (center_x * scale))
-    new_position_y = position_added_y + \
-        translate_y + (center_y - (center_y * scale))
-
-    new_center_x = (center_x * scale) - position_added_x
-    new_center_y = (center_y * scale) - position_added_y
-
-    # agrega los nuevos valores al tranformar general de las letras
-    transform = _thisNode.letter_transform
-
-    transform.translate.set(
-        new_position_x,
-        new_position_y
-    )
-    transform.center.set(new_center_x, new_center_y)
-    transform.rotate.set(rotate)
-    # --------------------------
 
 
 def fit_text_to_box():
@@ -172,18 +134,10 @@ def delete_text_Nodes():
 
 def create_letter(letter, position, gap):
 
-    def expression(field, name, gap, dimension=0, add=0, res_scale=True):
-        # res_scale: no todos los parametros necesitan reescalado de resolucion,
-        # solo la posicion y el desenfoque
-        exp = 'value = thisGroup.' + name
-        exp += '.curve(frame - ' + str(gap) + '*thisGroup.delay_param.get())'
-        if res_scale:
-            exp += '* thisGroup.resolution_scale.get();'
-        else:
-            exp += ';'
-        exp += 'ret = value + ' + str(add)
-
-        field.setExpression(exp, False, dimension)
+    # desfase en el tiempo para las expresiones
+    curve_time = '.curve( frame - ' + str(gap) + \
+        ' * thisGroup.delay_param.get() )'
+    # ------------------------
 
     # create text
     text = createNode('text')
@@ -192,7 +146,7 @@ def create_letter(letter, position, gap):
     set_font(text)
 
     # las letras dependiendo de la fuente, se salen del bbox,
-    # asi qur se hace un calculo con el autoSize y luego se suma
+    # asi que se hace un calculo con el autoSize y luego se suma
     # el doble del ancho a la letra y asi no se sale
     text.autoSize.set(True)
 
@@ -209,8 +163,9 @@ def create_letter(letter, position, gap):
     text.center.set(move_to_rigth, letter_height)
 
     # Opacity expression
+    opacity_exp = 'thisGroup.opacity_param' + curve_time
     for i in range(4):
-        expression(text.color, 'opacity_param', gap, i, res_scale=False)
+        text.color.setExpression(opacity_exp, False, i)
     # ------------------------
 
     # Position para corregir el tranform del texto
@@ -223,21 +178,70 @@ def create_letter(letter, position, gap):
     blur = createNode('blur')
     blur.cropToFormat.set(False)
     blur.connectInput(0, position_node)
-    expression(blur.size, 'blur_x_param', gap, 0)
-    expression(blur.size, 'blur_y_param', gap, 1)
+
+    blur_exp = (
+        'blur_x = thisGroup.blur_x_param' + curve_time + '\n'
+        'blur_y = thisGroup.blur_y_param' + curve_time + '\n'
+        'scale = thisGroup.resolution_scale.get() \n'
+        'if dimension == 0: \n'
+        '   ret = blur_x * scale \n'
+        'else: \n'
+        '   ret = blur_y * scale \n'
+    )
+    blur.size.setExpression(blur_exp, True, 0)
+    blur.size.setExpression(blur_exp, True, 1)
     # ------------------
 
+    # Transform solo para rotacion y escala local
+    local_transform = createNode('transform')
+    rotate_exp = (
+        'rotate = thisGroup.rotate_param' + curve_time + '\n'
+        'angle = thisGroup.angle_param' + curve_time + '\n'
+        'ret = rotate - angle'
+    )
+    local_transform.rotate.setExpression(rotate_exp, True, 0)
+
+    scale_exp = 'thisGroup.scale_param' + curve_time + ''
+    local_transform.scale.setExpression(scale_exp, False, 0)
+    local_transform.scale.setExpression(scale_exp, False, 1)
+
+    local_transform.translate.setExpression('0', False, 0)
+    local_transform.translate.setExpression('0', False, 1)
+
+    local_transform.connectInput(0, blur)
+    # --------------------
+
+    # Transform
     transform = createNode('transform')
+    translate_exp = (
+        'translate = thisGroup.translate_param' + curve_time + ' \n'
+        'translate = translate * thisGroup.resolution_scale.get() \n'
+        'if dimension == 0: \n'
+        '   ret = translate + ' + str(position) + '\n'
+        'else: \n'
+        '   ret = 0'
+    )
+    transform.translate.setExpression(translate_exp, True, 0)
+    transform.translate.setExpression(translate_exp, True, 1)
 
-    # Transform expression
-    expression(transform.translate, 'position_x_param', gap, 0, position)
-    expression(transform.translate, 'position_y_param', gap, 1)
-    expression(transform.rotate, 'rotate_param', gap, res_scale=False)
-    expression(transform.scale, 'scale_param', gap, 0, res_scale=False)
-    expression(transform.scale, 'scale_param', gap, 1, res_scale=False)
-    # -----------------------
+    center_x = str(letter_width / 2)
+    center_y = str(letter_height / 2)
+    center_exp = (
+        'translate = thisGroup.translate_param' + curve_time + ' \n'
+        'translate = translate * thisGroup.resolution_scale.get() \n'
+        'if dimension == 0: \n'
+        '   ret = ' + center_x + ' - translate \n'
+        'else: \n'
+        '   ret = ' + center_y
+    )
+    transform.center.setExpression(center_exp, True, 0)
+    transform.center.setExpression(center_exp, True, 1)
 
-    transform.connectInput(0, blur)
+    angle_exp = 'thisGroup.angle_param' + curve_time
+    transform.rotate.setExpression(angle_exp, False, 0)
+
+    transform.connectInput(0, local_transform)
+    # -----------------------------------
 
     return [transform, letter_width]
 
