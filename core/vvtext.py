@@ -1,4 +1,7 @@
 from util import *
+from PySide.QtCore import QTimer
+
+running = False
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -7,21 +10,41 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     # para poder acceder de otras funcciones
     global _app
     global _thisNode
+    global _thisParam
+    global running
+
     _app = app
     _thisNode = thisNode
+    _thisParam = thisParam
     # ----------------------
 
-    button_name = thisParam.getScriptName()
+    if not running:
+        running = True
+
+        _thisNode.getParam('text_generator').setEnabled(False)
+        _thisNode.getParam('refresh_param').setEnabled(False)
+
+        QTimer.singleShot(0, main_timer)
+
+
+def main_timer():
+    button_name = _thisParam.getScriptName()
     if button_name == 'text_generator':
         delete_text_Nodes()
         preview_text()
         create_word()
     elif button_name == 'refresh_param':
-        refresh_expression(thisNode)
+        refresh_expression(_thisNode)
     elif button_name == 'fit_to_box':
         fit_text_to_box()
 
     debug_show()
+
+    _thisNode.getParam('text_generator').setEnabled(True)
+    _thisNode.getParam('refresh_param').setEnabled(True)
+
+    global running
+    running = False
 
 
 def fit_text_to_box():
