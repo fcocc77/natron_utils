@@ -1,7 +1,4 @@
 from util import *
-from PySide.QtCore import QTimer
-
-running = False
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -10,41 +7,204 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     # para poder acceder de otras funcciones
     global _app
     global _thisNode
-    global _thisParam
-    global running
 
     _app = app
     _thisNode = thisNode
-    _thisParam = thisParam
     # ----------------------
 
-    if not running:
-        running = True
-
-        _thisNode.getParam('text_generator').setEnabled(False)
-        _thisNode.getParam('refresh_param').setEnabled(False)
-
-        QTimer.singleShot(0, main_timer)
-
-
-def main_timer():
-    button_name = _thisParam.getScriptName()
+    button_name = thisParam.getScriptName()
     if button_name == 'text_generator':
         delete_text_Nodes()
         preview_text()
-        create_word()
+        create_titles()
     elif button_name == 'refresh_param':
-        refresh_expression(_thisNode)
-    elif button_name == 'fit_to_box':
-        fit_text_to_box()
+        refresh_expression(thisNode)
 
     debug_show()
 
-    _thisNode.getParam('text_generator').setEnabled(True)
-    _thisNode.getParam('refresh_param').setEnabled(True)
 
-    global running
-    running = False
+def create_titles():
+    word_gap = _thisNode.word_gap_first.get()
+    wgap = False
+
+    title = _thisNode.text_param.get()
+    title_conection = _thisNode.getNode('letter_transform_title')
+    title_gap = False
+    if word_gap == 0:
+        title_gap = True
+    create_word(title, title_conection, title_gap, 'title')
+
+    subtitle = _thisNode.subtitle_param.get()
+    subtitle_conection = _thisNode.getNode('letter_transform_subtitle')
+    subtitle_gap = False
+    if word_gap == 1:
+        subtitle_gap = True
+    create_word(subtitle, subtitle_conection, subtitle_gap, 'subtitle')
+
+
+def create_word(text, conection, word_gap, _type):
+    idxs = range(len(text))
+
+    # el desfase en el tiempo de las letras
+    reverse = _thisNode.direction_param.get()
+    if (reverse):
+        gaps = reversed(idxs)
+    else:
+        gaps = idxs
+    # ---------------
+
+    pos = 0
+    last_letter_width = 0
+    last_merge = None
+    for index, gap, letter in zip(idxs, gaps, text):
+        # si la letra es un espacio agrega la posicion de la letra anterior
+        # para que quede el espacio
+        if letter == ' ':
+            pos += last_letter_width
+            continue
+        # ------------------
+
+        last_merge, letter_width = create_letter(
+            letter.strip(), pos, gap, word_gap, last_merge, _type)
+
+        # la entrada numero 2 pertenece a la maskara, asi que la omite
+        if index >= 2:
+            index += 1
+
+        pos += letter_width
+        last_letter_width = letter_width
+
+    conection.connectInput(0, last_merge)
+
+
+def create_letter(letter, position, letter_gap, word_gap, conection, _type):
+
+    # desfase en el tiempo para las expresiones
+    word_gap_exp = '0'
+    if word_gap:
+        word_gap_exp = 'thisGroup.word_gap.get()'
+
+    curve_time = '.curve( frame - (' + str(letter_gap) + \
+        ' * thisGroup.delay_param.get() ) - ' + word_gap_exp + ' )'
+    # ------------------------
+
+    # create text
+    text = createNode('text')
+    text.text.set(letter)
+    text.size.set(get_size_font(_type))
+    set_font(text)
+
+    # las letras dependiendo de la fuente, se salen del bbox,
+    # asi que se hace un calculo con el autoSize y luego se suma
+    # el doble del ancho a la letra y asi no se sale
+    text.autoSize.set(True)
+
+    letter_width = text.getRegionOfDefinition(1, 1).x2
+    letter_height = text.getRegionOfDefinition(1, 1).y2
+
+    text.autoSize.set(False)
+
+    new_letter_width = letter_width * 2
+    text.canvas.set(new_letter_width, letter_height)
+    # ---------------------------
+
+    move_to_rigth = letter_width / 2
+    text.center.set(move_to_rigth, letter_height)
+
+    # Text color
+    color_exp = 'thisGroup.title_color.getValue(dimension)'
+    for i in range(3):
+        text.color.setExpression(color_exp, False, i)
+    # ------------------------
+
+    # Transform solo para rotacion y escala local
+    local_transform = createNode('transform')
+    rotate_exp = (
+        'rotate = thisGroup.rotate_param' + curve_time + '\n'
+        'angle = thisGroup.angle_param' + curve_time + '\n'
+        'ret = rotate - angle'
+    )
+    local_transform.rotate.setExpression(rotate_exp, True, 0)
+
+    scale_exp = 'thisGroup.scale_param' + curve_time + ''
+    local_transform.scale.setExpression(scale_exp, False, 0)
+    local_transform.scale.setExpression(scale_exp, False, 1)
+
+    # Position para corregir el tranform del texto
+    local_transform_exp = '-' + str(move_to_rigth)
+    # ------------------------
+
+    local_transform.translate.setExpression(local_transform_exp, False, 0)
+    local_transform.translate.setExpression('0', False, 1)
+
+    local_transform.connectInput(0, text)
+    # --------------------
+
+    # Blur
+    blur = createNode('blur')
+    blur.cropToFormat.set(False)
+    blur.connectInput(0, local_transform)
+
+    blur_exp = (
+        'blur_x = thisGroup.blur_x_param' + curve_time + '\n'
+        'blur_y = thisGroup.blur_y_param' + curve_time + '\n'
+        'scale = thisGroup.resolution_scale.get() \n'
+        'if dimension == 0: \n'
+        '   ret = blur_x * scale \n'
+        'else: \n'
+        '   ret = blur_y * scale \n'
+    )
+    blur.size.setExpression(blur_exp, True, 0)
+    blur.size.setExpression(blur_exp, True, 1)
+    # ------------------
+
+    # Transform
+    transform = createNode('transform')
+    translate_exp = (
+        'translate = thisGroup.translate_param' + curve_time + ' \n'
+        'translate = translate * thisGroup.resolution_scale.get() \n'
+        'if dimension == 0: \n'
+        '   ret = translate + ' + str(position) + '\n'
+        'else: \n'
+        '   ret = 0'
+    )
+    transform.translate.setExpression(translate_exp, True, 0)
+    transform.translate.setExpression(translate_exp, True, 1)
+
+    center_x = str(letter_width / 2)
+    center_y = str(letter_height / 2)
+    center_exp = (
+        'translate = thisGroup.translate_param' + curve_time + ' \n'
+        'translate = translate * thisGroup.resolution_scale.get() \n'
+        'if dimension == 0: \n'
+        '   ret = ' + center_x + ' - translate \n'
+        'else: \n'
+        '   ret = ' + center_y
+    )
+    transform.center.setExpression(center_exp, True, 0)
+    transform.center.setExpression(center_exp, True, 1)
+
+    angle_exp = 'thisGroup.angle_param' + curve_time
+    transform.rotate.setExpression(angle_exp, False, 0)
+
+    transform.connectInput(0, blur)
+    # -----------------------------------
+
+    # Opacity expression
+    merge = createNode('merge')
+    opacity_exp = 'thisGroup.opacity_param' + curve_time
+    merge.mix.setExpression(opacity_exp, False)
+
+    merge.connectInput(1, transform)
+    if conection:
+        merge.connectInput(0, conection)
+    else:
+        crop = createNode('crop')
+        crop.getParam('size').set(0, 0)
+        merge.connectInput(0, crop)
+    # ------------------------
+
+    return [merge, letter_width]
 
 
 def fit_text_to_box():
@@ -97,10 +257,16 @@ def fit_text_to_box():
     )
 
 
-def get_size_font():
+def get_size_font(_type):
     # calcula el tamanio de la fuente, despues que pasa por la escala de un 'Transform'
 
-    src_size = _thisNode.title.size.get()
+    if _type == 'title':
+        src_size = _thisNode.title.size.get()
+    elif _type == 'subtitle':
+        src_size = _thisNode.subtitle.size.get()
+    else:
+        return 0
+
     scale = _thisNode.General_Transform.scale.getValue()
 
     font_size = src_size * scale
@@ -130,7 +296,8 @@ def createNode(name):
         'transform': 'net.sf.openfx.TransformPlugin',
         'merge': 'net.sf.openfx.MergePlugin',
         'output': 'fr.inria.built-in.Output',
-        'position': 'net.sf.openfx.Position'
+        'position': 'net.sf.openfx.Position',
+        'crop': 'net.sf.openfx.CropPlugin'
     }
 
     node_name = _app.createNode(nodes[name], -1, _thisNode).getScriptName()
@@ -153,120 +320,6 @@ def delete_text_Nodes():
     # natron necesita que se borren 2 veces los nodos, por un error de natron
     for node in text_nodes:
         node.destroy()
-
-
-def create_letter(letter, position, gap):
-
-    # desfase en el tiempo para las expresiones
-    curve_time = '.curve( frame - ' + str(gap) + \
-        ' * thisGroup.delay_param.get() )'
-    # ------------------------
-
-    # create text
-    text = createNode('text')
-    text.text.set(letter)
-    text.size.set(get_size_font())
-    set_font(text)
-
-    # las letras dependiendo de la fuente, se salen del bbox,
-    # asi que se hace un calculo con el autoSize y luego se suma
-    # el doble del ancho a la letra y asi no se sale
-    text.autoSize.set(True)
-
-    letter_width = text.getRegionOfDefinition(1, 1).x2
-    letter_height = text.getRegionOfDefinition(1, 1).y2
-
-    text.autoSize.set(False)
-
-    new_letter_width = letter_width * 2
-    text.canvas.set(new_letter_width, letter_height)
-    # ---------------------------
-
-    move_to_rigth = letter_width / 2
-    text.center.set(move_to_rigth, letter_height)
-
-    # Opacity expression
-    opacity_exp = 'thisGroup.opacity_param' + curve_time
-    for i in range(4):
-        text.color.setExpression(opacity_exp, False, i)
-    # ------------------------
-
-    # Position para corregir el tranform del texto
-    position_node = createNode('position')
-    position_node.translate.set(- move_to_rigth, 0)
-    position_node.connectInput(0, text)
-    # ------------------------
-
-    # Blur
-    blur = createNode('blur')
-    blur.cropToFormat.set(False)
-    blur.connectInput(0, position_node)
-
-    blur_exp = (
-        'blur_x = thisGroup.blur_x_param' + curve_time + '\n'
-        'blur_y = thisGroup.blur_y_param' + curve_time + '\n'
-        'scale = thisGroup.resolution_scale.get() \n'
-        'if dimension == 0: \n'
-        '   ret = blur_x * scale \n'
-        'else: \n'
-        '   ret = blur_y * scale \n'
-    )
-    blur.size.setExpression(blur_exp, True, 0)
-    blur.size.setExpression(blur_exp, True, 1)
-    # ------------------
-
-    # Transform solo para rotacion y escala local
-    local_transform = createNode('transform')
-    rotate_exp = (
-        'rotate = thisGroup.rotate_param' + curve_time + '\n'
-        'angle = thisGroup.angle_param' + curve_time + '\n'
-        'ret = rotate - angle'
-    )
-    local_transform.rotate.setExpression(rotate_exp, True, 0)
-
-    scale_exp = 'thisGroup.scale_param' + curve_time + ''
-    local_transform.scale.setExpression(scale_exp, False, 0)
-    local_transform.scale.setExpression(scale_exp, False, 1)
-
-    local_transform.translate.setExpression('0', False, 0)
-    local_transform.translate.setExpression('0', False, 1)
-
-    local_transform.connectInput(0, blur)
-    # --------------------
-
-    # Transform
-    transform = createNode('transform')
-    translate_exp = (
-        'translate = thisGroup.translate_param' + curve_time + ' \n'
-        'translate = translate * thisGroup.resolution_scale.get() \n'
-        'if dimension == 0: \n'
-        '   ret = translate + ' + str(position) + '\n'
-        'else: \n'
-        '   ret = 0'
-    )
-    transform.translate.setExpression(translate_exp, True, 0)
-    transform.translate.setExpression(translate_exp, True, 1)
-
-    center_x = str(letter_width / 2)
-    center_y = str(letter_height / 2)
-    center_exp = (
-        'translate = thisGroup.translate_param' + curve_time + ' \n'
-        'translate = translate * thisGroup.resolution_scale.get() \n'
-        'if dimension == 0: \n'
-        '   ret = ' + center_x + ' - translate \n'
-        'else: \n'
-        '   ret = ' + center_y
-    )
-    transform.center.setExpression(center_exp, True, 0)
-    transform.center.setExpression(center_exp, True, 1)
-
-    angle_exp = 'thisGroup.angle_param' + curve_time
-    transform.rotate.setExpression(angle_exp, False, 0)
-
-    transform.connectInput(0, local_transform)
-    # -----------------------------------
-
-    return [transform, letter_width]
 
 
 def set_font(text):
@@ -297,42 +350,3 @@ def preview_text():
     set_font(subtitle_node)
 
     fit_text_to_box()
-
-
-def create_word():
-
-    merge = _thisNode.getNode("TextMerge")
-    # -------------------
-
-    title = _thisNode.text_param.get()
-    subtitle = _thisNode.subtitle_param.get()
-
-    idxs = range(len(title))
-
-    # el desfase en el tiempo de las letras
-    reverse = _thisNode.direction_param.get()
-    if (reverse):
-        gaps = reversed(idxs)
-    else:
-        gaps = idxs
-    # ---------------
-
-    pos = 0
-    last_letter_width = 0
-    for index, gap, letter in zip(idxs, gaps, title):
-        # si la letra es un espacio agrega la posicion de la letra anterior
-        # para que quede el espacio
-        if letter == ' ':
-            pos += last_letter_width
-            continue
-        # ------------------
-
-        transform, letter_width = create_letter(letter.strip(), pos, gap)
-
-        # la entrada numero 2 pertenece a la maskara, asi que la omite
-        if index >= 2:
-            index += 1
-
-        merge.connectInput(index, transform)
-        pos += letter_width
-        last_letter_width = letter_width
