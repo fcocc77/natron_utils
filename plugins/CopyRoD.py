@@ -21,6 +21,9 @@ def getPluginID():
 
 def getLabel():
     return "CopyRoD"
+    
+def getIconPath():
+    return "CopyRoD.png"
 
 def getVersion():
     return 1

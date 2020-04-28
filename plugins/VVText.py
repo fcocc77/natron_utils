@@ -22,6 +22,9 @@ def getPluginID():
 def getLabel():
     return "VVText"
 
+def getIconPath():
+    return "VVText.png"
+
 def getVersion():
     return 1
 
