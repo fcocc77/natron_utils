@@ -6,6 +6,7 @@ import NatronEngine
 # vvPlugins modules
 import vvtext
 import ink
+import vinarender
 import util
 # --------------
 
