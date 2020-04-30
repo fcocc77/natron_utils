@@ -7,6 +7,7 @@ import NatronEngine
 import vvtext
 import ink
 import vinarender
+import merge_matte
 import util
 # --------------
 
