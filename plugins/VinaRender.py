@@ -54,6 +54,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.readfile = param
     del param
 
@@ -209,13 +210,13 @@ def createInstance(app,group):
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
     lastNode.setPosition(935, 241)
-    lastNode.setSize(128, 78)
+    lastNode.setSize(128, 76)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue(".//")
+        param.setValue("./")
         del param
 
     param = lastNode.getParam("firstFrame")
@@ -257,8 +258,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(1, 0)
         param.setValue(100, 1)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(1 - 1)</Natron>")
         del param
 
     del lastNode
@@ -275,7 +280,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValue(0, 0)
+        param.setValue(1, 0)
         del param
 
     del lastNode
@@ -287,7 +292,7 @@ def createInstance(app,group):
     groupSwitch1.connectInput(1, groupreading)
 
     param = groupreading.getParam("filename")
-    param.setExpression("import os\n\nfilename = thisGroup.filename.get()\nbasename = os.path.basename(filename)\ndirname = os.path.dirname(filename) \n\nret = dirname + \'/\' + basename.split(\'_\')[0] + \'/\' + basename", True, 0)
+    param.setExpression("thisGroup.filename.get()", False, 0)
     del param
     param = groupframe_range.getParam("frameRange")
     group.getParam("range").setAsAlias(param)

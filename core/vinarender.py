@@ -1,4 +1,5 @@
 import os
+import NatronGui
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
@@ -51,8 +52,13 @@ def get_node_path(thisNode, app):
                         break
 
     return found
-         
+    
 def render(thisNode, app):
+    node_input = thisNode.getInput(0)
+    if not node_input:
+        NatronGui.natron.warningDialog('VinaRender', '!You must connect the image.')
+        return
+
     filename = thisNode.filename.get()
 
     first_frame = thisNode.frame_range.frameRange.getValue(0)
@@ -67,8 +73,9 @@ def render(thisNode, app):
     task_size = thisNode.task_size.get()
     project = app.projectPath.get() + project_name
     software = 'Natron'
-    render = get_node_path(thisNode, app) + thisNode.getInput(0).getScriptName()
+    render = get_node_path(thisNode, app) + node_input.getScriptName()
     output = thisNode.filename.getValue()
+    output = output.replace( '[Project]/', app.projectPath.get() )
     instances = thisNode.instances.getValue()
 
     cmd = ( submit 
@@ -84,4 +91,10 @@ def render(thisNode, app):
         + ' -instances ' + str( instances )
     )
 
+    # guarda el proyecto antes de enviar el render
+    project_path = app.projectPath.get() + app.projectName.get()
+    app.saveProject( project_path )    
+    # ------------------
+
     os.system( cmd )
+    NatronGui.natron.informationDialog('VinaRender', 'Render Sended.')
