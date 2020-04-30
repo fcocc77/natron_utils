@@ -2,53 +2,74 @@ import os
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
+
     if knob_name == 'render':
         render(thisNode, app)
+    if knob_name == 'range' or knob_name =='readfile':
+        change_frame_range(thisNode)
+
+def change_frame_range(thisNode):
+    first_frame = thisNode.frame_range.frameRange.getValue(0)
+    last_frame = thisNode.frame_range.frameRange.getValue(1)
+
+    thisNode.reading.firstFrame.setValue(first_frame)
+    thisNode.reading.lastFrame.setValue(last_frame)
+
+    thisNode.reading.before.setValue(3)
+    thisNode.reading.after.setValue(3)
 
 def get_node_path(thisNode, app):
     # encuentra la ruta completa del nodo, si es que
     # el nodo a buscar esta dentro de un grupo.
 
-    vian_name = thisNode.getScriptName()
-    app_name = 'app1'
+    vina_name = thisNode.getScriptName()
+    vina_position = thisNode.getPosition()[0]
+
     found = None
     for a in app.getChildren():
         a_name = a.getScriptName()
-        
-        if a_name == vian_name:
-            found = app_name + '.'
-            break
+        a_pos = a.getPosition()[0]
+        if a_name == vina_name:
+            if a_pos == vina_position:
+                found = ''
+                break
 
         for b in a.getChildren():
             b_name = b.getScriptName()
-            if b_name == vian_name:
-                found = app_name + '.' + a_name + '.'
-                break
+            b_pos = b.getPosition()[0]
+            if b_name == vina_name:
+                if b_pos == vina_position:
+                    found = a_name + '.'
+                    break
 
             for c in b.getChildren():
                 c_name = c.getScriptName()
-                if c_name == vian_name:
-                    found = app_name + '.' + a_name + '.' + b_name + '.'
-                    break
+                c_pos = c.getPosition()[0]
+                if c_name == vina_name:
+                    if c_pos == vina_position:
+                        found = a_name + '.' + b_name + '.'
+                        break
 
     return found
          
 def render(thisNode, app):
     filename = thisNode.filename.get()
-    x = thisNode.resolution.boxSize.getValue(0)
-    y = thisNode.resolution.boxSize.getValue(1)
 
     first_frame = thisNode.frame_range.frameRange.getValue(0)
     last_frame = thisNode.frame_range.frameRange.getValue(1)
 
     submit = '/opt/vinarender/bin/submit'
 
-    job_name = 'natron_render'
+    project_name = app.projectName.get()
+
+    job_name = project_name.split('.')[0]
     server_group = 'Natron'
     task_size = thisNode.task_size.get()
-    project = app.projectPath.get() + app.projectName.get()
+    project = app.projectPath.get() + project_name
     software = 'Natron'
     render = get_node_path(thisNode, app) + thisNode.getInput(0).getScriptName()
+    output = thisNode.filename.getValue()
+    instances = thisNode.instances.getValue()
 
     cmd = ( submit 
         + ' -jobName ' + job_name
@@ -59,9 +80,8 @@ def render(thisNode, app):
         + ' -project "' + project + '"'
         + ' -software ' + software
         + ' -render ' + render
+        + ' -extra ' + output
+        + ' -instances ' + str( instances )
     )
 
-    
-    print cmd
-
-    # os.system( cmd )
+    os.system( cmd )

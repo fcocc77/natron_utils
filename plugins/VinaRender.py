@@ -45,6 +45,18 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createBooleanParam("readfile", "Read Render")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.readfile = param
+    del param
+
     param = lastNode.createOutputFileParam("filename", "Filename")
     param.setSequenceEnabled(False)
 
@@ -54,25 +66,21 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("/mnt/server_01/templates/wedding_01/renders/prerender/ink_blot_01/ink_blot_01_###.jpg")
+    param.setValue("./")
     lastNode.filename = param
     del param
 
-    param = lastNode.createInt2DParam("resolutionboxSize", "Size")
-    param.setDefaultValue(200, 0)
-    param.restoreDefaultValue(0)
-    param.setDefaultValue(200, 1)
-    param.restoreDefaultValue(1)
+    param = lastNode.createSeparatorParam("sep1", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.resolutionboxSize = param
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
     del param
 
     param = lastNode.createInt2DParam("range", "Frame Range")
@@ -85,11 +93,43 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(2, 0)
-    param.setValue(20, 1)
+    param.setValue(100, 1)
     lastNode.range = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
+    param = lastNode.createIntParam("instances", "Instances")
+    param.setMinimum(1, 0)
+    param.setMaximum(10, 0)
+    param.setDisplayMinimum(1, 0)
+    param.setDisplayMaximum(10, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.instances = param
     del param
 
     param = lastNode.createIntParam("task_size", "Task Size")
@@ -109,6 +149,19 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(10, 0)
     lastNode.task_size = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep2", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep2 = param
     del param
 
     param = lastNode.createButtonParam("render", "Render")
@@ -132,7 +185,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
     lastNode.setPosition(704, 406)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 
@@ -144,7 +197,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Input1")
     lastNode.setLabel("Input1")
     lastNode.setPosition(704, 125)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupInput1 = lastNode
 
@@ -155,34 +208,39 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
-    lastNode.setPosition(885, 266)
-    lastNode.setSize(123, 76)
+    lastNode.setPosition(935, 241)
+    lastNode.setSize(128, 78)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
 
-    param = lastNode.getParam("decodingPluginID")
-    if param is not None:
-        param.setValue("fr.inria.openfx.ReadOIIO")
-        del param
-
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/mnt/server_01/templates/wedding_01/renders/prerender/ink_blot_01/ink_blot_01_###.jpg")
+        param.setValue(".//")
+        del param
+
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
         del param
 
     param = lastNode.getParam("lastFrame")
     if param is not None:
-        param.setValue(20, 0)
+        param.setValue(100, 0)
         del param
 
-    param = lastNode.getParam("timeDomainUserEdited")
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
     if param is not None:
         param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputLayerChoice")
-    if param is not None:
-        param.setValue("Color.RGB")
         del param
 
     del lastNode
@@ -192,64 +250,50 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.FrameRange", 1, group)
     lastNode.setScriptName("frame_range")
     lastNode.setLabel("frame_range")
-    lastNode.setPosition(1119, 342)
-    lastNode.setSize(100, 55)
+    lastNode.setPosition(1210, 472)
+    lastNode.setSize(104, 57)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupframe_range = lastNode
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(2, 0)
-        param.setValue(20, 1)
+        param.setValue(1, 0)
+        param.setValue(100, 1)
         del param
 
     del lastNode
     # End of node "frame_range"
 
-    # Start of node "resolution"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("resolution")
-    lastNode.setLabel("resolution")
-    lastNode.setPosition(1364, 242)
-    lastNode.setSize(100, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupresolution = lastNode
+    # Start of node "Switch1"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("Switch1")
+    lastNode.setLabel("Switch1")
+    lastNode.setPosition(704, 288)
+    lastNode.setSize(104, 33)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupSwitch1 = lastNode
 
-    param = lastNode.getParam("reformatType")
+    param = lastNode.getParam("which")
     if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
+        param.setValue(0, 0)
         del param
 
     del lastNode
-    # End of node "resolution"
+    # End of node "Switch1"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupreading)
+    groupOutput1.connectInput(0, groupSwitch1)
+    groupSwitch1.connectInput(0, groupInput1)
+    groupSwitch1.connectInput(1, groupreading)
 
     param = groupreading.getParam("filename")
-    param.setExpression("thisGroup.filename.get()", False, 0)
+    param.setExpression("import os\n\nfilename = thisGroup.filename.get()\nbasename = os.path.basename(filename)\ndirname = os.path.dirname(filename) \n\nret = dirname + \'/\' + basename.split(\'_\')[0] + \'/\' + basename", True, 0)
     del param
     param = groupframe_range.getParam("frameRange")
     group.getParam("range").setAsAlias(param)
     del param
-    param = groupresolution.getParam("boxSize")
-    group.getParam("resolutionboxSize").setAsAlias(param)
+    param = groupSwitch1.getParam("which")
+    param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
     try:
