@@ -7,9 +7,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'render':
         render(thisNode, app)
     if knob_name == 'range' or knob_name =='readfile':
-        change_frame_range(thisNode)
+        change_paramaters(thisNode)
 
-def change_frame_range(thisNode):
+def change_paramaters(thisNode):
     first_frame = thisNode.frame_range.frameRange.getValue(0)
     last_frame = thisNode.frame_range.frameRange.getValue(1)
 
@@ -18,6 +18,10 @@ def change_frame_range(thisNode):
 
     thisNode.reading.before.setValue(3)
     thisNode.reading.after.setValue(3)
+
+    # cambia el premult de salida para que los .png no queden
+    # con el borde negro.
+    thisNode.reading.outputPremult.setValue(0)
 
 def get_node_path(thisNode, app):
     # encuentra la ruta completa del nodo, si es que
@@ -59,6 +63,12 @@ def render(thisNode, app):
         NatronGui.natron.warningDialog('VinaRender', '!You must connect the image.')
         return
 
+    rgb_only = thisNode.rgbonly.get()
+    if rgb_only:
+        output_node = 'to_rgb'
+    else:
+        output_node = 'Input1'
+
     filename = thisNode.filename.get()
 
     first_frame = thisNode.frame_range.frameRange.getValue(0)
@@ -73,7 +83,7 @@ def render(thisNode, app):
     task_size = thisNode.task_size.get()
     project = app.projectPath.get() + project_name
     software = 'Natron'
-    render = get_node_path(thisNode, app) + node_input.getScriptName()
+    render = get_node_path(thisNode, app) + thisNode.getScriptName() + '.' + output_node
     output = thisNode.filename.getValue()
     output = output.replace( '[Project]/', app.projectPath.get() )
     instances = thisNode.instances.getValue()

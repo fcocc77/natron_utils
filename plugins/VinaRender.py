@@ -54,7 +54,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.readfile = param
     del param
 
@@ -67,7 +66,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("./")
+    param.setValue("[Project]/")
     lastNode.filename = param
     del param
 
@@ -165,6 +164,32 @@ def createInstance(app,group):
     lastNode.sep2 = param
     del param
 
+    param = lastNode.createBooleanParam("rgbonly", "RGB Only")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.rgbonly = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
     param = lastNode.createButtonParam("render", "Render")
 
     # Add the param to the page
@@ -185,7 +210,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(704, 406)
+    lastNode.setPosition(704, 453)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -197,8 +222,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Input1")
     lastNode.setLabel("Input1")
-    lastNode.setPosition(704, 125)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(704, 98)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupInput1 = lastNode
 
@@ -209,14 +234,19 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
-    lastNode.setPosition(935, 241)
+    lastNode.setPosition(919, 266)
     lastNode.setSize(128, 76)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(comp)</Natron>")
+        del param
+
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("./")
+        param.setValue("[Project]/")
         del param
 
     param = lastNode.getParam("firstFrame")
@@ -239,6 +269,11 @@ def createInstance(app,group):
         param.set("black")
         del param
 
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
     param = lastNode.getParam("ParamExistingInstance")
     if param is not None:
         param.setValue(True)
@@ -252,18 +287,19 @@ def createInstance(app,group):
     lastNode.setScriptName("frame_range")
     lastNode.setLabel("frame_range")
     lastNode.setPosition(1210, 472)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupframe_range = lastNode
 
     param = lastNode.getParam("frameRange")
     if param is not None:
+        param.setValue(1, 0)
         param.setValue(100, 1)
         del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
+        param.setValue("<Natron>(1 - 100)</Natron>")
         del param
 
     del lastNode
@@ -274,22 +310,53 @@ def createInstance(app,group):
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
     lastNode.setPosition(704, 288)
-    lastNode.setSize(104, 33)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValue(1, 0)
+        param.setValue(0, 0)
         del param
 
     del lastNode
     # End of node "Switch1"
 
+    # Start of node "to_rgb"
+    lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
+    lastNode.setScriptName("to_rgb")
+    lastNode.setLabel("to_rgb")
+    lastNode.setPosition(379, 187)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.6, 0.24, 0.39)
+    groupto_rgb = lastNode
+
+    param = lastNode.getParam("outputComponents")
+    if param is not None:
+        param.set("rgb")
+        del param
+
+    del lastNode
+    # End of node "to_rgb"
+
+    # Start of node "Dot1"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot1")
+    lastNode.setLabel("Dot1")
+    lastNode.setPosition(749, 196)
+    lastNode.setSize(14, 14)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot1 = lastNode
+
+    del lastNode
+    # End of node "Dot1"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupSwitch1)
-    groupSwitch1.connectInput(0, groupInput1)
+    groupSwitch1.connectInput(0, groupDot1)
     groupSwitch1.connectInput(1, groupreading)
+    groupto_rgb.connectInput(0, groupDot1)
+    groupDot1.connectInput(0, groupInput1)
 
     param = groupreading.getParam("filename")
     param.setExpression("thisGroup.filename.get()", False, 0)
