@@ -69,9 +69,9 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.set("matte")
     lastNode.MergeMatteMainchannels = param
     del param
 
@@ -141,6 +141,11 @@ def createInstance(app,group):
         param.set("stencil")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "stencil"
 
@@ -149,7 +154,7 @@ def createInstance(app,group):
     lastNode.setScriptName("stencil_matte")
     lastNode.setLabel("stencil_matte")
     lastNode.setPosition(804, 73)
-    lastNode.setSize(100, 78)
+    lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupstencil_matte = lastNode
 
@@ -163,14 +168,9 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("B_channels")
+    param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.set("matte")
-        del param
-
-    param = lastNode.getParam("channels")
-    if param is not None:
-        param.set("matte")
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -224,6 +224,11 @@ def createInstance(app,group):
         param.set("mask")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "mask"
 
@@ -232,14 +237,9 @@ def createInstance(app,group):
     lastNode.setScriptName("MergeMatteMain")
     lastNode.setLabel("MergeMatteMain")
     lastNode.setPosition(-9, -10)
-    lastNode.setSize(100, 78)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMergeMatteMain = lastNode
-
-    param = lastNode.getParam("OutputChannelsR")
-    if param is not None:
-        param.setValue(False)
-        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -251,14 +251,9 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("B_channels")
-    if param is not None:
-        param.set("matte")
-        del param
-
     param = lastNode.getParam("channels")
     if param is not None:
-        param.set("matte")
+        param.set("uk.co.thefoundry.OfxImagePlaneColour")
         del param
 
     del lastNode
@@ -385,7 +380,7 @@ def createInstance(app,group):
     lastNode.setScriptName("over_matte")
     lastNode.setLabel("over_matte")
     lastNode.setPosition(1218, -2)
-    lastNode.setSize(100, 78)
+    lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupover_matte = lastNode
 
@@ -399,14 +394,9 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("B_channels")
+    param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.set("matte")
-        del param
-
-    param = lastNode.getParam("channels")
-    if param is not None:
-        param.set("matte")
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -532,24 +522,9 @@ def createInstance(app,group):
     lastNode.setColor(0.6, 0.24, 0.39)
     groupshuffle_matte = lastNode
 
-    param = lastNode.getParam("outputR")
-    if param is not None:
-        param.set("B.matte.R")
-        del param
-
-    param = lastNode.getParam("outputG")
-    if param is not None:
-        param.set("0")
-        del param
-
-    param = lastNode.getParam("outputB")
-    if param is not None:
-        param.set("0")
-        del param
-
     param = lastNode.getParam("outputA")
     if param is not None:
-        param.set("B.matte.R")
+        param.set("B.uk.co.thefoundry.OfxImagePlaneColour.R")
         del param
 
     del lastNode
