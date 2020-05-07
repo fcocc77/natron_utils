@@ -108,6 +108,7 @@ def get_node_path(thisNode, app):
                     if c_pos == vina_position:
                         found = a_name + '.' + b_name + '.'
                         break
+    return found
 
 def render(thisNode, app):
     node_input = thisNode.getInput(0)
