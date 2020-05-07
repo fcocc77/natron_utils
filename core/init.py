@@ -6,12 +6,12 @@ import NatronEngine
 # vvPlugins modules
 import vvtext
 import natron
+import collect_files
 import ink
 import vinarender
 import merge_matte
 import util
 # --------------
-
 
 def reload_nodes():
     repo = '/home/pancho/Documents/GitHub/natron_pyplugs'
@@ -47,5 +47,5 @@ def reload_nodes():
                 None
 
 
-NatronGui.natron.addMenuCommand('videovina/Reload Nodes', 'reload_nodes',
-                                QtCore.Qt.Key.Key_U, QtCore.Qt.KeyboardModifier.ControlModifier)
+NatronGui.natron.addMenuCommand('Videovina/Reload Nodes', 'reload_nodes',
+                                QtCore.Qt.Key.Key_R, QtCore.Qt.KeyboardModifier.ShiftModifier)
