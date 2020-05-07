@@ -36,3 +36,22 @@ def createParam(node, name, _type=None, _range=[0, 100]):
     # ----------------------
 
     return param
+
+def get_all_nodes(app):
+    nodes = []
+    for a in app.getChildren(): 
+        a_path = a.getScriptName()
+        nodes.append([a, a_path])
+        for b in a.getChildren(): 
+            b_path = a.getScriptName() + '.' + b.getScriptName()
+            nodes.append([b, b_path])
+            for c in b.getChildren(): 
+                c_path = a.getScriptName() + '.' + b.getScriptName() + '.' + c.getScriptName()
+                nodes.append([c, c_path])
+                for d in c.getChildren(): 
+                    d_path = a.getScriptName() + '.' + b.getScriptName() + '.' + c.getScriptName() + '.' + d.getScriptName()
+                    nodes.append([d, d_path])
+                    for e in d.getChildren(): 
+                        e_path = a.getScriptName() + '.' + b.getScriptName() + '.' + c.getScriptName() + '.' + d.getScriptName() + '.' + e.getScriptName()
+                        nodes.append([e, e_path])
+    return nodes

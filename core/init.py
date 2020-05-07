@@ -5,6 +5,7 @@ import NatronEngine
 
 # vvPlugins modules
 import vvtext
+import natron
 import ink
 import vinarender
 import merge_matte

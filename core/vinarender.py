@@ -1,5 +1,8 @@
 import os
 import NatronGui
+from util import jread
+from natron import get_all_nodes
+
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
@@ -22,6 +25,57 @@ def change_paramaters(thisNode):
     # cambia el premult de salida para que los .png no queden
     # con el borde negro.
     thisNode.reading.outputPremult.setValue(0)
+
+def check_project(app):
+
+    path_list = jread( '/opt/vinarender/etc/preferences_s.json' ).paths.system
+    paths = []
+    for r in path_list:
+        if os.path.isdir(r):
+            paths.append(r)
+    if not paths:
+        paths.append("#none#")
+
+    local_filename = ''
+    disconnect_filename = ''
+
+    ok = True
+
+    for node, node_path in get_all_nodes(app):
+        filename_param = node.getParam("filename")
+        if filename_param:
+            filename = filename_param.get()
+
+            dirname = os.path.dirname(filename)
+            relative = '[Project]'
+            
+            if relative in filename:
+                None
+            elif not os.path.isdir(dirname):
+                disconnect_filename += node_path + ' = ' + filename + '\n'
+                ok = False
+            else:
+                is_in_vinarender_paths = False
+                for p in paths:
+                    if p in filename:
+                        is_in_vinarender_paths = True
+                if not is_in_vinarender_paths:
+                    ok = False
+                    local_filename += node_path + ' = ' + filename + '\n'
+
+    if ok:
+        return True
+    else:
+        line1 = ''
+        line2 = ''
+        if local_filename:
+            line1 = "These files are on your PC:"
+        if disconnect_filename:
+            line2 = "These files are disconnected:"
+
+        message = line1 + '\n\n' + local_filename + '\n\n' + line2 + '\n\n' + disconnect_filename
+        NatronGui.natron.warningDialog( 'FileName Error', message )
+        return False
 
 def get_node_path(thisNode, app):
     # encuentra la ruta completa del nodo, si es que
@@ -55,14 +109,15 @@ def get_node_path(thisNode, app):
                         found = a_name + '.' + b_name + '.'
                         break
 
-    return found
-    
 def render(thisNode, app):
     node_input = thisNode.getInput(0)
     if not node_input:
         NatronGui.natron.warningDialog('VinaRender', '!You must connect the image.')
         return
 
+    if not check_project(app):
+        return
+    
     rgb_only = thisNode.rgbonly.get()
     if rgb_only:
         output_node = 'to_rgb'
