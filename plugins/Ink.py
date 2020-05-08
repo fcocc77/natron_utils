@@ -19,14 +19,14 @@ except ImportError:
 def getPluginID():
     return "vv.ink"
 
-def getIconPath():
-    return "Ink.png"
-
 def getLabel():
     return "Ink"
 
 def getVersion():
     return 1
+
+def getIconPath():
+    return "Ink.png"
 
 def getGrouping():
     return "videovina"
@@ -45,6 +45,24 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createChoiceParam("operation", "Operation")
+    entries = [ ("Over", ""),
+    ("Screen", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Screen")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.operation = param
+    del param
+
     param = lastNode.createIntParam("TimeOffset1timeOffset", "Time Start")
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
@@ -53,6 +71,7 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
     param.setValue(1, 0)
@@ -218,10 +237,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(1536, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setPosition(1536, 32)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -246,7 +270,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(1346, -174)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -344,7 +368,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
     lastNode.setPosition(1581, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
 
@@ -390,7 +414,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot2_2")
     lastNode.setLabel("Dot2_2")
     lastNode.setPosition(1754, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2_2 = lastNode
 
@@ -402,9 +426,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge2")
     lastNode.setLabel("Merge2")
     lastNode.setPosition(1709, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -414,6 +443,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0.9155578148474952, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(screen)</Natron>")
         del param
 
     del lastNode
@@ -662,7 +696,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
     lastNode.setPosition(1949, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
 
@@ -674,7 +708,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
     lastNode.setPosition(2174, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
 
@@ -686,7 +720,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot5")
     lastNode.setLabel("Dot5")
     lastNode.setPosition(2410, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot5 = lastNode
 
@@ -698,7 +732,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot6")
     lastNode.setLabel("Dot6")
     lastNode.setPosition(2665, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot6 = lastNode
 
@@ -710,7 +744,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot7")
     lastNode.setLabel("Dot7")
     lastNode.setPosition(2903, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot7 = lastNode
 
@@ -722,7 +756,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot8")
     lastNode.setLabel("Dot8")
     lastNode.setPosition(3110, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot8 = lastNode
 
@@ -734,7 +768,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot9")
     lastNode.setLabel("Dot9")
     lastNode.setPosition(3373, -173)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot9 = lastNode
 
@@ -746,9 +780,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge3")
     lastNode.setLabel("Merge3")
     lastNode.setPosition(1904, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -758,6 +797,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0.9155578148474952, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(screen)</Natron>")
         del param
 
     del lastNode
@@ -768,9 +812,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge4")
     lastNode.setLabel("Merge4")
     lastNode.setPosition(2129, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -782,6 +831,11 @@ def createInstance(app,group):
         param.setValue(0.9155578148474952, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(screen)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge4"
 
@@ -790,9 +844,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge5")
     lastNode.setLabel("Merge5")
     lastNode.setPosition(2365, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge5 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -802,6 +861,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(screen)</Natron>")
         del param
 
     del lastNode
@@ -812,9 +876,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge6")
     lastNode.setLabel("Merge6")
     lastNode.setPosition(2620, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge6 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -824,6 +893,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(screen)</Natron>")
         del param
 
     del lastNode
@@ -834,9 +908,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge7")
     lastNode.setLabel("Merge7")
     lastNode.setPosition(2858, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge7 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -846,6 +925,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(screen)</Natron>")
         del param
 
     del lastNode
@@ -856,9 +940,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge8")
     lastNode.setLabel("Merge8")
     lastNode.setPosition(3065, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge8 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -868,6 +957,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(screen)</Natron>")
         del param
 
     del lastNode
@@ -878,9 +972,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge9")
     lastNode.setLabel("Merge9")
     lastNode.setPosition(3328, 33)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge9 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("screen")
+        del param
 
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
@@ -892,25 +991,13 @@ def createInstance(app,group):
         param.setValue(0, 0)
         del param
 
-    del lastNode
-    # End of node "Merge9"
-
-    # Start of node "Shuffle1_2"
-    lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
-    lastNode.setScriptName("Shuffle1_2")
-    lastNode.setLabel("Shuffle1_2")
-    lastNode.setPosition(1301, -327)
-    lastNode.setSize(104, 33)
-    lastNode.setColor(0.6, 0.24, 0.39)
-    groupShuffle1_2 = lastNode
-
-    param = lastNode.getParam("outputA")
+    param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.set("B.uk.co.thefoundry.OfxImagePlaneColour.R")
+        param.setValue("<Natron>(screen)</Natron>")
         del param
 
     del lastNode
-    # End of node "Shuffle1_2"
+    # End of node "Merge9"
 
     # Start of node "TimeOffset1"
     lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
@@ -1104,7 +1191,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot10")
     lastNode.setLabel("Dot10")
     lastNode.setPosition(1346, 53)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot10 = lastNode
 
@@ -1145,7 +1232,7 @@ def createInstance(app,group):
     groupMerge1.connectInput(0, groupDot10)
     groupMerge1.connectInput(1, grouptblop_1)
     groupDot1.connectInput(0, groupPosition1)
-    groupPosition1.connectInput(0, groupShuffle1_2)
+    groupPosition1.connectInput(0, groupInput1)
     grouptblop_0.connectInput(0, groupTimer_10)
     grouptblop_1.connectInput(0, groupTimer)
     groupDot2.connectInput(0, groupDot1)
@@ -1181,7 +1268,6 @@ def createInstance(app,group):
     groupMerge8.connectInput(1, grouptblop_8)
     groupMerge9.connectInput(0, groupMerge8)
     groupMerge9.connectInput(1, grouptblop_9)
-    groupShuffle1_2.connectInput(0, groupInput1)
     groupTimeOffset1.connectInput(0, groupMerge9)
     groupTimer.connectInput(0, groupDot2)
     groupTimer_2.connectInput(0, groupDot2_2)
