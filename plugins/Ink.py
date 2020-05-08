@@ -143,7 +143,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
     lastNode.scale_random = param
     del param
 
@@ -262,6 +261,11 @@ def createInstance(app,group):
         param.setValue(0.9155578148474952, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge1"
 
@@ -276,24 +280,6 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "Dot1"
-
-    # Start of node "Position1"
-    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("Position1")
-    lastNode.setLabel("Position1")
-    lastNode.setPosition(1301, -259)
-    lastNode.setSize(104, 33)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupPosition1 = lastNode
-
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(-87, 0)
-        param.setValue(-80, 1)
-        del param
-
-    del lastNode
-    # End of node "Position1"
 
     # Start of node "tblop_0"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
@@ -317,8 +303,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -351,8 +337,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -397,8 +383,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -475,8 +461,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -509,8 +495,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -543,8 +529,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -577,8 +563,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -611,8 +597,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -645,8 +631,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -679,8 +665,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.277356642700564, 0)
-        param.setValue(1.277356642700564, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1231,8 +1217,7 @@ def createInstance(app,group):
     groupOutput1.connectInput(0, groupCrop1)
     groupMerge1.connectInput(0, groupDot10)
     groupMerge1.connectInput(1, grouptblop_1)
-    groupDot1.connectInput(0, groupPosition1)
-    groupPosition1.connectInput(0, groupInput1)
+    groupDot1.connectInput(0, groupInput1)
     grouptblop_0.connectInput(0, groupTimer_10)
     grouptblop_1.connectInput(0, groupTimer)
     groupDot2.connectInput(0, groupDot1)
