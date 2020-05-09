@@ -44,7 +44,7 @@ def back_and_forth_transition(param, duration, start_frame, values):
         param.setInterpolationAtTime(last_frame,  horizontal, dimension)
 
 
-def directional_transition(param, duration, exaggeration_time, exaggeration_value, start_frame, values):
+def directional_transition(param, duration, exaggeration_time, exaggeration_value, start_frame, values, dimension = 0):
     
     exaggeration_value = 1 - exaggeration_value  
     
@@ -81,13 +81,13 @@ def directional_transition(param, duration, exaggeration_time, exaggeration_valu
 
     horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
 
-    param.restoreDefaultValue()
+    param.restoreDefaultValue(dimension)
 
-    param.setValueAtTime(value_a, first_frame)
-    param.setValueAtTime(exaggeration_first_value, exaggeration_first)
+    param.setValueAtTime(value_a, first_frame, dimension)
+    param.setValueAtTime(exaggeration_first_value, exaggeration_first, dimension)
 
-    param.setValueAtTime(value_b, last_frame)
-    param.setValueAtTime(exaggeration_last_value, exaggeration_last)
+    param.setValueAtTime(value_b, last_frame, dimension)
+    param.setValueAtTime(exaggeration_last_value, exaggeration_last, dimension)
 
-    param.setInterpolationAtTime(first_frame,  horizontal)
-    param.setInterpolationAtTime(last_frame,  horizontal)
+    param.setInterpolationAtTime(first_frame,  horizontal, dimension)
+    param.setInterpolationAtTime(last_frame,  horizontal, dimension)

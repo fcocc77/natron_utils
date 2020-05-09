@@ -8,6 +8,7 @@ import vvtext
 import natron
 import collect_files
 import transition
+import glass_transition
 import ink
 import vinarender
 import merge_matte
