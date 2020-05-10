@@ -1,7 +1,7 @@
 import os
 import NatronGui
 from util import jread
-from natron import get_all_nodes
+from natron_utils import get_all_nodes
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):

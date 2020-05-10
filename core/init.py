@@ -1,11 +1,6 @@
-import os
-import shutil
-import sys
-import NatronEngine
-
 # vvPlugins modules
+import natron_utils
 import vvtext
-import natron
 import collect_files
 import transition
 import glass_transition
@@ -15,39 +10,50 @@ import merge_matte
 import util
 # --------------
 
+import shutil
+import os
+import sys
+import filecmp
+import NatronEngine
+import NatronGui
+from PySide import QtCore
+
 def reload_nodes():
+
     repo = '/home/pancho/Documents/GitHub/natron_pyplugs'
     natron_plugins = '/usr/share/Natron/Plugins'
 
     plugins = repo + '/plugins'
     core = repo + '/core'
 
-    # recarga los modulos de core
-    for module in os.listdir(core):
-
-        develop_module = core + '/' + module
+    def update(module, _type):
+        if _type == 'core':
+            develop_module = core + '/' + module
+        else:
+            develop_module = plugins + '/' + module
         natron_plugin = natron_plugins + '/' + module
 
-        shutil.copy(develop_module, natron_plugin)
+        ext = module.split('.')[-1]
+        if ext == 'py':
+            if not filecmp.cmp(develop_module, natron_plugin):
+                shutil.copy(develop_module, natron_plugin)
+                module_name = module.split('.')[0]
+                
+                try:
+                    reload(eval(module_name))
+                    print(module_name + ': has updated.')
+                except:
+                    None
 
-        _module = module.split('.')[0]
-
-        # si el modulo esta cargado lo recarga
-        if _module in sys.modules:
-            reload(eval(_module))
-            print(_module + ': has updated.')
+    # recarga los modulos de core
+    for module in os.listdir(core):
+        update(module, 'core')
 
     # recarga los modulos de plugins
-    for plugin in os.listdir(plugins):
-        ext = plugin.split('.')[-1]
-        plugin_name = plugin.split('.')[0]
-        if ext == 'py':
-            try:
-                reload(eval(plugin_name))
-                print(plugin_name + ': has updated.')
-            except:
-                None
+    for module in os.listdir(plugins):
+        update(module, 'plugins')
 
 
 NatronGui.natron.addMenuCommand('Videovina/Reload Nodes', 'reload_nodes',
                                 QtCore.Qt.Key.Key_R, QtCore.Qt.KeyboardModifier.ShiftModifier)
+
