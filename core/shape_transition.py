@@ -23,8 +23,14 @@ def distribute(thisNode):
     seed = thisNode.seed.get()
     # ------------------------
 
+    width = thisNode.format.boxSize.getValue(0)
+    hight = thisNode.format.boxSize.getValue(1)
+
     # ajusta la direccion de la forma
     rotate = thisNode.getNode('direction_transform').getParam('rotate')
+    center = thisNode.getNode('direction_transform').getParam('center')
+    center.set(width / 2, width / 2)
+
     if direction == 0:
         rotate.setValue(180)
     elif direction == 1:
@@ -34,9 +40,6 @@ def distribute(thisNode):
     elif direction == 3:
         rotate.setValue(-90)    
     # ---------------------------
-
-    width = thisNode.format.boxSize.getValue(0)
-    hight = thisNode.format.boxSize.getValue(1)
 
     # adapta algunos de los valores a la resolucion correspondiente, tomando como base 1920x1080
     end_translate = ( width * end_translate ) / 1920
