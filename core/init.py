@@ -3,7 +3,7 @@ import natron_utils
 import vvtext
 import collect_files
 import transition
-import glass_transition
+import shape_transition
 import ink
 import vinarender
 import merge_matte
@@ -35,10 +35,13 @@ def reload_nodes():
 
         ext = module.split('.')[-1]
         if ext == 'py':
-            if not filecmp.cmp(develop_module, natron_plugin):
+            if not os.path.isfile(natron_plugin):
+                shutil.copy(develop_module, natron_plugin)
+
+            elif not filecmp.cmp(develop_module, natron_plugin):
                 shutil.copy(develop_module, natron_plugin)
                 module_name = module.split('.')[0]
-                
+
                 try:
                     reload(eval(module_name))
                     print(module_name + ': has updated.')
