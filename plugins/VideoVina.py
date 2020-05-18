@@ -69,6 +69,31 @@ def createInstance(app,group):
     lastNode.generate_pictures = param
     del param
 
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep2", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep2 = param
+    del param
+
     param = lastNode.createStringParam("general", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
     param.setDefaultValue("GENERAL:")
@@ -85,7 +110,8 @@ def createInstance(app,group):
     lastNode.general = param
     del param
 
-    param = lastNode.createButtonParam("refresh", "Refresh")
+    param = lastNode.createFileParam("videovina_project", "VideoVina Project")
+    param.setSequenceEnabled(False)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -93,8 +119,20 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    lastNode.videovina_project = param
+    del param
+
+    param = lastNode.createButtonParam("tranfer_project", "Update VideoVina Project")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Actualiza datos, a partir de los datos del proyecto videovina.json")
+    param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
-    lastNode.refresh = param
+    lastNode.tranfer_project = param
     del param
 
     param = lastNode.createChoiceParam("velocity", "Velocity")
@@ -206,6 +244,19 @@ def createInstance(app,group):
     lastNode.color = param
     del param
 
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
     param = lastNode.createStringParam("base_slide", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
     param.setDefaultValue("BASE SLIDE:")
@@ -237,7 +288,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(20, 0)
+    param.setValue(2, 0)
     lastNode.amount_slide = param
     del param
 
@@ -265,6 +316,64 @@ def createInstance(app,group):
     lastNode.reference_pictures = param
     del param
 
+    param = lastNode.createSeparatorParam("sep1", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
+    del param
+
+    param = lastNode.createStringParam("production_slide_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("PRODUCTION SLIDE:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.production_slide_label = param
+    del param
+
+    param = lastNode.createIntParam("production_slides", "Amount Slide")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("A partir de las slides base, genera nuevas slide duplicando las que hay")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(7, 0)
+    lastNode.production_slides = param
+    del param
+
+    param = lastNode.createButtonParam("duplicate_slides", "Duplicate Slides")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.duplicate_slides = param
+    del param
+
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -273,7 +382,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output1")
-    lastNode.setPosition(1691, 374)
+    lastNode.setPosition(856, 185)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
