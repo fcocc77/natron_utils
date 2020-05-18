@@ -6,14 +6,12 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'generate_slides':
         generate_slides(thisNode, app)
-
     elif knob_name == 'save_production':
         save_production_projects(thisNode)
     elif knob_name == 'refresh':
         refresh(thisNode)
     elif knob_name == 'generate_inputs':
         extra_picture_inputs(thisNode, app)
-
 
 def refresh(thisNode):
 
@@ -32,9 +30,6 @@ def refresh(thisNode):
     transition_frames = ( slide_frames * transition_frames ) / normal_speed
     # -------------------------
 
-    print transition_frames
-
-
     first_frame = 1
     last_frame = slide_frames
 
@@ -44,16 +39,10 @@ def refresh(thisNode):
         color_slide = slide.getParam('color')
         rscale_slide = slide.getParam('rscale')
 
-
         color_slide.set(color[0], color[1], color[2], color[3])
         rscale_slide.set(rscale)
 
-
         frame_range.set(first_frame, last_frame)
-
-
-
-
 
         # Transition
         transition = thisNode.getNode('transition_' + str(i))
@@ -62,15 +51,10 @@ def refresh(thisNode):
         transition.getParam('duration').set( transition_frames )
         # --------------------
 
-
         first_frame += slide_frames
         last_frame += slide_frames
 
-
-
-
 def extra_picture_inputs(thisNode, app):
-
     amount = thisNode.input_amount.getValue()
 
     posx = 0
@@ -79,8 +63,6 @@ def extra_picture_inputs(thisNode, app):
         _input.setPosition(posx, 0)
 
         posx += 200
-
-
 
 def generate_slides(thisNode, app):
 
@@ -96,11 +78,9 @@ def generate_slides(thisNode, app):
     post_fx.setSize(400, 500)
     post_fx_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
     
-
     references_dir = thisNode.reference_pictures.get()
     references_pictures = os.listdir( references_dir )
     references_count = len( references_pictures )
-
 
     width = 1920
     hight = 1080
@@ -108,14 +88,16 @@ def generate_slides(thisNode, app):
     posx = 0
     last_transition = None
     last_dot = None
+    index = random.randint(0, references_count)
     for i in range(count):
-
-
         slide = app.createNode('vv.slide', 2, thisNode)
         slide.setPosition(posx, 0)
 
+        index += 1
+        if index >= references_count:
+            index = 0 
 
-        picture = references_dir + '/' + references_pictures[ random.randint(0, count) ]
+        picture = references_dir + '/' + references_pictures[index]
         reader = app.createReader( picture, thisNode )
         reader.setPosition(posx - 12 , -350)
         
@@ -130,53 +112,34 @@ def generate_slides(thisNode, app):
 
         slide.connectInput(0, reformat)
 
-
         if last_transition:
             last_transition.connectInput(1, slide)
 
-
         # si es el ultimo, conecta al output y cierra el loop
         if i == ( count - 1 ):
-
             post_fx.setPosition(posx - 50, 300)
             post_fx_dot.setPosition(posx + 45, 450)
 
             post_fx_dot.connectInput(0, last_transition)
             
-
             break
-
         # -----------------
 
-
         posx += 200
-
 
         transition = app.createNode('vv.FlareTransition', 2, thisNode)
         transition.setColor(.4, .5, .4)
         transition.setPosition(posx, 200)
 
-
         dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
         dot.setPosition(posx - 50, 100)
-
-        
-        
-
-
-        
-
-        
-        
-
+    
         transition.connectInput(2, dot)
 
         if last_dot:
             dot.connectInput(0, last_dot)
         else:
             dot.connectInput(0, filter_dot)
-
-
 
         if last_transition:
             transition.connectInput(0, last_transition)
@@ -186,7 +149,5 @@ def generate_slides(thisNode, app):
         last_transition = transition
         last_dot = dot
         
-
-
 def save_production_projects(thisNode):
     print 'save_production'
