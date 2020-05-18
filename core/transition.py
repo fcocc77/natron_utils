@@ -3,7 +3,8 @@ import NatronEngine
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
-    set_transition(thisNode)
+    if knob_name == 'refresh':
+        set_transition(thisNode)
 
 def set_transition(thisNode):
     duration = thisNode.duration.get()

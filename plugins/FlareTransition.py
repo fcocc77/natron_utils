@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 def getPluginID():
-    return "vv.flare_transition"
+    return "vv.FlareTransition"
 
 def getLabel():
     return "FlareTransition"
@@ -45,6 +45,18 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
     param = lastNode.createIntParam("start_frame", "Start Frame")
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
@@ -330,6 +342,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat2 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
 
     param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:

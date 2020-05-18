@@ -7,6 +7,7 @@ import shape_transition
 import ink
 import vinarender
 import merge_matte
+import videovina
 import util
 # --------------
 
