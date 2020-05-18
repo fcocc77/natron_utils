@@ -40,8 +40,10 @@ def refresh(thisNode):
     first_frame = 1
     last_frame = slide_frames
 
-    for i in range(1, 3):
-        slide = thisNode.getNode('slide_' + str(i))
+    slides = get_slides(thisNode)
+
+    for obj in slides:
+        slide = obj['slide']
         frame_range = slide.getParam('FrameRangeframeRange')
         color_slide = slide.getParam('color')
         rscale_slide = slide.getParam('rscale')
@@ -52,7 +54,7 @@ def refresh(thisNode):
         frame_range.set(first_frame, last_frame)
 
         # Transition
-        transition = thisNode.getNode('transition_' + str(i))
+        transition = obj['transition']
         start_frame = last_frame - ( transition_frames / 2 )
         transition.getParam('start_frame').set( start_frame )
         transition.getParam('duration').set( transition_frames )
