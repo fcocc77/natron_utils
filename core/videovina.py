@@ -1,7 +1,7 @@
 import random
 import os
 import NatronGui
-from natron_utils import copy, getNode, question
+from natron_utils import copy, getNode, question, alert
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -285,10 +285,19 @@ def duplicate_slides(thisNode, app):
     # duplica los slides base, dependiendo de la
     # cantidad de fotos que importemos.
 
+    base_amount = thisNode.amount_slide.get()
     amount = thisNode.production_slides.get()
-    
+
     slides = get_slides(thisNode)
     base_count = len( slides )
+
+    if amount <= base_amount: 
+        NatronGui.natron.warningDialog( 'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.' )
+        return
+    
+    if amount <= base_count:
+        NatronGui.natron.warningDialog( 'Production Slides', 'Ya existen los ' + str(amount) + ' Slides, Aumente la cantidad si quiere mas.' )
+        return
 
     last_transition = None
     last_dot = None
@@ -304,9 +313,6 @@ def duplicate_slides(thisNode, app):
         slide = slides[current]['slide']
         reformat = slides[current]['reformat']
         transition = slides[current]['transition']
-
-        # new_image = copy(image, thisNode)
-        # new_image.setPosition(posx, -400)
         
         new_reformat = copy(reformat, thisNode)
         new_reformat.setColor(.4, .5, .7)
@@ -327,20 +333,19 @@ def duplicate_slides(thisNode, app):
         else:
             new_transition.connectInput(0, last_base_transition)
 
-
         new_transition.connectInput(1, new_slide)
 
         dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
+        dot_name = 'slide_' + str(index) + '_dot'
+        dot.setLabel(dot_name)
         dot.setPosition(posx - 50, 100)
     
         if last_dot:
             dot.connectInput(0, last_dot)
-        else:
+        else:            
             dot.connectInput(0, last_base_dot)
 
-
         new_transition.connectInput(2, dot)
-
 
         last_transition = new_transition
         last_dot = dot

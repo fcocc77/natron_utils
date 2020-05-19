@@ -36,6 +36,9 @@ def getNode(group, label = None):
 	
 	return None
 
+def alert(message):
+	NatronGui.natron.informationDialog('Alert', str(message))
+
 def createParam(node, name, _type=None, _range=[0, 100]):
 	# funcion para crear parametros mas facilmente
 
