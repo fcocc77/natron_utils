@@ -1,5 +1,6 @@
 from util import *
 import NatronGui
+from PySide.QtGui import QMessageBox
 
 def copy(node, group):
 	app = NatronGui.natron.getGuiInstance(0)
@@ -13,6 +14,19 @@ def copy(node, group):
 		param.copy(p)
 
 	return new_node
+
+def question(_question, message):
+	msgBox = QMessageBox()
+	msgBox.setText(message)
+	msgBox.setInformativeText(_question)
+	msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+	msgBox.setDefaultButton(QMessageBox.Ok)
+	ret = msgBox.exec_()
+
+	if ret == QMessageBox.Ok:
+		return True
+	else:
+		return False
 
 def getNode(group, label = None):
 	# Encuentra un nodo a partir del Label

@@ -1,6 +1,7 @@
 import random
 import os
-from natron_utils import copy, getNode
+import NatronGui
+from natron_utils import copy, getNode, question
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -73,47 +74,94 @@ def extra_picture_inputs(thisNode, app):
 
         posx += 200
 
-def generate_slides(thisNode, app):
+def generate_pictures(thisNode, app):
 
-    count = thisNode.amount_slide.get()
-
-    filter_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
-    filter_dot.setPosition(-300, 100)
-
-    post_fx = app.createNode('fr.inria.built-in.BackDrop', 2, thisNode)
-    post_fx.setLabel('PostFX')
-    post_fx.getParam('Label').set('Aqui van todos los efectos para el video completo.')
-    post_fx.setColor(.5, .4, .4)
-    post_fx.setSize(400, 500)
-    post_fx_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
-    post_fx_dot.setLabel('post_fx_dot')
-    
     references_dir = thisNode.reference_pictures.get()
     references_pictures = os.listdir( references_dir )
     references_count = len( references_pictures )
 
-    width = 1920
-    hight = 1080
+    index = random.randint(0, references_count - 1)
 
-    posx = 0
-    last_transition = None
-    last_dot = None
-    index = random.randint(0, references_count)
-    for i in range(count):
-        slide = app.createNode('vv.slide', 2, thisNode)
-        slide_name = 'slide_' + str(i)
-        slide.setLabel(slide_name)
-        slide.setPosition(posx, 0)
+    for i, obj in enumerate( get_slides(thisNode) ):
+        reformat = obj['reformat']
+        reader = obj['image']
+
+        posx = reformat.getPosition()[0] - 11
+        posy = reformat.getPosition()[1] - 200
+
+        picture = references_dir + '/' + references_pictures[index]
+        
+        # si la imagen ya fue generada, solo cambia el la imagen 'filename'
+        if reader:
+            reader.getParam('filename').set(picture)
+        else:
+            reader = app.createReader( picture, thisNode )
+            reader_name = 'slide_' + str(i) + '_image'
+            reader.setLabel(reader_name)
+            reformat.connectInput(0, reader)
+        # -------------------------------
+        reader.setPosition(posx, posy)
 
         index += 1
         if index >= references_count:
             index = 0 
 
-        picture = references_dir + '/' + references_pictures[index]
-        reader = app.createReader( picture, thisNode )
-        reader_name = 'slide_' + str(i) + '_image'
-        reader.setLabel(reader_name)
-        reader.setPosition(posx - 12 , -350)
+def generate_slides(thisNode, app):
+    count = thisNode.amount_slide.get()
+
+    filter_dot = getNode(thisNode, 'filter_dot')
+    if not filter_dot:
+        filter_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
+        filter_dot.setLabel('filter_dot')
+        filter_dot.setPosition(-300, 100)
+    
+    post_fx = getNode(thisNode, 'PostFX')
+    post_fx_dot = getNode(thisNode, 'post_fx_dot')
+    if not post_fx:
+        post_fx = app.createNode('fr.inria.built-in.BackDrop', 2, thisNode)
+        post_fx.setLabel('PostFX')
+        post_fx.getParam('Label').set('Aqui van todos los efectos para el video completo.')
+        post_fx.setColor(.5, .4, .4)
+        post_fx.setSize(400, 500)
+        post_fx_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
+        post_fx_dot.setLabel('post_fx_dot')
+
+
+    # slides existentes
+    slides = get_slides(thisNode)
+    slides_count = len(slides)
+    # --------------------
+    
+    # si la cantidad de slides a generar es menor de las que hay en el nodegraph
+    # envia un mensage que se eliminaran algunas slides, si la respuesta es negativa retorna.
+    if count < slides_count:
+        message = 'Actualmente tienes ' + str(slides_count) + ' Slides y se eliminaran ' + str(slides_count - count) + ' Slides.'
+        ok = question('Estas seguro de que quieres continuar ?', message) 
+        if not ok:
+            return
+    # --------------------------
+
+    width = 1920
+    hight = 1080
+
+    posx = 0 - xdistance
+    last_transition = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_transition')
+    last_dot = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_dot')
+    
+    created_slides = 0
+    for i in range(count):
+        posx += xdistance
+
+        # si la slide ya fue generada, omite la creacion de la slide y pasa a la siguiente
+        if slides_count - 1 >= i:
+            continue
+        # -------------------
+        created_slides += 1
+
+        slide = app.createNode('vv.slide', 2, thisNode)
+        slide_name = 'slide_' + str(i)
+        slide.setLabel(slide_name)
+        slide.setPosition(posx, 0)
         
         reformat = app.createNode('net.sf.openfx.Reformat', 2, thisNode)
         reformat_name = 'slide_' + str(i) + '_reformat'
@@ -123,7 +171,6 @@ def generate_slides(thisNode, app):
         reformat.getParam('resize').set(4)
         reformat.getParam('boxSize').set(width, hight)
         reformat.setPosition(posx, -200)
-        reformat.connectInput(0, reader)
         reformat.setColor(.5, .4, .4)
 
         slide.connectInput(0, reformat)
@@ -163,10 +210,14 @@ def generate_slides(thisNode, app):
         if i == count - 1:
             post_fx.setPosition(posx - 150, 300)
             post_fx_dot.setPosition(posx + 45, 450)
+            post_fx_dot.disconnectInput(0)
             post_fx_dot.connectInput(0, last_transition)
         # -----------------
 
-        posx += xdistance
+    generate_pictures(thisNode, app)
+    
+    if created_slides:
+        NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(created_slides) + ' Slides base.')
      
 def get_slides(thisNode):
 
@@ -265,6 +316,8 @@ def duplicate_slides(thisNode, app):
     post_fx_dot.connectInput(0, last_transition)
     post_fx_dot.setPosition(posx - 157, 450)
     # ------------------
+
+    generate_pictures(thisNode, app)
 
 def save_production_projects(thisNode):
     print 'save_production'
