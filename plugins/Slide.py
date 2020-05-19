@@ -230,9 +230,14 @@ def createInstance(app,group):
         param.setValue(100, 1)
         del param
 
-    param = lastNode.getParam("userTextArea")
+    param = lastNode.getParam("before")
     if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
+        param.set("hold")
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("hold")
         del param
 
     del lastNode
@@ -329,7 +334,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(-519, 721)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -397,7 +402,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
     lastNode.setPosition(216, 566)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
 
@@ -409,7 +414,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
     lastNode.setPosition(216, 834)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
 
@@ -421,7 +426,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
     lastNode.setPosition(-519, 219)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
 
@@ -433,7 +438,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot5")
     lastNode.setLabel("Dot5")
     lastNode.setPosition(-162, 219)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot5 = lastNode
 

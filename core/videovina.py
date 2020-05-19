@@ -12,16 +12,18 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'generate_slides':
         generate_slides(thisNode, app)
+        refresh(thisNode, app)
     elif knob_name == 'save_production':
         save_production_projects(thisNode)
     elif knob_name == 'refresh':
-        refresh(thisNode)
+        refresh(thisNode, app)
     elif knob_name == 'generate_inputs':
         extra_picture_inputs(thisNode, app)
     elif knob_name == 'duplicate_slides':
         duplicate_slides(thisNode, app)
+        refresh(thisNode, app)
 
-def refresh(thisNode):
+def refresh(thisNode, app):
 
     velocity = thisNode.velocity.get()
     rscale = thisNode.rscale.get()
@@ -37,13 +39,24 @@ def refresh(thisNode):
     transition_frames = thisNode.transition_duration.get()
     transition_frames = ( slide_frames * transition_frames ) / normal_speed
     # -------------------------
+    
+    width, hight = get_resolution(thisNode)
 
     first_frame = 1
     last_frame = slide_frames
 
     slides = get_slides(thisNode)
 
-    for obj in slides:
+    # cambia la resolucion al primer fondo negro
+    first_black = getNode(thisNode, 'FirstBlack')
+    first_black.getParam('size').set(width, hight)
+    # ---------------------
+
+    # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
+    app.frameRange.set(1, len(slides) * slide_frames )
+    # --------------------
+
+    for i, obj in enumerate(slides):
         slide = obj['slide']
         frame_range = slide.getParam('FrameRangeframeRange')
         color_slide = slide.getParam('color')
@@ -56,10 +69,18 @@ def refresh(thisNode):
 
         # Transition
         transition = obj['transition']
-        start_frame = last_frame - ( transition_frames / 2 )
+        if i == 0:
+            # si es la primera transicion deja la transicion en el frame 1
+            start_frame = 1
+        else:
+            start_frame = ( last_frame - ( transition_frames / 2 ) ) - slide_frames
         transition.getParam('start_frame').set( start_frame )
         transition.getParam('duration').set( transition_frames )
+        transition.getParam('refresh').trigger()
         # --------------------
+
+        reformat = obj['reformat']
+        reformat.getParam('boxSize').set(width, hight)
 
         first_frame += slide_frames
         last_frame += slide_frames
@@ -127,6 +148,16 @@ def delete_slide(thisNode, slide_number):
         remove(slide_number)
         remove(slide_number)
 
+def get_resolution(thisNode):
+    # obtiene la correcta resolucion a partir de una escala
+    # tomando como referencia el 1920x1080
+    rscale = thisNode.rscale.get()
+
+    width = 1920 * rscale
+    hight = 1080 * rscale
+
+    return [width, hight]
+
 def generate_slides(thisNode, app):
     count = thisNode.amount_slide.get()
 
@@ -152,8 +183,7 @@ def generate_slides(thisNode, app):
             return
     # --------------------------
 
-    width = 1920
-    hight = 1080
+    width, hight = get_resolution(thisNode)
 
     posx = 0 - xdistance
     last_transition = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_transition')
@@ -210,6 +240,9 @@ def generate_slides(thisNode, app):
         else:
             constant = app.createNode('net.sf.openfx.ConstantPlugin', 2, thisNode)
             constant.setLabel('FirstBlack')
+            constant.getParam('extent').set(1)
+            constant.getParam('reformat').set(True)
+            constant.getParam('size').set(width, hight)
             constant.setColor(.5, .5, .5)
             constant.setPosition(posx - 200, 200)
             transition.connectInput(0, constant)
