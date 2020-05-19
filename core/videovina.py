@@ -86,6 +86,9 @@ def generate_pictures(thisNode, app):
         reformat = obj['reformat']
         reader = obj['image']
 
+        if not reformat:
+            continue
+
         posx = reformat.getPosition()[0] - 11
         posy = reformat.getPosition()[1] - 200
 
@@ -105,6 +108,24 @@ def generate_pictures(thisNode, app):
         index += 1
         if index >= references_count:
             index = 0 
+
+def delete_slide(thisNode, slide_number):
+    # se usa .destroy() 2 veces ya que a veces
+    # natron no borra el nodo
+    def remove(index):
+        obj = get_slide(thisNode, index)
+        for key, node in obj.iteritems():
+            if node:
+                node.destroy()
+
+    if type(slide_number) is list:
+        for i in slide_number:
+            remove(i)
+        for i in slide_number:
+            remove(i)
+    else:
+        remove(slide_number)
+        remove(slide_number)
 
 def generate_slides(thisNode, app):
     count = thisNode.amount_slide.get()
@@ -134,8 +155,10 @@ def generate_slides(thisNode, app):
     
     # si la cantidad de slides a generar es menor de las que hay en el nodegraph
     # envia un mensage que se eliminaran algunas slides, si la respuesta es negativa retorna.
+    count_delete_slide = None
     if count < slides_count:
-        message = 'Actualmente tienes ' + str(slides_count) + ' Slides y se eliminaran ' + str(slides_count - count) + ' Slides.'
+        count_delete_slide = slides_count - count
+        message = 'Actualmente tienes ' + str(slides_count) + ' Slides y se eliminaran ' + str(count_delete_slide) + ' Slides.'
         ok = question('Estas seguro de que quieres continuar ?', message) 
         if not ok:
             return
@@ -213,28 +236,42 @@ def generate_slides(thisNode, app):
             post_fx_dot.disconnectInput(0)
             post_fx_dot.connectInput(0, last_transition)
         # -----------------
+    
+    # borra las slides que sobran
+    if count_delete_slide:
+        _range = range(slides_count - count_delete_slide, slides_count)
+        delete_slide(thisNode, _range)
+    # -----------------------
 
     generate_pictures(thisNode, app)
     
     if created_slides:
         NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(created_slides) + ' Slides base.')
      
-def get_slides(thisNode):
+def get_slide(thisNode, index):
+    _index = str(index)
 
+    slide = getNode(thisNode, 'slide_' + _index)
+    reformat = getNode(thisNode, 'slide_' + _index + '_reformat')
+    image = getNode(thisNode, 'slide_' + _index + '_image')
+    transition = getNode(thisNode, 'slide_' + _index + '_transition')
+    dot = getNode(thisNode, 'slide_' + _index + '_dot')
+
+    return {
+        'slide' : slide,
+        'reformat' : reformat,
+        'image' : image,
+        'transition' : transition,
+        'dot' : dot
+    }
+
+def get_slides(thisNode):
     slides = []
 
-    for i in range(100):
-        slide = getNode(thisNode, 'slide_' + str(i))
-        reformat = getNode(thisNode, 'slide_' + str(i) + '_reformat')
-        image = getNode(thisNode, 'slide_' + str(i) + '_image')
-        transition = getNode(thisNode, 'slide_' + str(i) + '_transition')
-        if slide:
-            slides.append({
-                'slide' : slide,
-                'reformat' : reformat,
-                'image' : image,
-                'transition' : transition
-            })
+    for i in range(100):        
+        obj = get_slide(thisNode, i)
+        if obj['slide']:
+            slides.append(obj)
 
     return slides
 
