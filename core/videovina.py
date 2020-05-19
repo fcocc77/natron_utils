@@ -136,18 +136,6 @@ def generate_slides(thisNode, app):
         filter_dot.setLabel('filter_dot')
         filter_dot.setPosition(-300, 100)
     
-    post_fx = getNode(thisNode, 'PostFX')
-    post_fx_dot = getNode(thisNode, 'post_fx_dot')
-    if not post_fx:
-        post_fx = app.createNode('fr.inria.built-in.BackDrop', 2, thisNode)
-        post_fx.setLabel('PostFX')
-        post_fx.getParam('Label').set('Aqui van todos los efectos para el video completo.')
-        post_fx.setColor(.5, .4, .4)
-        post_fx.setSize(400, 500)
-        post_fx_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
-        post_fx_dot.setLabel('post_fx_dot')
-
-
     # slides existentes
     slides = get_slides(thisNode)
     slides_count = len(slides)
@@ -228,14 +216,6 @@ def generate_slides(thisNode, app):
 
         last_transition = transition
         last_dot = dot
-
-        # si es el ultimo, conecta al output y cierra el loop
-        if i == count - 1:
-            post_fx.setPosition(posx - 150, 300)
-            post_fx_dot.setPosition(posx + 45, 450)
-            post_fx_dot.disconnectInput(0)
-            post_fx_dot.connectInput(0, last_transition)
-        # -----------------
     
     # borra las slides que sobran
     if count_delete_slide:
@@ -244,6 +224,8 @@ def generate_slides(thisNode, app):
     # -----------------------
 
     generate_pictures(thisNode, app)
+    update_post_fx(thisNode, app)
+
     
     if created_slides:
         NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(created_slides) + ' Slides base.')
@@ -274,6 +256,30 @@ def get_slides(thisNode):
             slides.append(obj)
 
     return slides
+
+def update_post_fx(thisNode, app):
+    # obtiene el ultimo nodo de transition
+    slides = get_slides(thisNode)
+    transition = slides[-1]['transition']
+    # -----------------------
+    posx = transition.getPosition()[0]
+
+    post_fx = getNode(thisNode, 'PostFX')
+    post_fx_dot = getNode(thisNode, 'post_fx_dot')
+
+    if not post_fx:
+        post_fx = app.createNode('fr.inria.built-in.BackDrop', 2, thisNode)
+        post_fx.setLabel('PostFX')
+        post_fx.getParam('Label').set('Aqui van todos los efectos para el video completo.')
+        post_fx.setColor(.5, .4, .4)
+        post_fx.setSize(400, 500)
+        post_fx_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
+        post_fx_dot.setLabel('post_fx_dot')
+
+    post_fx.setPosition(posx - 150, 300)
+    post_fx_dot.setPosition(posx + 45, 450)
+    post_fx_dot.disconnectInput(0)
+    post_fx_dot.connectInput(0, transition)    
 
 def duplicate_slides(thisNode, app):
     # duplica los slides base, dependiendo de la
@@ -345,15 +351,7 @@ def duplicate_slides(thisNode, app):
         
         posx += xdistance
 
-    # mueve el backdrop 'postfx' hacia el ultimo nodo creado
-    post_fx = getNode(thisNode, 'PostFX')
-    post_fx.setPosition(posx - 350, 300)
-    post_fx_dot = getNode(thisNode, 'post_fx_dot')
-    post_fx_dot.disconnectInput(0)
-    post_fx_dot.connectInput(0, last_transition)
-    post_fx_dot.setPosition(posx - 157, 450)
-    # ------------------
-
+    update_post_fx(thisNode, app)
     generate_pictures(thisNode, app)
 
 def save_production_projects(thisNode):
