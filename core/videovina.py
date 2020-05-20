@@ -2,6 +2,7 @@ import random
 import os
 import NatronGui
 from natron_utils import copy, getNode, question, alert, createNode
+from transition import directional_transition
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -41,10 +42,7 @@ def refresh(thisNode, app):
     # -------------------------
     
     width, hight = get_resolution(thisNode)
-
-    first_frame = 1
-    last_frame = slide_frames
-
+    
     slides = get_slides(thisNode)
 
     # cambia la resolucion al primer y ultimo fondo negro
@@ -55,9 +53,28 @@ def refresh(thisNode, app):
     last_black.getParam('size').set(width, hight)
     # ---------------------
 
+
+    mid_transition_frames = transition_frames / 2 
+    _last_frame = len(slides) * slide_frames
+    # dissolve a negro en la ultima slide
+    dissolve = getNode(thisNode, 'last_transition').getParam('which')
+
+    directional_transition(
+        dissolve, 
+        transition_frames, 
+        0.5, 0.5, 
+        _last_frame, 
+        [0, 1]
+    )
+    # -------------------
+
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
-    app.frameRange.set(1, len(slides) * slide_frames )
+    # le sumamos 'transition_frames' que equivale a 2 mitades de transicion, la inicial y la final
+    app.frameRange.set(1, _last_frame + transition_frames + 2 )
     # --------------------
+
+    first_frame = 1
+    last_frame = slide_frames + mid_transition_frames
 
     for i, obj in enumerate(slides):
         slide = obj['slide']
@@ -86,7 +103,12 @@ def refresh(thisNode, app):
         reformat.getParam('boxSize').set(width, hight)
         reformat.getParam('refresh').trigger()
 
-        first_frame += slide_frames
+        # si es el primer slide, le sumamos la mitad de la duracion de la transicion,
+        # ya que la primera transicion va a negro.
+        if i == 0:
+            first_frame += slide_frames + mid_transition_frames
+        else:
+            first_frame += slide_frames
         last_frame += slide_frames
 
 def extra_picture_inputs(thisNode, app):
