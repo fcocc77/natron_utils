@@ -1,5 +1,6 @@
 from util import *
 import NatronGui
+import NatronEngine
 from PySide.QtGui import QMessageBox
 
 def copy(node, group):
@@ -35,6 +36,33 @@ def getNode(group, label = None):
 			return child
 	
 	return None
+
+def createNode(node=None, label=None, group=None, position=None, color=None, output=None):
+	app = NatronGui.natron.getGuiInstance(0)
+	nodes = {
+	    'blur': 'net.sf.cimg.CImgBlur',
+	    'text': 'net.fxarena.openfx.Text',
+	    'transform': 'net.sf.openfx.TransformPlugin',
+	    'merge': 'net.sf.openfx.MergePlugin',
+	    'output': 'fr.inria.built-in.Output',
+	    'position': 'net.sf.openfx.Position',
+	    'crop': 'net.sf.openfx.CropPlugin',
+		'constant': 'net.sf.openfx.ConstantPlugin',
+		'backdrop': 'fr.inria.built-in.BackDrop',
+		'dot': 'fr.inria.built-in.Dot',
+		'dissolve': 'net.sf.openfx.DissolvePlugin'
+	}
+
+	_node = app.createNode(nodes[node], 2, group)
+	_node.setLabel(label)
+	if position:
+		_node.setPosition(position[0], position[1])
+	if color:
+		_node.setColor(color[0], color[1], color[2])
+	if output:
+		output[1].connectInput(output[0], _node)
+
+	return _node
 
 def alert(message):
 	NatronGui.natron.informationDialog('Alert', str(message))

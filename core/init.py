@@ -8,6 +8,7 @@ import ink
 import vinarender
 import merge_matte
 import videovina
+import resolution_expand
 import util
 # --------------
 

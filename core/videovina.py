@@ -1,7 +1,7 @@
 import random
 import os
 import NatronGui
-from natron_utils import copy, getNode, question, alert
+from natron_utils import copy, getNode, question, alert, createNode
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -47,9 +47,12 @@ def refresh(thisNode, app):
 
     slides = get_slides(thisNode)
 
-    # cambia la resolucion al primer fondo negro
+    # cambia la resolucion al primer y ultimo fondo negro
     first_black = getNode(thisNode, 'FirstBlack')
     first_black.getParam('size').set(width, hight)
+
+    last_black = getNode(thisNode, 'LastBlack')
+    last_black.getParam('size').set(width, hight)
     # ---------------------
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
@@ -81,6 +84,7 @@ def refresh(thisNode, app):
 
         reformat = obj['reformat']
         reformat.getParam('boxSize').set(width, hight)
+        reformat.getParam('refresh').trigger()
 
         first_frame += slide_frames
         last_frame += slide_frames
@@ -123,6 +127,7 @@ def generate_pictures(thisNode, app):
             reader_name = 'slide_' + str(i) + '_image'
             reader.setLabel(reader_name)
             reformat.connectInput(0, reader)
+            reformat.getParam('refresh').trigger()
         # -------------------------------
         reader.setPosition(posx, posy)
 
@@ -157,6 +162,9 @@ def get_resolution(thisNode):
     hight = 1080 * rscale
 
     return [width, hight]
+
+def generate_black():
+    None
 
 def generate_slides(thisNode, app):
     count = thisNode.amount_slide.get()
@@ -204,12 +212,9 @@ def generate_slides(thisNode, app):
         slide.setLabel(slide_name)
         slide.setPosition(posx, 0)
         
-        reformat = app.createNode('net.sf.openfx.Reformat', 2, thisNode)
+        reformat = app.createNode('vv.ResolutionExpand', 2, thisNode)
         reformat_name = 'slide_' + str(i) + '_reformat'
         reformat.setLabel(reformat_name)
-        reformat.getParam('reformatType').set(1)
-        reformat.getParam('boxFixed').set(True)
-        reformat.getParam('resize').set(4)
         reformat.getParam('boxSize').set(width, hight)
         reformat.setPosition(posx, -200)
         reformat.setColor(.5, .4, .4)
@@ -238,14 +243,8 @@ def generate_slides(thisNode, app):
         if last_transition:
             transition.connectInput(0, last_transition)
         else:
-            constant = app.createNode('net.sf.openfx.ConstantPlugin', 2, thisNode)
-            constant.setLabel('FirstBlack')
-            constant.getParam('extent').set(1)
-            constant.getParam('reformat').set(True)
-            constant.getParam('size').set(width, hight)
-            constant.setColor(.5, .5, .5)
-            constant.setPosition(posx - 200, 200)
-            transition.connectInput(0, constant)
+            None
+
 
         last_transition = transition
         last_dot = dot
@@ -291,28 +290,78 @@ def get_slides(thisNode):
     return slides
 
 def update_post_fx(thisNode, app):
-    # obtiene el ultimo nodo de transition
+    # obtiene el primer y el ultimo nodo de transition
     slides = get_slides(thisNode)
-    transition = slides[-1]['transition']
+    first_transition = slides[0]['transition']
+    last_transition = slides[-1]['transition']
     # -----------------------
-    posx = transition.getPosition()[0]
+
+    # Primer negro
+    width, hight = get_resolution(thisNode)
+    first_constant = getNode(thisNode, 'FirstBlack')
+    first_posx = first_transition.getPosition()[0]
+    if not first_constant:
+        first_constant = createNode(
+            node='constant', 
+            label='FirstBlack', 
+            position=[first_posx - 200, 200], 
+            color=[.5, .5, .5],
+            output=[ 0, first_transition ],
+            group=thisNode
+        )
+        first_constant.getParam('extent').set(1)
+        first_constant.getParam('reformat').set(True)
+        first_constant.getParam('size').set(width, hight)
+    # ---------------------
+
+    # Ultimo negro
+    last_constant = getNode(thisNode, 'LastBlack')
+    last_posx = last_transition.getPosition()[0]
+    if not last_constant:
+        last_constant = createNode(
+            node='constant', 
+            label='LastBlack',
+            color=[.5, .5, .5],
+            group=thisNode
+        )
+        last_constant.getParam('extent').set(1)
+        last_constant.getParam('reformat').set(True)
+        last_constant.getParam('size').set(width, hight)
+    last_constant.setPosition( last_posx + 200, 100 )
+    # ---------------------
+
+    # la ultima transition es un dissolve
+    dissolve = getNode(thisNode, 'last_transition')
+    if not dissolve:
+        dissolve = createNode(
+            'dissolve', 
+            'last_transition', 
+            thisNode
+        )
+    dissolve.setPosition( last_posx + 200, 200 )
+    dissolve.disconnectInput(0)
+    dissolve.connectInput(0, last_transition)
+    dissolve.connectInput(1, last_constant)
+    # -------------------------
 
     post_fx = getNode(thisNode, 'PostFX')
     post_fx_dot = getNode(thisNode, 'post_fx_dot')
 
     if not post_fx:
-        post_fx = app.createNode('fr.inria.built-in.BackDrop', 2, thisNode)
-        post_fx.setLabel('PostFX')
+        post_fx = createNode(
+            node = 'backdrop', 
+            label = 'PostFX',
+            color = [.5, .4, .4],
+            group = thisNode
+        )
         post_fx.getParam('Label').set('Aqui van todos los efectos para el video completo.')
-        post_fx.setColor(.5, .4, .4)
         post_fx.setSize(400, 500)
-        post_fx_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
-        post_fx_dot.setLabel('post_fx_dot')
+        post_fx_dot = createNode('dot', 'post_fx_dot', thisNode)
 
-    post_fx.setPosition(posx - 150, 300)
-    post_fx_dot.setPosition(posx + 45, 450)
+    post_fx.setPosition(last_posx + 50, 300)
+    post_fx_dot.setPosition(last_posx + 245, 450)
     post_fx_dot.disconnectInput(0)
-    post_fx_dot.connectInput(0, transition)    
+    post_fx_dot.connectInput(0, dissolve)    
 
 def duplicate_slides(thisNode, app):
     # duplica los slides base, dependiendo de la
