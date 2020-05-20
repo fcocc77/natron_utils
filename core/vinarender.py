@@ -13,8 +13,11 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         change_paramaters(thisNode)
 
 def change_paramaters(thisNode):
-    first_frame = thisNode.frame_range.frameRange.getValue(0)
-    last_frame = thisNode.frame_range.frameRange.getValue(1)
+    frame_range = thisNode.getNode('frame_range')
+    if not frame_range:
+        return
+    first_frame = frame_range.getParam('frameRange').getValue(0)
+    last_frame = frame_range.getParam('frameRange').getValue(1)
 
     thisNode.reading.firstFrame.setValue(first_frame)
     thisNode.reading.lastFrame.setValue(last_frame)
@@ -123,7 +126,7 @@ def render(thisNode, app):
     if rgb_only:
         output_node = 'to_rgb'
     else:
-        output_node = 'Input1'
+        output_node = 'Source'
 
     filename = thisNode.filename.get()
 
@@ -134,7 +137,9 @@ def render(thisNode, app):
 
     project_name = app.projectName.get()
 
-    job_name = project_name.split('.')[0]
+    job_name = thisNode.job_name.get()
+    if not job_name:
+        job_name = project_name.split('.')[0]
     server_group = 'Natron'
     task_size = thisNode.task_size.get()
     project = app.projectPath.get() + project_name
@@ -145,7 +150,7 @@ def render(thisNode, app):
     instances = thisNode.instances.getValue()
 
     cmd = ( submit 
-        + ' -jobName ' + job_name
+        + ' -jobName "' + job_name +'"'
         + ' -serverGroup ' + server_group
         + ' -firstFrame ' + str( first_frame )
         + ' -lastFrame ' + str( last_frame )
@@ -163,4 +168,6 @@ def render(thisNode, app):
     # ------------------
 
     os.system( cmd )
-    NatronGui.natron.informationDialog('VinaRender', 'Render Sended.')
+
+    if (not thisNode.no_dialog.get()):
+        NatronGui.natron.informationDialog('VinaRender', 'Render Sended.')

@@ -57,7 +57,7 @@ def createInstance(app,group):
     lastNode.save_production = param
     del param
 
-    param = lastNode.createButtonParam("generate_pictures", "Generate Pictures")
+    param = lastNode.createButtonParam("videovina_info", "Export VIdeoVina Info")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -66,7 +66,7 @@ def createInstance(app,group):
     param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos.")
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
-    lastNode.generate_pictures = param
+    lastNode.videovina_info = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")
@@ -176,8 +176,8 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     param.setValue(100, 0)
-    param.setValue(100, 1)
-    param.setValue(100, 2)
+    param.setValue(52, 1)
+    param.setValue(25, 2)
     lastNode.speeds = param
     del param
 
@@ -196,7 +196,7 @@ def createInstance(app,group):
     param.setHelp("esta velocidad de frames corresponde a la velocidad normal,\ny calculta la velocidad final dependiendo de la velocidad de la slide ( Slow, Normal, Fast )\n")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(32, 0)
+    param.setValue(30, 0)
     lastNode.transition_duration = param
     del param
 
@@ -288,11 +288,11 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(2, 0)
+    param.setValue(4, 0)
     lastNode.amount_slide = param
     del param
 
-    param = lastNode.createButtonParam("generate_slides", "Generate Slides")
+    param = lastNode.createButtonParam("generate_slides", "Update Base Slides")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -358,7 +358,7 @@ def createInstance(app,group):
     param.setHelp("A partir de las slides base, genera nuevas slide duplicando las que hay")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(7, 0)
+    param.setValue(9, 0)
     lastNode.production_slides = param
     del param
 
@@ -382,8 +382,8 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output1")
-    lastNode.setPosition(856, 185)
-    lastNode.setSize(100, 32)
+    lastNode.setPosition(893, 290)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 

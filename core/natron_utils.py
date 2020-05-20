@@ -50,7 +50,8 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 		'constant': 'net.sf.openfx.ConstantPlugin',
 		'backdrop': 'fr.inria.built-in.BackDrop',
 		'dot': 'fr.inria.built-in.Dot',
-		'dissolve': 'net.sf.openfx.DissolvePlugin'
+		'dissolve': 'net.sf.openfx.DissolvePlugin',
+		'vinarender' : 'vv.vinarender'
 	}
 
 	_node = app.createNode(nodes[node], 2, group)
@@ -64,8 +65,8 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 
 	return _node
 
-def alert(message):
-	NatronGui.natron.informationDialog('Alert', str(message))
+def alert(message, title = 'Alert'):
+	NatronGui.natron.informationDialog(title, str(message))
 
 def createParam(node, name, _type=None, _range=[0, 100]):
 	# funcion para crear parametros mas facilmente

@@ -23,6 +23,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'duplicate_slides':
         duplicate_slides(thisNode, app)
         refresh(thisNode, app)
+    elif knob_name == 'videovina_info':
+        videovina_info(thisNode, app)
 
 def refresh(thisNode, app):
 
@@ -47,6 +49,8 @@ def refresh(thisNode, app):
 
     # cambia la resolucion al primer y ultimo fondo negro
     first_black = getNode(thisNode, 'FirstBlack')
+    if not first_black:
+        return
     first_black.getParam('size').set(width, hight)
 
     last_black = getNode(thisNode, 'LastBlack')
@@ -358,7 +362,8 @@ def update_post_fx(thisNode, app):
         dissolve = createNode(
             'dissolve', 
             'last_transition', 
-            thisNode
+            thisNode,
+            color=[.4, .5, .4]
         )
     dissolve.setPosition( last_posx + 200, 200 )
     dissolve.disconnectInput(0)
@@ -465,3 +470,49 @@ def duplicate_slides(thisNode, app):
 
 def save_production_projects(thisNode):
     print 'save_production'
+
+def videovina_info(thisNode, app):
+
+    slides = get_slides(thisNode)
+    
+    # obtiene la duracion de las slides
+    velocity = thisNode.velocity.get()
+    speeds = thisNode.speeds.get()
+    slide_frames = speeds[ velocity ]
+    # -----------------
+
+    project_path = os.path.dirname( os.path.dirname( app.getProjectParam('projectPath').get() ) )
+    resources = project_path + '/resources/overlap'
+    if not os.path.isdir(resources):
+        os.makedirs(resources)
+
+    # el frame central de la slide
+    central_frame = slide_frames / 2
+
+    for i, obj in enumerate(slides):
+        slide = obj['slide']
+        fx = slide.getNode('FX')
+
+        posx = fx.getPosition()[0] + 200
+        posy = fx.getPosition()[1]
+
+        render_name = 'OverlapSlide-' + str(i)
+        vinarender_node = getNode(slide, render_name)
+        if not vinarender_node:
+            vinarender_node = createNode('vinarender', render_name, slide, position = [posx, posy])
+            vinarender_node.connectInput(0, fx)
+
+        vinarender_node.getParam('range').set(central_frame, central_frame)
+        
+
+        _file = resources + '/' + slide.getLabel() + '.png'
+        vinarender_node.getParam('filename').set(_file)
+        jobname = app.projectName.get() + ' - Slide Overlap:  ' + str(i) 
+        vinarender_node.getParam('job_name').set(jobname)
+
+        vinarender_node.getParam('no_dialog').set(True)
+        vinarender_node.getParam('render').trigger()
+        vinarender_node.getParam('no_dialog').set(False)
+
+
+    alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.','VideoVina Info.')

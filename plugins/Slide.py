@@ -221,7 +221,7 @@ def createInstance(app,group):
     lastNode.setScriptName("FrameRange")
     lastNode.setLabel("FrameRange")
     lastNode.setPosition(-207, 990)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameRange = lastNode
 
@@ -238,6 +238,11 @@ def createInstance(app,group):
     param = lastNode.getParam("after")
     if param is not None:
         param.set("hold")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(1 - 100)</Natron>")
         del param
 
     del lastNode
@@ -269,11 +274,6 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
-    param = lastNode.getParam("BChannelsA")
-    if param is not None:
-        param.setValue(False)
-        del param
-
     param = lastNode.getParam("userTextArea")
     if param is not None:
         param.setValue("<Natron>(over)</Natron>")
@@ -286,7 +286,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
     lastNode.setScriptName("FX")
     lastNode.setLabel("FX")
-    lastNode.setPosition(-564, 510)
+    lastNode.setPosition(-564, 466)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupFX = lastNode
@@ -345,7 +345,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.BackDrop", 1, group)
     lastNode.setScriptName("Backdrop1")
     lastNode.setLabel("Backdrop1")
-    lastNode.setPosition(-725, 381)
+    lastNode.setPosition(-725, 380)
     lastNode.setSize(317, 268)
     lastNode.setColor(0.45, 0.45, 0.45)
     groupBackdrop1 = lastNode
@@ -445,36 +445,11 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot5"
 
-    # Start of node "Transform1_2"
-    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform1_2")
-    lastNode.setLabel("Transform1_2")
-    lastNode.setPosition(-207, 321)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform1_2 = lastNode
-
-    param = lastNode.getParam("scale")
-    if param is not None:
-        param.setValueAtTime(0.5, 1, 0)
-        param.setValueAtTime(1, 50, 0)
-        param.setValueAtTime(0.5, 1, 1)
-        param.setValueAtTime(1, 50, 1)
-        del param
-
-    param = lastNode.getParam("transformCenterChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Transform1_2"
-
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupFrameRange)
     groupFrameRange.connectInput(0, groupTimeOffset)
     groupTimeOffset.connectInput(0, groupMerge2)
-    groupMerge1.connectInput(0, groupTransform1_2)
+    groupMerge1.connectInput(0, groupDot5)
     groupMerge1.connectInput(1, groupDot1)
     groupFX.connectInput(0, groupDot4)
     groupDot1.connectInput(0, groupFX)
@@ -483,7 +458,6 @@ def createInstance(app,group):
     groupDot2.connectInput(0, groupDot3)
     groupDot4.connectInput(0, groupDot5)
     groupDot5.connectInput(0, groupImage)
-    groupTransform1_2.connectInput(0, groupDot5)
 
     param = groupFrameRange.getParam("frameRange")
     group.getParam("FrameRangeframeRange").setAsAlias(param)

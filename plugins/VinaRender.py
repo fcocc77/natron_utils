@@ -113,6 +113,19 @@ def createInstance(app,group):
     lastNode.sep3 = param
     del param
 
+    param = lastNode.createStringParam("job_name", "Job Name")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.job_name = param
+    del param
+
     param = lastNode.createIntParam("instances", "Instances")
     param.setMinimum(1, 0)
     param.setMaximum(10, 0)
@@ -173,7 +186,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -202,6 +214,19 @@ def createInstance(app,group):
     lastNode.render = param
     del param
 
+    param = lastNode.createBooleanParam("no_dialog", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setVisibleByDefault(False)
+    lastNode.no_dialog = param
+    del param
+
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -218,24 +243,12 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Input1"
-    lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Input1")
-    lastNode.setLabel("Input1")
-    lastNode.setPosition(704, 98)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.5, 0.2)
-    groupInput1 = lastNode
-
-    del lastNode
-    # End of node "Input1"
-
     # Start of node "reading"
     lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
     lastNode.setPosition(919, 266)
-    lastNode.setSize(128, 76)
+    lastNode.setSize(128, 78)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
 
@@ -293,7 +306,6 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(1, 0)
         param.setValue(100, 1)
         del param
 
@@ -344,19 +356,31 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(749, 196)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
     del lastNode
     # End of node "Dot1"
 
+    # Start of node "Source"
+    lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
+    lastNode.setScriptName("Source")
+    lastNode.setLabel("Source")
+    lastNode.setPosition(704, 104)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupSource = lastNode
+
+    del lastNode
+    # End of node "Source"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupSwitch1)
     groupSwitch1.connectInput(0, groupDot1)
     groupSwitch1.connectInput(1, groupreading)
     groupto_rgb.connectInput(0, groupDot1)
-    groupDot1.connectInput(0, groupInput1)
+    groupDot1.connectInput(0, groupSource)
 
     param = groupreading.getParam("filename")
     param.setExpression("thisGroup.filename.get()", False, 0)
