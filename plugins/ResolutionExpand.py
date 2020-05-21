@@ -36,7 +36,7 @@ def createInstance(app,group):
 
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = group
-    lastNode.setColor(0.5, 0.4, 0.4)
+    lastNode.setColor(0.4, 0.5, 0.7)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
         param.setValue("resolution_expand.main")
@@ -163,7 +163,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat2")
     lastNode.setLabel("Reformat2")
     lastNode.setPosition(913, 199)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat2 = lastNode
 
@@ -201,7 +201,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Blur1")
     lastNode.setLabel("Blur1")
     lastNode.setPosition(913, 290)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur1 = lastNode
 
@@ -358,14 +358,9 @@ def createInstance(app,group):
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
     lastNode.setPosition(1447, 371)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
 
     del lastNode
     # End of node "Switch1"
@@ -387,6 +382,68 @@ def createInstance(app,group):
     del lastNode
     # End of node "FrameHold1"
 
+    # Start of node "Reformat5"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("Reformat5")
+    lastNode.setLabel("Reformat5")
+    lastNode.setPosition(1766, 149)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupReformat5 = lastNode
+
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("resize")
+    if param is not None:
+        param.set("height")
+        del param
+
+    del lastNode
+    # End of node "Reformat5"
+
+    # Start of node "Dot3"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot3")
+    lastNode.setLabel("Dot3")
+    lastNode.setPosition(1811, 32)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot3 = lastNode
+
+    del lastNode
+    # End of node "Dot3"
+
+    # Start of node "Dot4"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot4")
+    lastNode.setLabel("Dot4")
+    lastNode.setPosition(1811, 379)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot4 = lastNode
+
+    del lastNode
+    # End of node "Dot4"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupFrameHold1)
     groupreformat.connectInput(0, groupDot2)
@@ -401,7 +458,11 @@ def createInstance(app,group):
     groupDot2.connectInput(0, groupadd_alpha)
     groupSwitch1.connectInput(0, groupReformat4)
     groupSwitch1.connectInput(1, groupMerge1)
+    groupSwitch1.connectInput(2, groupDot4)
     groupFrameHold1.connectInput(0, groupSwitch1)
+    groupReformat5.connectInput(0, groupDot3)
+    groupDot3.connectInput(0, groupDot1)
+    groupDot4.connectInput(0, groupReformat5)
 
     param = groupreformat.getParam("boxSize")
     group.getParam("boxSize").setAsAlias(param)

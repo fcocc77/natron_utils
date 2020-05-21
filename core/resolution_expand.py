@@ -12,6 +12,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         thisNode.Reformat2.boxSize.set(1920 / 7, 1080 / 7)
         thisNode.Reformat3.boxSize.set(width, height)
         thisNode.Reformat4.boxSize.set(width, height)
+        thisNode.Reformat5.boxSize.set(width, height)
 
         # si la imagen es vertical cambia el switch a los reformat correspondientes
         add_alpha = thisNode.add_alpha
@@ -20,5 +21,16 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         _height = add_alpha.getOutputFormat().height()
 
         switch = thisNode.Switch1.which
-        switch.set( _width < _height)
+        vertical = _width < _height
+
+        aspect = 1920.0 / 1080.0 # aspecto de referencia
+        aspect_input = float(_width) / float(_height)
+
+        if vertical:
+            switch.set(1)
+        else:
+            if aspect >= aspect_input:
+                switch.set(0)
+            else:
+                switch.set(2)
         # ------------------------

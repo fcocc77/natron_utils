@@ -136,6 +136,7 @@ def generate_pictures(thisNode, app):
     for i, obj in enumerate( get_slides(thisNode) ):
         reformat = obj['reformat']
         reader = obj['image']
+        production = obj['production']
 
         if not reformat:
             continue
@@ -150,7 +151,10 @@ def generate_pictures(thisNode, app):
             reader.getParam('filename').set(picture)
         else:
             reader = app.createReader( picture, thisNode )
-            reader_name = 'slide_' + str(i) + '_image'
+            if production:
+                reader_name = 'slide_' + str(i) + 'p_image'
+            else:
+                reader_name = 'slide_' + str(i) + '_image'
             reader.setLabel(reader_name)
             reformat.connectInput(0, reader)
             reformat.getParam('refresh').trigger()
@@ -168,7 +172,8 @@ def delete_slide(thisNode, slide_number):
         obj = get_slide(thisNode, index)
         for key, node in obj.iteritems():
             if node:
-                node.destroy()
+                if not type(node) == bool:
+                    node.destroy()
 
     if type(slide_number) is list:
         for i in slide_number:
@@ -288,16 +293,31 @@ def generate_slides(thisNode, app):
     if created_slides:
         NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(created_slides) + ' Slides base.')
      
-def get_slide(thisNode, index):
+def get_slide(thisNode, index, all = True):
     _index = str(index)
 
-    slide = getNode(thisNode, 'slide_' + _index)
+    slide = getNode(thisNode, 'slide_' + _index)    
     reformat = getNode(thisNode, 'slide_' + _index + '_reformat')
     image = getNode(thisNode, 'slide_' + _index + '_image')
     transition = getNode(thisNode, 'slide_' + _index + '_transition')
     dot = getNode(thisNode, 'slide_' + _index + '_dot')
 
+    production = False
+    # si no no existe la slide base, busca la slide de produccion, si
+    # es que all=True
+    if not slide:
+        if all:
+            slide = getNode(thisNode, 'slide_' + _index + 'p')    
+            reformat = getNode(thisNode, 'slide_' + _index + 'p_reformat')
+            image = getNode(thisNode, 'slide_' + _index + 'p_image')
+            transition = getNode(thisNode, 'slide_' + _index + 'p_transition')
+            dot = getNode(thisNode, 'slide_' + _index + 'p_dot')
+
+            production = True
+    # --------------------
+
     return {
+        'production' : production, 
         'slide' : slide,
         'reformat' : reformat,
         'image' : image,
@@ -305,11 +325,12 @@ def get_slide(thisNode, index):
         'dot' : dot
     }
 
-def get_slides(thisNode):
+def get_slides(thisNode, all = True):
+    # si 'all' es False obtiene solo las slide de base
     slides = []
 
     for i in range(100):        
-        obj = get_slide(thisNode, i)
+        obj = get_slide(thisNode, i, all = all)
         if obj['slide']:
             slides.append(obj)
 
@@ -410,9 +431,10 @@ def duplicate_slides(thisNode, app):
 
     last_transition = None
     last_dot = None
- 
-    last_base_transition = getNode(thisNode, 'slide_' + str( base_count - 1 ) + '_transition')
-    last_base_dot = getNode(thisNode, 'slide_' + str( base_count - 1 ) + '_dot')
+
+    slide_obj = get_slide(thisNode, base_count - 1)
+    last_base_transition = slide_obj['transition']
+    last_base_dot = slide_obj['dot']
 
     current = 0
     posx = ( xdistance * base_count ) + xdistance
@@ -426,17 +448,17 @@ def duplicate_slides(thisNode, app):
         new_reformat = copy(reformat, thisNode)
         new_reformat.setColor(.4, .5, .7)
         new_reformat.setPosition(posx, -200)
-        new_reformat.setLabel('slide_' + str(index) + '_reformat')
+        new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
 
         new_slide = copy(slide, thisNode)
         new_slide.setPosition(posx, 0)
-        new_slide.setLabel('slide_' + str(index))
+        new_slide.setLabel('slide_' + str(index) + 'p')
         new_slide.connectInput(0, new_reformat)
 
         new_transition = copy(transition, thisNode)
         new_transition.setColor(.7, .7, .4)
         new_transition.setPosition(posx, 200)
-        new_transition.setLabel('slide_' + str(index) + '_transition')
+        new_transition.setLabel('slide_' + str(index) + 'p_transition')
         if last_transition:
             new_transition.connectInput(0, last_transition)
         else:
@@ -445,7 +467,7 @@ def duplicate_slides(thisNode, app):
         new_transition.connectInput(1, new_slide)
 
         dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
-        dot_name = 'slide_' + str(index) + '_dot'
+        dot_name = 'slide_' + str(index) + 'p_dot'
         dot.setLabel(dot_name)
         dot.setPosition(posx - 50, 100)
     
@@ -468,12 +490,14 @@ def duplicate_slides(thisNode, app):
     update_post_fx(thisNode, app)
     generate_pictures(thisNode, app)
 
+    alert('Ya se duplicaron las slide de Produccion.','Duplicate from base slides.')
+
 def save_production_projects(thisNode):
     print 'save_production'
 
 def videovina_info(thisNode, app):
 
-    slides = get_slides(thisNode)
+    slides = get_slides(thisNode, all = False)
     
     # obtiene la duracion de las slides
     velocity = thisNode.velocity.get()
@@ -509,6 +533,7 @@ def videovina_info(thisNode, app):
         vinarender_node.getParam('filename').set(_file)
         jobname = app.projectName.get() + ' - Slide Overlap:  ' + str(i) 
         vinarender_node.getParam('job_name').set(jobname)
+        vinarender_node.getParam('instances').set(10)
 
         vinarender_node.getParam('no_dialog').set(True)
         vinarender_node.getParam('render').trigger()
