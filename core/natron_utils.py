@@ -51,7 +51,8 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 		'backdrop': 'fr.inria.built-in.BackDrop',
 		'dot': 'fr.inria.built-in.Dot',
 		'dissolve': 'net.sf.openfx.DissolvePlugin',
-		'vinarender' : 'vv.vinarender'
+		'vinarender' : 'vv.vinarender',
+		'input' : 'fr.inria.built-in.Input'
 	}
 
 	_node = app.createNode(nodes[node], 2, group)
