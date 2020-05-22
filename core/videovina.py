@@ -120,7 +120,6 @@ def refresh(thisNode, app):
 def connect_slide_inputs(slides, current_slide):
     # conecta todas las entradas de cada slide, asi
     # poder usarlas dentro del grupo de la slide
-
     slide = slides[current_slide]['slide']
     extra_count = slide.getMaxInputCount() - 1
 
@@ -167,6 +166,13 @@ def connect_slide_inputs(slides, current_slide):
 
             if connect_node > connect_nodes_count:
                 connect_node = 0
+
+            # cuando es la primera slide se conecta a si mismo, 
+            # asi que cuando la acutal slide sea 0 y el nodo a conectar 0
+            # cambia el nodo a conectar a 1.
+            if current_slide == 0 and connect_node == 0:
+                connect_node = 1
+            # ------------------
 
             reformat = slides[connect_node]['reformat']
             slide.disconnectInput(i)
