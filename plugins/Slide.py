@@ -72,10 +72,14 @@ def createInstance(app,group):
     lastNode.generate_inputs = param
     del param
 
-    param = lastNode.createInt2DParam("FrameRangeframeRange", "Frame Range")
-    param.setDefaultValue(1, 0)
+    param = lastNode.createInt2DParam("frameRange", "Frame Range")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
-    param.setDefaultValue(1, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
     param.restoreDefaultValue(1)
 
     # Add the param to the page
@@ -84,9 +88,10 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
     param.setValue(100, 1)
-    lastNode.FrameRangeframeRange = param
+    lastNode.frameRange = param
     del param
 
     param = lastNode.createDoubleParam("rscale", "Resolution Scale")
@@ -221,12 +226,13 @@ def createInstance(app,group):
     lastNode.setScriptName("FrameRange")
     lastNode.setLabel("FrameRange")
     lastNode.setPosition(-207, 990)
-    lastNode.setSize(104, 45)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameRange = lastNode
 
     param = lastNode.getParam("frameRange")
     if param is not None:
+        param.setValue(1, 0)
         param.setValue(100, 1)
         del param
 
@@ -238,11 +244,6 @@ def createInstance(app,group):
     param = lastNode.getParam("after")
     if param is not None:
         param.set("hold")
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(1 - 100)</Natron>")
         del param
 
     del lastNode
@@ -460,10 +461,11 @@ def createInstance(app,group):
     groupDot5.connectInput(0, groupImage)
 
     param = groupFrameRange.getParam("frameRange")
-    group.getParam("FrameRangeframeRange").setAsAlias(param)
+    param.setExpression("thisGroup.frameRange.getValue(dimension)", False, 0)
+    param.setExpression("thisGroup.frameRange.getValue(dimension)", False, 1)
     del param
     param = groupTimeOffset.getParam("timeOffset")
-    param.setExpression("thisGroup.FrameRange.frameRange.getValue(0)", False, 0)
+    param.setExpression("thisGroup.frameRange.getValue(0)", False, 0)
     del param
     param = groupMerge2.getParam("mix")
     param.setExpression("# si tiene titulo o subtitle, mezcla los textos\nif thisGroup.title.get() or thisGroup.subtitle.get():\n\tret = 1\nelse:\n\tret = 0", True, 0)

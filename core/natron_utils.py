@@ -108,7 +108,8 @@ def copy(node, group = None):
 		for p in node.getParams():	
 			name = p.getScriptName()
 			param = new_node.getParam(name)
-			param.copy(p)
+			if param:
+				param.copy(p)
 	
 	new_node.setScriptName( node.getScriptName() )
 	new_node.refreshUserParamsGUI()

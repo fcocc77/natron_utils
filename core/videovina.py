@@ -82,7 +82,7 @@ def refresh(thisNode, app):
 
     for i, obj in enumerate(slides):
         slide = obj['slide']
-        frame_range = slide.getParam('FrameRangeframeRange')
+        frame_range = slide.getParam('frameRange')
         color_slide = slide.getParam('color')
         rscale_slide = slide.getParam('rscale')
 
