@@ -3,16 +3,115 @@ import NatronGui
 import NatronEngine
 from PySide.QtGui import QMessageBox
 
-def copy(node, group):
+def copy(node, group = None):
 	app = NatronGui.natron.getGuiInstance(0)
-
 	_id = node.getPluginID()
-	new_node = app.createNode(_id, 0, group)
 
-	for p in node.getParams():	
-		name = p.getScriptName()			
-		param = new_node.getParam(name)
-		param.copy(p)
+	# si el nodo es un grupo, busca cada parametro en el nodo de origen
+	# y lo crea en el nuevo nodo grupo, y luega copia cada nodo hijo con sus atributos
+	if _id == 'fr.inria.built-in.Group':
+		new_node = app.createNode('vv.group', 1, group)
+
+		new_node.control = new_node.createPageParam("control", "Control")
+		new_node.setPagesOrder(['control', 'Node', 'Settings'])
+
+		for p in node.getParams():	
+			name = p.getScriptName()
+			label = p.getLabel()
+			_type = type(p)	
+			param = None
+			parent = p.getParent()
+			
+			page = None
+			if parent:
+				page = parent.getScriptName()
+
+			if page == 'Node':
+				param = new_node.getParam(name)
+			else:
+				# identifica que tipo de parametro es, para poder crearlo en el nuevo nodo
+				if _type == NatronEngine.BooleanParam:
+					param = new_node.createBooleanParam (name, label)
+				elif _type == NatronEngine.ButtonParam:
+					param = new_node.createButtonParam (name, label)
+				elif _type == NatronEngine.ChoiceParam:
+					param = new_node.createChoiceParam (name, label)
+				elif _type == NatronEngine.ColorParam:
+					useAlpha = False
+					param = new_node.createColorParam (name, label, useAlpha)
+				elif _type == NatronEngine.Double2DParam:
+					param = new_node.createDouble2DParam (name, label)
+				elif _type == NatronEngine.Double3DParam:
+					param = new_node.createDouble3DParam (name, label)
+				elif _type == NatronEngine.DoubleParam:
+					param = new_node.createDoubleParam (name, label)
+				elif _type == NatronEngine.FileParam:
+					param = new_node.createFileParam (name, label)
+				elif _type == NatronEngine.GroupParam:
+					param = new_node.createGroupParam (name, label)
+				elif _type == NatronEngine.Int2DParam:
+					param = new_node.createInt2DParam (name, label)
+				elif _type == NatronEngine.Int3DParam:
+					param = new_node.createInt3DParam (name, label)
+				elif _type == NatronEngine.IntParam:
+					param = new_node.createIntParam (name, label)
+				elif _type == NatronEngine.OutputFileParam:
+					param = new_node.createOutputFileParam (name, label)
+				elif _type == NatronEngine.PageParam:
+					param = new_node.createPageParam (name, label)
+				elif _type == NatronEngine.ParametricParam:
+					nbCurves = 0
+					param = new_node.createParametricParam (name, label, nbCurves)
+				elif _type == NatronEngine.PathParam:
+					param = new_node.createPathParam (name, label)
+				elif _type == NatronEngine.StringParam:
+					param = new_node.createStringParam (name, label)
+					# usar esto si es un label:
+						# param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+				
+				if param:
+					if hasattr(p, 'getMinimum'):
+						param.setMinimum( p.getMinimum() )
+						param.setMaximum( p.getMaximum() )
+				
+			param.copy(p)
+
+		# crea una lista con los nodos hijos, para despues
+		# conectarlos, cuando ya esten todos creados
+		created_nodes = {}
+		for child in node.getChildren():
+			_node = copy(child, new_node)
+			created_nodes[ child.getScriptName() ] = _node
+
+		for child in node.getChildren():
+			# datos del nodo de origen
+			name = child.getScriptName()
+			label = child.getLabel()
+			input_count = child.getMaxInputCount()
+			position = child.getPosition()
+			size = child.getSize()
+			# ---------------
+
+			_node = created_nodes[name]
+			_node.setPosition( position[0], position[1] )
+			_node.setSize( size[0], size[1] )
+			_node.setLabel( label )
+
+			
+			for i in range(input_count):
+				inode = child.getInput(i)
+				if inode:
+					iname = inode.getScriptName()
+					_node.connectInput(i, created_nodes[iname])
+	else:
+		new_node = app.createNode(_id, 1, group)
+		for p in node.getParams():	
+			name = p.getScriptName()
+			param = new_node.getParam(name)
+			param.copy(p)
+	
+	new_node.setScriptName( node.getScriptName() )
+	new_node.refreshUserParamsGUI()
 
 	return new_node
 
@@ -68,42 +167,6 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 
 def alert(message, title = 'Alert'):
 	NatronGui.natron.informationDialog(title, str(message))
-
-def createParam(node, name, _type=None, _range=[0, 100]):
-	# funcion para crear parametros mas facilmente
-
-	label = name.replace('_', ' ').title()
-
-	# creacion de parametro
-	if _type == 'float':
-		param = node.createDoubleParam(name + '_param', label)
-	elif _type == 'int':
-		param = node.createIntParam(name + '_param', label)
-	elif _type == 'string':
-		param = node.createStringParam(name + '_param', label)
-	elif name == 'separator':
-		param = node.createSeparatorParam("sep_" + hash_generator(5), "")
-	elif _type == 'button':
-		param = node.createButtonParam(name + '_param', label)
-	elif _type == 'choice':
-		param = node.createChoiceParam(name + '_param', label)
-	elif _type == 'label':
-		param = node.createSeparatorParam(name + '_param', label)
-
-	# establece el rango de la slide
-	allowed = ['float', 'int']
-	if _type in allowed:
-		param.setMinimum(_range[0], 0)
-		param.setMaximum(_range[1], 0)
-		param.setDisplayMinimum(_range[0], 0)
-		param.setDisplayMaximum(_range[1], 0)
-	# ----------------------
-
-	# agrega el parametro a la pestania
-	node.controls.addParam(param)
-	# ----------------------
-
-	return param
 
 def get_all_nodes(app):
 	nodes = []
