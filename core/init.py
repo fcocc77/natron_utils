@@ -22,7 +22,7 @@ from PySide import QtCore
 
 def reload_nodes():
 
-    repo = '/home/pancho/Documents/GitHub/natron_pyplugs'
+    repo = '/home/pancho/Documents/GitHub/natron_utils'
     natron_plugins = '/usr/share/Natron/Plugins'
 
     plugins = repo + '/plugins'
