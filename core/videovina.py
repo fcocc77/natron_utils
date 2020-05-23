@@ -23,6 +23,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         duplicate_slides(thisNode, app)
     elif knob_name == 'videovina_info':
         videovina_info(thisNode, app)
+    elif knob_name == 'update_videovina_project':
+        update_videovina_project(thisNode)
 
 def refresh(thisNode, app):
 
@@ -629,3 +631,6 @@ def videovina_info(thisNode, app):
 
 
     alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.','VideoVina Info.')
+
+def update_videovina_project(thisNode):
+    print 'update_videovina_project'
