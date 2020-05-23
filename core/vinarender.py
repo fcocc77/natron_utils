@@ -11,6 +11,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         render(thisNode, app)
     if knob_name == 'range' or knob_name =='readfile':
         change_paramaters(thisNode)
+    if knob_name == 'project_frame_range':
+        frame_range = app.frameRange.get()
+        thisNode.range.set( frame_range[0], frame_range[1] )
 
 def change_paramaters(thisNode):
     frame_range = thisNode.getNode('frame_range')

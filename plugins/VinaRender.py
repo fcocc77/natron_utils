@@ -100,6 +100,18 @@ def createInstance(app,group):
     lastNode.range = param
     del param
 
+    param = lastNode.createButtonParam("project_frame_range", "Project Frame Range")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.project_frame_range = param
+    del param
+
     param = lastNode.createSeparatorParam("sep3", "")
 
     # Add the param to the page
@@ -248,7 +260,7 @@ def createInstance(app,group):
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
     lastNode.setPosition(919, 266)
-    lastNode.setSize(128, 78)
+    lastNode.setSize(128, 76)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
 
@@ -274,7 +286,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("lastFrame")
     if param is not None:
-        param.setValue(100, 0)
+        param.setValue(552, 0)
         del param
 
     param = lastNode.getParam("after")
@@ -306,12 +318,13 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(100, 1)
+        param.setValue(1, 0)
+        param.setValue(552, 1)
         del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(1 - 100)</Natron>")
+        param.setValue("<Natron>(1 - 552)</Natron>")
         del param
 
     del lastNode
@@ -356,7 +369,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(749, 196)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
