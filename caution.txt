@@ -1,0 +1,10 @@
+# Este archivo contiene todas las precauciones
+# qué tomar para que Natron funcione correctamente, con videovina
+# para que no se congele u otros errores que pueda tener Natron,
+# Dado que Natron es software libre y da muchos problemas.
+
+- Evitar congelamientos de cuadros:
+    . Para detectar los problemas en el render usar '--render-stats' en NatronRenderer, esto creara un archivo 'stats.txt', para ver los errores.
+    
+    1 - Al mezclar 2 imagenes jpg, y para sumarle el alpha con el nodo Shufle, se congela en la transicion,
+        tratar de envitarlo leyendo directamente la imagen con alpha.

@@ -36,7 +36,7 @@ def createInstance(app,group):
 
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = group
-    lastNode.setColor(0.4, 0.5, 0.7)
+    lastNode.setColor(0.5, 0.4, 0.4)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
         param.setValue("resolution_expand.main")
@@ -112,7 +112,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Input1")
     lastNode.setLabel("Input1")
-    lastNode.setPosition(910, -118)
+    lastNode.setPosition(913, -117)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupInput1 = lastNode
@@ -279,23 +279,6 @@ def createInstance(app,group):
     del lastNode
     # End of node "Reformat3"
 
-    # Start of node "add_alpha"
-    lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
-    lastNode.setScriptName("add_alpha")
-    lastNode.setLabel("add_alpha")
-    lastNode.setPosition(913, 23)
-    lastNode.setSize(104, 30)
-    lastNode.setColor(0.6, 0.24, 0.39)
-    groupadd_alpha = lastNode
-
-    param = lastNode.getParam("outputA")
-    if param is not None:
-        param.set("1")
-        del param
-
-    del lastNode
-    # End of node "add_alpha"
-
     # Start of node "Reformat4"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("Reformat4")
@@ -334,7 +317,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(1492, 32)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -346,7 +329,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
     lastNode.setPosition(958, 154)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
 
@@ -425,7 +408,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
     lastNode.setPosition(1811, 32)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
 
@@ -437,12 +420,24 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
     lastNode.setPosition(1811, 379)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
 
     del lastNode
     # End of node "Dot4"
+
+    # Start of node "dot_input"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("dot_input")
+    lastNode.setLabel("dot_input")
+    lastNode.setPosition(958, 32)
+    lastNode.setSize(14, 14)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupdot_input = lastNode
+
+    del lastNode
+    # End of node "dot_input"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupFrameHold1)
@@ -452,10 +447,9 @@ def createInstance(app,group):
     groupMerge1.connectInput(0, groupReformat3)
     groupMerge1.connectInput(1, groupreformat)
     groupReformat3.connectInput(0, groupBlur1)
-    groupadd_alpha.connectInput(0, groupInput1)
     groupReformat4.connectInput(0, groupDot1)
-    groupDot1.connectInput(0, groupadd_alpha)
-    groupDot2.connectInput(0, groupadd_alpha)
+    groupDot1.connectInput(0, groupdot_input)
+    groupDot2.connectInput(0, groupdot_input)
     groupSwitch1.connectInput(0, groupReformat4)
     groupSwitch1.connectInput(1, groupMerge1)
     groupSwitch1.connectInput(2, groupDot4)
@@ -463,6 +457,7 @@ def createInstance(app,group):
     groupReformat5.connectInput(0, groupDot3)
     groupDot3.connectInput(0, groupDot1)
     groupDot4.connectInput(0, groupReformat5)
+    groupdot_input.connectInput(0, groupInput1)
 
     param = groupreformat.getParam("boxSize")
     group.getParam("boxSize").setAsAlias(param)

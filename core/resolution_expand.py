@@ -15,10 +15,10 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         thisNode.Reformat5.boxSize.set(width, height)
 
         # si la imagen es vertical cambia el switch a los reformat correspondientes
-        add_alpha = thisNode.add_alpha
+        dot_input = thisNode.dot_input
 
-        _width = add_alpha.getOutputFormat().width()
-        _height = add_alpha.getOutputFormat().height()
+        _width = dot_input.getOutputFormat().width()
+        _height = dot_input.getOutputFormat().height()
 
         switch = thisNode.Switch1.which
         vertical = _width < _height

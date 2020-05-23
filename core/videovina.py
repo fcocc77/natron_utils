@@ -226,6 +226,10 @@ def generate_pictures(thisNode, app):
             else:
                 reader_name = 'slide_' + str(i) + '_image'
             reader.setLabel(reader_name)
+            # deja la imagen con rgba para que no de conflicto, porque
+            # a veces da conflicto al mezclar imagenes usando el shufle.
+            reader.getParam('outputComponents').set(0)
+            # ---------------------
             reformat.connectInput(0, reader)
             reformat.getParam('refresh').trigger()
         # -------------------------------
