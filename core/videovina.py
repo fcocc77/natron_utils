@@ -13,7 +13,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'generate_slides':
         generate_slides(thisNode, app)
-        refresh(thisNode, app)
     elif knob_name == 'save_production':
         save_production_projects(thisNode)
     elif knob_name == 'refresh':
@@ -22,7 +21,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         extra_picture_inputs(thisNode, app)
     elif knob_name == 'duplicate_slides':
         duplicate_slides(thisNode, app)
-        refresh(thisNode, app)
     elif knob_name == 'videovina_info':
         videovina_info(thisNode, app)
 
@@ -360,12 +358,12 @@ def generate_slides(thisNode, app):
 
     generate_pictures(thisNode, app)
     update_post_fx(thisNode, app)
+    refresh(thisNode, app)
 
-    
     if created_slides:
         NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(created_slides) + ' Slides base.')
      
-def get_slide(thisNode, index, all = True):
+def get_slide(thisNode, index):
     _index = str(index)
 
     slide = getNode(thisNode, 'slide_' + _index)    
@@ -378,14 +376,13 @@ def get_slide(thisNode, index, all = True):
     # si no no existe la slide base, busca la slide de produccion, si
     # es que all=True
     if not slide:
-        if all:
-            slide = getNode(thisNode, 'slide_' + _index + 'p')    
-            reformat = getNode(thisNode, 'slide_' + _index + 'p_reformat')
-            image = getNode(thisNode, 'slide_' + _index + 'p_image')
-            transition = getNode(thisNode, 'slide_' + _index + 'p_transition')
-            dot = getNode(thisNode, 'slide_' + _index + 'p_dot')
+        slide = getNode(thisNode, 'slide_' + _index + 'p')    
+        reformat = getNode(thisNode, 'slide_' + _index + 'p_reformat')
+        image = getNode(thisNode, 'slide_' + _index + 'p_image')
+        transition = getNode(thisNode, 'slide_' + _index + 'p_transition')
+        dot = getNode(thisNode, 'slide_' + _index + 'p_dot')
 
-            production = True
+        production = True
     # --------------------
 
     return {
@@ -397,16 +394,29 @@ def get_slide(thisNode, index, all = True):
         'dot' : dot
     }
 
-def get_slides(thisNode, all = True):
+def get_slides(thisNode, production = True, base = True, separate = False):
     # si 'all' es False obtiene solo las slide de base
-    slides = []
+    production_list = []
+    base_list = []
+    all_list = []
 
     for i in range(100):        
-        obj = get_slide(thisNode, i, all = all)
+        obj = get_slide(thisNode, i)
         if obj['slide']:
-            slides.append(obj)
+            all_list.append(obj)
+            if obj['production']:
+                production_list.append(obj)
+            else:
+                base_list.append(obj)
 
-    return slides
+    if separate:
+        return [ base_list, production_list ]
+    elif production and base:
+        return all_list
+    elif production:
+        return production_list
+    elif base:
+        return base_list
 
 def update_post_fx(thisNode, app):
     # obtiene el primer y el ultimo nodo de transition
@@ -490,32 +500,33 @@ def duplicate_slides(thisNode, app):
     base_amount = thisNode.amount_slide.get()
     amount = thisNode.production_slides.get()
 
-    slides = get_slides(thisNode)
-    base_count = len( slides )
+    base_slides, production_slides = get_slides(thisNode, separate = True)
+    base_count = len( base_slides )
+    slides_count = base_count + len( production_slides )
 
     if amount <= base_amount: 
         NatronGui.natron.warningDialog( 'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.' )
         return
     
-    if amount <= base_count:
+    if amount <= slides_count:
         NatronGui.natron.warningDialog( 'Production Slides', 'Ya existen los ' + str(amount) + ' Slides, Aumente la cantidad si quiere mas.' )
         return
 
     last_transition = None
     last_dot = None
 
-    slide_obj = get_slide(thisNode, base_count - 1)
+    slide_obj = get_slide(thisNode, slides_count - 1)
     last_base_transition = slide_obj['transition']
     last_base_dot = slide_obj['dot']
 
     current = 0
-    posx = ( xdistance * base_count ) + xdistance
-    for i in range( amount - base_count ):
-        index = i + base_count
-
-        slide = slides[current]['slide']
-        reformat = slides[current]['reformat']
-        transition = slides[current]['transition']
+    posx = ( xdistance * slides_count ) + xdistance
+    for i in range( amount - slides_count ):
+        index = i + slides_count
+        
+        slide = base_slides[current]['slide']
+        reformat = base_slides[current]['reformat']
+        transition = base_slides[current]['transition']
         
         new_reformat = copy(reformat, thisNode)
         new_reformat.setColor(.4, .5, .7)
@@ -561,6 +572,7 @@ def duplicate_slides(thisNode, app):
 
     update_post_fx(thisNode, app)
     generate_pictures(thisNode, app)
+    refresh(thisNode, app)
 
     alert('Ya se duplicaron las slide de Produccion.','Duplicate from base slides.')
 
@@ -569,7 +581,7 @@ def save_production_projects(thisNode):
 
 def videovina_info(thisNode, app):
 
-    slides = get_slides(thisNode, all = False)
+    slides = get_slides(thisNode, production = False)
     
     # obtiene la duracion de las slides
     velocity = thisNode.velocity.get()

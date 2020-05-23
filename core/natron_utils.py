@@ -104,12 +104,15 @@ def copy(node, group = None):
 					iname = inode.getScriptName()
 					_node.connectInput(i, created_nodes[iname])
 	else:
-		new_node = app.createNode(_id, 1, group)
+		new_node = app.createNode(_id, -1, group)
 		for p in node.getParams():	
 			name = p.getScriptName()
 			param = new_node.getParam(name)
-			if param:
+			# if param:
+			try:
 				param.copy(p)
+			except:
+				alert(_id)
 	
 	new_node.setScriptName( node.getScriptName() )
 	new_node.refreshUserParamsGUI()
