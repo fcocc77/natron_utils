@@ -8,3 +8,6 @@
     
     1 - Al mezclar 2 imagenes jpg, y para sumarle el alpha con el nodo Shufle, se congela en la transicion,
         tratar de envitarlo leyendo directamente la imagen con alpha.
+
+    2 - Para asegurarnos que no se congele el los proyectos en produccion, probrar cada una de las opciones antes de enviar a produccion:
+        probar en 640x360, 1920x1080, 3840x2160 en todas las velocidad Lenta, Normal y Rapido, en total serian 9 proyectos.
