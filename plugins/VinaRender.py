@@ -66,7 +66,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/")
+    param.setValue("[Project]/../renders/video.mov")
     lastNode.filename = param
     del param
 
@@ -264,44 +264,19 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
 
+    param = lastNode.getParam("decodingPluginID")
+    if param is not None:
+        param.setValue("fr.inria.openfx.ReadFFmpeg")
+        del param
+
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(comp)</Natron>")
+        param.setValue("<Natron>(video.mov)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/")
-        del param
-
-    param = lastNode.getParam("firstFrame")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(552, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
-        del param
-
-    param = lastNode.getParam("ParamExistingInstance")
-    if param is not None:
-        param.setValue(True)
+        param.setValue("[Project]/../renders/video.mov")
         del param
 
     del lastNode
@@ -319,7 +294,7 @@ def createInstance(app,group):
     param = lastNode.getParam("frameRange")
     if param is not None:
         param.setValue(1, 0)
-        param.setValue(552, 1)
+        param.setValue(100, 1)
         del param
 
     param = lastNode.getParam("userTextArea")
