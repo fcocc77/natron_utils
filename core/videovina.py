@@ -447,6 +447,7 @@ def update_post_fx(thisNode, app):
         first_constant.getParam('extent').set(1)
         first_constant.getParam('reformat').set(True)
         first_constant.getParam('size').set(width, hight)
+        first_constant.getParam('color').set(0,0,0,1)
     # ---------------------
 
     # Ultimo negro
@@ -462,6 +463,7 @@ def update_post_fx(thisNode, app):
         last_constant.getParam('extent').set(1)
         last_constant.getParam('reformat').set(True)
         last_constant.getParam('size').set(width, hight)
+        last_constant.getParam('color').set(0,0,0,1)
     last_constant.setPosition( last_posx + 200, 100 )
     # ---------------------
 
