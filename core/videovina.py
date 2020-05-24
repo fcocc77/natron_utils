@@ -3,6 +3,7 @@ import os
 import NatronGui
 from natron_utils import copy, getNode, question, alert, createNode
 from transition import directional_transition
+from util import jread
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -12,7 +13,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'generate_slides':
-        generate_slides(thisNode, app)
+        generate_base_slides(thisNode, app)
     elif knob_name == 'save_production':
         save_production_projects(thisNode)
     elif knob_name == 'refresh':
@@ -24,7 +25,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'videovina_info':
         videovina_info(thisNode, app)
     elif knob_name == 'update_videovina_project':
-        update_videovina_project(thisNode)
+        update_videovina_project(thisNode, app)
 
 def refresh(thisNode, app):
 
@@ -197,14 +198,26 @@ def extra_picture_inputs(thisNode, app):
 
         posx += 200
 
-def generate_pictures(thisNode, app):
-
+def generate_random_pictures(thisNode, app, amount):
+    
     references_dir = thisNode.reference_pictures.get()
     references_pictures = os.listdir( references_dir )
     references_count = len( references_pictures )
 
     index = random.randint(0, references_count - 1)
 
+    random_pictures = []
+    for i in range(amount):
+        picture = references_dir + '/' + references_pictures[index]
+        random_pictures.append(picture)
+
+        index += 1
+        if index >= references_count:
+            index = 0 
+
+    generate_pictures(thisNode, app, random_pictures)
+
+def generate_pictures(thisNode, app, pictures):
     for i, obj in enumerate( get_slides(thisNode) ):
         reformat = obj['reformat']
         reader = obj['image']
@@ -216,7 +229,7 @@ def generate_pictures(thisNode, app):
         posx = reformat.getPosition()[0] - 11
         posy = reformat.getPosition()[1] - 200
 
-        picture = references_dir + '/' + references_pictures[index]
+        picture = pictures[i]
         
         # si la imagen ya fue generada, solo cambia el la imagen 'filename'
         if reader:
@@ -236,10 +249,6 @@ def generate_pictures(thisNode, app):
             reformat.getParam('refresh').trigger()
         # -------------------------------
         reader.setPosition(posx, posy)
-
-        index += 1
-        if index >= references_count:
-            index = 0 
 
 def delete_slide(thisNode, slide_number):
     # se usa .destroy() 2 veces ya que a veces
@@ -273,7 +282,7 @@ def get_resolution(thisNode):
 def generate_black():
     None
 
-def generate_slides(thisNode, app):
+def generate_base_slides(thisNode, app):
     count = thisNode.amount_slide.get()
 
     filter_dot = getNode(thisNode, 'filter_dot')
@@ -362,7 +371,7 @@ def generate_slides(thisNode, app):
         delete_slide(thisNode, _range)
     # -----------------------
 
-    generate_pictures(thisNode, app)
+    generate_random_pictures(thisNode, app, created_slides)
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
 
@@ -502,12 +511,21 @@ def update_post_fx(thisNode, app):
     post_fx_dot.connectInput(0, dissolve)    
 
 def duplicate_slides(thisNode, app):
+    amount = thisNode.production_slides.get()
+    
+    generate_production_slides(thisNode, app, amount)
+
+    update_post_fx(thisNode, app)
+    generate_random_pictures(thisNode, app, amount)
+    refresh(thisNode, app)
+
+    alert('Ya se duplicaron las slide de Produccion.','Duplicate from base slides.')
+
+def generate_production_slides(thisNode, app, amount):
     # duplica los slides base, dependiendo de la
     # cantidad de fotos que importemos.
-
     base_amount = thisNode.amount_slide.get()
-    amount = thisNode.production_slides.get()
-
+        
     base_slides, production_slides = get_slides(thisNode, separate = True)
     base_count = len( base_slides )
     slides_count = base_count + len( production_slides )
@@ -578,12 +596,6 @@ def duplicate_slides(thisNode, app):
         
         posx += xdistance
 
-    update_post_fx(thisNode, app)
-    generate_pictures(thisNode, app)
-    refresh(thisNode, app)
-
-    alert('Ya se duplicaron las slide de Produccion.','Duplicate from base slides.')
-
 def save_production_projects(thisNode):
     print 'save_production'
 
@@ -634,5 +646,30 @@ def videovina_info(thisNode, app):
 
     alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.','VideoVina Info.')
 
-def update_videovina_project(thisNode):
-    print 'update_videovina_project'
+def update_videovina_project(thisNode, app):
+
+    project_file = thisNode.getParam('videovina_project').get()
+    project = jread(project_file)
+
+    footage = os.path.dirname(project_file) + '/footage'
+
+    # leer datos del proyecto json de videovina
+    color = project.states.app.color
+    timeline = project.states.app.timeline
+    # ----------------
+
+    # modifica los datos del proyecto natron 
+    thisNode.getParam('color').set( color[0] / 255.0, color[1] / 255.0, color[2] / 255.0, 1)
+    # ------------------
+
+    photos = []
+    count = len(timeline)
+    for photo in timeline:
+        basename = photo.name.split('.')[0]
+        url = footage + '/' + basename + '.jpg'
+        photos.append(url)
+
+    generate_production_slides(thisNode, app, count)
+    generate_pictures(thisNode, app, photos)
+    update_post_fx(thisNode, app)
+    refresh(thisNode, app)

@@ -120,10 +120,11 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
+    param.setValue("/mnt/server_01/videovina/as3/private/admin/projects/test/project.json")
     lastNode.videovina_project = param
     del param
 
-    param = lastNode.createButtonParam("tranfer_project", "Update VideoVina Project")
+    param = lastNode.createButtonParam("update_videovina_project", "Update VideoVina Project")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -132,7 +133,7 @@ def createInstance(app,group):
     param.setHelp("Actualiza datos, a partir de los datos del proyecto videovina.json")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
-    lastNode.tranfer_project = param
+    lastNode.update_videovina_project = param
     del param
 
     param = lastNode.createChoiceParam("velocity", "Velocity")
