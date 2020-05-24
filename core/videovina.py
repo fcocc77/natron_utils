@@ -656,10 +656,12 @@ def update_videovina_project(thisNode, app):
     # leer datos del proyecto json de videovina
     color = project.states.app.color
     timeline = project.states.app.timeline
+    velocity = project.states.edit.duration
     # ----------------
 
     # modifica los datos del proyecto natron 
     thisNode.getParam('color').set( color[0] / 255.0, color[1] / 255.0, color[2] / 255.0, 1)
+    thisNode.getParam('velocity').set(velocity)
     # ------------------
 
     photos = []
