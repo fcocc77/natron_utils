@@ -306,77 +306,79 @@ def generate_base_slides(thisNode, app):
         if not ok:
             return
     # --------------------------
-
-    width, hight = get_resolution(thisNode)
-
-    posx = 0 - xdistance
-    last_transition = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_transition')
-    last_dot = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_dot')
     
-    created_slides = 0
-    for i in range(count):
-        posx += xdistance
+    current_slides = 0
 
-        # si la slide ya fue generada, omite la creacion de la slide y pasa a la siguiente
-        if slides_count - 1 >= i:
-            continue
-        # -------------------
-        created_slides += 1
-
-        slide = app.createNode('vv.slide', 2, thisNode)
-        slide_name = 'slide_' + str(i)
-        slide.setLabel(slide_name)
-        slide.setPosition(posx, 0)
-        
-        reformat = app.createNode('vv.ResolutionExpand', 2, thisNode)
-        reformat_name = 'slide_' + str(i) + '_reformat'
-        reformat.setLabel(reformat_name)
-        reformat.getParam('boxSize').set(width, hight)
-        reformat.setPosition(posx, -200)
-        reformat.setColor(.5, .4, .4)
-
-        slide.connectInput(0, reformat)
-
-        transition = app.createNode('vv.FlareTransition', 2, thisNode)
-        transition_name = 'slide_' + str(i) + '_transition'
-        transition.setLabel(transition_name)
-        transition.setColor(.4, .5, .4)
-        transition.setPosition(posx, 200)
-        transition.connectInput(1, slide)
-
-        dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
-        dot_name = 'slide_' + str(i) + '_dot'
-        dot.setLabel(dot_name)
-        dot.setPosition(posx - 50, 100)
-    
-        transition.connectInput(2, dot)
-
-        if last_dot:
-            dot.connectInput(0, last_dot)
-        else:
-            dot.connectInput(0, filter_dot)
-
-        if last_transition:
-            transition.connectInput(0, last_transition)
-        else:
-            None
-
-
-        last_transition = transition
-        last_dot = dot
-    
-    # borra las slides que sobran
-    if count_delete_slide:
+    if count_delete_slide: 
+        # borra las slides que sobran
         _range = range(slides_count - count_delete_slide, slides_count)
         delete_slide(thisNode, _range)
-    # -----------------------
+        # -----------------------
 
-    generate_random_pictures(thisNode, app, created_slides)
+        current_slides = slides_count - count_delete_slide
+    else:
+        width, hight = get_resolution(thisNode)
+        posx = 0 - xdistance
+        last_transition = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_transition')
+        last_dot = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_dot')
+        
+        for i in range(count):
+            posx += xdistance
+
+            # si la slide ya fue generada, omite la creacion de la slide y pasa a la siguiente
+            if slides_count - 1 >= i:
+                continue
+            # -------------------
+            current_slides += 1
+
+            slide = app.createNode('vv.slide', 2, thisNode)
+            slide_name = 'slide_' + str(i)
+            slide.setLabel(slide_name)
+            slide.setPosition(posx, 0)
+            
+            reformat = app.createNode('vv.ResolutionExpand', 2, thisNode)
+            reformat_name = 'slide_' + str(i) + '_reformat'
+            reformat.setLabel(reformat_name)
+            reformat.getParam('boxSize').set(width, hight)
+            reformat.setPosition(posx, -200)
+            reformat.setColor(.5, .4, .4)
+
+            slide.connectInput(0, reformat)
+
+            transition = app.createNode('vv.FlareTransition', 2, thisNode)
+            transition_name = 'slide_' + str(i) + '_transition'
+            transition.setLabel(transition_name)
+            transition.setColor(.4, .5, .4)
+            transition.setPosition(posx, 200)
+            transition.connectInput(1, slide)
+
+            dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
+            dot_name = 'slide_' + str(i) + '_dot'
+            dot.setLabel(dot_name)
+            dot.setPosition(posx - 50, 100)
+        
+            transition.connectInput(2, dot)
+
+            if last_dot:
+                dot.connectInput(0, last_dot)
+            else:
+                dot.connectInput(0, filter_dot)
+
+            if last_transition:
+                transition.connectInput(0, last_transition)
+            else:
+                None
+
+
+            last_transition = transition
+            last_dot = dot
+
+    generate_random_pictures(thisNode, app, current_slides)
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
 
-    if created_slides:
-        NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(created_slides) + ' Slides base.')
+    if current_slides:
+        NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(current_slides) + ' Slides base.')
      
 def get_slide(thisNode, index):
     _index = str(index)
@@ -434,8 +436,11 @@ def get_slides(thisNode, production = True, base = True, separate = False):
         return base_list
 
 def update_post_fx(thisNode, app):
-    # obtiene el primer y el ultimo nodo de transition
     slides = get_slides(thisNode)
+    if not len(slides):
+        return    
+
+    # obtiene el primer y el ultimo nodo de transition
     first_transition = slides[0]['transition']
     last_transition = slides[-1]['transition']
     # -----------------------
@@ -513,7 +518,9 @@ def update_post_fx(thisNode, app):
 def duplicate_slides(thisNode, app):
     amount = thisNode.production_slides.get()
     
-    generate_production_slides(thisNode, app, amount)
+    generated = generate_production_slides(thisNode, app, amount)
+    if not generated:
+        return
 
     update_post_fx(thisNode, app)
     generate_random_pictures(thisNode, app, amount)
@@ -530,71 +537,90 @@ def generate_production_slides(thisNode, app, amount):
     base_count = len( base_slides )
     slides_count = base_count + len( production_slides )
 
+    if not slides_count:
+        NatronGui.natron.warningDialog( 'Production Slides', 'No hay ninguna slide base creada.' )
+        return False
+
     if amount <= base_amount: 
         NatronGui.natron.warningDialog( 'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.' )
-        return
+        return False
     
+    if amount == slides_count:
+        NatronGui.natron.warningDialog( 'Production Slides', 'Ya existen ' + str(amount) + ' slides.' )
+        return False
+
+    count_delete_slide = None
     if amount <= slides_count:
-        NatronGui.natron.warningDialog( 'Production Slides', 'Ya existen los ' + str(amount) + ' Slides, Aumente la cantidad si quiere mas.' )
-        return
+        count_delete_slide = slides_count - amount
+        message = 'La cantidad de slides es menor a la existente, se eliminaran ' + str(count_delete_slide) + ' slides.'
+        ok = question('Estas seguro de que quieres continuar ?', message) 
+        if not ok:
+            return False
 
-    last_transition = None
-    last_dot = None
+    if count_delete_slide:
+        # borra las slides que sobran
+        _range = range(slides_count - count_delete_slide, slides_count)
+        delete_slide(thisNode, _range)
+    else:
+        last_transition = None
+        last_dot = None
 
-    slide_obj = get_slide(thisNode, slides_count - 1)
-    last_base_transition = slide_obj['transition']
-    last_base_dot = slide_obj['dot']
+        slide_obj = get_slide(thisNode, slides_count - 1)
+        last_base_transition = slide_obj['transition']
+        last_base_dot = slide_obj['dot']
 
-    current = 0
-    posx = ( xdistance * slides_count ) + xdistance
-    for i in range( amount - slides_count ):
-        index = i + slides_count
+        current = 0
+        posx = ( xdistance * slides_count ) + xdistance
+        for i in range( amount - slides_count ):
+            index = i + slides_count
+            
+            slide = base_slides[current]['slide']
+            reformat = base_slides[current]['reformat']
+            transition = base_slides[current]['transition']
+            
+            new_reformat = copy(reformat, thisNode)
+            new_reformat.setColor(.4, .5, .7)
+            new_reformat.setPosition(posx, -200)
+            new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
+
+            new_slide = copy(slide, thisNode)
+            new_slide.setPosition(posx, 0)
+            new_slide.setLabel('slide_' + str(index) + 'p')
+            new_slide.connectInput(0, new_reformat)
+
+            new_transition = copy(transition, thisNode)
+            new_transition.setColor(.7, .7, .4)
+            new_transition.setPosition(posx, 200)
+            new_transition.setLabel('slide_' + str(index) + 'p_transition')
+            if last_transition:
+                new_transition.connectInput(0, last_transition)
+            else:
+                new_transition.connectInput(0, last_base_transition)
+
+            new_transition.connectInput(1, new_slide)
+
+            dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
+            dot_name = 'slide_' + str(index) + 'p_dot'
+            dot.setLabel(dot_name)
+            dot.setPosition(posx - 50, 100)
         
-        slide = base_slides[current]['slide']
-        reformat = base_slides[current]['reformat']
-        transition = base_slides[current]['transition']
+            if last_dot:
+                dot.connectInput(0, last_dot)
+            else:            
+                dot.connectInput(0, last_base_dot)
+
+            new_transition.connectInput(2, dot)
+
+            last_transition = new_transition
+            last_dot = dot
+
+            current += 1
+            if current >= base_count:
+                current = 0
+            
+            posx += xdistance
         
-        new_reformat = copy(reformat, thisNode)
-        new_reformat.setColor(.4, .5, .7)
-        new_reformat.setPosition(posx, -200)
-        new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
-
-        new_slide = copy(slide, thisNode)
-        new_slide.setPosition(posx, 0)
-        new_slide.setLabel('slide_' + str(index) + 'p')
-        new_slide.connectInput(0, new_reformat)
-
-        new_transition = copy(transition, thisNode)
-        new_transition.setColor(.7, .7, .4)
-        new_transition.setPosition(posx, 200)
-        new_transition.setLabel('slide_' + str(index) + 'p_transition')
-        if last_transition:
-            new_transition.connectInput(0, last_transition)
-        else:
-            new_transition.connectInput(0, last_base_transition)
-
-        new_transition.connectInput(1, new_slide)
-
-        dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
-        dot_name = 'slide_' + str(index) + 'p_dot'
-        dot.setLabel(dot_name)
-        dot.setPosition(posx - 50, 100)
-    
-        if last_dot:
-            dot.connectInput(0, last_dot)
-        else:            
-            dot.connectInput(0, last_base_dot)
-
-        new_transition.connectInput(2, dot)
-
-        last_transition = new_transition
-        last_dot = dot
-
-        current += 1
-        if current >= base_count:
-            current = 0
-        
-        posx += xdistance
+    return True
 
 def save_production_projects(thisNode):
     print 'save_production'
