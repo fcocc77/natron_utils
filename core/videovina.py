@@ -523,9 +523,26 @@ def update_post_fx(thisNode, app):
         post_fx_dot = createNode('dot', 'post_fx_dot', thisNode)
 
     post_fx.setPosition(last_posx + 50, 300)
-    post_fx_dot.setPosition(last_posx + 245, 450)
+    post_fx_dot.setPosition(last_posx + 243, 900)
     post_fx_dot.disconnectInput(0)
     post_fx_dot.connectInput(0, dissolve)    
+
+    # output
+    output = getNode(thisNode, 'Output1')    
+    if not output:
+        output = createNode('output' , 'Output1', thisNode)
+    output.setPosition(last_posx + 200, 1100)
+    output.connectInput(0, post_fx_dot)    
+
+    # si es que existe un viewer lo posiciona correctamente
+    viewer = None
+    for i in range(10):
+        viewer = thisNode.getNode('Viewer' + str(i))
+        if viewer:
+            viewer.setPosition(last_posx + 450, 895)
+            viewer.connectInput(0, post_fx_dot)  
+            break   
+    # ---------------------
 
 def duplicate_slides(thisNode, app):
     amount = thisNode.production_slides.get()
