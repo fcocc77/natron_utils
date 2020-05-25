@@ -548,6 +548,7 @@ def update_post_fx(thisNode, app):
         viewer = thisNode.getNode('Viewer' + str(i))
         if viewer:
             viewer.setPosition(last_posx + 450, 895)
+            viewer.disconnectInput(0)
             viewer.connectInput(0, post_fx_dot)  
             break   
     # ---------------------
