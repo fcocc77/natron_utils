@@ -393,7 +393,7 @@ def generate_base_slides(thisNode, app):
             last_transition = transition
             last_dot = dot
 
-    generate_random_pictures(thisNode, app, current_slides)
+    generate_random_pictures(thisNode, app, current_slides + slides_count)
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
 
@@ -758,9 +758,44 @@ def export_default_project(thisNode, app):
         _color = thisNode.getParam('color_' + str(i) ).get()
         color = [ _color[0] * 255, _color[1] * 255, _color[2] * 255 ]
         colors.append(color)
-    # ----------------
-
+    
     project.states.color.basic_colors = colors
+    # ---------------- 
+
+    # datos de los textos: 
+    base_slides, production_slides = get_slides(thisNode, separate = True)
+    base_count = len( base_slides )
+
+    texts_items = {}
+    texts = []
+    for i, obj in enumerate(base_slides):
+        slide = obj['slide']
+
+        include_texts = slide.getParam('include_texts').get()
+        if include_texts:
+            name = 'text' + str(i + 1)
+            texts.append(name)
+
+            item = {
+                'background' : '',
+                'foreground' : '',
+                'enable' : False,
+                'expanded' : True,
+                'title' : '',
+                'subtitle' : '',
+                'transform' : {
+                    'rotate': 0, 
+                    'scale': 0.5, 
+                    'x': 0, 
+                    'y': 0
+                }
+            }
+            texts_items[name] = item
+
+    project.states.edit.texts = texts
+    project.states.edit_items = texts_items
+    project.states.edit.base_slides = base_count
+    # ----------------------
 
     jwrite(out_project, project)
 
