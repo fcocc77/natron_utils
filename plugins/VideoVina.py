@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 def getPluginID():
-    return "vv.VideoVina"
+    return "vv.VIdeoVina"
 
 def getLabel():
     return "VideoVina"
@@ -152,6 +152,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Slow")
     lastNode.velocity = param
     del param
 
@@ -176,9 +177,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    param.setValue(52, 1)
-    param.setValue(25, 2)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
     lastNode.speeds = param
     del param
 
@@ -197,7 +198,7 @@ def createInstance(app,group):
     param.setHelp("esta velocidad de frames corresponde a la velocidad normal,\ny calculta la velocidad final dependiendo de la velocidad de la slide ( Slow, Normal, Fast )\n")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(30, 0)
+    param.setValue(20, 0)
     lastNode.transition_duration = param
     del param
 
@@ -216,6 +217,25 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(1, 0)
     lastNode.rscale = param
+    del param
+
+    param = lastNode.createChoiceParam("default_color", "Default Color")
+    entries = [ ("-", ""),
+    ("Color 1", ""),
+    ("Color 2", ""),
+    ("Color 3", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Color 2")
+    lastNode.default_color = param
     del param
 
     param = lastNode.createColorParam("color", "Color", False)
@@ -237,12 +257,25 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    param.setValue(1, 1)
-    param.setValue(1, 2)
+    param.setValue(0.3647058823529412, 0)
+    param.setValue(0.1294117647058824, 1)
+    param.setValue(0.01176470588235294, 2)
     lastNode.color = param
+    del param
+
+    param = lastNode.createFileParam("song", "Song")
+    param.setSequenceEnabled(False)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    lastNode.song = param
     del param
 
     param = lastNode.createSeparatorParam("sep3", "")
@@ -289,7 +322,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(4, 0)
+    param.setValue(2, 0)
     lastNode.amount_slide = param
     del param
 
@@ -359,7 +392,7 @@ def createInstance(app,group):
     param.setHelp("A partir de las slides base, genera nuevas slide duplicando las que hay")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(9, 0)
+    param.setValue(4, 0)
     lastNode.production_slides = param
     del param
 
@@ -375,6 +408,168 @@ def createInstance(app,group):
     lastNode.duplicate_slides = param
     del param
 
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createStringParam("default_project", "Default Project")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("DEFAULT PROJECT:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Datos por defecto que va a tener la plantilla.")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.default_project = param
+    del param
+
+    param = lastNode.createColorParam("color_1", "Color 1", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.6375969648361206, 0)
+    param.setValue(0.5088813304901123, 1)
+    param.setValue(0.2746773660182953, 2)
+    lastNode.color_1 = param
+    del param
+
+    param = lastNode.createColorParam("color_2", "Color 2", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.366252601146698, 0)
+    param.setValue(0.1301364898681641, 1)
+    param.setValue(0.01228648703545332, 2)
+    lastNode.color_2 = param
+    del param
+
+    param = lastNode.createColorParam("color_3", "Color 3", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.1119324341416359, 0)
+    param.setValue(0.304987370967865, 1)
+    param.setValue(0.5332764983177185, 2)
+    lastNode.color_3 = param
+    del param
+
+    param = lastNode.createFileParam("default_song", "Song")
+    param.setSequenceEnabled(False)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    lastNode.default_song = param
+    del param
+
+    param = lastNode.createFileParam("default_font", "Font")
+    param.setSequenceEnabled(False)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    lastNode.default_font = param
+    del param
+
+    param = lastNode.createFileParam("default_json_project", "Project")
+    param.setSequenceEnabled(False)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    param.setValue("/mnt/server_01/videovina/as3/private/admin/projects/test/project.json")
+    lastNode.default_json_project = param
+    del param
+
+    param = lastNode.createButtonParam("export_default_project", "Export Project")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Exporta todos los datos por defecto a un archivo \'project.json\' para la aplicacion web.")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.export_default_project = param
+    del param
+
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -383,8 +578,8 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output1")
-    lastNode.setPosition(893, 290)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(823, -203)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 

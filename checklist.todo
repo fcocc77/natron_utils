@@ -1,5 +1,5 @@
 videovina:
     ✔ que videovina_info solo exporte los slides base @done (5/21/2020, 10:48:04 AM)
     ✔ no funciona el copiado cuando el grupo tiene mas de 1 entrada @done (5/22/2020, 10:56:04 PM)
-    ☐ en "duplicate slides" hacer que borre las slides base cuando la cantidad sea menor
-    
+    ✔ en "duplicate slides" hacer que borre las slides base cuando la cantidad sea menor @done (5/25/2020, 9:40:45 AM)
+    ☐ crear boton para crear proyecto base para la web, con los datos: 3 colores base y color, textos, fuente, song

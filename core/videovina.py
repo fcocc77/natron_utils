@@ -3,7 +3,7 @@ import os
 import NatronGui
 from natron_utils import copy, getNode, question, alert, createNode
 from transition import directional_transition
-from util import jread
+from util import jread, jwrite
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -26,6 +26,18 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         videovina_info(thisNode, app)
     elif knob_name == 'update_videovina_project':
         update_videovina_project(thisNode, app)
+    elif knob_name == 'export_default_project':
+        export_default_project(thisNode, app)
+    elif knob_name == 'default_color':
+        set_default_color(thisNode, thisParam)
+
+def set_default_color(thisNode, thisParam):
+    current = thisParam.get()
+    if current:
+        color_param = thisNode.getParam('color_' + str( current ))
+        if color_param:
+            color = color_param.get()
+            thisNode.color.set(color[0], color[1], color[2], 1)
 
 def refresh(thisNode, app):
 
@@ -528,7 +540,7 @@ def duplicate_slides(thisNode, app):
 
     alert('Ya se duplicaron las slide de Produccion.','Duplicate from base slides.')
 
-def generate_production_slides(thisNode, app, amount):
+def generate_production_slides(thisNode, app, amount, force = False):
     # duplica los slides base, dependiendo de la
     # cantidad de fotos que importemos.
     base_amount = thisNode.amount_slide.get()
@@ -537,25 +549,27 @@ def generate_production_slides(thisNode, app, amount):
     base_count = len( base_slides )
     slides_count = base_count + len( production_slides )
 
-    if not slides_count:
-        NatronGui.natron.warningDialog( 'Production Slides', 'No hay ninguna slide base creada.' )
-        return False
+    if not force:
+        if not slides_count:
+            NatronGui.natron.warningDialog( 'Production Slides', 'No hay ninguna slide base creada.' )
+            return False
 
-    if amount <= base_amount: 
-        NatronGui.natron.warningDialog( 'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.' )
-        return False
-    
-    if amount == slides_count:
-        NatronGui.natron.warningDialog( 'Production Slides', 'Ya existen ' + str(amount) + ' slides.' )
-        return False
+        if amount <= base_amount: 
+            NatronGui.natron.warningDialog( 'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.' )
+            return False
+        
+        if amount == slides_count:
+            NatronGui.natron.warningDialog( 'Production Slides', 'Ya existen ' + str(amount) + ' slides.' )
+            return False
 
     count_delete_slide = None
     if amount <= slides_count:
         count_delete_slide = slides_count - amount
-        message = 'La cantidad de slides es menor a la existente, se eliminaran ' + str(count_delete_slide) + ' slides.'
-        ok = question('Estas seguro de que quieres continuar ?', message) 
-        if not ok:
-            return False
+        if not force:
+            message = 'La cantidad de slides es menor a la existente, se eliminaran ' + str(count_delete_slide) + ' slides.'
+            ok = question('Estas seguro de que quieres continuar ?', message) 
+            if not ok:
+                return False
 
     if count_delete_slide:
         # borra las slides que sobran
@@ -697,7 +711,28 @@ def update_videovina_project(thisNode, app):
         url = footage + '/' + basename + '.jpg'
         photos.append(url)
 
-    generate_production_slides(thisNode, app, count)
+    generate_production_slides(thisNode, app, count, force=True)
     generate_pictures(thisNode, app, photos)
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
+
+def export_default_project(thisNode, app):
+    project_path = os.path.dirname( os.path.dirname( app.getProjectParam('projectPath').get() ) )
+    base_project = project_path + '/resources/project.json'
+    out_project = thisNode.default_json_project.get()
+    
+    project = jread(out_project)
+
+    # obtiene colores de muestra
+    colors = []
+    for i in range(1, 4):
+        _color = thisNode.getParam('color_' + str(i) ).get()
+        color = [ _color[0] * 255, _color[1] * 255, _color[2] * 255 ]
+        colors.append(color)
+    # ----------------
+
+    project.states.color.basic_colors = colors
+
+    jwrite(out_project, project)
+
+    alert('Proyecto ya fue exportado.', 'Export default project')
