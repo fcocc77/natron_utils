@@ -117,8 +117,9 @@ def refresh(thisNode, app):
         # --------------------
 
         reformat = obj['reformat']
-        reformat.getParam('boxSize').set(width, hight)
-        reformat.getParam('refresh').trigger()
+        if reformat:
+            reformat.getParam('boxSize').set(width, hight)
+            reformat.getParam('refresh').trigger()
 
         # si es el primer slide, le sumamos la mitad de la duracion de la transicion,
         # ya que la primera transicion va a negro.
@@ -231,15 +232,21 @@ def generate_random_pictures(thisNode, app, amount):
 
 def generate_pictures(thisNode, app, pictures):
     for i, obj in enumerate( get_slides(thisNode) ):
+        slide = obj['slide']
         reformat = obj['reformat']
         reader = obj['image']
         production = obj['production']
 
-        if not reformat:
-            continue
+        # cuando se crea los slides en produccion, no se genera 
+        # el reformat, y se usa el slide para conectar
+        if reformat:
+            node_to_connect = reformat
+        else:
+            node_to_connect = slide
+        # --------------------
 
-        posx = reformat.getPosition()[0] - 11
-        posy = reformat.getPosition()[1] - 200
+        posx = node_to_connect.getPosition()[0] - 11
+        posy = node_to_connect.getPosition()[1] - 200
 
         picture = pictures[i]
         
@@ -257,8 +264,9 @@ def generate_pictures(thisNode, app, pictures):
             # a veces da conflicto al mezclar imagenes usando el shufle.
             reader.getParam('outputComponents').set(0)
             # ---------------------
-            reformat.connectInput(0, reader)
-            reformat.getParam('refresh').trigger()
+            node_to_connect.connectInput(0, reader)
+            if reformat:
+                reformat.getParam('refresh').trigger()
         # -------------------------------
         reader.setPosition(posx, posy)
 
@@ -557,7 +565,7 @@ def duplicate_slides(thisNode, app):
 
     alert('Ya se duplicaron las slide de Produccion.','Duplicate from base slides.')
 
-def generate_production_slides(thisNode, app, amount, force = False):
+def generate_production_slides(thisNode, app, amount, force = False, reformat = True):
     # duplica los slides base, dependiendo de la
     # cantidad de fotos que importemos.
     base_amount = thisNode.amount_slide.get()
@@ -606,18 +614,21 @@ def generate_production_slides(thisNode, app, amount, force = False):
             index = i + slides_count
             
             slide = base_slides[current]['slide']
-            reformat = base_slides[current]['reformat']
             transition = base_slides[current]['transition']
             
-            new_reformat = copy(reformat, thisNode)
-            new_reformat.setColor(.4, .5, .7)
-            new_reformat.setPosition(posx, -200)
-            new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
+            if reformat:
+                _reformat = base_slides[current]['reformat']
+
+                new_reformat = copy(_reformat, thisNode)
+                new_reformat.setColor(.4, .5, .7)
+                new_reformat.setPosition(posx, -200)
+                new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
 
             new_slide = copy(slide, thisNode)
             new_slide.setPosition(posx, 0)
             new_slide.setLabel('slide_' + str(index) + 'p')
-            new_slide.connectInput(0, new_reformat)
+            if reformat:
+                new_slide.connectInput(0, new_reformat)
 
             new_transition = copy(transition, thisNode)
             new_transition.setColor(.7, .7, .4)
@@ -728,7 +739,7 @@ def update_videovina_project(thisNode, app):
         url = footage + '/' + basename + '.jpg'
         photos.append(url)
 
-    generate_production_slides(thisNode, app, count, force=True)
+    generate_production_slides(thisNode, app, count, force=True, reformat=False)
     generate_pictures(thisNode, app, photos)
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
