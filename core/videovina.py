@@ -30,6 +30,14 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         export_default_project(thisNode, app)
     elif knob_name == 'default_color':
         set_default_color(thisNode, thisParam)
+    elif knob_name == 'include_texts':
+        color_if_has_text(thisNode, thisParam)
+
+def color_if_has_text(thisNode, thisParam):
+    if thisParam.get():
+        thisNode.setColor(.7, .5, .4)
+    else:
+        thisNode.setColor(.7, .7, .7)
 
 def set_default_color(thisNode, thisParam):
     current = thisParam.get()
@@ -726,6 +734,7 @@ def update_videovina_project(thisNode, app):
     color = project.states.app.color
     timeline = project.states.app.timeline
     velocity = project.states.edit.duration
+    texts = project.states.edit_items
     # ----------------
 
     # modifica los datos del proyecto natron 
@@ -741,6 +750,28 @@ def update_videovina_project(thisNode, app):
         photos.append(url)
 
     generate_production_slides(thisNode, app, count, force=True, reformat=False)
+
+    # cambia los titulos de todas las slides
+    for i, obj in enumerate( get_slides(thisNode) ):
+        slide = obj['slide']
+
+        text_name = 'text' + str(i + 1)
+        
+        if hasattr(texts, text_name):
+            text = getattr(texts, text_name)
+            include_texts = slide.getParam('include_texts')
+            include_texts.set(0)
+            include_texts.set(text.enable)
+            
+            if text.enable:
+                slide.getParam('title').set(text.title)
+                slide.getParam('subtitle').set(text.subtitle)
+            else:
+                slide.getParam('title').set('')
+                slide.getParam('subtitle').set('')
+
+    # -----------------------------
+    
     generate_pictures(thisNode, app, photos)
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
@@ -766,21 +797,22 @@ def export_default_project(thisNode, app):
     base_slides, production_slides = get_slides(thisNode, separate = True)
     base_count = len( base_slides )
 
-    texts_items = {}
-    texts = []
+    texts = {}
+    texts_indexs = []
     for i, obj in enumerate(base_slides):
         slide = obj['slide']
 
         include_texts = slide.getParam('include_texts').get()
         if include_texts:
-            name = 'text' + str(i + 1)
-            texts.append(name)
+            index = i + 1
+            texts_indexs.append(index)
+            name = 'text' + str(index)
 
             item = {
                 'background' : '',
                 'foreground' : '',
                 'enable' : False,
-                'expanded' : True,
+                'expanded' : False,
                 'title' : '',
                 'subtitle' : '',
                 'transform' : {
@@ -790,10 +822,10 @@ def export_default_project(thisNode, app):
                     'y': 0
                 }
             }
-            texts_items[name] = item
+            texts[name] = item
 
     project.states.edit.texts = texts
-    project.states.edit_items = texts_items
+    project.states.edit_items = texts
     project.states.edit.base_slides = base_count
     # ----------------------
 
