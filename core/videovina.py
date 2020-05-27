@@ -802,6 +802,14 @@ def export_default_project(thisNode, app):
     for i, obj in enumerate(base_slides):
         slide = obj['slide']
 
+        transform = slide.getNode('Transform')
+        _transform = {
+            'rotate' : transform.getParam('rotate').get(),
+            'scale' : transform.getParam('scale').getValue(),
+            'x' : transform.getParam('translate').get()[0],
+            'y' : transform.getParam('translate').get()[1]
+        }
+
         include_texts = slide.getParam('include_texts').get()
         if include_texts:
             index = i + 1
@@ -815,12 +823,7 @@ def export_default_project(thisNode, app):
                 'expanded' : False,
                 'title' : '',
                 'subtitle' : '',
-                'transform' : {
-                    'rotate': 0, 
-                    'scale': 0.5, 
-                    'x': 0, 
-                    'y': 0
-                }
+                'transform' : _transform
             }
             texts[name] = item
 

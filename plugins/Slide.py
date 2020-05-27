@@ -390,11 +390,6 @@ def createInstance(app,group):
         param.setValue(0, 0)
         del param
 
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
-        del param
-
     del lastNode
     # End of node "Merge2"
 
@@ -414,18 +409,6 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "Backdrop2"
-
-    # Start of node "Dot3"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot3")
-    lastNode.setLabel("Dot3")
-    lastNode.setPosition(216, 566)
-    lastNode.setSize(14, 14)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot3 = lastNode
-
-    del lastNode
-    # End of node "Dot3"
 
     # Start of node "Dot2"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -463,6 +446,69 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot5"
 
+    # Start of node "Constant1"
+    lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
+    lastNode.setScriptName("Constant1")
+    lastNode.setLabel("Constant1")
+    lastNode.setPosition(173, 451)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupConstant1 = lastNode
+
+    param = lastNode.getParam("extent")
+    if param is not None:
+        param.set("size")
+        del param
+
+    param = lastNode.getParam("reformat")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("color")
+    if param is not None:
+        param.setValue(0.5, 0)
+        param.setValue(0.5, 1)
+        param.setValue(1, 2)
+        param.setValue(1, 3)
+        del param
+
+    del lastNode
+    # End of node "Constant1"
+
+    # Start of node "Transform"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("Transform")
+    lastNode.setLabel("Transform")
+    lastNode.setPosition(173, 515)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupTransform = lastNode
+
+    param = lastNode.getParam("scale")
+    if param is not None:
+        param.setValue(0.5, 0)
+        param.setValue(0.5, 1)
+        del param
+
+    param = lastNode.getParam("transformCenterChanged")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Transform"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupFrameRange)
     groupFrameRange.connectInput(0, groupTimeOffset)
@@ -473,9 +519,10 @@ def createInstance(app,group):
     groupDot1.connectInput(0, groupFX)
     groupMerge2.connectInput(0, groupMerge1)
     groupMerge2.connectInput(1, groupDot2)
-    groupDot2.connectInput(0, groupDot3)
+    groupDot2.connectInput(0, groupTransform)
     groupDot4.connectInput(0, groupDot5)
     groupDot5.connectInput(0, groupImage)
+    groupTransform.connectInput(0, groupConstant1)
 
     param = groupFrameRange.getParam("frameRange")
     param.setExpression("thisGroup.frameRange.getValue(dimension)", False, 0)
@@ -485,7 +532,7 @@ def createInstance(app,group):
     param.setExpression("thisGroup.frameRange.getValue(0)", False, 0)
     del param
     param = groupMerge2.getParam("mix")
-    param.setExpression("# si tiene titulo o subtitle, mezcla los textos\nif thisGroup.title.get() or thisGroup.subtitle.get():\n\tret = 1\nelse:\n\tret = 0", True, 0)
+    param.setExpression("if thisGroup.include_texts.get():\n\tret = 1\nelse:\n\tret = 0", True, 0)
     del param
 
     try:
