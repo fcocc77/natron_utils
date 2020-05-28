@@ -32,6 +32,61 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         set_default_color(thisNode, thisParam)
     elif knob_name == 'include_texts':
         color_if_has_text(thisNode, thisParam)
+    elif knob_name == 'videovina_private':
+        update_private_content(thisNode, thisParam)
+    elif knob_name == 'play':
+        play_song(thisNode)
+    elif knob_name == 'stop':
+        play_song(thisNode, play=False)
+
+def play_song(thisNode, play=True):
+    if not play:
+        os.system('pkill -9 vlc')
+        return
+     
+    cmd = 'vlc --qt-start-minimized "' + get_current_song(thisNode)[1] + '"'
+
+    os.system('pkill -9 vlc')
+    os.popen2(cmd)
+
+def get_type_song(thisNode, song_name):
+    for option in thisNode.getParam('default_song').getOptions():
+        if song_name in option:
+            song_type = option.split('-')[1].strip().lower()             
+            return song_type
+
+def get_current_song(thisNode):
+    default_song = thisNode.getParam('default_song')
+    private = thisNode.getParam('videovina_private').get()
+
+    song = default_song.getOption( default_song.get() )
+    song_type = song.split('-')[1].strip().lower() 
+    song_name = song.split('-')[0].strip()
+    song_path = private + '/music/' + song_type + '/' + song_name + '.mp3'
+
+    return [song_name, song_path, song_type]    
+
+def update_private_content(thisNode, thisParam):
+    # actualiza todo el contenido que hay en la carpeta private de videovina,
+    # plantillas, musica y fuentes
+    private = thisParam.get()
+
+    music_dir = private + '/music' 
+    songs = []
+    for _root, _dir, files in os.walk(music_dir):
+        for _file in files:
+            base_name = _file.split('.')[0]
+            name = base_name + '  -  ' + os.path.basename(_root).capitalize()
+            songs.append((name, base_name))
+
+    thisNode.getParam('default_song').setOptions(songs)
+
+    fonts_dir = private + '/fonts'
+    fonts = []
+    if os.path.isdir(fonts_dir):
+        for font in os.listdir(fonts_dir):
+            fonts.append((font, font))
+    thisNode.getParam('default_font').setOptions(fonts)
 
 def color_if_has_text(thisNode, thisParam):
     if thisParam.get():
@@ -735,6 +790,7 @@ def update_videovina_project(thisNode, app):
     timeline = project.states.app.timeline
     velocity = project.states.edit.duration
     texts = project.states.edit_items
+    song = project.states.app.song
     # ----------------
 
     # modifica los datos del proyecto natron 
@@ -771,6 +827,12 @@ def update_videovina_project(thisNode, app):
                 slide.getParam('subtitle').set('')
 
     # -----------------------------
+
+    # song
+    song_type = get_type_song(thisNode, song)
+    song_path = thisNode.getParam('videovina_private').get() + '/music/' + song_type + '/' + song + '.mp3'  
+    thisNode.getParam('song').set(song_path)
+    # -------------
     
     generate_pictures(thisNode, app, photos)
     update_post_fx(thisNode, app)
@@ -831,6 +893,12 @@ def export_default_project(thisNode, app):
     project.states.edit_items = texts
     project.states.edit.base_slides = base_count
     # ----------------------
+
+    # song
+    song_name = get_current_song(thisNode)[0]
+    project.states.app.song = song_name
+    project.states.music.playing = song_name
+    # --------------
 
     jwrite(out_project, project)
 
