@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 def getPluginID():
-    return "vv.VIdeoVina"
+    return "vv.VideoVina"
 
 def getLabel():
     return "VideoVina"
@@ -45,28 +45,29 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createButtonParam("save_production", "Save Production Projects")
+    param = lastNode.createPathParam("videovina_private", "VideoVina Private Folder")
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Guarda una versión de producción, elimina todo\nlo innecesario, y procesa las capas que no serán modificadas")
+    param.setHelp("Carpeta privada de videovina, donde estan todos las plantillas base, fotos de muestra y la musica.")
     param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.save_production = param
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private")
+    lastNode.videovina_private = param
     del param
 
-    param = lastNode.createButtonParam("videovina_info", "Export VIdeoVina Info")
+    param = lastNode.createSeparatorParam("sep6", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos.")
+    param.setHelp("")
     param.setAddNewLine(True)
+    param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.videovina_info = param
+    lastNode.sep6 = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")
@@ -79,6 +80,30 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     lastNode.refresh = param
+    del param
+
+    param = lastNode.createButtonParam("save_production", "Save Production Projects")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Guarda una versión de producción, elimina todo\nlo innecesario, y procesa las capas que no serán modificadas")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.save_production = param
+    del param
+
+    param = lastNode.createButtonParam("videovina_info", "Export VIdeoVina Info")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos.")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.videovina_info = param
     del param
 
     param = lastNode.createSeparatorParam("sep2", "")
@@ -94,9 +119,9 @@ def createInstance(app,group):
     lastNode.sep2 = param
     del param
 
-    param = lastNode.createStringParam("general", "")
+    param = lastNode.createStringParam("production_slide_label", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("GENERAL:")
+    param.setDefaultValue("PRODUCTION SLIDE:")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -107,7 +132,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    lastNode.general = param
+    lastNode.production_slide_label = param
     del param
 
     param = lastNode.createFileParam("videovina_project", "VideoVina Project")
@@ -152,7 +177,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Slow")
     lastNode.velocity = param
     del param
 
@@ -234,7 +258,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Color 2")
+    param.set("Color 1")
     lastNode.default_color = param
     del param
 
@@ -259,9 +283,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(0.3647058823529412, 0)
-    param.setValue(0.1294117647058824, 1)
-    param.setValue(0.01176470588235294, 2)
+    param.setValue(1, 0)
+    param.setValue(0.2784313725490196, 1)
+    param.setValue(0.05098039215686274, 2)
     lastNode.color = param
     del param
 
@@ -275,7 +299,22 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/music/others/Bustin Loose.mp3")
     lastNode.song = param
+    del param
+
+    param = lastNode.createFileParam("font", "Font")
+    param.setSequenceEnabled(False)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Open Sans Bold.ttf")
+    lastNode.font = param
     del param
 
     param = lastNode.createSeparatorParam("sep3", "")
@@ -291,9 +330,9 @@ def createInstance(app,group):
     lastNode.sep3 = param
     del param
 
-    param = lastNode.createStringParam("base_slide", "")
+    param = lastNode.createStringParam("develop_slide", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("BASE SLIDE:")
+    param.setDefaultValue("DEVELOP SLIDE:")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -304,10 +343,22 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    lastNode.base_slide = param
+    lastNode.develop_slide = param
     del param
 
-    param = lastNode.createIntParam("amount_slide", "Amount Slide")
+    param = lastNode.createPathParam("reference_pictures", "Reference Pictures Folder")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
+    param.setAddNewLine(True)
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/travel")
+    lastNode.reference_pictures = param
+    del param
+
+    param = lastNode.createIntParam("amount_slide", "Base Slide")
     param.setMinimum(0, 0)
     param.setMaximum(20, 0)
     param.setDisplayMinimum(0, 0)
@@ -326,7 +377,7 @@ def createInstance(app,group):
     lastNode.amount_slide = param
     del param
 
-    param = lastNode.createButtonParam("generate_slides", "Update Base Slides")
+    param = lastNode.createButtonParam("generate_slides", "Generate Base")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -338,48 +389,7 @@ def createInstance(app,group):
     lastNode.generate_slides = param
     del param
 
-    param = lastNode.createPathParam("reference_pictures", "Reference Pictures Folder")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
-    param.setAddNewLine(True)
-    param.setValue("/mnt/server_01/photos/christmas")
-    lastNode.reference_pictures = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep1", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
-    del param
-
-    param = lastNode.createStringParam("production_slide_label", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("PRODUCTION SLIDE:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.production_slide_label = param
-    del param
-
-    param = lastNode.createIntParam("production_slides", "Amount Slide")
+    param = lastNode.createIntParam("production_slides", "Production Slide")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -392,11 +402,11 @@ def createInstance(app,group):
     param.setHelp("A partir de las slides base, genera nuevas slide duplicando las que hay")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(4, 0)
+    param.setValue(7, 0)
     lastNode.production_slides = param
     del param
 
-    param = lastNode.createButtonParam("duplicate_slides", "Duplicate Slides")
+    param = lastNode.createButtonParam("duplicate_slides", "Generate Production")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -485,9 +495,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.366252601146698, 0)
-    param.setValue(0.1301364898681641, 1)
-    param.setValue(0.01228648703545332, 2)
+    param.setValue(1, 0)
+    param.setValue(0.278894305229187, 1)
+    param.setValue(0.05126946419477463, 2)
     lastNode.color_2 = param
     del param
 
@@ -512,14 +522,13 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.1119324341416359, 0)
-    param.setValue(0.304987370967865, 1)
-    param.setValue(0.5332764983177185, 2)
+    param.setValue(0.2345505952835083, 0)
+    param.setValue(0.5332764983177185, 1)
+    param.setValue(0.0176419522613287, 2)
     lastNode.color_3 = param
     del param
 
-    param = lastNode.createFileParam("default_song", "Song")
-    param.setSequenceEnabled(False)
+    param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -527,12 +536,100 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep7 = param
+    del param
+
+    param = lastNode.createChoiceParam("default_song", "Song")
+    entries = [ ("Sitcom Joy  -  Kid", "Sitcom Joy"),
+    ("African Bliss  -  Kid", "African Bliss"),
+    ("Jingle Bells  -  Christmas", "Jingle Bells"),
+    ("Jingle Bells Jazz  -  Christmas", "Jingle Bells Jazz"),
+    ("Deck the Halls  -  Christmas", "Deck the Halls"),
+    ("Deck the Halls Jazz  -  Christmas", "Deck the Halls Jazz"),
+    ("We Wish You a Merry Christmas Jazz  -  Christmas", "We Wish You a Merry Christmas Jazz"),
+    ("Earning Happiness  -  Wedding", "Earning Happiness"),
+    ("Green Leaves  -  Wedding", "Green Leaves"),
+    ("Penny Whistle  -  Wedding", "Penny Whistle"),
+    ("Solo Acoustic  -  Others", "Solo Acoustic"),
+    ("Mountain Sun  -  Others", "Mountain Sun"),
+    ("Bouncy Gypsy Beats  -  Others", "Bouncy Gypsy Beats"),
+    ("Jazzy Detective  -  Others", "Jazzy Detective"),
+    ("Careful Tiptoe  -  Others", "Careful Tiptoe"),
+    ("Happy African Village  -  Others", "Happy African Village"),
+    ("Iyanetha  -  Others", "Iyanetha"),
+    ("Interstellar Space  -  Others", "Interstellar Space"),
+    ("Rhastafarian  -  Others", "Rhastafarian"),
+    ("Heading West  -  Others", "Heading West"),
+    ("Bustin Loose  -  Others", "Bustin Loose"),
+    ("Acoustic Guitar  -  Love", "Acoustic Guitar"),
+    ("Brides Ballad  -  Love", "Brides Ballad"),
+    ("Cool Steel Breeze  -  Love", "Cool Steel Breeze"),
+    ("One Fine Day  -  Love", "One Fine Day"),
+    ("Redwood Trail  -  Love", "Redwood Trail"),
+    ("West in Africa  -  Baby", "West in Africa"),
+    ("Pepper The Pig  -  Baby", "Pepper The Pig"),
+    ("Balkan Gypsy Party  -  Baby", "Balkan Gypsy Party"),
+    ("Mad Hatter Tea Party  -  Baby", "Mad Hatter Tea Party"),
+    ("Walk In The Park  -  Travels", "Walk In The Park"),
+    ("Acoustic Rock  -  Travels", "Acoustic Rock"),
+    ("Gameshow Brazz  -  Travels", "Gameshow Brazz"),
+    ("African Moon  -  Travels", "African Moon"),
+    ("Crazy Balloons  -  Birthday", "Crazy Balloons"),
+    ("Robot Gypsy Jazz  -  Birthday", "Robot Gypsy Jazz"),
+    ("Happy Clappy  -  Birthday", "Happy Clappy")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Bustin Loose  -  Others")
     lastNode.default_song = param
     del param
 
-    param = lastNode.createFileParam("default_font", "Font")
-    param.setSequenceEnabled(False)
+    param = lastNode.createButtonParam("play", "Play")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.play = param
+    del param
+
+    param = lastNode.createButtonParam("stop", "Stop")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.stop = param
+    del param
+
+    param = lastNode.createChoiceParam("default_font", "Font")
+    entries = [ ("Great Vibes", "Great Vibes"),
+    ("Dancing Script", "Dancing Script"),
+    ("Delius Swash Caps", "Delius Swash Caps"),
+    ("Kingthings Trypewriter", "Kingthings Trypewriter"),
+    ("Major Shift", "Major Shift"),
+    ("Note This", "Note This"),
+    ("Open Sans Bold", "Open Sans Bold"),
+    ("Open Sans Light", "Open Sans Light"),
+    ("Pompiere Regular", "Pompiere Regular"),
+    ("Tinos", "Tinos")]
+    param.setOptions(entries)
+    del entries
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -540,8 +637,22 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
+    param.setAnimationEnabled(True)
+    param.set("Open Sans Bold")
     lastNode.default_font = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep8", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep8 = param
     del param
 
     param = lastNode.createFileParam("default_json_project", "Project")
@@ -575,16 +686,16 @@ def createInstance(app,group):
     lastNode.refreshUserParamsGUI()
     del lastNode
 
-    # Start of node "Output1"
+    # Start of node "Output3"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
-    lastNode.setLabel("Output1")
-    lastNode.setPosition(823, -203)
+    lastNode.setLabel("Output3")
+    lastNode.setPosition(327, -333)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupOutput1 = lastNode
+    groupOutput3 = lastNode
 
     del lastNode
-    # End of node "Output1"
+    # End of node "Output3"
 
     # Now that all nodes are created we can connect them together, restore expressions
     try:

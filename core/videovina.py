@@ -85,7 +85,8 @@ def update_private_content(thisNode, thisParam):
     fonts = []
     if os.path.isdir(fonts_dir):
         for font in os.listdir(fonts_dir):
-            fonts.append((font, font))
+            base_name = font.split('.')[0]
+            fonts.append((base_name, base_name))
     thisNode.getParam('default_font').setOptions(fonts)
 
 def color_if_has_text(thisNode, thisParam):
@@ -780,6 +781,7 @@ def videovina_info(thisNode, app):
 
 def update_videovina_project(thisNode, app):
 
+    private = thisNode.getParam('videovina_private').get()
     project_file = thisNode.getParam('videovina_project').get()
     project = jread(project_file)
 
@@ -791,6 +793,7 @@ def update_videovina_project(thisNode, app):
     velocity = project.states.edit.duration
     texts = project.states.edit_items
     song = project.states.app.song
+    font = project.states.edit.font
     # ----------------
 
     # modifica los datos del proyecto natron 
@@ -830,8 +833,16 @@ def update_videovina_project(thisNode, app):
 
     # song
     song_type = get_type_song(thisNode, song)
-    song_path = thisNode.getParam('videovina_private').get() + '/music/' + song_type + '/' + song + '.mp3'  
+    song_path = private + '/music/' + song_type + '/' + song + '.mp3'  
     thisNode.getParam('song').set(song_path)
+    # -------------
+    
+    # font
+    font_path = private + '/fonts/' + font + '.'
+    _font = font_path + 'otf'
+    if not os.path.isfile(_font):
+        _font = font_path + 'ttf'
+    thisNode.getParam('font').set(_font)
     # -------------
     
     generate_pictures(thisNode, app, photos)
@@ -898,6 +909,12 @@ def export_default_project(thisNode, app):
     song_name = get_current_song(thisNode)[0]
     project.states.app.song = song_name
     project.states.music.playing = song_name
+    # --------------
+
+    # font
+    default_font = thisNode.getParam('default_font')
+    font = default_font.getOption( default_font.get() )
+    project.states.edit.font = font
     # --------------
 
     jwrite(out_project, project)
