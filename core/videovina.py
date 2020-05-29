@@ -810,9 +810,18 @@ def update_videovina_project(thisNode, app):
 
     generate_production_slides(thisNode, app, count, force=True, reformat=False)
 
+    # font
+    font_path = private + '/fonts/' + font + '.'
+    _font = font_path + 'otf'
+    if not os.path.isfile(_font):
+        _font = font_path + 'ttf'
+    thisNode.getParam('font').set(_font)
+    # -------------
+
     # cambia los titulos de todas las slides
     for i, obj in enumerate( get_slides(thisNode) ):
         slide = obj['slide']
+        slide.getParam('font').set(_font)
 
         text_name = 'text' + str(i + 1)
         
@@ -835,14 +844,6 @@ def update_videovina_project(thisNode, app):
     song_type = get_type_song(thisNode, song)
     song_path = private + '/music/' + song_type + '/' + song + '.mp3'  
     thisNode.getParam('song').set(song_path)
-    # -------------
-    
-    # font
-    font_path = private + '/fonts/' + font + '.'
-    _font = font_path + 'otf'
-    if not os.path.isfile(_font):
-        _font = font_path + 'ttf'
-    thisNode.getParam('font').set(_font)
     # -------------
     
     generate_pictures(thisNode, app, photos)

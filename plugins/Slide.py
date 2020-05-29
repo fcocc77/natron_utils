@@ -192,8 +192,8 @@ def createInstance(app,group):
     lastNode.subtitle = param
     del param
 
-    param = lastNode.createStringParam("font", "Font")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+    param = lastNode.createFileParam("font", "Font")
+    param.setSequenceEnabled(False)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -201,7 +201,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
+    param.setAnimationEnabled(False)
     lastNode.font = param
     del param
 
@@ -388,6 +388,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
