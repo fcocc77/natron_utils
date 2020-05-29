@@ -761,11 +761,11 @@ def videovina_info(thisNode, app):
         vinarender_node = getNode(slide, render_name)
         if not vinarender_node:
             vinarender_node = createNode('vinarender', render_name, slide, position = [posx, posy])
+            vinarender_node.setScriptName(render_name)
             vinarender_node.connectInput(0, fx)
 
         vinarender_node.getParam('range').set(central_frame, central_frame)
         
-
         _file = resources + '/' + slide.getLabel() + '.png'
         vinarender_node.getParam('filename').set(_file)
         jobname = app.projectName.get() + ' - Slide Overlap:  ' + str(i) 
@@ -775,7 +775,6 @@ def videovina_info(thisNode, app):
         vinarender_node.getParam('no_dialog').set(True)
         vinarender_node.getParam('render').trigger()
         vinarender_node.getParam('no_dialog').set(False)
-
 
     alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.','VideoVina Info.')
 
