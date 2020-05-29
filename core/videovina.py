@@ -743,7 +743,7 @@ def export_videovina_info(thisNode, app):
     # -----------------
 
     template_name = app.projectName.get().split('.')[0]
-    resources = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name + '/resources/overlap'
+    resources = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name + '/overlap'
     if not os.path.isdir(resources):
         os.makedirs(resources)
 
@@ -757,12 +757,21 @@ def export_videovina_info(thisNode, app):
         posx = fx.getPosition()[0] + 200
         posy = fx.getPosition()[1]
 
+        # cambia resolucion 640 x 360
+        reformat = getNode(slide, 'reformat_render')
+        if not reformat:
+            reformat = createNode('reformat', 'reformat_render', slide, position = [posx, posy] )
+            reformat.getParam('reformatType').set(1)
+            reformat.getParam('boxSize').set(640, 360)
+        reformat.connectInput(0, fx)
+        # ----------------------
+
         render_name = 'OverlapSlide-' + str(i)
         vinarender_node = getNode(slide, render_name)
         if not vinarender_node:
-            vinarender_node = createNode('vinarender', render_name, slide, position = [posx, posy])
+            vinarender_node = createNode('vinarender', render_name, slide, position = [posx, posy + 50])
             vinarender_node.setScriptName(render_name)
-            vinarender_node.connectInput(0, fx)
+            vinarender_node.connectInput(0, reformat)
 
         vinarender_node.getParam('range').set(central_frame, central_frame)
         
