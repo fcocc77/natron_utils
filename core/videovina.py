@@ -23,7 +23,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'duplicate_slides':
         duplicate_slides(thisNode, app)
     elif knob_name == 'videovina_info':
-        videovina_info(thisNode, app)
+        export_videovina_info(thisNode, app)
     elif knob_name == 'update_videovina_project':
         update_videovina_project(thisNode, app)
     elif knob_name == 'export_default_project':
@@ -32,7 +32,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         set_default_color(thisNode, thisParam)
     elif knob_name == 'include_texts':
         color_if_has_text(thisNode, thisParam)
-    elif knob_name == 'videovina_private':
+    elif knob_name == 'videovina_root':
         update_private_content(thisNode, thisParam)
     elif knob_name == 'play':
         play_song(thisNode)
@@ -57,7 +57,7 @@ def get_type_song(thisNode, song_name):
 
 def get_current_song(thisNode):
     default_song = thisNode.getParam('default_song')
-    private = thisNode.getParam('videovina_private').get()
+    private = thisNode.getParam('videovina_root').get() + '/private'
 
     song = default_song.getOption( default_song.get() )
     song_type = song.split('-')[1].strip().lower() 
@@ -732,7 +732,7 @@ def generate_production_slides(thisNode, app, amount, force = False, reformat = 
 def save_production_projects(thisNode):
     print 'save_production'
 
-def videovina_info(thisNode, app):
+def export_videovina_info(thisNode, app):
 
     slides = get_slides(thisNode, production = False)
     
@@ -742,8 +742,8 @@ def videovina_info(thisNode, app):
     slide_frames = speeds[ velocity ]
     # -----------------
 
-    project_path = os.path.dirname( os.path.dirname( app.getProjectParam('projectPath').get() ) )
-    resources = project_path + '/resources/overlap'
+    template_name = app.projectName.get().split('.')[0]
+    resources = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name + '/resources/overlap'
     if not os.path.isdir(resources):
         os.makedirs(resources)
 
@@ -780,7 +780,7 @@ def videovina_info(thisNode, app):
 
 def update_videovina_project(thisNode, app):
 
-    private = thisNode.getParam('videovina_private').get()
+    private = thisNode.getParam('videovina_root').get() + '/private'
     project_file = thisNode.getParam('videovina_project').get()
     project = jread(project_file)
 
@@ -891,7 +891,7 @@ def export_default_project(thisNode, app):
 
             item = {
                 'background' : '',
-                'foreground' : '',
+                'foreground' : 'overlap/slide_' + str(i) + '.png',
                 'enable' : False,
                 'expanded' : False,
                 'title' : '',
