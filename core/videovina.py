@@ -914,6 +914,20 @@ def export_default_project(thisNode, app):
     project.states.edit.base_slides = base_count
     # ----------------------
 
+    frame_rate = 30.0
+    speeds = thisNode.getParam('speeds').get()
+    transition = thisNode.getParam('transition_duration').get() / frame_rate
+    project.states.preview.transition_duration = [
+        ( transition * speeds[0] ) / 100,
+        ( transition * speeds[1] ) / 100,
+        ( transition * speeds[2] ) / 100
+    ] 
+    project.states.preview.speeds = [
+        speeds[0] / frame_rate,
+        speeds[1] / frame_rate,
+        speeds[2] / frame_rate
+    ]
+
     # song
     song_name = get_current_song(thisNode)[0]
     project.states.app.song = song_name
