@@ -134,7 +134,6 @@ def refresh(thisNode, app):
     last_black.getParam('size').set(width, hight)
     # ---------------------
 
-
     mid_transition_frames = transition_frames / 2 
     _last_frame = len(slides) * slide_frames
     # dissolve a negro en la ultima slide
@@ -452,7 +451,6 @@ def generate_base_slides(thisNode, app):
                 transition.connectInput(0, last_transition)
             else:
                 None
-
 
             last_transition = transition
             last_dot = dot
@@ -798,10 +796,9 @@ def update_videovina_project(thisNode, app):
     # leer datos del proyecto json de videovina
     color = project.states.app.color
     timeline = project.states.app.timeline
-    velocity = project.states.edit.duration
-    texts = project.states.edit_items
+    velocity = project.states.preview.speed
     song = project.states.app.song
-    font = project.states.edit.font
+    global_font = project.states.timeline.font
     # ----------------
 
     # modifica los datos del proyecto natron 
@@ -818,34 +815,38 @@ def update_videovina_project(thisNode, app):
 
     generate_production_slides(thisNode, app, count, force=True, reformat=False)
 
-    # font
-    font_path = private + '/fonts/' + font + '.'
-    _font = font_path + 'otf'
-    if not os.path.isfile(_font):
-        _font = font_path + 'ttf'
-    thisNode.getParam('font').set(_font)
-    # -------------
+    def font_path(font_name):
+        font_path = private + '/fonts/' + font_name + '.'
+        _font = font_path + 'otf'
+        if not os.path.isfile(_font):
+            _font = font_path + 'ttf'
+
+        return _font
+
+    thisNode.getParam('font').set( font_path(global_font) )
 
     # cambia los titulos de todas las slides
     for i, obj in enumerate( get_slides(thisNode) ):
         slide = obj['slide']
-        slide.getParam('font').set(_font)
-
-        text_name = 'text' + str(i + 1)
         
-        if hasattr(texts, text_name):
-            text = getattr(texts, text_name)
+        item = timeline[i]
+
+        if item.separate_font:
+            slide.getParam('font').set( font_path(item.font) )
+        else:
+            slide.getParam('font').set( font_path(global_font) )
+
+        if item.text:
             include_texts = slide.getParam('include_texts')
             include_texts.set(0)
-            include_texts.set(text.enable)
-            
-            if text.enable:
-                slide.getParam('title').set(text.title)
-                slide.getParam('subtitle').set(text.subtitle)
+            include_texts.set(item.text_enabled)
+
+            if item.text_enabled:
+                slide.getParam('title').set(item.title)
+                slide.getParam('subtitle').set(item.subtitle)
             else:
                 slide.getParam('title').set('')
                 slide.getParam('subtitle').set('')
-
     # -----------------------------
 
     # song
@@ -879,8 +880,7 @@ def export_default_project(thisNode, app):
     base_slides, production_slides = get_slides(thisNode, separate = True)
     base_count = len( base_slides )
 
-    texts = {}
-    texts_indexs = []
+    slides_base = []
     for i, obj in enumerate(base_slides):
         slide = obj['slide']
 
@@ -893,26 +893,22 @@ def export_default_project(thisNode, app):
         }
 
         include_texts = slide.getParam('include_texts').get()
-        if include_texts:
-            index = i + 1
-            texts_indexs.append(index)
-            name = 'text' + str(index)
 
-            item = {
-                'background' : '',
-                'foreground' : 'overlap/slide_' + str(i) + '.png',
-                'enable' : False,
-                'expanded' : False,
-                'title' : '',
-                'subtitle' : '',
-                'transform' : _transform
-            }
-            texts[name] = item
-
-    project.states.edit.texts = texts
-    project.states.edit_items = texts
-    project.states.edit.base_slides = base_count
+        item = {
+            'foreground' : 'overlap/slide_' + str(i) + '.png',
+            'text' : include_texts,
+            'transform' : _transform
+        }
+        slides_base.append(item)
     # ----------------------
+
+    # font
+    default_font = thisNode.getParam('default_font')
+    font = default_font.getOption( default_font.get() )
+    # --------------
+    
+    project.states.timeline.slides_base = slides_base
+    project.states.timeline.font = font
 
     frame_rate = 30.0
     speeds = thisNode.getParam('speeds').get()
@@ -932,12 +928,6 @@ def export_default_project(thisNode, app):
     song_name = get_current_song(thisNode)[0]
     project.states.app.song = song_name
     project.states.music.playing = song_name
-    # --------------
-
-    # font
-    default_font = thisNode.getParam('default_font')
-    font = default_font.getOption( default_font.get() )
-    project.states.edit.font = font
     # --------------
 
     jwrite(out_project, project)

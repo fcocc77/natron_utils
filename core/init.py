@@ -9,6 +9,7 @@ import vinarender
 import merge_matte
 import videovina
 import resolution_expand
+import multi_photos
 import util
 # --------------
 

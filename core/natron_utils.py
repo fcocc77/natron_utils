@@ -97,7 +97,6 @@ def copy(node, group = None):
 			_node.setSize( size[0], size[1] )
 			_node.setLabel( label )
 
-			
 			for i in range(input_count):
 				inode = child.getInput(i)
 				if inode:
