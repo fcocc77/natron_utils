@@ -151,7 +151,8 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 		'dissolve': 'net.sf.openfx.DissolvePlugin',
 		'vinarender' : 'vv.vinarender',
 		'input' : 'fr.inria.built-in.Input',
-		'reformat' : 'net.sf.openfx.Reformat'
+		'reformat' : 'net.sf.openfx.Reformat',
+		'switch' : 'net.sf.openfx.switchPlugin'
 	}
 
 	_node = app.createNode(nodes[node], 2, group)
