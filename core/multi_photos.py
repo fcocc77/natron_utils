@@ -1,6 +1,8 @@
 from natron_utils import createNode, getNode
+from util import jread, sh
 import os
 import random
+import wave
 
 vertical = 5
 horizontal = 5
@@ -12,7 +14,48 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         create(thisNode, app)
     if knob_name == 'update':
         update(thisNode)
+    if knob_name == 'sync':
+        audio_sync(thisNode)        
 
+def audio_sync(thisNode):
+
+    audio1 = jread('/home/pancho/Desktop/video_audio2.json')
+    audio2 = jread('/home/pancho/Desktop/part.json')
+
+    comps = []
+
+    start = 0
+    end = len(audio2)
+
+    for frame in range(0, len(audio1) - end):
+        comp = 0
+        for i in range(0, end):
+            value1 = audio2[i]
+            try:
+                value2 = audio1[i + frame]
+            except:
+                break
+
+            comp += abs(value1-value2)
+
+        comps.append([comp, frame])
+
+    comps = sorted(comps)
+    if len(comps):
+        offset = comps[0][1]
+    else:
+        offset= 0
+
+    curve = thisNode.getParam('curve')
+    curve.restoreDefaultValue(0)
+    curve.restoreDefaultValue(1)
+
+    for frame, value in enumerate(audio1):
+        curve.setValueAtTime(value, frame, 0)
+
+    for frame, value in enumerate(audio2):
+        curve.setValueAtTime(value, frame + offset , 1)
+        
 def get_pair_indexs(vertical, horizontal, amount):
     # obtiene una lista de pares de index verticalmente
 
