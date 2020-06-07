@@ -1,21 +1,24 @@
 from natron_utils import createNode, getNode
-from util import jread, sh
+from util import jread
 import os
 import random
 import wave
 
-vertical = 5
-horizontal = 5
-
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
-    if knob_name == 'generate':
-        create(thisNode, app)
+    if knob_name == 'video_import':
+        import_videos(thisNode, app)
+    if knob_name == 'cuts':
+        cuts_create(thisNode)
     if knob_name == 'update':
-        update(thisNode)
-    if knob_name == 'sync':
-        audio_sync(thisNode)        
+        update(thisNode)     
+    if knob_name == 'mosaic_a':
+        create_mosaic_a(thisNode)
+
+def update(thisNode):
+
+    print get_all_mosaics(thisNode)
 
 def audio_sync(thisNode):
 
@@ -56,21 +59,13 @@ def audio_sync(thisNode):
     for frame, value in enumerate(audio2):
         curve.setValueAtTime(value, frame + offset , 1)
         
-def get_pair_indexs(vertical, horizontal, amount):
+def get_pair_indexs(vertical, horizontal, amount, skip = []):
     # obtiene una lista de pares de index verticalmente
 
     _min = 0
     _max = vertical - 1
 
     pairs = []
-
-    # deja una lista desordenada
-    def random_sin_repetir(lista):
-        for _ in range(0,len(lista)):
-            result = random.choice(lista)
-            yield result
-            lista.remove(result)
-    # --------------------
 
     for i in range(horizontal):
         rand = random.randint(_min, _max)
@@ -86,14 +81,17 @@ def get_pair_indexs(vertical, horizontal, amount):
                 index1 -= 1
                 index2 -= 1
 
-        pairs.append( [index1, index2] ) 
+        if not index1 in skip and not index2 in skip:
+            pairs.append( [index1, index2] ) 
 
         _min += vertical
         _max += vertical
 
+    pairs_no_repeat = random.sample( pairs, len(pairs) )
+
     # crea una lista nueva con la cantidad entrante, aleatoriamente
     _pairs = []
-    for i, pair in enumerate(random_sin_repetir(pairs)):
+    for i, pair in enumerate(pairs_no_repeat):
         if i >= amount:
             break
         _pairs.append(pair)
@@ -101,108 +99,258 @@ def get_pair_indexs(vertical, horizontal, amount):
 
     return _pairs
 
-def get_four_indexs(vertical, horizontal, amount):
+def get_four_indexs(vertical, horizontal):
 
-    four = get_pair_indexs(vertical, horizontal, 1)[0]
-    
-    four.append(four[0] + vertical)
-    four.append(four[0] + vertical + 1)
+    total_images = vertical * horizontal
+    index_4 = 1000
+    while(index_4 >= total_images):
+        
+        four = get_pair_indexs(vertical, horizontal, 1)[0]
 
-    return [four]
+        index_3 = four[0] + vertical
+        index_4 = four[0] + vertical + 1
+
+    four.append(index_3)
+    four.append(index_4)
+
+    return four
 
 def get_items(thisNode):
     items = []
     for i in range(200):
         reader = getNode(thisNode, 'reader_' + str(i))
-        transform = getNode(thisNode, 'transform_' + str(i))
+        reformat = getNode(thisNode, 'reformat_' + str(i))
 
         if not reader:
             break
         item = {
             'reader': reader,
-            'transform': transform
+            'reformat': reformat
         }
         items.append(item)
 
     return items
 
-def update(thisNode):
+def cuts_create(thisNode):
 
-    hide = get_four_indexs(vertical, horizontal, 2)
+    # encuentra todos los merges de los mosaicos
+    merges = []
+    for index in range(100):
+        name = 'merge_' + str(index)
+        merge = getNode(thisNode, name)
+        if merge:
+            merges.append(merge)
+    # -------------------------
+
+    total_frames = 250
+
+    switch = getNode(thisNode, 'switch')
+    if not switch:
+        switch = createNode('switch', 'switch', thisNode, position=[0, 2000])
+
+    for i, merge in enumerate(merges):
+        switch.disconnectInput(i)
+        switch.connectInput(i, merge)
+
+    which = switch.getParam('which')
+    which.restoreDefaultValue()
+
+    time_range = thisNode.getParam('time_range').get()
+
+    cut = 0
+
+    connections_random = random.sample(range(len(merges)), len(merges)) # rango random sin repetir
+
+    i = 0
+    for frame in range(total_frames):
+        if cut == frame:
+            if i >= len(connections_random):
+                i = 0
+
+            index = connections_random[i]
+
+            which.setValueAtTime(index, cut, 0)
+            cut += random.randint(time_range[0], time_range[1])
+
+            i += 1
+
+def include_multi_index(thisNode, items):
+
+    squared_videos = thisNode.getParam('squared_videos').get()
+    vertical = squared_videos
+    horizontal = squared_videos
+
+    # si la cantidad de imagenes es mayor a 4 crea las slide de 4 imagenes
+    fours = []
+    if (squared_videos * squared_videos ) > 4:
+        fours = get_four_indexs(vertical, horizontal) 
+    # ----------------
+    
+    pairs_amount = thisNode.getParam('pairs_indexs').get()
+    pairs = get_pair_indexs(vertical, horizontal, pairs_amount, skip=fours)
+
     scale = 1.0 / horizontal
     
-    for i, item in enumerate(get_items(thisNode)):
-        scale_param = item['transform'].getParam('scale')
-
+    for index, item in enumerate(items):
+        crop, transform = item
+        
+        scale_param = transform.getParam('scale')
+        translate = transform.getParam('translate')
+        size = crop.getParam('size')
+        
         scale_param.set(scale, scale)
+        size.set(1920, 1080)
+        
+        # slide con 4 imagenes
+        if len(fours):
+            if index in fours:
+                size.set(0, 0)
 
-        for pair in hide:
-            if i in pair:
-                scale_param.set(0, 0)
-            
-            # sube la escala al primer item 
-            if i == pair[0]:
+            if index == fours[0]:
                 new_scale = scale * 2
                 scale_param.set(new_scale, new_scale)
+                size.set(1920, 1080)
+        # ----------------
+        
+        # slide con 2 imagenes
+        for pair in pairs:
+            if index in pair:
+                size.set(0, 0)
+            
+            # sube la escala al primer item 
+            if index == pair[0]:
+                new_scale = scale * 2
+                scale_param.set(new_scale, new_scale)                
+
+                size.set(1920 / 2, 1080)
+                crop.getParam('bottomLeft').set(1920 / 4, 0)
+
+                # restamos la mitad de la imagen para que quede centrada
+                translate_x = translate.getValue() - (( 1920 * scale ) / 2)
+                # -----------------
+                translate.setValue(translate_x)
             
             # --------------
 
-def create(thisNode, app):
-    videos_folder = thisNode.videos_dir.get()
-    videos = os.listdir(videos_folder)
+def get_all_mosaics(thisNode):
+    mosaics = []
+    for mosaic_index in range(100):
+        mosaic = []
+        for slide_index in range(100):
+            index = '_' + str(mosaic_index) + '_' + str(slide_index)
+            crop = getNode(thisNode, 'crop' + index)
+            transform = getNode(thisNode, 'transform' + index)
 
-    merge = createNode('merge', 'merge', thisNode, position=[0, 300])
+            if not transform:
+                break
+
+            mosaic.append({
+                'crop': crop,
+                'transform': transform
+            })
+        
+        if len(mosaic):
+            mosaics.append(mosaic)
+        else:
+            break
+
+    return mosaics
+
+def import_videos(thisNode, app):
+    videos_folder = thisNode.videos_dir.get()
+
+    posx = 0
+    for index, video in enumerate(os.listdir(videos_folder)):
+        picture = videos_folder + '/' + video
+        reader = app.createReader( picture, thisNode )
+        reader.setPosition(posx - 12, -300)
+        reader.setLabel('reader_' + str(index))
+
+        # para ajustar el reformat
+        _width = reader.getOutputFormat().width()
+        _height = reader.getOutputFormat().height()
+        aspect = 1920.0 / 1080.0 # aspecto de referencia
+        aspect_input = float(_width) / float(_height)
+        # -------------
+
+        reformat = createNode('reformat', 'reformat_' + str(index), thisNode, position=[posx, -150])
+        reformat.getParam('reformatType').set(1)
+        reformat.getParam('boxFixed').set(1)
+        reformat.getParam('boxSize').set(1920, 1080)
+
+        if aspect <= aspect_input:
+            reformat.getParam('resize').set(2)
+        reformat.connectInput(0, reader)
+
+        posx += 150
+
+def create_mosaic_a(thisNode):
+    amount = thisNode.getParam('mosaic_a_amount').get()
+
+    # obtiene la ultimo slide del ultimo mosaico para sacar la ultima posicion
+    all_mosaics = get_all_mosaics(thisNode)
+    if len(all_mosaics):
+        last_slide = all_mosaics[-1][-1]
+        transform = last_slide['transform']
+        posx = transform.getPosition()[0] + 150
+    else:
+        posx = -200
+
+    for i in range(amount):
+        index = len(all_mosaics) + i
+        posx = create_one_mosaic_a(thisNode, str(index), posx + 200)
+
+    cuts_create(thisNode)
+
+def create_one_mosaic_a(thisNode, name, posx = 0):
+    
+    squared_videos = thisNode.getParam('squared_videos').get()
+    vertical = squared_videos
+    horizontal = squared_videos
 
     margin = 10
     scale = 1.0 / horizontal
     left_pos = 1920 / horizontal
     up_pos = 1080 * scale
 
-    posx = 0
+    items = get_items(thisNode)
+    items_random = random.sample(items, len(items)) # random sin repetir
 
+    posy = 500
+
+    merge = createNode('merge', 'merge_' + name, thisNode, position=[posx, posy + 300])
+
+    created_items = []
     left = 0
     conections = 3
     video_index = 0
     for l in range(horizontal):
-        
         up = 0
         for u in range(vertical):
             index = str(video_index)
+            
+            reformat = items_random[video_index]['reformat']
+            crop = createNode('crop', 'crop_' + name + '_' + index, thisNode, position=[posx, posy + 50])
+            crop.connectInput(0, reformat)
 
-            picture = videos_folder + '/' + videos[video_index]
-            reader = app.createReader( picture, thisNode )
-            reader.setPosition(posx, -300)
-            reader.setLabel('reader_' + index)
-
-            # para ajustar el reformat
-            _width = reader.getOutputFormat().width()
-            _height = reader.getOutputFormat().height()
-            aspect = 1920.0 / 1080.0 # aspecto de referencia
-            aspect_input = float(_width) / float(_height)
-            # -------------
-
-            reformat = createNode('reformat', 'reformat_' + index, thisNode, position=[posx, -150])
-            reformat.getParam('reformatType').set(1)
-            reformat.getParam('boxFixed').set(1)
-            reformat.getParam('boxSize').set(1920, 1080)
-
-            if aspect <= aspect_input:
-                reformat.getParam('resize').set(2)
-            reformat.connectInput(0, reader)
-
-            transform = createNode('transform', 'transform_' + index, thisNode, position=[posx, 0])
+            transform = createNode('transform', 'transform_' + name + '_' + index, thisNode, position=[posx, posy + 150])
             transform.getParam('scale').set(scale, scale)
             transform.getParam('center').set(0,0)
 
             transform.getParam('translate').set(left, up)
-            transform.connectInput(0, reformat)
+            transform.connectInput(0, crop)
+
+            created_items.append([crop, transform])
             
             conections += 1
             merge.connectInput(conections, transform)
             
             up += up_pos
-            posx += 200
+            posx += 120
             video_index += 1
 
         left += left_pos
-        
+    
+    include_multi_index(thisNode, created_items)
+
+    return posx
