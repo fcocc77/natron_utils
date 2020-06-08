@@ -3,22 +3,36 @@ from util import jread
 import os
 import random
 import wave
+import NatronEngine
+import json
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'video_import':
         import_videos(thisNode, app)
-    if knob_name == 'cuts':
-        cuts_create(thisNode)
-    if knob_name == 'update':
-        update(thisNode)     
+    if knob_name == 'refresh':
+        refresh(thisNode)     
     if knob_name == 'mosaic_a':
         create_mosaic_a(thisNode)
 
-def update(thisNode):
+def refresh(thisNode):
 
-    print get_all_mosaics(thisNode)
+    cuts_create(thisNode)
+
+    for mosaic in get_all_mosaics(thisNode):
+        for item in mosaic:
+            crop = item['crop']
+            userTextArea = str(crop.getParam('userTextArea').get())
+
+            if userTextArea != '0':
+                crop_data = userTextArea.replace('"', '').split(',')
+
+                squared_videos = int(crop_data[0])
+                mid = int(crop_data[1])
+                double = int(crop_data[2])
+
+                margin(thisNode, crop, mid=mid, double=double, squared_videos=squared_videos)
 
 def audio_sync(thisNode):
 
@@ -131,6 +145,67 @@ def get_items(thisNode):
 
     return items
 
+def margin(thisNode, crop, mid = False, double = False, squared_videos = False):
+    if not squared_videos:
+        squared_videos = thisNode.getParam('squared_videos').get()
+    margin = thisNode.getParam('margin').get()
+    if double:
+        margin /= 2
+
+    if squared_videos == 3:
+        margin = margin + (margin / 2)
+    elif squared_videos == 4:
+        margin *= 2 
+    elif squared_videos == 5:
+        margin = (margin * 2) + (margin / 2)       
+    elif squared_videos == 6:
+        margin *= 3      
+
+    size = crop.getParam('size')
+    bottom_left = crop.getParam('bottomLeft')
+
+    if mid:
+        mid_x = 1920 / 2
+        mid_x_left = 1920 / 4 + margin
+    else:
+        mid_x = 1920 
+        mid_x_left = margin
+
+    margin_rigth = mid_x - (margin * 2) 
+    margin_bottom = 1080 - (margin * 2) 
+
+    size.set(margin_rigth, margin_bottom)
+    bottom_left.set(mid_x_left , margin)
+
+def add_transition(thisNode, mosaic_index, start_frame, out=False):
+    mosaic = get_all_mosaics(thisNode)[mosaic_index]
+
+    horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
+    
+    random_difference = thisNode.getParam('random_difference').get()
+    duration = thisNode.getParam('transition_frames').get()
+
+    def add(param, _from, _to, start):
+        for dimension in range( param.getNumDimensions() ):
+            param.setValueAtTime(_from, start, dimension)
+            param.setInterpolationAtTime(start,  horizontal, dimension)
+
+            param.setValueAtTime(_to, start + duration, dimension)
+            param.setInterpolationAtTime(start + duration,  horizontal, dimension)
+
+    for item in mosaic:
+        which = item['dissolve'].getParam('which')
+        blur = item['blur'].getParam('size')
+        
+        start = start_frame + random.randint(start_frame, start_frame + random_difference )
+
+        if out:
+            add(which, 1, 0, start)
+            add(blur, 0, 100, start)
+        else:
+            add(which, 0, 1, start)
+            add(blur, 100, 0, start)
+
 def cuts_create(thisNode):
 
     # encuentra todos los merges de los mosaicos
@@ -144,35 +219,49 @@ def cuts_create(thisNode):
 
     total_frames = 250
 
-    switch = getNode(thisNode, 'switch')
-    if not switch:
-        switch = createNode('switch', 'switch', thisNode, position=[0, 2000])
+    global_merge = getNode(thisNode, 'global_merge')
+    if not global_merge:
+        global_merge = createNode('merge', 'global_merge', thisNode, position=[0, 2000])
 
     for i, merge in enumerate(merges):
-        switch.disconnectInput(i)
-        switch.connectInput(i, merge)
-
-    which = switch.getParam('which')
-    which.restoreDefaultValue()
+        global_merge.disconnectInput(i + 3)
+        global_merge.connectInput(i + 3, merge)
 
     time_range = thisNode.getParam('time_range').get()
-
-    cut = 0
-
+    transition_separation = thisNode.getParam('transition_separation').get()
+    cut_frame = 0
     connections_random = random.sample(range(len(merges)), len(merges)) # rango random sin repetir
 
+    def reset_all_transition():
+        for mosaic in get_all_mosaics(thisNode):
+            for item in mosaic:
+                which = item['dissolve'].getParam('which')
+                which.restoreDefaultValue(0)
+
+                blur = item['blur'].getParam('size')
+                blur.restoreDefaultValue(0)
+                blur.restoreDefaultValue(1)
+
+    reset_all_transition()
+
+    last_connection = 0
     i = 0
     for frame in range(total_frames):
-        if cut == frame:
+        if cut_frame == frame:
             if i >= len(connections_random):
                 i = 0
 
-            index = connections_random[i]
+            connection = connections_random[i]
 
-            which.setValueAtTime(index, cut, 0)
-            cut += random.randint(time_range[0], time_range[1])
+            if cut_frame > 0:
+                add_transition(thisNode, last_connection, frame - transition_separation  , out=True)
 
+            add_transition(thisNode, connection, frame)
+
+            cut_frame += random.randint(time_range[0], time_range[1])
+            
             i += 1
+            last_connection = connection 
 
 def include_multi_index(thisNode, items):
 
@@ -193,42 +282,51 @@ def include_multi_index(thisNode, items):
     
     for index, item in enumerate(items):
         crop, transform = item
-        
+        userTextArea = crop.getParam('userTextArea')
+
         scale_param = transform.getParam('scale')
         translate = transform.getParam('translate')
         size = crop.getParam('size')
         
         scale_param.set(scale, scale)
-        size.set(1920, 1080)
+        margin(thisNode, crop)
+
+        crop_data = str(squared_videos) + ', 0, 0'
+        userTextArea.set(crop_data)
         
         # slide con 4 imagenes
         if len(fours):
             if index in fours:
                 size.set(0, 0)
+                userTextArea.set('0')
 
             if index == fours[0]:
                 new_scale = scale * 2
                 scale_param.set(new_scale, new_scale)
-                size.set(1920, 1080)
+                margin(thisNode, crop, double=True)
+                crop_data = str(squared_videos) + ', 0, 1'
+                userTextArea.set(crop_data)
         # ----------------
         
         # slide con 2 imagenes
         for pair in pairs:
             if index in pair:
                 size.set(0, 0)
+                userTextArea.set('0')
             
             # sube la escala al primer item 
             if index == pair[0]:
                 new_scale = scale * 2
                 scale_param.set(new_scale, new_scale)                
-
-                size.set(1920 / 2, 1080)
-                crop.getParam('bottomLeft').set(1920 / 4, 0)
+                margin(thisNode, crop, mid=True, double=True)
 
                 # restamos la mitad de la imagen para que quede centrada
                 translate_x = translate.getValue() - (( 1920 * scale ) / 2)
                 # -----------------
                 translate.setValue(translate_x)
+
+                crop_data = str(squared_videos) + ', 1, 1'
+                userTextArea.set(crop_data)                
             
             # --------------
 
@@ -240,13 +338,17 @@ def get_all_mosaics(thisNode):
             index = '_' + str(mosaic_index) + '_' + str(slide_index)
             crop = getNode(thisNode, 'crop' + index)
             transform = getNode(thisNode, 'transform' + index)
+            blur = getNode(thisNode, 'blur' + index)
+            dissolve = getNode(thisNode, 'dissolve' + index)
 
             if not transform:
                 break
 
             mosaic.append({
                 'crop': crop,
-                'transform': transform
+                'transform': transform,
+                'blur': blur,
+                'dissolve': dissolve
             })
         
         if len(mosaic):
@@ -265,6 +367,7 @@ def import_videos(thisNode, app):
         reader = app.createReader( picture, thisNode )
         reader.setPosition(posx - 12, -300)
         reader.setLabel('reader_' + str(index))
+        reader.getParam('outputComponents').set(0)
 
         # para ajustar el reformat
         _width = reader.getOutputFormat().width()
@@ -308,7 +411,6 @@ def create_one_mosaic_a(thisNode, name, posx = 0):
     vertical = squared_videos
     horizontal = squared_videos
 
-    margin = 10
     scale = 1.0 / horizontal
     left_pos = 1920 / horizontal
     up_pos = 1080 * scale
@@ -318,7 +420,7 @@ def create_one_mosaic_a(thisNode, name, posx = 0):
 
     posy = 500
 
-    merge = createNode('merge', 'merge_' + name, thisNode, position=[posx, posy + 300])
+    merge = createNode('merge', 'merge_' + name, thisNode, position=[posx, posy + 500])
 
     created_items = []
     left = 0
@@ -330,7 +432,7 @@ def create_one_mosaic_a(thisNode, name, posx = 0):
             index = str(video_index)
             
             reformat = items_random[video_index]['reformat']
-            crop = createNode('crop', 'crop_' + name + '_' + index, thisNode, position=[posx, posy + 50])
+            crop = createNode('crop', 'crop_' + name + '_' + index, thisNode, position=[posx, posy])
             crop.connectInput(0, reformat)
 
             transform = createNode('transform', 'transform_' + name + '_' + index, thisNode, position=[posx, posy + 150])
@@ -340,10 +442,18 @@ def create_one_mosaic_a(thisNode, name, posx = 0):
             transform.getParam('translate').set(left, up)
             transform.connectInput(0, crop)
 
+            blur = createNode('blur', 'blur_' + name + '_' + index, thisNode, position=[posx, posy + 200])
+            blur.getParam('NatronOfxParamProcessA').set(1)
+            blur.connectInput(0, transform)
+            
+            dissolve = createNode('dissolve', 'dissolve_' + name + '_' + index, thisNode, position=[posx, posy + 250])
+            dissolve.connectInput(1, blur)
+            dissolve.getParam('which').set(1)
+
             created_items.append([crop, transform])
             
             conections += 1
-            merge.connectInput(conections, transform)
+            merge.connectInput(conections, dissolve)
             
             up += up_pos
             posx += 120
