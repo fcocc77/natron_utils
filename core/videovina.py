@@ -798,7 +798,7 @@ def update_videovina_project(thisNode, app):
     timeline = project.states.app.timeline
     velocity = project.states.preview.speed
     song = project.states.app.song
-    global_font = project.states.timeline.font
+    global_font = project.states.app.font
     # ----------------
 
     # modifica los datos del proyecto natron 
@@ -908,7 +908,7 @@ def export_default_project(thisNode, app):
     # --------------
     
     project.states.timeline.slides_base = slides_base
-    project.states.timeline.font = font
+    project.states.app.font = font
 
     frame_rate = 30.0
     speeds = thisNode.getParam('speeds').get()
