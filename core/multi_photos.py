@@ -15,6 +15,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         refresh(thisNode)     
     if knob_name == 'mosaic_a':
         create_mosaic_a(thisNode)
+    if knob_name == 'add_subtitles':
+        add_subtitles(thisNode)
 
 def refresh(thisNode):
 
@@ -33,6 +35,35 @@ def refresh(thisNode):
                 double = int(crop_data[2])
 
                 margin(thisNode, crop, mid=mid, double=double, squared_videos=squared_videos)
+
+def add_subtitles(thisNode):
+
+    subtitles_json = thisNode.getParam('subtitles').get()
+    subtitles = jread(subtitles_json)
+
+    posx = 200
+    posy = 2200
+
+    merge_all = createNode('merge', 'subtitles_merge_all', thisNode, position=[posx, posy + 200])
+    merge = createNode('merge', 'subtitles_merge', thisNode, position=[0, posy + 200])
+
+    global_merge = getNode(thisNode, 'global_merge')
+
+    merge.connectInput(1, merge_all)
+    merge.connectInput(0, global_merge)
+
+    for i, text in enumerate(subtitles):
+
+        title = createNode('text', 'title_' + str(i), thisNode, position=[posx, posy])
+        title.getParam('text').set(text.title)
+
+        subtitle = createNode('text', 'subtitle_' + str(i), thisNode, position=[posx, posy + 70])
+        subtitle.connectInput(0, title)
+        subtitle.getParam('text').set(text.subtitle)
+
+        merge_all.connectInput(i + 3, subtitle)
+
+        posx += 200
 
 def audio_sync(thisNode):
 
