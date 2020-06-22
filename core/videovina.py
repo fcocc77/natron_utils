@@ -4,6 +4,7 @@ import NatronGui
 from natron_utils import copy, getNode, question, alert, createNode
 from transition import directional_transition
 from util import jread, jwrite
+from time import sleep
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -103,7 +104,7 @@ def set_default_color(thisNode, thisParam):
             color = color_param.get()
             thisNode.color.set(color[0], color[1], color[2], 1)
 
-def refresh(thisNode, app):
+def refresh(thisNode, app):    
 
     velocity = thisNode.velocity.get()
     rscale = thisNode.rscale.get()
@@ -119,7 +120,7 @@ def refresh(thisNode, app):
     transition_frames = thisNode.transition_duration.get()
     transition_frames = ( slide_frames * transition_frames ) / normal_speed
     # -------------------------
-    
+
     width, hight = get_resolution(thisNode)
     
     slides = get_slides(thisNode)
@@ -730,58 +731,104 @@ def generate_production_slides(thisNode, app, amount, force = False, reformat = 
 def save_production_projects(thisNode):
     print 'save_production'
 
+def export_video_previs():
+    None
+    
+def export_sample_frame(thisNode, app, central_frame, template_from_static):
+    sample_slide_index = 1
+    slide = get_slide(thisNode, sample_slide_index)['slide']
+    filename = template_from_static + '/temp_image.jpg'
+    
+    if os.path.isfile(filename):
+        os.remove(filename)
+
+    export_frame(
+        script_name = 'export_sample_image',
+        jobname = 'Sample Image: ' + str(sample_slide_index),
+        filename = filename,
+        frame = central_frame,
+        resolution = [800, 450],
+        node = slide,
+        parent_node = thisNode
+    )
+
+    # espera que la imagen este rendereada para poder comprimirla
+    for i in range(60):
+        if os.path.isfile(filename):
+            break
+        sleep(1)
+    # -----------------------
+
+    # convertir la imagen renderizada a un formato jpg mas liviano
+    os.system('ffmpeg -y -i "' + filename + '" -q:v 10 "' + template_from_static + '/image.jpg"')
+    os.remove(filename)
+    
+def export_frame(script_name='', jobname='', filename='', frame=1, resolution=[640, 360], node=None, parent_node=None):
+    # exporta 1 frame con vinarender
+    posx = node.getPosition()[0] + 120
+    posy = node.getPosition()[1]
+
+    # cambia resolucion
+    reformat = getNode(parent_node, 'reformat_render')
+    if not reformat:
+        reformat = createNode('reformat', 'reformat_render', parent_node, position = [posx, posy] )
+        reformat.getParam('reformatType').set(1)
+    reformat.getParam('boxSize').set(resolution[0], resolution[1])
+    reformat.connectInput(0, node)
+    # ----------------------
+
+    vinarender_node = getNode(parent_node, script_name)
+    if not vinarender_node:
+        vinarender_node = createNode('vinarender', script_name, parent_node, position = [posx, posy + 50])
+        vinarender_node.setScriptName(script_name)
+        vinarender_node.connectInput(0, reformat)
+
+    vinarender_node.getParam('range').set(frame, frame)
+    
+    vinarender_node.getParam('filename').set(filename)
+    vinarender_node.getParam('job_name').set(jobname)
+    vinarender_node.getParam('instances').set(10)
+
+    vinarender_node.getParam('no_dialog').set(True)
+    vinarender_node.getParam('render').trigger()
+    vinarender_node.getParam('no_dialog').set(False)
+
+def export_overlap_frames(thisNode, app, central_frame, template_from_static):
+    slides = get_slides(thisNode, production = False)
+    overlap = template_from_static + '/overlap' 
+    
+    if not os.path.isdir(overlap):
+        os.makedirs(overlap)
+
+    for i, obj in enumerate(slides):
+        slide = obj['slide']
+
+        export_frame(
+            script_name = 'OverlapSlide-' + str(i),
+            jobname = app.projectName.get() + ' - Slide Overlap:  ' + str(i),
+            filename = overlap + '/' + slide.getLabel() + '.png',
+            frame = central_frame,
+            resolution = [640, 360],
+            node = slide.getNode('FX'),
+            parent_node = slide
+        )
+
 def export_videovina_info(thisNode, app):
 
-    slides = get_slides(thisNode, production = False)
-    
     # obtiene la duracion de las slides
     velocity = thisNode.velocity.get()
     speeds = thisNode.speeds.get()
     slide_frames = speeds[ velocity ]
     # -----------------
 
-    template_name = app.projectName.get().split('.')[0]
-    resources = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name + '/overlap'
-    if not os.path.isdir(resources):
-        os.makedirs(resources)
-
     # el frame central de la slide
     central_frame = slide_frames / 2
 
-    for i, obj in enumerate(slides):
-        slide = obj['slide']
-        fx = slide.getNode('FX')
+    template_name = app.projectName.get().split('.')[0]
+    template_from_static = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name
 
-        posx = fx.getPosition()[0] + 200
-        posy = fx.getPosition()[1]
-
-        # cambia resolucion 640 x 360
-        reformat = getNode(slide, 'reformat_render')
-        if not reformat:
-            reformat = createNode('reformat', 'reformat_render', slide, position = [posx, posy] )
-            reformat.getParam('reformatType').set(1)
-            reformat.getParam('boxSize').set(640, 360)
-        reformat.connectInput(0, fx)
-        # ----------------------
-
-        render_name = 'OverlapSlide-' + str(i)
-        vinarender_node = getNode(slide, render_name)
-        if not vinarender_node:
-            vinarender_node = createNode('vinarender', render_name, slide, position = [posx, posy + 50])
-            vinarender_node.setScriptName(render_name)
-            vinarender_node.connectInput(0, reformat)
-
-        vinarender_node.getParam('range').set(central_frame, central_frame)
-        
-        _file = resources + '/' + slide.getLabel() + '.png'
-        vinarender_node.getParam('filename').set(_file)
-        jobname = app.projectName.get() + ' - Slide Overlap:  ' + str(i) 
-        vinarender_node.getParam('job_name').set(jobname)
-        vinarender_node.getParam('instances').set(10)
-
-        vinarender_node.getParam('no_dialog').set(True)
-        vinarender_node.getParam('render').trigger()
-        vinarender_node.getParam('no_dialog').set(False)
+    # export_overlap_frames(thisNode, app, central_frame, template_from_static)
+    export_sample_frame(thisNode, app, central_frame, template_from_static)
 
     alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.','VideoVina Info.')
 
