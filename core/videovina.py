@@ -1,5 +1,6 @@
 import random
 import os
+import shutil
 import NatronGui
 from natron_utils import copy, getNode, question, alert, createNode
 from transition import directional_transition
@@ -1030,3 +1031,5 @@ def transfer_to_static(thisNode, app, project_path):
 
     # copia proyecto
     shutil.copy(resources + '/project.json', static_templates)
+
+    alert('Se transfirieron todos los archivos a la carpeta estatica de videovina.')
