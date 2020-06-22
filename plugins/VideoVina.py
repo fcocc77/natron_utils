@@ -177,6 +177,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Fast")
     lastNode.velocity = param
     del param
 
@@ -222,7 +223,7 @@ def createInstance(app,group):
     param.setHelp("esta velocidad de frames corresponde a la velocidad normal,\ny calculta la velocidad final dependiendo de la velocidad de la slide ( Slow, Normal, Fast )\n")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(40, 0)
+    param.setValue(36, 0)
     lastNode.transition_duration = param
     del param
 
@@ -239,7 +240,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(0.2, 0)
     lastNode.rscale = param
     del param
 
@@ -354,7 +355,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
     param.setAddNewLine(True)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/travel")
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/christmas")
     lastNode.reference_pictures = param
     del param
 
@@ -373,7 +374,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(2, 0)
+    param.setValue(5, 0)
     lastNode.amount_slide = param
     del param
 
@@ -402,7 +403,7 @@ def createInstance(app,group):
     param.setHelp("A partir de las slides base, genera nuevas slide duplicando las que hay")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(7, 0)
+    param.setValue(3, 0)
     lastNode.production_slides = param
     del param
 
@@ -684,6 +685,18 @@ def createInstance(app,group):
     lastNode.export_default_project = param
     del param
 
+    param = lastNode.createButtonParam("transfer_to_static", "Transfer To Static")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Transfiere todos los recursos generados, a la carpeta estatica de videovina, con las imagenes y videos comprimidos para mayor rapides de la pagina.")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.transfer_to_static = param
+    del param
+
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -692,7 +705,7 @@ def createInstance(app,group):
     # Start of node "Output3"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output3")
-    lastNode.setPosition(1800, 635)
+    lastNode.setPosition(1923, -560)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput3 = lastNode

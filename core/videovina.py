@@ -13,6 +13,8 @@ xdistance = 200
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
+    project_path = os.path.dirname(os.path.dirname(app.projectPath.get()))    
+
     if knob_name == 'generate_slides':
         generate_base_slides(thisNode, app)
     elif knob_name == 'save_production':
@@ -24,11 +26,11 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'duplicate_slides':
         duplicate_slides(thisNode, app)
     elif knob_name == 'videovina_info':
-        export_videovina_info(thisNode, app)
+        export_videovina_info(thisNode, app, project_path)
     elif knob_name == 'update_videovina_project':
         update_videovina_project(thisNode, app)
     elif knob_name == 'export_default_project':
-        export_default_project(thisNode, app)
+        export_default_project(thisNode, app, project_path)
     elif knob_name == 'default_color':
         set_default_color(thisNode, thisParam)
     elif knob_name == 'include_texts':
@@ -39,6 +41,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         play_song(thisNode)
     elif knob_name == 'stop':
         play_song(thisNode, play=False)
+    elif knob_name == 'transfer_to_static':
+        transfer_to_static(thisNode, app, project_path)
 
 def play_song(thisNode, play=True):
     if not play:
@@ -731,47 +735,48 @@ def generate_production_slides(thisNode, app, amount, force = False, reformat = 
 def save_production_projects(thisNode):
     print 'save_production'
 
-def export_video_previs():
-    None
+def export_video_previs(thisNode, app, template_name, resources):
+    last_transition = getNode(thisNode, 'last_transition')
+
+    filename = resources + '/previs.mov'
+
+    thisNode.getParam('rscale').set(0.2)
+    refresh(thisNode, app)
+
+    render(
+        script_name = 'video_previs_export',
+        jobname = 'Video Previs: ' + template_name,
+        filename = filename,
+        frame = [1, 210],
+        resolution = [384, 216],
+        node = last_transition,
+        parent_node = thisNode
+    ) 
     
-def export_sample_frame(thisNode, app, central_frame, template_from_static):
+def export_sample_frame(thisNode, central_frame, resources):
     sample_slide_index = 1
     slide = get_slide(thisNode, sample_slide_index)['slide']
-    filename = template_from_static + '/temp_image.jpg'
     
-    if os.path.isfile(filename):
-        os.remove(filename)
-
-    export_frame(
+    render(
         script_name = 'export_sample_image',
         jobname = 'Sample Image: ' + str(sample_slide_index),
-        filename = filename,
+        filename = resources + '/image.jpg',
         frame = central_frame,
         resolution = [800, 450],
         node = slide,
         parent_node = thisNode
     )
 
-    # espera que la imagen este rendereada para poder comprimirla
-    for i in range(60):
-        if os.path.isfile(filename):
-            break
-        sleep(1)
-    # -----------------------
-
-    # convertir la imagen renderizada a un formato jpg mas liviano
-    os.system('ffmpeg -y -i "' + filename + '" -q:v 10 "' + template_from_static + '/image.jpg"')
-    os.remove(filename)
-    
-def export_frame(script_name='', jobname='', filename='', frame=1, resolution=[640, 360], node=None, parent_node=None):
+def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 360], node=None, parent_node=None):
     # exporta 1 frame con vinarender
     posx = node.getPosition()[0] + 120
     posy = node.getPosition()[1]
 
     # cambia resolucion
-    reformat = getNode(parent_node, 'reformat_render')
+    reformat_name = 'reformat_' + script_name
+    reformat = getNode(parent_node, reformat_name)
     if not reformat:
-        reformat = createNode('reformat', 'reformat_render', parent_node, position = [posx, posy] )
+        reformat = createNode('reformat', reformat_name, parent_node, position = [posx, posy] )
         reformat.getParam('reformatType').set(1)
     reformat.getParam('boxSize').set(resolution[0], resolution[1])
     reformat.connectInput(0, node)
@@ -783,8 +788,11 @@ def export_frame(script_name='', jobname='', filename='', frame=1, resolution=[6
         vinarender_node.setScriptName(script_name)
         vinarender_node.connectInput(0, reformat)
 
-    vinarender_node.getParam('range').set(frame, frame)
-    
+    if type(frame) == int:
+        vinarender_node.getParam('range').set(frame, frame)
+    else:
+        vinarender_node.getParam('range').set(frame[0], frame[1])
+
     vinarender_node.getParam('filename').set(filename)
     vinarender_node.getParam('job_name').set(jobname)
     vinarender_node.getParam('instances').set(10)
@@ -793,9 +801,9 @@ def export_frame(script_name='', jobname='', filename='', frame=1, resolution=[6
     vinarender_node.getParam('render').trigger()
     vinarender_node.getParam('no_dialog').set(False)
 
-def export_overlap_frames(thisNode, app, central_frame, template_from_static):
+def export_overlap_frames(thisNode, template_name, central_frame, resources):
     slides = get_slides(thisNode, production = False)
-    overlap = template_from_static + '/overlap' 
+    overlap = resources + '/overlap' 
     
     if not os.path.isdir(overlap):
         os.makedirs(overlap)
@@ -803,9 +811,9 @@ def export_overlap_frames(thisNode, app, central_frame, template_from_static):
     for i, obj in enumerate(slides):
         slide = obj['slide']
 
-        export_frame(
+        render(
             script_name = 'OverlapSlide-' + str(i),
-            jobname = app.projectName.get() + ' - Slide Overlap:  ' + str(i),
+            jobname = template_name + ' - Slide Overlap:  ' + str(i),
             filename = overlap + '/' + slide.getLabel() + '.png',
             frame = central_frame,
             resolution = [640, 360],
@@ -813,7 +821,7 @@ def export_overlap_frames(thisNode, app, central_frame, template_from_static):
             parent_node = slide
         )
 
-def export_videovina_info(thisNode, app):
+def export_videovina_info(thisNode, app, project_path):
 
     # obtiene la duracion de las slides
     velocity = thisNode.velocity.get()
@@ -825,10 +833,12 @@ def export_videovina_info(thisNode, app):
     central_frame = slide_frames / 2
 
     template_name = app.projectName.get().split('.')[0]
-    template_from_static = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name
+    resources = project_path + '/resources'
 
-    # export_overlap_frames(thisNode, app, central_frame, template_from_static)
-    export_sample_frame(thisNode, app, central_frame, template_from_static)
+    export_default_project(thisNode, app, project_path)
+    export_overlap_frames(thisNode, template_name, central_frame, resources)
+    export_sample_frame(thisNode, central_frame, resources)
+    export_video_previs(thisNode, app, template_name, resources)
 
     alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.','VideoVina Info.')
 
@@ -906,23 +916,17 @@ def update_videovina_project(thisNode, app):
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
 
-def export_default_project(thisNode, app):
-    project_path = os.path.dirname(os.path.dirname(app.projectPath.get()))
+def export_default_project(thisNode, app, project_path):
     project_name = app.projectName.get().split('.')[0]
     videovina_root = thisNode.getParam('videovina_root').get()
 
     base_project = videovina_root + '/misc/base_project.json'
-    out_project_dir = videovina_root + '/static/templates/' + project_name
-    out_project = out_project_dir + '/project.json'
-
-    if not os.path.isdir(out_project_dir):
-        os.makedirs(out_project_dir)
-    
-    # copia el contenido de la carpeta resources a la carpeta estatica
     resources = project_path + '/resources'
-    os.system('cp ' + resources + '/* ' + out_project_dir)
-    # -------------------------
-    
+    out_project = resources + '/project.json'
+
+    if not os.path.isdir(resources):
+        os.makedirs(resources)
+
     project = jread(base_project)
 
     # obtiene colores de muestra
@@ -997,3 +1001,32 @@ def export_default_project(thisNode, app):
     jwrite(out_project, project)
 
     alert('Proyecto ya fue exportado.', 'Export default project')
+
+def transfer_to_static(thisNode, app, project_path):
+
+    template_name = app.projectName.get().split('.')[0]
+    static_templates = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name
+    resources = project_path + '/resources'
+
+    if not os.path.isdir(static_templates):
+        os.makedirs(static_templates)
+
+    # copia la json de informacion de la plantilla
+    info = resources + '/info.json'
+    shutil.copy(info, static_templates)
+    # -------------------------
+
+    # convertir la imagen renderizada a un formato jpg mas liviano
+    os.system('ffmpeg -y -i "' + resources + '/image.jpg" -q:v 10 "' + static_templates + '/image.jpg"')
+
+    # convertir el previs renderizada a un formato mp4 mas liviano
+    os.system('ffmpeg -y -i "' + resources + '/previs.mov" -b 500k "' + static_templates + '/previs.mp4"')
+
+    # copia la carpeta overlap
+    static_overlap = static_templates + '/overlap'
+    if os.path.isdir(static_overlap):
+        shutil.rmtree(static_overlap)
+    shutil.copytree(resources + '/overlap', static_overlap)
+
+    # copia proyecto
+    shutil.copy(resources + '/project.json', static_templates)
