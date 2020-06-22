@@ -69,9 +69,9 @@ def get_current_song(thisNode):
 def update_private_content(thisNode, thisParam):
     # actualiza todo el contenido que hay en la carpeta private de videovina,
     # plantillas, musica y fuentes
-    private = thisParam.get()
+    videovina_root = thisParam.get()
 
-    music_dir = private + '/music' 
+    music_dir = videovina_root + '/private/music'
     songs = []
     for _root, _dir, files in os.walk(music_dir):
         for _file in files:
@@ -81,7 +81,7 @@ def update_private_content(thisNode, thisParam):
 
     thisNode.getParam('default_song').setOptions(songs)
 
-    fonts_dir = private + '/fonts'
+    fonts_dir = videovina_root + '/private/fonts'
     fonts = []
     if os.path.isdir(fonts_dir):
         for font in os.listdir(fonts_dir):
@@ -860,11 +860,23 @@ def update_videovina_project(thisNode, app):
     refresh(thisNode, app)
 
 def export_default_project(thisNode, app):
-    project_path = os.path.dirname( os.path.dirname( app.getProjectParam('projectPath').get() ) )
-    base_project = project_path + '/resources/project.json'
-    out_project = thisNode.default_json_project.get()
+    project_path = os.path.dirname(os.path.dirname(app.projectPath.get()))
+    project_name = app.projectName.get().split('.')[0]
+    videovina_root = thisNode.getParam('videovina_root').get()
+
+    base_project = videovina_root + '/misc/base_project.json'
+    out_project_dir = videovina_root + '/static/templates/' + project_name
+    out_project = out_project_dir + '/project.json'
+
+    if not os.path.isdir(out_project_dir):
+        os.makedirs(out_project_dir)
     
-    project = jread(out_project)
+    # copia el contenido de la carpeta resources a la carpeta estatica
+    resources = project_path + '/resources'
+    os.system('cp ' + resources + '/* ' + out_project_dir)
+    # -------------------------
+    
+    project = jread(base_project)
 
     # obtiene colores de muestra
     colors = []
@@ -908,6 +920,7 @@ def export_default_project(thisNode, app):
     # --------------
     
     project.states.timeline.slides_base = slides_base
+    project.states.timeline.slides_base_count = base_count
     project.states.app.font = font
 
     frame_rate = 30.0
@@ -929,6 +942,10 @@ def export_default_project(thisNode, app):
     project.states.app.song = song_name
     project.states.music.playing = song_name
     # --------------
+    
+    # cambia el tipo
+    project.type = project_name
+    # -------------
 
     jwrite(out_project, project)
 

@@ -45,16 +45,16 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createPathParam("videovina_private", "VideoVina Private Folder")
+    param = lastNode.createPathParam("videovina_root", "VideoVina Root Folder")
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Carpeta privada de videovina, donde estan todos las plantillas base, fotos de muestra y la musica.")
+    param.setHelp("Carpeta raiz de videovina, donde esta toda la web y archivos privados que contienen las plantillas base, fotos de muestra y la musica.")
     param.setAddNewLine(True)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private")
-    lastNode.videovina_private = param
+    param.setValue("/home/pancho/Documents/GitHub/videovina")
+    lastNode.videovina_root = param
     del param
 
     param = lastNode.createSeparatorParam("sep6", "")
@@ -100,7 +100,7 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos.")
+    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos, lo copia a la carpeta estatica de videovina \'static/templates/<template_name>\'/resources/overlap\'")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.videovina_info = param
@@ -222,7 +222,7 @@ def createInstance(app,group):
     param.setHelp("esta velocidad de frames corresponde a la velocidad normal,\ny calculta la velocidad final dependiendo de la velocidad de la slide ( Slow, Normal, Fast )\n")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(20, 0)
+    param.setValue(40, 0)
     lastNode.transition_duration = param
     del param
 
@@ -258,7 +258,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Color 1")
+    param.set("Color 3")
     lastNode.default_color = param
     del param
 
@@ -284,8 +284,8 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     param.setValue(1, 0)
-    param.setValue(0.2784313725490196, 1)
-    param.setValue(0.05098039215686274, 2)
+    param.setValue(1, 1)
+    param.setValue(1, 2)
     lastNode.color = param
     del param
 
@@ -299,7 +299,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/music/others/Bustin Loose.mp3")
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/music/others/Heading West.mp3")
     lastNode.song = param
     del param
 
@@ -313,7 +313,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Open Sans Bold.ttf")
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Major Shift.ttf")
     lastNode.font = param
     del param
 
@@ -589,7 +589,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Bustin Loose  -  Others")
+    param.set("Rhastafarian  -  Others")
     lastNode.default_song = param
     del param
 
@@ -627,7 +627,8 @@ def createInstance(app,group):
     ("Open Sans Bold", "Open Sans Bold"),
     ("Open Sans Light", "Open Sans Light"),
     ("Pompiere Regular", "Pompiere Regular"),
-    ("Tinos", "Tinos")]
+    ("Tinos", "Tinos"),
+    ("Licenses", "Licenses")]
     param.setOptions(entries)
     del entries
 
@@ -638,7 +639,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Open Sans Bold")
+    param.set("Delius Swash Caps")
     lastNode.default_font = param
     del param
 
@@ -655,27 +656,29 @@ def createInstance(app,group):
     lastNode.sep8 = param
     del param
 
-    param = lastNode.createFileParam("default_json_project", "Project")
-    param.setSequenceEnabled(False)
+    param = lastNode.createStringParam("default_json_project", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("SAVE PROJECT IN:       static/templates/.../project.json")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
+    param.setHelp("Proyecto guardado en el directorio static de la carpeta base de videovina")
     param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    param.setValue("/mnt/server_01/videovina/as3/private/admin/projects/test/project.json")
     lastNode.default_json_project = param
     del param
 
-    param = lastNode.createButtonParam("export_default_project", "Export Project")
+    param = lastNode.createButtonParam("export_default_project", "Export Project to Static")
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Exporta todos los datos por defecto a un archivo \'project.json\' para la aplicacion web.")
+    param.setHelp("Exporta todos los datos por defecto a un archivo \'project.json\' y copia  el contenido de resources a la carpeta static de videovina.")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.export_default_project = param
@@ -689,8 +692,8 @@ def createInstance(app,group):
     # Start of node "Output3"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output3")
-    lastNode.setPosition(327, -333)
-    lastNode.setSize(100, 32)
+    lastNode.setPosition(1800, 635)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput3 = lastNode
 
