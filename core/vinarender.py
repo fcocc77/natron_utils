@@ -1,8 +1,8 @@
 import os
+import shutil
 import NatronGui
 from util import jread
 from natron_utils import get_all_nodes
-
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
@@ -165,9 +165,17 @@ def render(thisNode, app):
         + ' -instances ' + str( instances )
     )
 
-    # guarda el proyecto antes de enviar el render
+    # guarda el proyecto antes de enviar, y crea uno nuevo
     project_path = app.projectPath.get() + app.projectName.get()
-    app.saveProject( project_path )    
+    app.saveProject( project_path )
+
+    for i in range(100):
+        # encuentra version disponible
+        new_project = project_path[:-4] + '_render_' + str(i + 1) + '.ntp'
+        if not os.path.isfile( new_project ):
+            break
+
+    shutil.copy(project_path, new_project)    
     # ------------------
 
     os.system( cmd )
