@@ -155,7 +155,7 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 		'switch' : 'net.sf.openfx.switchPlugin'
 	}
 
-	_node = app.createNode(nodes[node], 2, group)
+	_node = app.createNode(nodes[node], -1, group)
 	_node.setLabel(label)
 	if position:
 		_node.setPosition(position[0], position[1])

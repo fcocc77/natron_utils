@@ -10,6 +10,7 @@ import merge_matte
 import videovina
 import resolution_expand
 import multi_photos
+import glass_transition
 import util
 # --------------
 

@@ -171,7 +171,9 @@ def render(thisNode, app):
 
     for i in range(100):
         # encuentra version disponible
-        new_project = project_path[:-4] + '_render_' + str(i + 1) + '.ntp'
+        dirname = os.path.dirname(project_path)
+        basename = os.path.basename(project_path) 
+        new_project = dirname + '/__' + basename[:-4] + '_render_' + str(i + 1) + '.ntp'
         if not os.path.isfile( new_project ):
             break
 
