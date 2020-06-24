@@ -12,15 +12,27 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'video_import':
         import_videos(thisNode, app)
     if knob_name == 'refresh':
-        refresh(thisNode)     
+        refresh(thisNode, app)     
     if knob_name == 'mosaic_a':
-        create_mosaic_a(thisNode)
+        create_mosaic_a(thisNode, app)
     if knob_name == 'add_subtitles':
         add_subtitles(thisNode)
+    if knob_name == 'titles_refresh':
+        titles_refresh(thisNode)
 
-def refresh(thisNode):
+def time_to_frames(time):    
+    frame_rate = 30
 
-    cuts_create(thisNode)
+    minutes, second = time.split(':')
+
+    total_second = ( int(minutes) * 60 ) + int(second) 
+    frames = total_second * total_second
+
+    return frames
+
+def refresh(thisNode, app):
+
+    cuts_create(thisNode, app)
 
     for mosaic in get_all_mosaics(thisNode):
         for item in mosaic:
@@ -35,6 +47,25 @@ def refresh(thisNode):
                 double = int(crop_data[2])
 
                 margin(thisNode, crop, mid=mid, double=double, squared_videos=squared_videos)
+
+def add_line(thisNode, word):
+    # separa el texto con un maximo de letras horizontales
+    max_letter = thisNode.getParam('max_horizon_letters').get()
+    final = ''
+
+    i = 0
+    last_letter = ''
+    for letter in word:
+        if i >= max_letter:
+            if last_letter == ' ':
+                final += '\n'
+                i = 0
+
+        final += letter
+
+        last_letter = letter
+        i += 1
+    return final
 
 def add_subtitles(thisNode):
 
@@ -54,16 +85,30 @@ def add_subtitles(thisNode):
 
     for i, text in enumerate(subtitles):
 
+        _subtitle = add_line(thisNode, text.subtitle)
+        subtitle = createNode('text', 'subtitle_' + str(i), thisNode, position=[posx + 150, posy])
+        subtitle.getParam('text').set(_subtitle)
+        subtitle.getParam('autoSize').set(True)
+        subtitle.getParam('size').set(thisNode.getParam('subtitle_size').get())
+        subtitle_height = subtitle.getRegionOfDefinition(1, 1).y2
+
+        _title = add_line(thisNode, text.title)
         title = createNode('text', 'title_' + str(i), thisNode, position=[posx, posy])
-        title.getParam('text').set(text.title)
+        title.getParam('size').set(thisNode.getParam('title_size').get())
+        title.getParam('text').set(_title)
+        title.getParam('autoSize').set(True)
 
-        subtitle = createNode('text', 'subtitle_' + str(i), thisNode, position=[posx, posy + 70])
-        subtitle.connectInput(0, title)
-        subtitle.getParam('text').set(text.subtitle)
+        title_position = createNode('position', 'subtitle_position_' + str(i),thisNode,  position=[posx, posy + 50])
+        title_position.connectInput(0, title)
+        title_position.getParam('translate').set(0, subtitle_height)
 
-        merge_all.connectInput(i + 3, subtitle)
+        merge = createNode('merge','merge_titles_' + str(i), thisNode, position=[posx, posy + 100])
+        merge.connectInput(0, subtitle)
+        merge.connectInput(1, title_position)
 
-        posx += 200
+        merge_all.connectInput(i + 3, merge)
+
+        posx += 400
 
 def audio_sync(thisNode):
 
@@ -237,7 +282,7 @@ def add_transition(thisNode, mosaic_index, start_frame, out=False):
             add(which, 0, 1, start)
             add(blur, 100, 0, start)
 
-def cuts_create(thisNode):
+def cuts_create(thisNode, app):
 
     # encuentra todos los merges de los mosaicos
     merges = []
@@ -248,7 +293,7 @@ def cuts_create(thisNode):
             merges.append(merge)
     # -------------------------
 
-    total_frames = 250
+    total_frames = app.frameRange.getValue(1)
 
     global_merge = getNode(thisNode, 'global_merge')
     if not global_merge:
@@ -418,7 +463,7 @@ def import_videos(thisNode, app):
 
         posx += 150
 
-def create_mosaic_a(thisNode):
+def create_mosaic_a(thisNode, app):
     amount = thisNode.getParam('mosaic_a_amount').get()
 
     # obtiene la ultimo slide del ultimo mosaico para sacar la ultima posicion
@@ -434,7 +479,7 @@ def create_mosaic_a(thisNode):
         index = len(all_mosaics) + i
         posx = create_one_mosaic_a(thisNode, str(index), posx + 200)
 
-    cuts_create(thisNode)
+    cuts_create(thisNode, app)
 
 def create_one_mosaic_a(thisNode, name, posx = 0):
     
