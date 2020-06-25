@@ -2,7 +2,7 @@ import os
 import shutil
 import NatronGui
 from util import jread
-from natron_utils import get_all_nodes
+from natron_utils import get_all_nodes, saveProject
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
@@ -166,8 +166,7 @@ def render(thisNode, app):
     )
 
     # guarda el proyecto antes de enviar, y crea uno nuevo
-    project_path = app.projectPath.get() + app.projectName.get()
-    app.saveProject( project_path )
+    project_path = saveProject()
 
     for i in range(100):
         # encuentra version disponible

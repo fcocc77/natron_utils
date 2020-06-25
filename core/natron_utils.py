@@ -114,6 +114,14 @@ def copy(node, group = None):
 
 	return new_node
 
+def saveProject():
+	app = NatronGui.natron.getGuiInstance(0)
+
+	project_path = app.getProjectParam('projectPath').get() + app.getProjectParam('projectName').get()
+	app.saveProject( project_path )
+
+	return project_path
+
 def question(_question, message):
 	msgBox = QMessageBox()
 	msgBox.setText(message)
