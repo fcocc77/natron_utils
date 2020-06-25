@@ -184,8 +184,7 @@ def createInstance(app,group):
     lastNode.duration = param
     del param
 
-    param = lastNode.createOutputFileParam("prefix", "Prefix File")
-    param.setSequenceEnabled(False)
+    param = lastNode.createPathParam("prefix_dir", "Prefix DIr")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -194,6 +193,19 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setValue("[Project]/../footage")
+    lastNode.prefix_dir = param
+    del param
+
+    param = lastNode.createStringParam("prefix", "Prefix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
     lastNode.prefix = param
     del param
 
@@ -289,7 +301,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_slow_hd/slow_hd_###.jpg")
+    param.setValue("[Project]/../footage/transition_slow_hd/transition_slow_hd_###.jpg")
     lastNode.filename = param
     del param
 
@@ -506,7 +518,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_slow_hd/slow_hd_###.jpg")
+    param.setValue("[Project]/../footage/transition_slow_hd/transition_slow_hd_###.jpg")
     lastNode.filename = param
     del param
 
@@ -713,37 +725,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(slow_hd_001.jpg)</Natron>")
+        param.setValue("<Natron>(transition_slow_hd_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_slow_hd/slow_hd_###.jpg")
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(45, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
+        param.setValue("[Project]/../footage/transition_slow_hd/transition_slow_hd_###.jpg")
         del param
 
     del lastNode
@@ -889,7 +876,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_normal_hd/normal_hd_###.jpg")
+    param.setValue("[Project]/../footage/transition_normal_hd/transition_normal_hd_###.jpg")
     lastNode.filename = param
     del param
 
@@ -1106,7 +1093,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_normal_hd/normal_hd_###.jpg")
+    param.setValue("[Project]/../footage/transition_normal_hd/transition_normal_hd_###.jpg")
     lastNode.filename = param
     del param
 
@@ -1308,57 +1295,17 @@ def createInstance(app,group):
 
     param = lastNode.getParam("decodingPluginID")
     if param is not None:
-        param.setValue("fr.inria.openfx.ReadFFmpeg")
+        param.setValue("fr.inria.openfx.ReadOIIO")
         del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(video.mov)</Natron>")
+        param.setValue("<Natron>(transition_normal_hd_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_normal_hd/normal_hd_###.jpg")
-        del param
-
-    param = lastNode.getParam("firstFrame")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(30, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("startingTime")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
-        del param
-
-    param = lastNode.getParam("ParamExistingInstance")
-    if param is not None:
-        param.setValue(True)
+        param.setValue("[Project]/../footage/transition_normal_hd/transition_normal_hd_###.jpg")
         del param
 
     del lastNode
@@ -1504,7 +1451,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_fast_hd/fast_hd_###.jpg")
+    param.setValue("[Project]/../footage/transition_fast_hd/transition_fast_hd_###.jpg")
     lastNode.filename = param
     del param
 
@@ -1721,7 +1668,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_fast_hd/fast_hd_###.jpg")
+    param.setValue("[Project]/../footage/transition_fast_hd/transition_fast_hd_###.jpg")
     lastNode.filename = param
     del param
 
@@ -1928,37 +1875,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(fast_hd_001.jpg)</Natron>")
+        param.setValue("<Natron>(transition_fast_hd_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_fast_hd/fast_hd_###.jpg")
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(15, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
+        param.setValue("[Project]/../footage/transition_fast_hd/transition_fast_hd_###.jpg")
         del param
 
     del lastNode
@@ -1975,7 +1897,6 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(1, 0)
         param.setValue(15, 1)
         del param
 
@@ -2105,7 +2026,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_slow_mid/slow_mid_###.jpg")
+    param.setValue("[Project]/../footage/transition_slow_mid/transition_slow_mid_###.jpg")
     lastNode.filename = param
     del param
 
@@ -2322,7 +2243,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_slow_mid/slow_mid_###.jpg")
+    param.setValue("[Project]/../footage/transition_slow_mid/transition_slow_mid_###.jpg")
     lastNode.filename = param
     del param
 
@@ -2524,47 +2445,17 @@ def createInstance(app,group):
 
     param = lastNode.getParam("decodingPluginID")
     if param is not None:
-        param.setValue("fr.inria.openfx.ReadFFmpeg")
+        param.setValue("fr.inria.openfx.ReadOIIO")
         del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(video.mov)</Natron>")
+        param.setValue("<Natron>(transition_slow_mid_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_slow_mid/slow_mid_###.jpg")
-        del param
-
-    param = lastNode.getParam("firstFrame")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(45, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
-        del param
-
-    param = lastNode.getParam("ParamExistingInstance")
-    if param is not None:
-        param.setValue(True)
+        param.setValue("[Project]/../footage/transition_slow_mid/transition_slow_mid_###.jpg")
         del param
 
     del lastNode
@@ -2710,7 +2601,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_normal_mid/normal_mid_###.jpg")
+    param.setValue("[Project]/../footage/transition_normal_mid/transition_normal_mid_###.jpg")
     lastNode.filename = param
     del param
 
@@ -2927,7 +2818,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_normal_mid/normal_mid_###.jpg")
+    param.setValue("[Project]/../footage/transition_normal_mid/transition_normal_mid_###.jpg")
     lastNode.filename = param
     del param
 
@@ -3134,37 +3025,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(normal_mid_001.jpg)</Natron>")
+        param.setValue("<Natron>(transition_normal_mid_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_normal_mid/normal_mid_###.jpg")
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(30, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
+        param.setValue("[Project]/../footage/transition_normal_mid/transition_normal_mid_###.jpg")
         del param
 
     del lastNode
@@ -3310,7 +3176,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_fast_mid/fast_mid_###.jpg")
+    param.setValue("[Project]/../footage/transition_fast_mid/transition_fast_mid_###.jpg")
     lastNode.filename = param
     del param
 
@@ -3527,7 +3393,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_fast_mid/fast_mid_###.jpg")
+    param.setValue("[Project]/../footage/transition_fast_mid/transition_fast_mid_###.jpg")
     lastNode.filename = param
     del param
 
@@ -3734,37 +3600,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(fast_mid_001.jpg)</Natron>")
+        param.setValue("<Natron>(transition_fast_mid_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_fast_mid/fast_mid_###.jpg")
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(15, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
+        param.setValue("[Project]/../footage/transition_fast_mid/transition_fast_mid_###.jpg")
         del param
 
     del lastNode
@@ -3781,7 +3622,6 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(1, 0)
         param.setValue(15, 1)
         del param
 
@@ -3911,7 +3751,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_slow_4k/slow_4k_###.jpg")
+    param.setValue("[Project]/../footage/transition_slow_4k/transition_slow_4k_###.jpg")
     lastNode.filename = param
     del param
 
@@ -4128,7 +3968,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_slow_4k/slow_4k_###.jpg")
+    param.setValue("[Project]/../footage/transition_slow_4k/transition_slow_4k_###.jpg")
     lastNode.filename = param
     del param
 
@@ -4335,37 +4175,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(slow_4k_001.jpg)</Natron>")
+        param.setValue("<Natron>(transition_slow_4k_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_slow_4k/slow_4k_###.jpg")
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(45, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
+        param.setValue("[Project]/../footage/transition_slow_4k/transition_slow_4k_###.jpg")
         del param
 
     del lastNode
@@ -4511,7 +4326,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_normal_4k/normal_4k_###.jpg")
+    param.setValue("[Project]/../footage/transition_normal_4k/transition_normal_4k_###.jpg")
     lastNode.filename = param
     del param
 
@@ -4728,7 +4543,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_normal_4k/normal_4k_###.jpg")
+    param.setValue("[Project]/../footage/transition_normal_4k/transition_normal_4k_###.jpg")
     lastNode.filename = param
     del param
 
@@ -4935,37 +4750,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(normal_4k_001.jpg)</Natron>")
+        param.setValue("<Natron>(transition_normal_4k_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_normal_4k/normal_4k_###.jpg")
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(30, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
+        param.setValue("[Project]/../footage/transition_normal_4k/transition_normal_4k_###.jpg")
         del param
 
     del lastNode
@@ -5111,7 +4901,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_fast_4k/fast_4k_###.jpg")
+    param.setValue("[Project]/../footage/transition_fast_4k/transition_fast_4k_###.jpg")
     lastNode.filename = param
     del param
 
@@ -5328,7 +5118,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_fast_4k/fast_4k_###.jpg")
+    param.setValue("[Project]/../footage/transition_fast_4k/transition_fast_4k_###.jpg")
     lastNode.filename = param
     del param
 
@@ -5530,57 +5320,17 @@ def createInstance(app,group):
 
     param = lastNode.getParam("decodingPluginID")
     if param is not None:
-        param.setValue("fr.inria.openfx.ReadFFmpeg")
+        param.setValue("fr.inria.openfx.ReadOIIO")
         del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(video.mov)</Natron>")
+        param.setValue("<Natron>(transition_fast_4k_001.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/transition_fast_4k/fast_4k_###.jpg")
-        del param
-
-    param = lastNode.getParam("firstFrame")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("lastFrame")
-    if param is not None:
-        param.setValue(15, 0)
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("black")
-        del param
-
-    param = lastNode.getParam("startingTime")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    param = lastNode.getParam("timeDomainUserEdited")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
-        del param
-
-    param = lastNode.getParam("ParamExistingInstance")
-    if param is not None:
-        param.setValue(True)
+        param.setValue("[Project]/../footage/transition_fast_4k/transition_fast_4k_###.jpg")
         del param
 
     del lastNode
@@ -5597,7 +5347,6 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(1, 0)
         param.setValue(15, 1)
         del param
 
@@ -5797,6 +5546,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupful_hd = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
 
     param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:

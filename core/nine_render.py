@@ -13,6 +13,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 def render(thisNode):
     prefix = thisNode.getParam('prefix').get()
+    prefix_dir = thisNode.getParam('prefix_dir').get()
 
     resolutions = ['mid', 'hd', '4k']
     speeds = ['slow', 'normal', 'fast']
@@ -24,18 +25,17 @@ def render(thisNode):
 
         for resolution in resolutions:
             name = velocity + '_' + resolution
-
             render_node = getNode(thisNode, name)
 
-            render_dir = prefix + '_' + name 
+            prefix_name = prefix + '_' + name
+            render_dir = prefix_dir + '/' + prefix_name 
 
-            render_node.getParam('filename').set(render_dir + '/' + name + '_###.jpg')
+            render_node.getParam('filename').set(render_dir + '/' + prefix_name + '_###.jpg')
             render_node.getParam('job_name').set( 'glass_transition: ' + name)
             render_node.getParam('no_dialog').set(True)
             render_node.getParam('rgbonly').set(True)
 
             render_node.getParam('range').set(1, last_frame)
-            
             render_node.getParam('render').trigger()
 
     if thisNode.getParam('dialog').get():
