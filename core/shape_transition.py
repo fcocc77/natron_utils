@@ -23,6 +23,15 @@ def distribute(thisNode):
     seed = thisNode.seed.get()
     # ------------------------
 
+    # obtiene el desfase correcto dependiendo de la duracion
+    gap = (duration * float(gap)) / 100
+    # -----------------------
+
+    # modifica la duracion quitandole la cola que queda a causa del desfase
+    tail_duration = repetitions * gap
+    duration -= tail_duration
+    # ----------------------
+
     width = thisNode.format.boxSize.getValue(0)
     hight = thisNode.format.boxSize.getValue(1)
 
