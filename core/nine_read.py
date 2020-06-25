@@ -4,7 +4,7 @@ from natron_utils import getNode
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
-    if knob_name == 'reload':
+    if knob_name == 'reload' or knob_name == 'velocity' or knob_name == 'resolution':
         reload_file(thisNode)
 
 def reload_file(thisNode):
@@ -19,7 +19,9 @@ def reload_file(thisNode):
     current_velocity = speeds[velocity]
     current_resolution = resolutions[resolution]
 
-    prefix_name = thisNode.getParam('prefix').get() + '_' + current_velocity + '_' + current_resolution
+    prefix = thisNode.getParam('prefix').get()
 
-    filename = thisNode.getParam('prefix_dir').get() + '/' + prefix_name + '/' + prefix_name + '_###.jpg'
+    prefix_name = prefix + '_' + current_velocity + '_' + current_resolution
+
+    filename = thisNode.getParam('prefix_dir').get() + '/' + prefix + '/' + prefix_name + '/' + prefix_name + '_###.jpg'
     read.getParam('filename').set(filename)

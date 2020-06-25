@@ -122,6 +122,14 @@ def saveProject():
 
 	return project_path
 
+def absolute(path):
+	app = NatronGui.natron.getGuiInstance(0)
+
+	app = NatronGui.natron.getGuiInstance(0)
+	base_project = app.getProjectParam('projectPath').get()
+
+	return path.replace('[Project]/', base_project)
+
 def question(_question, message):
 	msgBox = QMessageBox()
 	msgBox.setText(message)

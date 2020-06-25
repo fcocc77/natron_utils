@@ -1,7 +1,7 @@
 import os
 import NatronGui
 import NatronEngine
-from natron_utils import getNode, alert
+from natron_utils import getNode, alert, duration_by_speed
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
@@ -11,24 +11,20 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 def render(thisNode):
 
-    prefix = thisNode.getParam('prefix_transition_file').get()
+    nine_render = getNode(thisNode, 'NineRender')
 
-    list_renders = ['slow_mid', 'slow_hd', 'slow_4k', 'normal_mid', 'normal_hd', 'normal_4k', 'fast_mid', 'fast_hd', 'fast_4k']
+    speeds = thisNode.getParam('speeds').get()
+    normal_duration = thisNode.getParam('duration').get()
+    
+    render_speeds = ['render_slow', 'render_normal', 'render_fast']
 
-    for name in list_renders:
-        render_node = getNode(thisNode, name)
+    for render_speed, duration in zip(render_speeds, duration_by_speed(normal_duration, speeds)):
 
-        render_dir = prefix + '_' + name 
+        for shape_name in ['shape1','shape2','shape3']:
+            shape = getNode(thisNode, shape_name)
+            shape.getParam('duration').set(duration)
+            shape.getParam('refresh').trigger()
 
-        render_node.getParam('filename').set(render_dir + '/' + name + '_###.jpg')
-        render_node.getParam('job_name').set( 'glass_transition: ' + name)
-        render_node.getParam('no_dialog').set(True)
-        render_node.getParam('rgbonly').set(True)
-
-        last_frame = thisNode.getParam('duration').get()
-
-        render_node.getParam('range').set(1, last_frame)
-
-        render_node.getParam('render').trigger()
+        nine_render.getParam(render_speed).trigger()
 
     alert('Se enviaron a render las 9 diferentes transiciones.')

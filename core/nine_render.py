@@ -3,24 +3,41 @@
 import os
 import NatronGui
 import NatronEngine
-from natron_utils import getNode, alert, duration_by_speed
+from natron_utils import getNode, alert, duration_by_speed, absolute
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'render':
         render(thisNode)
+    if knob_name == 'render_slow':
+        render(thisNode, 'slow')
+    if knob_name == 'render_normal':
+        render(thisNode, 'normal')
+    if knob_name == 'render_fast':
+        render(thisNode, 'fast')
 
-def render(thisNode):
+def render(thisNode, one_speed = False):
     prefix = thisNode.getParam('prefix').get()
-    prefix_dir = thisNode.getParam('prefix_dir').get()
+    prefix_dir = thisNode.getParam('prefix_dir').get() + '/' + prefix 
+    absolule_path = absolute(prefix_dir)
 
+    if not os.path.isdir(absolule_path):
+        os.makedirs(absolule_path)
+     
+    speeds_names = ['slow', 'normal', 'fast']
     resolutions = ['mid', 'hd', '4k']
-    speeds = ['slow', 'normal', 'fast']
 
-    for velocity_index, velocity in enumerate(speeds):
+    if one_speed:
+        speeds_list = [one_speed]
+    else:
+        speeds_list = speeds_names
+        
+    for velocity in speeds_list:
         duration = thisNode.getParam('duration').get()
         speeds = thisNode.getParam('speeds').get()
+
+        velocity_index = speeds_names.index(velocity)
         last_frame = duration_by_speed(duration, speeds)[velocity_index]
 
         for resolution in resolutions:

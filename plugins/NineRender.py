@@ -45,101 +45,6 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createStringParam("output", "OUTPUT:")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("OUTPUT:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.output = param
-    del param
-
-    param = lastNode.createChoiceParam("resolution", "Resolution")
-    entries = [ ("Mid HD", ""),
-    ("Full HD", ""),
-    ("4K", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.resolution = param
-    del param
-
-    param = lastNode.createChoiceParam("velocity", "Velocity")
-    entries = [ ("Slow", ""),
-    ("Normal", ""),
-    ("Fast", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Normal")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.velocity = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep1", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
-    del param
-
-    param = lastNode.createStringParam("prerender", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("PRE-RENDER:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.prerender = param
-    del param
-
-    param = lastNode.createBooleanParam("read_files", "Read Files")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.read_files = param
-    del param
-
     param = lastNode.createInt3DParam("speeds", "Speeds")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
@@ -209,6 +114,19 @@ def createInstance(app,group):
     lastNode.prefix = param
     del param
 
+    param = lastNode.createBooleanParam("dialog", "Show Dialog")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.dialog = param
+    del param
+
     param = lastNode.createButtonParam("render", "Render")
 
     # Add the param to the page
@@ -221,7 +139,7 @@ def createInstance(app,group):
     lastNode.render = param
     del param
 
-    param = lastNode.createBooleanParam("dialog", "Show Dialog")
+    param = lastNode.createSeparatorParam("sep", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -229,9 +147,61 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.dialog = param
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep = param
+    del param
+
+    param = lastNode.createStringParam("separate_render", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("SEPARATE VELOCITY RENDERS:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.separate_render = param
+    del param
+
+    param = lastNode.createButtonParam("render_slow", "Render Slow")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    lastNode.render_slow = param
+    del param
+
+    param = lastNode.createButtonParam("render_normal", "Render Normal")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.render_normal = param
+    del param
+
+    param = lastNode.createButtonParam("render_fast", "Render Fast")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.render_fast = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -242,7 +212,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output1")
-    lastNode.setPosition(1158, 1139)
+    lastNode.setPosition(2389, 168)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -288,7 +258,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -505,7 +474,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -733,6 +701,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_slow_hd/transition_slow_hd_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(45, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -833,9 +831,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "normal_hd"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
@@ -863,7 +858,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -1080,7 +1074,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -1308,6 +1301,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_normal_hd/transition_normal_hd_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(30, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -1408,9 +1431,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "fast_hd"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
@@ -1438,7 +1458,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -1655,7 +1674,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -1883,6 +1901,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_fast_hd/transition_fast_hd_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(15, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -1983,9 +2031,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "slow_mid"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
@@ -2013,7 +2058,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -2230,7 +2274,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -2458,6 +2501,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_slow_mid/transition_slow_mid_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(45, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -2558,15 +2631,12 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "normal_mid"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
     lastNode.setScriptName("normal_mid")
     lastNode.setLabel("normal_mid")
-    lastNode.setPosition(608, 477)
+    lastNode.setPosition(615, 478)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupnormal_mid = lastNode
@@ -2588,7 +2658,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -2805,7 +2874,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -3033,6 +3101,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_normal_mid/transition_normal_mid_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(30, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -3133,9 +3231,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "fast_mid"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
@@ -3163,7 +3258,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -3380,7 +3474,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -3608,6 +3701,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_fast_mid/transition_fast_mid_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(15, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -3708,9 +3831,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "slow_4k"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
@@ -3738,7 +3858,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -3955,7 +4074,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -4183,6 +4301,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_slow_4k/transition_slow_4k_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(45, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -4283,9 +4431,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "normal_4k"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
@@ -4313,7 +4458,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -4530,7 +4674,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -4758,6 +4901,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_normal_4k/transition_normal_4k_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(30, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -4858,9 +5031,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
 
     # Start of node "fast_4k"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
@@ -4888,7 +5058,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -5105,7 +5274,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(False)
     lastNode.readfile = param
     del param
 
@@ -5333,6 +5501,36 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/transition_fast_4k/transition_fast_4k_###.jpg")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(15, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -5433,77 +5631,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.readfile.get()", False, 0)
     del param
 
-    param = groupgroup.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-
-    # Start of node "normal"
-    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("normal")
-    lastNode.setLabel("normal")
-    lastNode.setPosition(1158, 667)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupnormal = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    del lastNode
-    # End of node "normal"
-
-    # Start of node "slow"
-    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("slow")
-    lastNode.setLabel("slow")
-    lastNode.setPosition(608, 647)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupslow = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    del lastNode
-    # End of node "slow"
-
-    # Start of node "fast"
-    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("fast")
-    lastNode.setLabel("fast")
-    lastNode.setPosition(1753, 661)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupfast = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    del lastNode
-    # End of node "fast"
-
-    # Start of node "velocitys"
-    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("velocitys")
-    lastNode.setLabel("_resolution")
-    lastNode.setPosition(1158, 907)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupvelocitys = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    del lastNode
-    # End of node "velocitys"
 
     # Start of node "mid_hd"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
@@ -5610,7 +5737,7 @@ def createInstance(app,group):
     # End of node "Dot4"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupvelocitys)
+    groupOutput1.connectInput(0, groupDot4)
     groupslow_hd.connectInput(0, groupful_hd)
     groupnormal_hd.connectInput(0, groupful_hd)
     groupfast_hd.connectInput(0, groupful_hd)
@@ -5620,64 +5747,12 @@ def createInstance(app,group):
     groupslow_4k.connectInput(0, groupDot1)
     groupnormal_4k.connectInput(0, groupDot1)
     groupfast_4k.connectInput(0, groupDot1)
-    groupnormal.connectInput(0, groupslow_hd)
-    groupnormal.connectInput(1, groupnormal_hd)
-    groupnormal.connectInput(2, groupfast_hd)
-    groupslow.connectInput(0, groupslow_mid)
-    groupslow.connectInput(1, groupnormal_mid)
-    groupslow.connectInput(2, groupfast_mid)
-    groupfast.connectInput(0, groupslow_4k)
-    groupfast.connectInput(1, groupnormal_4k)
-    groupfast.connectInput(2, groupfast_4k)
-    groupvelocitys.connectInput(0, groupslow)
-    groupvelocitys.connectInput(1, groupnormal)
-    groupvelocitys.connectInput(2, groupfast)
     groupmid_hd.connectInput(0, groupDot3)
     groupful_hd.connectInput(0, groupDot2)
     groupDot1.connectInput(0, groupDot4)
     groupDot2.connectInput(0, groupp4K_Input)
     groupDot3.connectInput(0, groupDot2)
     groupDot4.connectInput(0, groupDot2)
-
-    param = groupslow_hd.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupnormal_hd.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupfast_hd.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupslow_mid.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupnormal_mid.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupfast_mid.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupslow_4k.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupnormal_4k.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupfast_4k.getParam("readfile")
-    param.setExpression("thisGroup.read_files.get()", False, 0)
-    del param
-    param = groupnormal.getParam("which")
-    param.setExpression("thisGroup.velocity.get()", False, 0)
-    del param
-    param = groupslow.getParam("which")
-    param.setExpression("thisGroup.velocity.get()", False, 0)
-    del param
-    param = groupfast.getParam("which")
-    param.setExpression("thisGroup.velocity.get()", False, 0)
-    del param
-    param = groupvelocitys.getParam("which")
-    param.setExpression("thisGroup.resolution.get()", False, 0)
-    del param
 
     try:
         extModule = sys.modules["NineRenderExt"]
