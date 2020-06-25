@@ -11,6 +11,7 @@ import videovina
 import resolution_expand
 import multi_photos
 import nine_render
+import nine_read
 import glass_transition
 import util
 # --------------
