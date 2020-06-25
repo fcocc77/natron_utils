@@ -21,5 +21,5 @@ def reload_file(thisNode):
 
     prefix_name = thisNode.getParam('prefix').get() + '_' + current_velocity + '_' + current_resolution
 
-    filename = thisNode.getParam('prefix_dir').get() + '/' + prefix_name + '/' + prefix_name + '.jpg'
+    filename = thisNode.getParam('prefix_dir').get() + '/' + prefix_name + '/' + prefix_name + '_###.jpg'
     read.getParam('filename').set(filename)
