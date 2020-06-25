@@ -124,8 +124,6 @@ def saveProject():
 
 def absolute(path):
 	app = NatronGui.natron.getGuiInstance(0)
-
-	app = NatronGui.natron.getGuiInstance(0)
 	base_project = app.getProjectParam('projectPath').get()
 
 	return path.replace('[Project]/', base_project)

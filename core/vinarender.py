@@ -2,7 +2,7 @@ import os
 import shutil
 import NatronGui
 from util import jread
-from natron_utils import get_all_nodes, saveProject
+from natron_utils import get_all_nodes, saveProject, absolute
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
@@ -145,29 +145,13 @@ def render(thisNode, app):
         job_name = project_name.split('.')[0]
     server_group = 'Natron'
     task_size = thisNode.task_size.get()
-    project = app.projectPath.get() + project_name
     software = 'Natron'
     render = get_node_path(thisNode, app) + thisNode.getScriptName() + '.' + output_node
-    output = thisNode.filename.getValue()
-    output = output.replace( '[Project]/', app.projectPath.get() )
+    output = absolute(thisNode.filename.getValue())
     instances = thisNode.instances.getValue()
-
-    cmd = ( submit 
-        + ' -jobName "' + job_name +'"'
-        + ' -serverGroup ' + server_group
-        + ' -firstFrame ' + str( first_frame )
-        + ' -lastFrame ' + str( last_frame )
-        + ' -taskSize ' + str( task_size )
-        + ' -project "' + project + '"'
-        + ' -software ' + software
-        + ' -render ' + render
-        + ' -extra ' + output
-        + ' -instances ' + str( instances )
-    )
 
     # guarda el proyecto antes de enviar, y crea uno nuevo
     project_path = saveProject()
-
     for i in range(100):
         # encuentra version disponible
         dirname = os.path.dirname(project_path)
@@ -175,9 +159,21 @@ def render(thisNode, app):
         new_project = dirname + '/__' + basename[:-4] + '_render_' + str(i + 1) + '.ntp'
         if not os.path.isfile( new_project ):
             break
-
     shutil.copy(project_path, new_project)    
     # ------------------
+
+    cmd = ( submit 
+        + ' -jobName "' + job_name +'"'
+        + ' -serverGroup ' + server_group
+        + ' -firstFrame ' + str( first_frame )
+        + ' -lastFrame ' + str( last_frame )
+        + ' -taskSize ' + str( task_size )
+        + ' -project "' + new_project + '"'
+        + ' -software ' + software
+        + ' -render ' + render
+        + ' -extra ' + output
+        + ' -instances ' + str( instances )
+    )
 
     os.system( cmd )
 
