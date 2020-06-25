@@ -169,6 +169,14 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 def alert(message, title = 'Alert'):
 	NatronGui.natron.informationDialog(title, str(message))
 
+def duration_by_speed(value, speeds=[0,0,0]):
+	normal_speed = speeds[1]
+    
+	slow = ( value * speeds[0] ) / normal_speed
+	fast = ( value * speeds[2] ) / normal_speed
+
+	return [slow, value, fast]
+
 def get_all_nodes(app):
 	nodes = []
 	for a in app.getChildren(): 
