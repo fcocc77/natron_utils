@@ -217,7 +217,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
+    param.setValue(5, 0)
     lastNode.stencil_self_gap = param
     del param
 
@@ -445,7 +445,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Shape")
     lastNode.setLabel("Shape")
     lastNode.setPosition(1258, -215)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupShape = lastNode
 
@@ -457,16 +457,16 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_1")
     lastNode.setLabel("shape_width_1")
     lastNode.setPosition(1431, 159)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_1 = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-474, 1, 0)
-        param.setValueAtTime(-439.2, 12.375, 0)
-        param.setValueAtTime(-275.8, 22.125, 0)
-        param.setValueAtTime(-241, 33.5, 0)
+        param.setValueAtTime(0, 1, 0)
+        param.setValueAtTime(-51.90000000000001, 12.375, 0)
+        param.setValueAtTime(-294.1, 22.125, 0)
+        param.setValueAtTime(-346, 33.5, 0)
         del param
 
     del lastNode
@@ -477,7 +477,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_1")
     lastNode.setLabel("shape_mask_1")
     lastNode.setPosition(1257, 249)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_1 = lastNode
 
@@ -523,16 +523,16 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_2")
     lastNode.setLabel("shape_width_2")
     lastNode.setPosition(1824, 152)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_2 = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-44, 3.5, 0)
-        param.setValueAtTime(-45.5, 14.875, 0)
-        param.setValueAtTime(-52.5, 24.625, 0)
-        param.setValueAtTime(-54, 36, 0)
+        param.setValueAtTime(0, 3.5, 0)
+        param.setValueAtTime(-51.90000000000001, 14.875, 0)
+        param.setValueAtTime(-294.1, 24.625, 0)
+        param.setValueAtTime(-346, 36, 0)
         del param
 
     del lastNode
@@ -543,7 +543,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_2")
     lastNode.setLabel("shape_mask_2")
     lastNode.setPosition(1662, 244)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_2 = lastNode
 
@@ -589,16 +589,16 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_3")
     lastNode.setLabel("shape_width_3")
     lastNode.setPosition(2185, 158)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_3 = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-15, 6, 0)
-        param.setValueAtTime(-53.10000000000001, 17.375, 0)
-        param.setValueAtTime(-230.9, 27.125, 0)
-        param.setValueAtTime(-269, 38.5, 0)
+        param.setValueAtTime(0, 6, 0)
+        param.setValueAtTime(-51.90000000000001, 17.375, 0)
+        param.setValueAtTime(-294.1, 27.125, 0)
+        param.setValueAtTime(-346, 38.5, 0)
         del param
 
     del lastNode
@@ -609,7 +609,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_3")
     lastNode.setLabel("shape_mask_3")
     lastNode.setPosition(1997, 245)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_3 = lastNode
 
@@ -655,16 +655,16 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_4")
     lastNode.setLabel("shape_width_4")
     lastNode.setPosition(2495, 165)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_4 = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-121, 8.5, 0)
-        param.setValueAtTime(-173.8, 19.875, 0)
-        param.setValueAtTime(-420.2, 29.625, 0)
-        param.setValueAtTime(-473, 41, 0)
+        param.setValueAtTime(0, 8.5, 0)
+        param.setValueAtTime(-51.90000000000001, 19.875, 0)
+        param.setValueAtTime(-294.1, 29.625, 0)
+        param.setValueAtTime(-346, 41, 0)
         del param
 
     del lastNode
@@ -675,7 +675,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_4")
     lastNode.setLabel("shape_mask_4")
     lastNode.setPosition(2344, 239)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_4 = lastNode
 
@@ -721,16 +721,16 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_5")
     lastNode.setLabel("shape_width_5")
     lastNode.setPosition(2878, 155)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_5 = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-82, 11, 0)
-        param.setValueAtTime(-81.40000000000001, 22.375, 0)
-        param.setValueAtTime(-77.59999999999999, 32.125, 0)
-        param.setValueAtTime(-77, 43.5, 0)
+        param.setValueAtTime(0, 11, 0)
+        param.setValueAtTime(-51.90000000000001, 22.375, 0)
+        param.setValueAtTime(-294.1, 32.125, 0)
+        param.setValueAtTime(-346, 43.5, 0)
         del param
 
     del lastNode
@@ -741,7 +741,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_5")
     lastNode.setLabel("shape_mask_5")
     lastNode.setPosition(2706, 245)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_5 = lastNode
 
@@ -787,16 +787,16 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_6")
     lastNode.setLabel("shape_width_6")
     lastNode.setPosition(3254, 170)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_6 = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-79, 13.5, 0)
-        param.setValueAtTime(-133.9, 24.875, 0)
-        param.setValueAtTime(-391.1, 34.625, 0)
-        param.setValueAtTime(-446, 46, 0)
+        param.setValueAtTime(0, 13.5, 0)
+        param.setValueAtTime(-51.90000000000001, 24.875, 0)
+        param.setValueAtTime(-294.1, 34.625, 0)
+        param.setValueAtTime(-346, 46, 0)
         del param
 
     del lastNode
@@ -807,7 +807,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_6")
     lastNode.setLabel("shape_mask_6")
     lastNode.setPosition(3099, 269)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_6 = lastNode
 
@@ -853,16 +853,16 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_7")
     lastNode.setLabel("shape_width_7")
     lastNode.setPosition(3666, 162)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_7 = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-24, 16, 0)
-        param.setValueAtTime(-68.10000000000001, 27.375, 0)
-        param.setValueAtTime(-274.9, 37.125, 0)
-        param.setValueAtTime(-319, 48.5, 0)
+        param.setValueAtTime(0, 16, 0)
+        param.setValueAtTime(-51.90000000000001, 27.375, 0)
+        param.setValueAtTime(-294.1, 37.125, 0)
+        param.setValueAtTime(-346, 48.5, 0)
         del param
 
     del lastNode
@@ -873,7 +873,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_7")
     lastNode.setLabel("shape_mask_7")
     lastNode.setPosition(3468, 236)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_7 = lastNode
 
@@ -919,7 +919,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge_2")
     lastNode.setLabel("merge_2")
     lastNode.setPosition(1662, 461)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_2 = lastNode
 
@@ -936,7 +936,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge_3")
     lastNode.setLabel("merge_3")
     lastNode.setPosition(1997, 461)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_3 = lastNode
 
@@ -953,7 +953,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge_4")
     lastNode.setLabel("merge_4")
     lastNode.setPosition(2344, 461)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_4 = lastNode
 
@@ -970,7 +970,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge_5")
     lastNode.setLabel("merge_5")
     lastNode.setPosition(2706, 461)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_5 = lastNode
 
@@ -987,7 +987,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge_6")
     lastNode.setLabel("merge_6")
     lastNode.setPosition(3099, 458)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_6 = lastNode
 
@@ -1004,7 +1004,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge_7")
     lastNode.setLabel("merge_7")
     lastNode.setPosition(3468, 458)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_7 = lastNode
 
@@ -1021,7 +1021,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge_1")
     lastNode.setLabel("merge_1")
     lastNode.setPosition(1257, 461)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_1 = lastNode
 
@@ -1038,7 +1038,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_1")
     lastNode.setLabel("transform_1")
     lastNode.setPosition(1257, 380)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_1 = lastNode
 
@@ -1082,7 +1082,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_2")
     lastNode.setLabel("transform_2")
     lastNode.setPosition(1662, 339)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_2 = lastNode
 
@@ -1126,7 +1126,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_3")
     lastNode.setLabel("transform_3")
     lastNode.setPosition(1997, 326)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_3 = lastNode
 
@@ -1170,7 +1170,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_4")
     lastNode.setLabel("transform_4")
     lastNode.setPosition(2344, 327)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_4 = lastNode
 
@@ -1214,7 +1214,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_5")
     lastNode.setLabel("transform_5")
     lastNode.setPosition(2706, 337)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_5 = lastNode
 
@@ -1258,7 +1258,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_6")
     lastNode.setLabel("transform_6")
     lastNode.setPosition(3099, 347)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_6 = lastNode
 
@@ -1302,7 +1302,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_7")
     lastNode.setLabel("transform_7")
     lastNode.setPosition(3468, 341)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_7 = lastNode
 
@@ -1346,7 +1346,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Crop2")
     lastNode.setLabel("Crop2")
     lastNode.setPosition(3468, 561)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop2 = lastNode
 
@@ -1369,7 +1369,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Crop3")
     lastNode.setLabel("Crop3")
     lastNode.setPosition(1258, -105)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop3 = lastNode
 
@@ -1397,7 +1397,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat1_2_2")
     lastNode.setLabel("Reformat1_2_2")
     lastNode.setPosition(981, 472)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat1_2_2 = lastNode
 
@@ -1430,7 +1430,7 @@ def createInstance(app,group):
     lastNode.setScriptName("direction_transform")
     lastNode.setLabel("direction_transform")
     lastNode.setPosition(3468, 616)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupdirection_transform = lastNode
 
@@ -1452,7 +1452,7 @@ def createInstance(app,group):
     lastNode.setScriptName("format")
     lastNode.setLabel("format")
     lastNode.setPosition(3469, 726)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupformat = lastNode
 
@@ -1491,7 +1491,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("timeOffset")
     if param is not None:
-        param.setValue(10, 0)
+        param.setValue(5, 0)
         del param
 
     del lastNode
@@ -1502,13 +1502,18 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
     lastNode.setPosition(3663, 986)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -1543,7 +1548,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
     lastNode.setPosition(3469, 997)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
 
@@ -1675,7 +1680,7 @@ def createInstance(app,group):
     group.getParam("formatboxSize").setAsAlias(param)
     del param
     param = groupTimeOffset1.getParam("timeOffset")
-    param.setExpression("thisGroup.stencil_self_gap.get()", False, 0)
+    param.setExpression("duration = thisGroup.duration.get()\nstencil_gap = thisGroup.stencil_self_gap.get()\ngap = (duration * float(stencil_gap)) / 50\n\nret = gap", True, 0)
     del param
     param = groupSwitch1.getParam("which")
     param.setExpression("thisGroup.stencil_self.get()", False, 0)
