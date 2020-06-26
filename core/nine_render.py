@@ -3,7 +3,7 @@
 import os
 import NatronGui
 import NatronEngine
-from natron_utils import getNode, alert, duration_by_speed, absolute
+from natron_utils import getNode, alert, value_by_speed, absolute
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
@@ -38,7 +38,7 @@ def render(thisNode, one_speed = False):
         speeds = thisNode.getParam('speeds').get()
 
         velocity_index = speeds_names.index(velocity)
-        last_frame = duration_by_speed(duration, speeds)[velocity_index]
+        last_frame = value_by_speed(duration, speeds)[velocity_index]
 
         for resolution in resolutions:
             name = velocity + '_' + resolution

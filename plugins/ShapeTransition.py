@@ -268,9 +268,8 @@ def createInstance(app,group):
 
     param = lastNode.createIntParam("start_frame", "Start Frame")
     param.setMinimum(0, 0)
-    param.setMaximum(1000, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1000, 0)
+    param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
 
@@ -287,7 +286,6 @@ def createInstance(app,group):
 
     param = lastNode.createIntParam("duration", "Duration")
     param.setMinimum(1, 0)
-    param.setMaximum(100, 0)
     param.setDisplayMinimum(1, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
