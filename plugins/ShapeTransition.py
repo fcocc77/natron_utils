@@ -96,6 +96,7 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
     param.setValue(1920, 0)
@@ -174,7 +175,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
+    param.setValue(1, 0)
     lastNode.seed = param
     del param
 
@@ -189,6 +190,35 @@ def createInstance(app,group):
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep4 = param
+    del param
+
+    param = lastNode.createBooleanParam("stencil_self", "Stencil Self")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Hace un stencil en si mismo, enmascarandola y dejandola invisible a menos que desfasemos una de las dos capas")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.stencil_self = param
+    del param
+
+    param = lastNode.createIntParam("stencil_self_gap", "Stencil Self Gap")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(10, 0)
+    lastNode.stencil_self_gap = param
     del param
 
     param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
@@ -402,7 +432,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(3469, 915)
+    lastNode.setPosition(3469, 1234)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -433,10 +463,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(-51.90000000000001, 18.5, 0)
-        param.setValueAtTime(-294.1, 33.5, 0)
-        param.setValueAtTime(-346, 51, 0)
+        param.setValueAtTime(-474, 1, 0)
+        param.setValueAtTime(-439.2, 12.375, 0)
+        param.setValueAtTime(-275.8, 22.125, 0)
+        param.setValueAtTime(-241, 33.5, 0)
         del param
 
     del lastNode
@@ -454,6 +484,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -494,10 +529,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(0, 6, 0)
-        param.setValueAtTime(-51.90000000000001, 23.5, 0)
-        param.setValueAtTime(-294.1, 38.5, 0)
-        param.setValueAtTime(-346, 56, 0)
+        param.setValueAtTime(-44, 3.5, 0)
+        param.setValueAtTime(-45.5, 14.875, 0)
+        param.setValueAtTime(-52.5, 24.625, 0)
+        param.setValueAtTime(-54, 36, 0)
         del param
 
     del lastNode
@@ -515,6 +550,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -555,10 +595,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(0, 11, 0)
-        param.setValueAtTime(-51.90000000000001, 28.5, 0)
-        param.setValueAtTime(-294.1, 43.5, 0)
-        param.setValueAtTime(-346, 61, 0)
+        param.setValueAtTime(-15, 6, 0)
+        param.setValueAtTime(-53.10000000000001, 17.375, 0)
+        param.setValueAtTime(-230.9, 27.125, 0)
+        param.setValueAtTime(-269, 38.5, 0)
         del param
 
     del lastNode
@@ -576,6 +616,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -616,10 +661,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(0, 16, 0)
-        param.setValueAtTime(-51.90000000000001, 33.5, 0)
-        param.setValueAtTime(-294.1, 48.5, 0)
-        param.setValueAtTime(-346, 66, 0)
+        param.setValueAtTime(-121, 8.5, 0)
+        param.setValueAtTime(-173.8, 19.875, 0)
+        param.setValueAtTime(-420.2, 29.625, 0)
+        param.setValueAtTime(-473, 41, 0)
         del param
 
     del lastNode
@@ -637,6 +682,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -677,10 +727,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(0, 21, 0)
-        param.setValueAtTime(-51.90000000000001, 38.5, 0)
-        param.setValueAtTime(-294.1, 53.5, 0)
-        param.setValueAtTime(-346, 71, 0)
+        param.setValueAtTime(-82, 11, 0)
+        param.setValueAtTime(-81.40000000000001, 22.375, 0)
+        param.setValueAtTime(-77.59999999999999, 32.125, 0)
+        param.setValueAtTime(-77, 43.5, 0)
         del param
 
     del lastNode
@@ -698,6 +748,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -738,10 +793,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(0, 26, 0)
-        param.setValueAtTime(-51.90000000000001, 43.5, 0)
-        param.setValueAtTime(-294.1, 58.5, 0)
-        param.setValueAtTime(-346, 76, 0)
+        param.setValueAtTime(-79, 13.5, 0)
+        param.setValueAtTime(-133.9, 24.875, 0)
+        param.setValueAtTime(-391.1, 34.625, 0)
+        param.setValueAtTime(-446, 46, 0)
         del param
 
     del lastNode
@@ -759,6 +814,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -799,10 +859,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(0, 31, 0)
-        param.setValueAtTime(-51.90000000000001, 48.5, 0)
-        param.setValueAtTime(-294.1, 63.5, 0)
-        param.setValueAtTime(-346, 81, 0)
+        param.setValueAtTime(-24, 16, 0)
+        param.setValueAtTime(-68.10000000000001, 27.375, 0)
+        param.setValueAtTime(-274.9, 37.125, 0)
+        param.setValueAtTime(-319, 48.5, 0)
         del param
 
     del lastNode
@@ -820,6 +880,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -858,6 +923,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_2 = lastNode
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "merge_2"
 
@@ -869,6 +939,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_3 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "merge_3"
@@ -882,6 +957,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_4 = lastNode
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "merge_4"
 
@@ -893,6 +973,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_5 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "merge_5"
@@ -906,6 +991,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_6 = lastNode
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "merge_6"
 
@@ -918,6 +1008,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_7 = lastNode
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "merge_7"
 
@@ -929,6 +1024,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_1 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "merge_1"
@@ -945,17 +1045,17 @@ def createInstance(app,group):
     param = lastNode.getParam("translate")
     if param is not None:
         param.setValueAtTime(-500, 1, 0)
-        param.setValueAtTime(-350, 18.5, 0)
-        param.setValueAtTime(350, 33.5, 0)
-        param.setValueAtTime(500, 51, 0)
+        param.setValueAtTime(-350, 12.375, 0)
+        param.setValueAtTime(350, 22.125, 0)
+        param.setValueAtTime(500, 33.5, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
         param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(0, 18.5, 0)
+        param.setValueAtTime(0, 12.375, 0)
+        param.setValueAtTime(0, 22.125, 0)
         param.setValueAtTime(0, 33.5, 0)
-        param.setValueAtTime(0, 51, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -988,18 +1088,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-845, 6, 0)
-        param.setValueAtTime(-695, 23.5, 0)
-        param.setValueAtTime(4.999999999999972, 38.5, 0)
-        param.setValueAtTime(155, 56, 0)
+        param.setValueAtTime(-845, 3.5, 0)
+        param.setValueAtTime(-695, 14.875, 0)
+        param.setValueAtTime(4.999999999999972, 24.625, 0)
+        param.setValueAtTime(155, 36, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(0, 6, 0)
-        param.setValueAtTime(0, 23.5, 0)
-        param.setValueAtTime(0, 38.5, 0)
-        param.setValueAtTime(0, 56, 0)
+        param.setValueAtTime(0, 3.5, 0)
+        param.setValueAtTime(0, 14.875, 0)
+        param.setValueAtTime(0, 24.625, 0)
+        param.setValueAtTime(0, 36, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -1032,18 +1132,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-1190, 11, 0)
-        param.setValueAtTime(-1040, 28.5, 0)
-        param.setValueAtTime(-340, 43.5, 0)
-        param.setValueAtTime(-190, 61, 0)
+        param.setValueAtTime(-1190, 6, 0)
+        param.setValueAtTime(-1040, 17.375, 0)
+        param.setValueAtTime(-340, 27.125, 0)
+        param.setValueAtTime(-190, 38.5, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(0, 11, 0)
-        param.setValueAtTime(0, 28.5, 0)
-        param.setValueAtTime(0, 43.5, 0)
-        param.setValueAtTime(0, 61, 0)
+        param.setValueAtTime(0, 6, 0)
+        param.setValueAtTime(0, 17.375, 0)
+        param.setValueAtTime(0, 27.125, 0)
+        param.setValueAtTime(0, 38.5, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -1076,18 +1176,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-1535, 16, 0)
-        param.setValueAtTime(-1385, 33.5, 0)
-        param.setValueAtTime(-685, 48.5, 0)
-        param.setValueAtTime(-535, 66, 0)
+        param.setValueAtTime(-1535, 8.5, 0)
+        param.setValueAtTime(-1385, 19.875, 0)
+        param.setValueAtTime(-685, 29.625, 0)
+        param.setValueAtTime(-535, 41, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(0, 16, 0)
-        param.setValueAtTime(0, 33.5, 0)
-        param.setValueAtTime(0, 48.5, 0)
-        param.setValueAtTime(0, 66, 0)
+        param.setValueAtTime(0, 8.5, 0)
+        param.setValueAtTime(0, 19.875, 0)
+        param.setValueAtTime(0, 29.625, 0)
+        param.setValueAtTime(0, 41, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -1120,18 +1220,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-1880, 21, 0)
-        param.setValueAtTime(-1730, 38.5, 0)
-        param.setValueAtTime(-1030, 53.5, 0)
-        param.setValueAtTime(-880, 71, 0)
+        param.setValueAtTime(-1880, 11, 0)
+        param.setValueAtTime(-1730, 22.375, 0)
+        param.setValueAtTime(-1030, 32.125, 0)
+        param.setValueAtTime(-880, 43.5, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(0, 21, 0)
-        param.setValueAtTime(0, 38.5, 0)
-        param.setValueAtTime(0, 53.5, 0)
-        param.setValueAtTime(0, 71, 0)
+        param.setValueAtTime(0, 11, 0)
+        param.setValueAtTime(0, 22.375, 0)
+        param.setValueAtTime(0, 32.125, 0)
+        param.setValueAtTime(0, 43.5, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -1164,18 +1264,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-2225, 26, 0)
-        param.setValueAtTime(-2075, 43.5, 0)
-        param.setValueAtTime(-1375, 58.5, 0)
-        param.setValueAtTime(-1225, 76, 0)
+        param.setValueAtTime(-2225, 13.5, 0)
+        param.setValueAtTime(-2075, 24.875, 0)
+        param.setValueAtTime(-1375, 34.625, 0)
+        param.setValueAtTime(-1225, 46, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(0, 26, 0)
-        param.setValueAtTime(0, 43.5, 0)
-        param.setValueAtTime(0, 58.5, 0)
-        param.setValueAtTime(0, 76, 0)
+        param.setValueAtTime(0, 13.5, 0)
+        param.setValueAtTime(0, 24.875, 0)
+        param.setValueAtTime(0, 34.625, 0)
+        param.setValueAtTime(0, 46, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -1208,18 +1308,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-2570, 31, 0)
-        param.setValueAtTime(-2420, 48.5, 0)
-        param.setValueAtTime(-1720, 63.5, 0)
-        param.setValueAtTime(-1570, 81, 0)
+        param.setValueAtTime(-2570, 16, 0)
+        param.setValueAtTime(-2420, 27.375, 0)
+        param.setValueAtTime(-1720, 37.125, 0)
+        param.setValueAtTime(-1570, 48.5, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(0, 31, 0)
+        param.setValueAtTime(0, 16, 0)
+        param.setValueAtTime(0, 27.375, 0)
+        param.setValueAtTime(0, 37.125, 0)
         param.setValueAtTime(0, 48.5, 0)
-        param.setValueAtTime(0, 63.5, 0)
-        param.setValueAtTime(0, 81, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -1380,8 +1480,95 @@ def createInstance(app,group):
     del lastNode
     # End of node "format"
 
+    # Start of node "TimeOffset1"
+    lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
+    lastNode.setScriptName("TimeOffset1")
+    lastNode.setLabel("TimeOffset1")
+    lastNode.setPosition(3967, 997)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.65, 0.35)
+    groupTimeOffset1 = lastNode
+
+    param = lastNode.getParam("timeOffset")
+    if param is not None:
+        param.setValue(10, 0)
+        del param
+
+    del lastNode
+    # End of node "TimeOffset1"
+
+    # Start of node "Merge1"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge1")
+    lastNode.setLabel("Merge1")
+    lastNode.setPosition(3663, 986)
+    lastNode.setSize(104, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge1 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("stencil")
+        del param
+
+    del lastNode
+    # End of node "Merge1"
+
+    # Start of node "Dot3"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot3")
+    lastNode.setLabel("Dot3")
+    lastNode.setPosition(3708, 858)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot3 = lastNode
+
+    del lastNode
+    # End of node "Dot3"
+
+    # Start of node "Dot4"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot4")
+    lastNode.setLabel("Dot4")
+    lastNode.setPosition(4012, 858)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot4 = lastNode
+
+    del lastNode
+    # End of node "Dot4"
+
+    # Start of node "Switch1"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("Switch1")
+    lastNode.setLabel("Switch1")
+    lastNode.setPosition(3469, 997)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupSwitch1 = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Switch1"
+
+    # Start of node "Dot5"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot5")
+    lastNode.setLabel("Dot5")
+    lastNode.setPosition(3514, 858)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot5 = lastNode
+
+    del lastNode
+    # End of node "Dot5"
+
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupformat)
+    groupOutput1.connectInput(0, groupSwitch1)
     groupshape_width_1.connectInput(0, groupDot1)
     groupshape_mask_1.connectInput(0, groupDot1)
     groupshape_mask_1.connectInput(1, groupshape_width_1)
@@ -1442,6 +1629,14 @@ def createInstance(app,group):
     groupCrop3.connectInput(0, groupShape)
     groupdirection_transform.connectInput(0, groupCrop2)
     groupformat.connectInput(0, groupdirection_transform)
+    groupTimeOffset1.connectInput(0, groupDot4)
+    groupMerge1.connectInput(0, groupDot3)
+    groupMerge1.connectInput(1, groupTimeOffset1)
+    groupDot3.connectInput(0, groupDot5)
+    groupDot4.connectInput(0, groupDot3)
+    groupSwitch1.connectInput(0, groupDot5)
+    groupSwitch1.connectInput(1, groupMerge1)
+    groupDot5.connectInput(0, groupformat)
 
     param = grouptransform_1.getParam("motionBlur")
     param.setExpression("thisGroup.motion_blur.get()", False, 0)
@@ -1478,6 +1673,12 @@ def createInstance(app,group):
     del param
     param = groupformat.getParam("boxSize")
     group.getParam("formatboxSize").setAsAlias(param)
+    del param
+    param = groupTimeOffset1.getParam("timeOffset")
+    param.setExpression("thisGroup.stencil_self_gap.get()", False, 0)
+    del param
+    param = groupSwitch1.getParam("which")
+    param.setExpression("thisGroup.stencil_self.get()", False, 0)
     del param
 
     try:

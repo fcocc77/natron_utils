@@ -32,6 +32,11 @@ def distribute(thisNode):
     duration -= tail_duration
     # ----------------------
 
+    # le quita a la duracion el desface del stencil self
+    if thisNode.getParam('stencil_self').get():
+        duration -= thisNode.getParam('stencil_self_gap').get()
+    # ------------------
+
     width = thisNode.format.boxSize.getValue(0)
     hight = thisNode.format.boxSize.getValue(1)
 
