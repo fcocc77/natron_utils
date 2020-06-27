@@ -57,6 +57,69 @@ def createInstance(app,group):
     lastNode.readfile = param
     del param
 
+    param = lastNode.createBooleanParam("rgbonly", "RGB Only")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.rgbonly = param
+    del param
+
+    param = lastNode.createBooleanParam("no_dialog", "No Show Message")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.no_dialog = param
+    del param
+
+    param = lastNode.createBooleanParam("duplicate_project", "Duplicate Project")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Duplica el proyecto y hace el renderizado sobre ese nuevo proyecto.")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.duplicate_project = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
+    param = lastNode.createStringParam("job_name", "Job Name")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.job_name = param
+    del param
+
     param = lastNode.createOutputFileParam("filename", "Filename")
     param.setSequenceEnabled(False)
 
@@ -70,7 +133,19 @@ def createInstance(app,group):
     lastNode.filename = param
     del param
 
-    param = lastNode.createSeparatorParam("sep1", "")
+    param = lastNode.createButtonParam("render", "Render")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.render = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep3", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -80,7 +155,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
+    lastNode.sep3 = param
     del param
 
     param = lastNode.createInt2DParam("range", "Frame Range")
@@ -112,7 +187,7 @@ def createInstance(app,group):
     lastNode.project_frame_range = param
     del param
 
-    param = lastNode.createSeparatorParam("sep3", "")
+    param = lastNode.createSeparatorParam("sep2", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -122,20 +197,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
-    del param
-
-    param = lastNode.createStringParam("job_name", "Job Name")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.job_name = param
+    lastNode.sep2 = param
     del param
 
     param = lastNode.createIntParam("instances", "Instances")
@@ -176,69 +238,6 @@ def createInstance(app,group):
     lastNode.task_size = param
     del param
 
-    param = lastNode.createSeparatorParam("sep2", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
-    del param
-
-    param = lastNode.createBooleanParam("rgbonly", "RGB Only")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.rgbonly = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep4", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep4 = param
-    del param
-
-    param = lastNode.createButtonParam("render", "Render")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.render = param
-    del param
-
-    param = lastNode.createBooleanParam("no_dialog", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setVisibleByDefault(False)
-    lastNode.no_dialog = param
-    del param
-
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -260,7 +259,7 @@ def createInstance(app,group):
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
     lastNode.setPosition(919, 266)
-    lastNode.setSize(128, 76)
+    lastNode.setSize(128, 78)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
 
@@ -279,6 +278,11 @@ def createInstance(app,group):
         param.setValue("[Project]/../renders/video.mov")
         del param
 
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
 
@@ -293,7 +297,6 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(1, 0)
         param.setValue(100, 1)
         del param
 
@@ -344,7 +347,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(749, 196)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 

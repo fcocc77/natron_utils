@@ -149,18 +149,19 @@ def render(thisNode, app):
     render = get_node_path(thisNode, app) + thisNode.getScriptName() + '.' + output_node
     output = absolute(thisNode.filename.getValue())
     instances = thisNode.instances.getValue()
+    project = saveProject()
 
-    # guarda el proyecto antes de enviar, y crea uno nuevo
-    project_path = saveProject()
-    for i in range(100):
-        # encuentra version disponible
-        dirname = os.path.dirname(project_path)
-        basename = os.path.basename(project_path) 
-        new_project = dirname + '/__' + basename[:-4] + '_render_' + str(i + 1) + '.ntp'
-        if not os.path.isfile( new_project ):
-            break
-    shutil.copy(project_path, new_project)    
-    # ------------------
+    if thisNode.getParam('duplicate_project').get():
+        # guarda el proyecto antes de enviar, y crea uno nuevo
+        for i in range(1000):
+            # encuentra version disponible
+            dirname = os.path.dirname(project)
+            basename = os.path.basename(project) 
+            new_project = dirname + '/__' + basename[:-4] + '_render_' + str(i + 1) + '.ntp'
+            if not os.path.isfile( new_project ):
+                break
+        shutil.copy(project, new_project)    
+        project = new_project
 
     cmd = ( submit 
         + ' -jobName "' + job_name +'"'
