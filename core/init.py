@@ -2,6 +2,7 @@
 import natron_utils
 import vvtext
 import collect_files
+import export_pyplugs
 import backup
 import transition
 import shape_transition
