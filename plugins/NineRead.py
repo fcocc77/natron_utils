@@ -145,21 +145,6 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     groupread = lastNode
 
-    param = lastNode.getParam("decodingPluginID")
-    if param is not None:
-        param.setValue("fr.inria.openfx.ReadOIIO")
-        del param
-
-    param = lastNode.getParam("filename")
-    if param is not None:
-        param.setValue("[Project]/../footage/_normal_hd/_normal_hd.jpg")
-        del param
-
-    param = lastNode.getParam("outputPremult")
-    if param is not None:
-        param.set("opaque")
-        del param
-
     param = lastNode.getParam("ParamExistingInstance")
     if param is not None:
         param.setValue(True)

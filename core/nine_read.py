@@ -1,11 +1,13 @@
 import os
 from natron_utils import getNode
 
+
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'reload' or knob_name == 'velocity' or knob_name == 'resolution':
         reload_file(thisNode)
+
 
 def reload_file(thisNode):
     read = getNode(thisNode, 'read')
@@ -23,7 +25,13 @@ def reload_file(thisNode):
 
     prefix_name = prefix + '_' + current_velocity + '_' + current_resolution
 
-    filename = thisNode.getParam('prefix_dir').get() + '/' + prefix + '/' + prefix_name + '/' + prefix_name + '_###.png'
-    read.getParam('filename').set(filename)
-    read.getParam('filename').reloadFile()
+    filename_param = read.getParam('filename')
+    filename = thisNode.getParam('prefix_dir').get(
+    ) + '/' + prefix + '/' + prefix_name + '/' + prefix_name + '_###.png'
+
+    if filename_param.get() == filename:
+        filename_param.reloadFile()
+    else:
+        filename_param.set(filename)
+
     read.getParam('outputPremult').set(0)
