@@ -2,6 +2,8 @@ from util import *
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
 
     # defina la app y el nodo como variables globales,
     # para poder acceder de otras funcciones

@@ -3,6 +3,9 @@ from natron_utils import getNode
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
+
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'reload' or knob_name == 'velocity' or knob_name == 'resolution':

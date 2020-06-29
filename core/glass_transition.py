@@ -5,6 +5,9 @@ from natron_utils import getNode, alert, value_by_speed, switch
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
+
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'refresh':

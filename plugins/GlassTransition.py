@@ -143,6 +143,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Slow")
     lastNode.speed = param
     del param
 
@@ -278,6 +279,22 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(10, 0)
     lastNode.difference_with_mask = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
     del param
 
     param = lastNode.createStringParam("prefix_render", "Render Prefix")
@@ -1231,6 +1248,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     lastNode.motion_blur = param
     del param
 
@@ -1645,6 +1663,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     lastNode.motion_blur = param
     del param
 
@@ -2057,6 +2076,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     lastNode.motion_blur = param
     del param
 
@@ -2645,7 +2665,7 @@ def createInstance(app,group):
     if param is not None:
         param.setValueAtTime(0, 9, 0)
         param.setValueAtTime(1, 10, 0)
-        param.setValueAtTime(2, 61, 0)
+        param.setValueAtTime(2, 86, 0)
         del param
 
     del lastNode
@@ -2708,7 +2728,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Normal")
+    param.set("Slow")
     lastNode.velocity = param
     del param
 
@@ -2836,11 +2856,24 @@ def createInstance(app,group):
     param = groupglass_fx_switch.getParam("which")
     param.setExpression("thisGroup.glass_fx.get()", False, 0)
     del param
+    param = groupBlur1.getParam("size")
+    param.setExpression("resolutions = [960, 1920, 3840]\nindex = thisGroup.resolution.get()\nresolution = resolutions[index]\n\nvalue = 4\nret = (resolution * value) / 1920", True, 0)
+    param.setExpression("resolutions = [960, 1920, 3840]\nindex = thisGroup.resolution.get()\nresolution = resolutions[index]\n\nvalue = 4\nret = (resolution * value) / 1920", True, 1)
+    del param
     param = groupcolorize.getParam("white")
     param.setExpression("thisGroup.color.getValue(dimension)", False, 0)
     param.setExpression("thisGroup.color.getValue(dimension)", False, 1)
     param.setExpression("thisGroup.color.getValue(dimension)", False, 2)
     param.setExpression("thisGroup.color.getValue(dimension)", False, 3)
+    del param
+    param = groupshape_glass_1.getParam("motion_blur")
+    param.setExpression("thisGroup.motion_blur.get()", False, 0)
+    del param
+    param = groupshape_glass_2.getParam("motion_blur")
+    param.setExpression("thisGroup.motion_blur.get()", False, 0)
+    del param
+    param = grouptransition_mask.getParam("motion_blur")
+    param.setExpression("thisGroup.motion_blur.get()", False, 0)
     del param
     param = groupNineRender.getParam("speeds")
     param.setExpression("thisGroup.speeds.get()[dimension]", False, 0)

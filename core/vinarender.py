@@ -4,16 +4,21 @@ import NatronGui
 from util import jread
 from natron_utils import get_all_nodes, saveProject, absolute
 
+
 def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
+
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'render':
         render(thisNode, app)
-    if knob_name == 'range' or knob_name =='readfile':
+    if knob_name == 'range' or knob_name == 'readfile':
         change_paramaters(thisNode)
     if knob_name == 'project_frame_range':
         frame_range = app.frameRange.get()
-        thisNode.range.set( frame_range[0], frame_range[1] )
+        thisNode.range.set(frame_range[0], frame_range[1])
+
 
 def change_paramaters(thisNode):
     frame_range = thisNode.getNode('frame_range')
@@ -32,9 +37,10 @@ def change_paramaters(thisNode):
     # con el borde negro.
     thisNode.reading.outputPremult.setValue(0)
 
+
 def check_project(app):
 
-    path_list = jread( '/opt/vinarender/etc/preferences_s.json' ).paths.system
+    path_list = jread('/opt/vinarender/etc/preferences_s.json').paths.system
     paths = []
     for r in path_list:
         if os.path.isdir(r):
@@ -54,7 +60,7 @@ def check_project(app):
 
             dirname = os.path.dirname(filename)
             relative = '[Project]'
-            
+
             if relative in filename:
                 None
             elif not os.path.isdir(dirname):
@@ -79,9 +85,11 @@ def check_project(app):
         if disconnect_filename:
             line2 = "These files are disconnected:"
 
-        message = line1 + '\n\n' + local_filename + '\n\n' + line2 + '\n\n' + disconnect_filename
-        NatronGui.natron.warningDialog( 'FileName Error', message )
+        message = line1 + '\n\n' + local_filename + \
+            '\n\n' + line2 + '\n\n' + disconnect_filename
+        NatronGui.natron.warningDialog('FileName Error', message)
         return False
+
 
 def get_node_path(thisNode, app):
     # encuentra la ruta completa del nodo, si es que
@@ -116,15 +124,17 @@ def get_node_path(thisNode, app):
                         break
     return found
 
+
 def render(thisNode, app):
     node_input = thisNode.getInput(0)
     if not node_input:
-        NatronGui.natron.warningDialog('VinaRender', '!You must connect the image.')
+        NatronGui.natron.warningDialog(
+            'VinaRender', '!You must connect the image.')
         return
 
     if not check_project(app):
         return
-    
+
     rgb_only = thisNode.rgbonly.get()
     if rgb_only:
         output_node = 'to_rgb'
@@ -146,7 +156,8 @@ def render(thisNode, app):
     server_group = 'Natron'
     task_size = thisNode.task_size.get()
     software = 'Natron'
-    render = get_node_path(thisNode, app) + thisNode.getScriptName() + '.' + output_node
+    render = get_node_path(thisNode, app) + \
+        thisNode.getScriptName() + '.' + output_node
     output = absolute(thisNode.filename.getValue())
     instances = thisNode.instances.getValue()
     project = saveProject()
@@ -156,27 +167,28 @@ def render(thisNode, app):
         for i in range(1000):
             # encuentra version disponible
             dirname = os.path.dirname(project)
-            basename = os.path.basename(project) 
-            new_project = dirname + '/__' + basename[:-4] + '_render_' + str(i + 1) + '.ntp'
-            if not os.path.isfile( new_project ):
+            basename = os.path.basename(project)
+            new_project = dirname + '/__' + \
+                basename[:-4] + '_render_' + str(i + 1) + '.ntp'
+            if not os.path.isfile(new_project):
                 break
-        shutil.copy(project, new_project)    
+        shutil.copy(project, new_project)
         project = new_project
 
-    cmd = ( submit 
-        + ' -jobName "' + job_name +'"'
-        + ' -serverGroup ' + server_group
-        + ' -firstFrame ' + str( first_frame )
-        + ' -lastFrame ' + str( last_frame )
-        + ' -taskSize ' + str( task_size )
-        + ' -project "' + new_project + '"'
-        + ' -software ' + software
-        + ' -render ' + render
-        + ' -extra ' + output
-        + ' -instances ' + str( instances )
-    )
+    cmd = (submit
+           + ' -jobName "' + job_name + '"'
+           + ' -serverGroup ' + server_group
+           + ' -firstFrame ' + str(first_frame)
+           + ' -lastFrame ' + str(last_frame)
+           + ' -taskSize ' + str(task_size)
+           + ' -project "' + new_project + '"'
+           + ' -software ' + software
+           + ' -render ' + render
+           + ' -extra ' + output
+           + ' -instances ' + str(instances)
+           )
 
-    os.system( cmd )
+    os.system(cmd)
 
     if (not thisNode.no_dialog.get()):
         NatronGui.natron.informationDialog('VinaRender', 'Render Sended.')

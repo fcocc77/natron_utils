@@ -42,6 +42,11 @@ def createInstance(app,group):
         param.setValue("nine_read.main")
         del param
 
+    param = lastNode.getParam("afterNodeCreated")
+    if param is not None:
+        param.setValue("nine_read.created")
+        del param
+
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")

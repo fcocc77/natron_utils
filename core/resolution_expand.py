@@ -1,4 +1,7 @@
 def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
+
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'refresh':
@@ -23,7 +26,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         switch = thisNode.Switch1.which
         vertical = _width < _height
 
-        aspect = 1920.0 / 1080.0 # aspecto de referencia
+        aspect = 1920.0 / 1080.0  # aspecto de referencia
         aspect_input = float(_width) / float(_height)
 
         if vertical:

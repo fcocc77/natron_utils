@@ -11,10 +11,14 @@ from time import sleep
 xdistance = 200
 # ----------------
 
+
 def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
+
     knob_name = thisParam.getScriptName()
 
-    project_path = os.path.dirname(os.path.dirname(app.projectPath.get()))    
+    project_path = os.path.dirname(os.path.dirname(app.projectPath.get()))
 
     if knob_name == 'generate_slides':
         generate_base_slides(thisNode, app)
@@ -45,32 +49,36 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'transfer_to_static':
         transfer_to_static(thisNode, app, project_path)
 
+
 def play_song(thisNode, play=True):
     if not play:
         os.system('pkill -9 vlc')
         return
-     
+
     cmd = 'vlc --qt-start-minimized "' + get_current_song(thisNode)[1] + '"'
 
     os.system('pkill -9 vlc')
     os.popen2(cmd)
 
+
 def get_type_song(thisNode, song_name):
     for option in thisNode.getParam('default_song').getOptions():
         if song_name in option:
-            song_type = option.split('-')[1].strip().lower()             
+            song_type = option.split('-')[1].strip().lower()
             return song_type
+
 
 def get_current_song(thisNode):
     default_song = thisNode.getParam('default_song')
     private = thisNode.getParam('videovina_root').get() + '/private'
 
-    song = default_song.getOption( default_song.get() )
-    song_type = song.split('-')[1].strip().lower() 
+    song = default_song.getOption(default_song.get())
+    song_type = song.split('-')[1].strip().lower()
     song_name = song.split('-')[0].strip()
     song_path = private + '/music/' + song_type + '/' + song_name + '.mp3'
 
-    return [song_name, song_path, song_type]    
+    return [song_name, song_path, song_type]
+
 
 def update_private_content(thisNode, thisParam):
     # actualiza todo el contenido que hay en la carpeta private de videovina,
@@ -95,21 +103,24 @@ def update_private_content(thisNode, thisParam):
             fonts.append((base_name, base_name))
     thisNode.getParam('default_font').setOptions(fonts)
 
+
 def color_if_has_text(thisNode, thisParam):
     if thisParam.get():
         thisNode.setColor(.7, .5, .4)
     else:
         thisNode.setColor(.7, .7, .7)
 
+
 def set_default_color(thisNode, thisParam):
     current = thisParam.get()
     if current:
-        color_param = thisNode.getParam('color_' + str( current ))
+        color_param = thisNode.getParam('color_' + str(current))
         if color_param:
             color = color_param.get()
             thisNode.color.set(color[0], color[1], color[2], 1)
 
-def refresh(thisNode, app):    
+
+def refresh(thisNode, app):
 
     velocity = thisNode.velocity.get()
     rscale = thisNode.rscale.get()
@@ -118,16 +129,16 @@ def refresh(thisNode, app):
 
     normal_speed = speeds[1]
 
-    slide_frames = speeds[ velocity ]
+    slide_frames = speeds[velocity]
 
     # esta velocidad de frames corresponde a la velocidad normal,
     # y calculta la velocidad final dependiendo de la velocidad de la slide
     transition_frames = thisNode.transition_duration.get()
-    transition_frames = ( slide_frames * transition_frames ) / normal_speed
+    transition_frames = (slide_frames * transition_frames) / normal_speed
     # -------------------------
 
     width, hight = get_resolution(thisNode)
-    
+
     slides = get_slides(thisNode)
 
     # cambia la resolucion al primer y ultimo fondo negro
@@ -140,23 +151,23 @@ def refresh(thisNode, app):
     last_black.getParam('size').set(width, hight)
     # ---------------------
 
-    mid_transition_frames = transition_frames / 2 
+    mid_transition_frames = transition_frames / 2
     _last_frame = len(slides) * slide_frames
     # dissolve a negro en la ultima slide
     dissolve = getNode(thisNode, 'last_transition').getParam('which')
 
     directional_transition(
-        dissolve, 
-        transition_frames, 
-        0.5, 0.5, 
-        _last_frame, 
+        dissolve,
+        transition_frames,
+        0.5, 0.5,
+        _last_frame,
         [0, 1]
     )
     # -------------------
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
     # le sumamos 'transition_frames' que equivale a 2 mitades de transicion, la inicial y la final
-    app.frameRange.set(1, _last_frame + transition_frames + 2 )
+    app.frameRange.set(1, _last_frame + transition_frames + 2)
     # --------------------
 
     first_frame = 1
@@ -179,9 +190,9 @@ def refresh(thisNode, app):
             # si es la primera transicion deja la transicion en el frame 1
             start_frame = 1
         else:
-            start_frame = ( last_frame - ( transition_frames / 2 ) ) - slide_frames
-        transition.getParam('start_frame').set( start_frame )
-        transition.getParam('duration').set( transition_frames )
+            start_frame = (last_frame - (transition_frames / 2)) - slide_frames
+        transition.getParam('start_frame').set(start_frame)
+        transition.getParam('duration').set(transition_frames)
         transition.getParam('refresh').trigger()
         # --------------------
 
@@ -200,6 +211,7 @@ def refresh(thisNode, app):
 
         connect_slide_inputs(slides, i)
 
+
 def connect_slide_inputs(slides, current_slide):
     # conecta todas las entradas de cada slide, asi
     # poder usarlas dentro del grupo de la slide
@@ -207,15 +219,15 @@ def connect_slide_inputs(slides, current_slide):
     extra_count = slide.getMaxInputCount() - 1
 
     if not extra_count:
-        return 
+        return
 
     slide_count = len(slides)
     connect_nodes_count = slide_count - 1
 
     if connect_nodes_count >= extra_count:
-        # encuentra el nodo de inicio, para las conecciones 
-        connect_node = current_slide - ( extra_count / 2 )
-        
+        # encuentra el nodo de inicio, para las conecciones
+        connect_node = current_slide - (extra_count / 2)
+
         # el index maximo al que se puede conectar una entrada
         max_connection = connect_node + extra_count
         # -------------------
@@ -250,7 +262,7 @@ def connect_slide_inputs(slides, current_slide):
             if connect_node > connect_nodes_count:
                 connect_node = 0
 
-            # cuando es la primera slide se conecta a si mismo, 
+            # cuando es la primera slide se conecta a si mismo,
             # asi que cuando la acutal slide sea 0 y el nodo a conectar 0
             # cambia el nodo a conectar a 1.
             if current_slide == 0 and connect_node == 0:
@@ -262,6 +274,7 @@ def connect_slide_inputs(slides, current_slide):
             slide.connectInput(i, reformat)
 
             connect_node += 1
+
 
 def extra_picture_inputs(thisNode, app):
     amount = thisNode.input_amount.getValue()
@@ -280,11 +293,12 @@ def extra_picture_inputs(thisNode, app):
 
         posx += 200
 
+
 def generate_random_pictures(thisNode, app, amount):
-    
+
     references_dir = thisNode.reference_pictures.get()
-    references_pictures = os.listdir( references_dir )
-    references_count = len( references_pictures )
+    references_pictures = os.listdir(references_dir)
+    references_count = len(references_pictures)
 
     index = random.randint(0, references_count - 1)
 
@@ -295,18 +309,19 @@ def generate_random_pictures(thisNode, app, amount):
 
         index += 1
         if index >= references_count:
-            index = 0 
+            index = 0
 
     generate_pictures(thisNode, app, random_pictures)
 
+
 def generate_pictures(thisNode, app, pictures):
-    for i, obj in enumerate( get_slides(thisNode) ):
+    for i, obj in enumerate(get_slides(thisNode)):
         slide = obj['slide']
         reformat = obj['reformat']
         reader = obj['image']
         production = obj['production']
 
-        # cuando se crea los slides en produccion, no se genera 
+        # cuando se crea los slides en produccion, no se genera
         # el reformat, y se usa el slide para conectar
         if reformat:
             node_to_connect = reformat
@@ -318,12 +333,12 @@ def generate_pictures(thisNode, app, pictures):
         posy = node_to_connect.getPosition()[1] - 200
 
         picture = pictures[i]
-        
+
         # si la imagen ya fue generada, solo cambia el la imagen 'filename'
         if reader:
             reader.getParam('filename').set(picture)
         else:
-            reader = app.createReader( picture, thisNode )
+            reader = app.createReader(picture, thisNode)
             if production:
                 reader_name = 'slide_' + str(i) + 'p_image'
             else:
@@ -338,6 +353,7 @@ def generate_pictures(thisNode, app, pictures):
                 reformat.getParam('refresh').trigger()
         # -------------------------------
         reader.setPosition(posx, posy)
+
 
 def delete_slide(thisNode, slide_number):
     # se usa .destroy() 2 veces ya que a veces
@@ -358,6 +374,7 @@ def delete_slide(thisNode, slide_number):
         remove(slide_number)
         remove(slide_number)
 
+
 def get_resolution(thisNode):
     # obtiene la correcta resolucion a partir de una escala
     # tomando como referencia el 1920x1080
@@ -368,8 +385,10 @@ def get_resolution(thisNode):
 
     return [width, hight]
 
+
 def generate_black():
     None
+
 
 def generate_base_slides(thisNode, app):
     count = thisNode.amount_slide.get()
@@ -379,26 +398,28 @@ def generate_base_slides(thisNode, app):
         filter_dot = app.createNode('fr.inria.built-in.Dot', 2, thisNode)
         filter_dot.setLabel('filter_dot')
         filter_dot.setPosition(-300, 100)
-    
+
     # slides existentes
     slides = get_slides(thisNode)
     slides_count = len(slides)
     # --------------------
-    
+
     # si la cantidad de slides a generar es menor de las que hay en el nodegraph
     # envia un mensage que se eliminaran algunas slides, si la respuesta es negativa retorna.
     count_delete_slide = None
     if count < slides_count:
         count_delete_slide = slides_count - count
-        message = 'Actualmente tienes ' + str(slides_count) + ' Slides y se eliminaran ' + str(count_delete_slide) + ' Slides.'
-        ok = question('Estas seguro de que quieres continuar ?', message) 
+        message = 'Actualmente tienes ' + \
+            str(slides_count) + ' Slides y se eliminaran ' + \
+            str(count_delete_slide) + ' Slides.'
+        ok = question('Estas seguro de que quieres continuar ?', message)
         if not ok:
             return
     # --------------------------
-    
+
     current_slides = 0
 
-    if count_delete_slide: 
+    if count_delete_slide:
         # borra las slides que sobran
         _range = range(slides_count - count_delete_slide, slides_count)
         delete_slide(thisNode, _range)
@@ -408,9 +429,10 @@ def generate_base_slides(thisNode, app):
     else:
         width, hight = get_resolution(thisNode)
         posx = 0 - xdistance
-        last_transition = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_transition')
-        last_dot = getNode(thisNode, 'slide_' + str( slides_count - 1 ) + '_dot')
-        
+        last_transition = getNode(
+            thisNode, 'slide_' + str(slides_count - 1) + '_transition')
+        last_dot = getNode(thisNode, 'slide_' + str(slides_count - 1) + '_dot')
+
         for i in range(count):
             posx += xdistance
 
@@ -424,7 +446,7 @@ def generate_base_slides(thisNode, app):
             slide_name = 'slide_' + str(i)
             slide.setLabel(slide_name)
             slide.setPosition(posx, 0)
-            
+
             reformat = app.createNode('vv.ResolutionExpand', 2, thisNode)
             reformat_name = 'slide_' + str(i) + '_reformat'
             reformat.setLabel(reformat_name)
@@ -445,7 +467,7 @@ def generate_base_slides(thisNode, app):
             dot_name = 'slide_' + str(i) + '_dot'
             dot.setLabel(dot_name)
             dot.setPosition(posx - 50, 100)
-        
+
             transition.connectInput(2, dot)
 
             if last_dot:
@@ -466,12 +488,14 @@ def generate_base_slides(thisNode, app):
     refresh(thisNode, app)
 
     if current_slides:
-        NatronGui.natron.informationDialog('VideoVina', 'Se han creado ' + str(current_slides) + ' Slides base.')
-     
+        NatronGui.natron.informationDialog(
+            'VideoVina', 'Se han creado ' + str(current_slides) + ' Slides base.')
+
+
 def get_slide(thisNode, index):
     _index = str(index)
 
-    slide = getNode(thisNode, 'slide_' + _index)    
+    slide = getNode(thisNode, 'slide_' + _index)
     reformat = getNode(thisNode, 'slide_' + _index + '_reformat')
     image = getNode(thisNode, 'slide_' + _index + '_image')
     transition = getNode(thisNode, 'slide_' + _index + '_transition')
@@ -481,7 +505,7 @@ def get_slide(thisNode, index):
     # si no no existe la slide base, busca la slide de produccion, si
     # es que all=True
     if not slide:
-        slide = getNode(thisNode, 'slide_' + _index + 'p')    
+        slide = getNode(thisNode, 'slide_' + _index + 'p')
         reformat = getNode(thisNode, 'slide_' + _index + 'p_reformat')
         image = getNode(thisNode, 'slide_' + _index + 'p_image')
         transition = getNode(thisNode, 'slide_' + _index + 'p_transition')
@@ -491,21 +515,22 @@ def get_slide(thisNode, index):
     # --------------------
 
     return {
-        'production' : production, 
-        'slide' : slide,
-        'reformat' : reformat,
-        'image' : image,
-        'transition' : transition,
-        'dot' : dot
+        'production': production,
+        'slide': slide,
+        'reformat': reformat,
+        'image': image,
+        'transition': transition,
+        'dot': dot
     }
 
-def get_slides(thisNode, production = True, base = True, separate = False):
+
+def get_slides(thisNode, production=True, base=True, separate=False):
     # si 'all' es False obtiene solo las slide de base
     production_list = []
     base_list = []
     all_list = []
 
-    for i in range(100):        
+    for i in range(100):
         obj = get_slide(thisNode, i)
         if obj['slide']:
             all_list.append(obj)
@@ -515,7 +540,7 @@ def get_slides(thisNode, production = True, base = True, separate = False):
                 base_list.append(obj)
 
     if separate:
-        return [ base_list, production_list ]
+        return [base_list, production_list]
     elif production and base:
         return all_list
     elif production:
@@ -523,10 +548,11 @@ def get_slides(thisNode, production = True, base = True, separate = False):
     elif base:
         return base_list
 
+
 def update_post_fx(thisNode, app):
     slides = get_slides(thisNode)
     if not len(slides):
-        return    
+        return
 
     # obtiene el primer y el ultimo nodo de transition
     first_transition = slides[0]['transition']
@@ -539,17 +565,17 @@ def update_post_fx(thisNode, app):
     first_posx = first_transition.getPosition()[0]
     if not first_constant:
         first_constant = createNode(
-            node='constant', 
-            label='FirstBlack', 
-            position=[first_posx - 200, 200], 
+            node='constant',
+            label='FirstBlack',
+            position=[first_posx - 200, 200],
             color=[.5, .5, .5],
-            output=[ 0, first_transition ],
+            output=[0, first_transition],
             group=thisNode
         )
         first_constant.getParam('extent').set(1)
         first_constant.getParam('reformat').set(True)
         first_constant.getParam('size').set(width, hight)
-        first_constant.getParam('color').set(0,0,0,1)
+        first_constant.getParam('color').set(0, 0, 0, 1)
     # ---------------------
 
     # Ultimo negro
@@ -557,7 +583,7 @@ def update_post_fx(thisNode, app):
     last_posx = last_transition.getPosition()[0]
     if not last_constant:
         last_constant = createNode(
-            node='constant', 
+            node='constant',
             label='LastBlack',
             color=[.5, .5, .5],
             group=thisNode
@@ -565,20 +591,20 @@ def update_post_fx(thisNode, app):
         last_constant.getParam('extent').set(1)
         last_constant.getParam('reformat').set(True)
         last_constant.getParam('size').set(width, hight)
-        last_constant.getParam('color').set(0,0,0,1)
-    last_constant.setPosition( last_posx + 200, 100 )
+        last_constant.getParam('color').set(0, 0, 0, 1)
+    last_constant.setPosition(last_posx + 200, 100)
     # ---------------------
 
     # la ultima transition es un dissolve
     dissolve = getNode(thisNode, 'last_transition')
     if not dissolve:
         dissolve = createNode(
-            'dissolve', 
-            'last_transition', 
+            'dissolve',
+            'last_transition',
             thisNode,
             color=[.4, .5, .4]
         )
-    dissolve.setPosition( last_posx + 200, 200 )
+    dissolve.setPosition(last_posx + 200, 200)
     dissolve.disconnectInput(0)
     dissolve.connectInput(0, last_transition)
     dissolve.connectInput(1, last_constant)
@@ -589,26 +615,27 @@ def update_post_fx(thisNode, app):
 
     if not post_fx:
         post_fx = createNode(
-            node = 'backdrop', 
-            label = 'PostFX',
-            color = [.5, .4, .4],
-            group = thisNode
+            node='backdrop',
+            label='PostFX',
+            color=[.5, .4, .4],
+            group=thisNode
         )
-        post_fx.getParam('Label').set('Aqui van todos los efectos para el video completo.')
+        post_fx.getParam('Label').set(
+            'Aqui van todos los efectos para el video completo.')
         post_fx.setSize(400, 500)
         post_fx_dot = createNode('dot', 'post_fx_dot', thisNode)
 
     post_fx.setPosition(last_posx + 50, 300)
     post_fx_dot.setPosition(last_posx + 243, 900)
     post_fx_dot.disconnectInput(0)
-    post_fx_dot.connectInput(0, dissolve)    
+    post_fx_dot.connectInput(0, dissolve)
 
     # output
-    output = getNode(thisNode, 'Output1')    
+    output = getNode(thisNode, 'Output1')
     if not output:
-        output = createNode('output' , 'Output1', thisNode)
+        output = createNode('output', 'Output1', thisNode)
     output.setPosition(last_posx + 200, 1100)
-    output.connectInput(0, post_fx_dot)    
+    output.connectInput(0, post_fx_dot)
 
     # si es que existe un viewer lo posiciona correctamente
     viewer = None
@@ -617,13 +644,14 @@ def update_post_fx(thisNode, app):
         if viewer:
             viewer.setPosition(last_posx + 450, 895)
             viewer.disconnectInput(0)
-            viewer.connectInput(0, post_fx_dot)  
-            break   
+            viewer.connectInput(0, post_fx_dot)
+            break
     # ---------------------
+
 
 def duplicate_slides(thisNode, app):
     amount = thisNode.production_slides.get()
-    
+
     generated = generate_production_slides(thisNode, app, amount)
     if not generated:
         return
@@ -632,36 +660,42 @@ def duplicate_slides(thisNode, app):
     generate_random_pictures(thisNode, app, amount)
     refresh(thisNode, app)
 
-    alert('Ya se duplicaron las slide de Produccion.','Duplicate from base slides.')
+    alert('Ya se duplicaron las slide de Produccion.',
+          'Duplicate from base slides.')
 
-def generate_production_slides(thisNode, app, amount, force = False, reformat = True):
+
+def generate_production_slides(thisNode, app, amount, force=False, reformat=True):
     # duplica los slides base, dependiendo de la
     # cantidad de fotos que importemos.
     base_amount = thisNode.amount_slide.get()
-        
-    base_slides, production_slides = get_slides(thisNode, separate = True)
-    base_count = len( base_slides )
-    slides_count = base_count + len( production_slides )
+
+    base_slides, production_slides = get_slides(thisNode, separate=True)
+    base_count = len(base_slides)
+    slides_count = base_count + len(production_slides)
 
     if not force:
         if not slides_count:
-            NatronGui.natron.warningDialog( 'Production Slides', 'No hay ninguna slide base creada.' )
+            NatronGui.natron.warningDialog(
+                'Production Slides', 'No hay ninguna slide base creada.')
             return False
 
-        if amount <= base_amount: 
-            NatronGui.natron.warningDialog( 'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.' )
+        if amount <= base_amount:
+            NatronGui.natron.warningDialog(
+                'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.')
             return False
-        
+
         if amount == slides_count:
-            NatronGui.natron.warningDialog( 'Production Slides', 'Ya existen ' + str(amount) + ' slides.' )
+            NatronGui.natron.warningDialog(
+                'Production Slides', 'Ya existen ' + str(amount) + ' slides.')
             return False
 
     count_delete_slide = None
     if amount <= slides_count:
         count_delete_slide = slides_count - amount
         if not force:
-            message = 'La cantidad de slides es menor a la existente, se eliminaran ' + str(count_delete_slide) + ' slides.'
-            ok = question('Estas seguro de que quieres continuar ?', message) 
+            message = 'La cantidad de slides es menor a la existente, se eliminaran ' + \
+                str(count_delete_slide) + ' slides.'
+            ok = question('Estas seguro de que quieres continuar ?', message)
             if not ok:
                 return False
 
@@ -678,13 +712,13 @@ def generate_production_slides(thisNode, app, amount, force = False, reformat = 
         last_base_dot = slide_obj['dot']
 
         current = 0
-        posx = ( xdistance * slides_count ) + xdistance
-        for i in range( amount - slides_count ):
+        posx = (xdistance * slides_count) + xdistance
+        for i in range(amount - slides_count):
             index = i + slides_count
-            
+
             slide = base_slides[current]['slide']
             transition = base_slides[current]['transition']
-            
+
             if reformat:
                 _reformat = base_slides[current]['reformat']
 
@@ -714,10 +748,10 @@ def generate_production_slides(thisNode, app, amount, force = False, reformat = 
             dot_name = 'slide_' + str(index) + 'p_dot'
             dot.setLabel(dot_name)
             dot.setPosition(posx - 50, 100)
-        
+
             if last_dot:
                 dot.connectInput(0, last_dot)
-            else:            
+            else:
                 dot.connectInput(0, last_base_dot)
 
             new_transition.connectInput(2, dot)
@@ -728,13 +762,15 @@ def generate_production_slides(thisNode, app, amount, force = False, reformat = 
             current += 1
             if current >= base_count:
                 current = 0
-            
+
             posx += xdistance
-        
+
     return True
+
 
 def save_production_projects(thisNode):
     print 'save_production'
+
 
 def export_video_previs(thisNode, app, template_name, resources):
     last_transition = getNode(thisNode, 'last_transition')
@@ -745,28 +781,30 @@ def export_video_previs(thisNode, app, template_name, resources):
     refresh(thisNode, app)
 
     render(
-        script_name = 'video_previs_export',
-        jobname = 'Video Previs: ' + template_name,
-        filename = filename,
-        frame = [1, 210],
-        resolution = [384, 216],
-        node = last_transition,
-        parent_node = thisNode
-    ) 
-    
+        script_name='video_previs_export',
+        jobname='Video Previs: ' + template_name,
+        filename=filename,
+        frame=[1, 210],
+        resolution=[384, 216],
+        node=last_transition,
+        parent_node=thisNode
+    )
+
+
 def export_sample_frame(thisNode, central_frame, resources):
     sample_slide_index = 1
     slide = get_slide(thisNode, sample_slide_index)['slide']
-    
+
     render(
-        script_name = 'export_sample_image',
-        jobname = 'Sample Image: ' + str(sample_slide_index),
-        filename = resources + '/image.jpg',
-        frame = central_frame,
-        resolution = [800, 450],
-        node = slide,
-        parent_node = thisNode
+        script_name='export_sample_image',
+        jobname='Sample Image: ' + str(sample_slide_index),
+        filename=resources + '/image.jpg',
+        frame=central_frame,
+        resolution=[800, 450],
+        node=slide,
+        parent_node=thisNode
     )
+
 
 def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 360], node=None, parent_node=None):
     # exporta 1 frame con vinarender
@@ -777,7 +815,8 @@ def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 36
     reformat_name = 'reformat_' + script_name
     reformat = getNode(parent_node, reformat_name)
     if not reformat:
-        reformat = createNode('reformat', reformat_name, parent_node, position = [posx, posy] )
+        reformat = createNode('reformat', reformat_name,
+                              parent_node, position=[posx, posy])
         reformat.getParam('reformatType').set(1)
     reformat.getParam('boxSize').set(resolution[0], resolution[1])
     reformat.connectInput(0, node)
@@ -785,7 +824,8 @@ def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 36
 
     vinarender_node = getNode(parent_node, script_name)
     if not vinarender_node:
-        vinarender_node = createNode('vinarender', script_name, parent_node, position = [posx, posy + 50])
+        vinarender_node = createNode(
+            'vinarender', script_name, parent_node, position=[posx, posy + 50])
         vinarender_node.setScriptName(script_name)
         vinarender_node.connectInput(0, reformat)
 
@@ -802,10 +842,11 @@ def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 36
     vinarender_node.getParam('render').trigger()
     vinarender_node.getParam('no_dialog').set(False)
 
+
 def export_overlap_frames(thisNode, template_name, central_frame, resources):
-    slides = get_slides(thisNode, production = False)
-    overlap = resources + '/overlap' 
-    
+    slides = get_slides(thisNode, production=False)
+    overlap = resources + '/overlap'
+
     if not os.path.isdir(overlap):
         os.makedirs(overlap)
 
@@ -813,21 +854,22 @@ def export_overlap_frames(thisNode, template_name, central_frame, resources):
         slide = obj['slide']
 
         render(
-            script_name = 'OverlapSlide-' + str(i),
-            jobname = template_name + ' - Slide Overlap:  ' + str(i),
-            filename = overlap + '/' + slide.getLabel() + '.png',
-            frame = central_frame,
-            resolution = [640, 360],
-            node = slide.getNode('FX'),
-            parent_node = slide
+            script_name='OverlapSlide-' + str(i),
+            jobname=template_name + ' - Slide Overlap:  ' + str(i),
+            filename=overlap + '/' + slide.getLabel() + '.png',
+            frame=central_frame,
+            resolution=[640, 360],
+            node=slide.getNode('FX'),
+            parent_node=slide
         )
+
 
 def export_videovina_info(thisNode, app, project_path):
 
     # obtiene la duracion de las slides
     velocity = thisNode.velocity.get()
     speeds = thisNode.speeds.get()
-    slide_frames = speeds[ velocity ]
+    slide_frames = speeds[velocity]
     # -----------------
 
     # el frame central de la slide
@@ -841,7 +883,8 @@ def export_videovina_info(thisNode, app, project_path):
     export_sample_frame(thisNode, central_frame, resources)
     export_video_previs(thisNode, app, template_name, resources)
 
-    alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.','VideoVina Info.')
+    alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.', 'VideoVina Info.')
+
 
 def update_videovina_project(thisNode, app):
 
@@ -859,8 +902,9 @@ def update_videovina_project(thisNode, app):
     global_font = project.states.app.font
     # ----------------
 
-    # modifica los datos del proyecto natron 
-    thisNode.getParam('color').set( color[0] / 255.0, color[1] / 255.0, color[2] / 255.0, 1)
+    # modifica los datos del proyecto natron
+    thisNode.getParam('color').set(
+        color[0] / 255.0, color[1] / 255.0, color[2] / 255.0, 1)
     thisNode.getParam('velocity').set(velocity)
     # ------------------
 
@@ -871,7 +915,8 @@ def update_videovina_project(thisNode, app):
         url = footage + '/' + basename + '.jpg'
         photos.append(url)
 
-    generate_production_slides(thisNode, app, count, force=True, reformat=False)
+    generate_production_slides(
+        thisNode, app, count, force=True, reformat=False)
 
     def font_path(font_name):
         font_path = private + '/fonts/' + font_name + '.'
@@ -881,18 +926,18 @@ def update_videovina_project(thisNode, app):
 
         return _font
 
-    thisNode.getParam('font').set( font_path(global_font) )
+    thisNode.getParam('font').set(font_path(global_font))
 
     # cambia los titulos de todas las slides
-    for i, obj in enumerate( get_slides(thisNode) ):
+    for i, obj in enumerate(get_slides(thisNode)):
         slide = obj['slide']
-        
+
         item = timeline[i]
 
         if item.separate_font:
-            slide.getParam('font').set( font_path(item.font) )
+            slide.getParam('font').set(font_path(item.font))
         else:
-            slide.getParam('font').set( font_path(global_font) )
+            slide.getParam('font').set(font_path(global_font))
 
         if item.text:
             include_texts = slide.getParam('include_texts')
@@ -909,13 +954,14 @@ def update_videovina_project(thisNode, app):
 
     # song
     song_type = get_type_song(thisNode, song)
-    song_path = private + '/music/' + song_type + '/' + song + '.mp3'  
+    song_path = private + '/music/' + song_type + '/' + song + '.mp3'
     thisNode.getParam('song').set(song_path)
     # -------------
-    
+
     generate_pictures(thisNode, app, photos)
     update_post_fx(thisNode, app)
     refresh(thisNode, app)
+
 
 def export_default_project(thisNode, app, project_path):
     project_name = app.projectName.get().split('.')[0]
@@ -933,16 +979,16 @@ def export_default_project(thisNode, app, project_path):
     # obtiene colores de muestra
     colors = []
     for i in range(1, 4):
-        _color = thisNode.getParam('color_' + str(i) ).get()
-        color = [ _color[0] * 255, _color[1] * 255, _color[2] * 255 ]
+        _color = thisNode.getParam('color_' + str(i)).get()
+        color = [_color[0] * 255, _color[1] * 255, _color[2] * 255]
         colors.append(color)
-    
-    project.states.color.basic_colors = colors
-    # ---------------- 
 
-    # datos de los textos: 
-    base_slides, production_slides = get_slides(thisNode, separate = True)
-    base_count = len( base_slides )
+    project.states.color.basic_colors = colors
+    # ----------------
+
+    # datos de los textos:
+    base_slides, production_slides = get_slides(thisNode, separate=True)
+    base_count = len(base_slides)
 
     slides_base = []
     for i, obj in enumerate(base_slides):
@@ -950,27 +996,27 @@ def export_default_project(thisNode, app, project_path):
 
         transform = slide.getNode('Transform')
         _transform = {
-            'rotate' : transform.getParam('rotate').get(),
-            'scale' : transform.getParam('scale').getValue(),
-            'x' : transform.getParam('translate').get()[0],
-            'y' : transform.getParam('translate').get()[1]
+            'rotate': transform.getParam('rotate').get(),
+            'scale': transform.getParam('scale').getValue(),
+            'x': transform.getParam('translate').get()[0],
+            'y': transform.getParam('translate').get()[1]
         }
 
         include_texts = slide.getParam('include_texts').get()
 
         item = {
-            'foreground' : 'overlap/slide_' + str(i) + '.png',
-            'text' : include_texts,
-            'transform' : _transform
+            'foreground': 'overlap/slide_' + str(i) + '.png',
+            'text': include_texts,
+            'transform': _transform
         }
         slides_base.append(item)
     # ----------------------
 
     # font
     default_font = thisNode.getParam('default_font')
-    font = default_font.getOption( default_font.get() )
+    font = default_font.getOption(default_font.get())
     # --------------
-    
+
     project.states.timeline.slides_base = slides_base
     project.states.timeline.slides_base_count = base_count
     project.states.app.font = font
@@ -979,10 +1025,10 @@ def export_default_project(thisNode, app, project_path):
     speeds = thisNode.getParam('speeds').get()
     transition = thisNode.getParam('transition_duration').get() / frame_rate
     project.states.preview.transition_duration = [
-        ( transition * speeds[0] ) / 100,
-        ( transition * speeds[1] ) / 100,
-        ( transition * speeds[2] ) / 100
-    ] 
+        (transition * speeds[0]) / 100,
+        (transition * speeds[1]) / 100,
+        (transition * speeds[2]) / 100
+    ]
     project.states.preview.speeds = [
         speeds[0] / frame_rate,
         speeds[1] / frame_rate,
@@ -994,7 +1040,7 @@ def export_default_project(thisNode, app, project_path):
     project.states.app.song = song_name
     project.states.music.playing = song_name
     # --------------
-    
+
     # cambia el tipo
     project.type = project_name
     # -------------
@@ -1003,10 +1049,12 @@ def export_default_project(thisNode, app, project_path):
 
     alert('Proyecto ya fue exportado.', 'Export default project')
 
+
 def transfer_to_static(thisNode, app, project_path):
 
     template_name = app.projectName.get().split('.')[0]
-    static_templates = thisNode.getParam('videovina_root').get() + '/static/templates/' + template_name
+    static_templates = thisNode.getParam(
+        'videovina_root').get() + '/static/templates/' + template_name
     resources = project_path + '/resources'
 
     if not os.path.isdir(static_templates):
@@ -1018,10 +1066,12 @@ def transfer_to_static(thisNode, app, project_path):
     # -------------------------
 
     # convertir la imagen renderizada a un formato jpg mas liviano
-    os.system('ffmpeg -y -i "' + resources + '/image.jpg" -q:v 10 "' + static_templates + '/image.jpg"')
+    os.system('ffmpeg -y -i "' + resources +
+              '/image.jpg" -q:v 10 "' + static_templates + '/image.jpg"')
 
     # convertir el previs renderizada a un formato mp4 mas liviano
-    os.system('ffmpeg -y -i "' + resources + '/previs.mov" -b 500k "' + static_templates + '/previs.mp4"')
+    os.system('ffmpeg -y -i "' + resources +
+              '/previs.mov" -b 500k "' + static_templates + '/previs.mp4"')
 
     # copia la carpeta overlap
     static_overlap = static_templates + '/overlap'

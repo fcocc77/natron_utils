@@ -5,7 +5,11 @@ import NatronGui
 import NatronEngine
 from natron_utils import getNode, alert, value_by_speed, absolute
 
+
 def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
+
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'render':
@@ -17,14 +21,15 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'render_fast':
         render(thisNode, 'fast')
 
-def render(thisNode, one_speed = False):
+
+def render(thisNode, one_speed=False):
     prefix = thisNode.getParam('prefix').get()
-    prefix_dir = thisNode.getParam('prefix_dir').get() + '/' + prefix 
+    prefix_dir = thisNode.getParam('prefix_dir').get() + '/' + prefix
     absolule_path = absolute(prefix_dir)
 
     if not os.path.isdir(absolule_path):
         os.makedirs(absolule_path)
-     
+
     speeds_names = ['slow', 'normal', 'fast']
     resolutions = ['mid', 'hd', '4k']
 
@@ -32,7 +37,7 @@ def render(thisNode, one_speed = False):
         speeds_list = [one_speed]
     else:
         speeds_list = speeds_names
-        
+
     for velocity in speeds_list:
         duration = thisNode.getParam('duration').get()
         speeds = thisNode.getParam('speeds').get()
@@ -45,10 +50,11 @@ def render(thisNode, one_speed = False):
             render_node = getNode(thisNode, name)
 
             prefix_name = prefix + '_' + name
-            render_dir = prefix_dir + '/' + prefix_name 
+            render_dir = prefix_dir + '/' + prefix_name
 
-            render_node.getParam('filename').set(render_dir + '/' + prefix_name + '_###.png')
-            render_node.getParam('job_name').set( 'glass_transition: ' + name)
+            render_node.getParam('filename').set(
+                render_dir + '/' + prefix_name + '_###.png')
+            render_node.getParam('job_name').set('glass_transition: ' + name)
             render_node.getParam('no_dialog').set(True)
             render_node.getParam('rgbonly').set(False)
 
