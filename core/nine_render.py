@@ -47,10 +47,10 @@ def render(thisNode, one_speed = False):
             prefix_name = prefix + '_' + name
             render_dir = prefix_dir + '/' + prefix_name 
 
-            render_node.getParam('filename').set(render_dir + '/' + prefix_name + '_###.jpg')
+            render_node.getParam('filename').set(render_dir + '/' + prefix_name + '_###.png')
             render_node.getParam('job_name').set( 'glass_transition: ' + name)
             render_node.getParam('no_dialog').set(True)
-            render_node.getParam('rgbonly').set(True)
+            render_node.getParam('rgbonly').set(False)
 
             render_node.getParam('range').set(1, last_frame)
             render_node.getParam('render').trigger()

@@ -10,13 +10,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'render_shape':
         render(thisNode)
     if knob_name == 'read_file':
-        switch(
-            thisNode,
-            thisParam.get(),
-            'start_frame_node',
-            'NineRender',
-            'NineRead'
-        )
+        read_file(thisNode, thisParam)
+
     if knob_name == 'display_map':
         switch(
             thisNode,
@@ -25,6 +20,19 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
             'glass_fx_switch',
             'start_frame_node'
         )
+
+
+def read_file(thisNode, thisParam):
+    nine_read = getNode(thisNode, 'NineRead')
+    nine_read.getParam('reload').trigger()
+
+    switch(
+        thisNode,
+        thisParam.get(),
+        'start_frame_node',
+        'NineRender',
+        'NineRead'
+    )
 
 
 def render(thisNode):
@@ -39,6 +47,10 @@ def render(thisNode):
     render_speeds = ['render_slow', 'render_normal', 'render_fast']
     durations = value_by_speed(normal_duration, speeds)
     masks_diff = value_by_speed(difference_with_mask, speeds)
+
+    if not (normal_duration / 2) > difference_with_mask:
+        alert('Este numero tiene que ser menor que el medio de la duracion.')
+        return
 
     for render_speed, duration, mask_diff in zip(render_speeds, durations, masks_diff):
 

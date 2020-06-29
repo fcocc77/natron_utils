@@ -374,7 +374,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -525,7 +524,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -592,7 +591,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -743,7 +741,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -810,7 +808,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -961,7 +958,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -1028,7 +1025,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -1179,7 +1175,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -1246,7 +1242,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -1397,7 +1392,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -1464,7 +1459,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -1615,7 +1609,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -1682,7 +1676,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -1833,7 +1826,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -1900,7 +1893,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -2051,7 +2043,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.instances = param
     del param
 
@@ -2118,7 +2110,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
