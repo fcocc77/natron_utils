@@ -89,6 +89,19 @@ def createInstance(app,group):
     lastNode.mask_channel_a = param
     del param
 
+    param = lastNode.createBooleanParam("channel_a_alpha", "Alpha")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.channel_a_alpha = param
+    del param
+
     param = lastNode.createColorParam("color_a", "Color", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
@@ -137,6 +150,18 @@ def createInstance(app,group):
     lastNode.mask_channel_b = param
     del param
 
+    param = lastNode.createBooleanParam("channel_b_alpha", "Alpha")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.channel_b_alpha = param
+    del param
+
     param = lastNode.createColorParam("color_b", "Color", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
@@ -183,6 +208,18 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     lastNode.mask_channel_c = param
+    del param
+
+    param = lastNode.createBooleanParam("channel_c_alpha", "Alpha")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.channel_c_alpha = param
     del param
 
     param = lastNode.createColorParam("color_c", "Color", False)
@@ -348,7 +385,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(1730, 781)
+    lastNode.setPosition(2190, 771)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -580,7 +617,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
     lastNode.setScriptName("Constant1")
     lastNode.setLabel("Constant1")
-    lastNode.setPosition(1730, 61)
+    lastNode.setPosition(2190, 51)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupConstant1 = lastNode
@@ -605,10 +642,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge3")
     lastNode.setLabel("Merge3")
-    lastNode.setPosition(1730, 294)
+    lastNode.setPosition(2190, 284)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge3"
@@ -637,7 +679,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("channel_b")
     lastNode.setLabel("channel_b")
-    lastNode.setPosition(462, -438)
+    lastNode.setPosition(462, -509)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupchannel_b = lastNode
@@ -669,7 +711,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("channel_c")
     lastNode.setLabel("channel_c")
-    lastNode.setPosition(1083, -438)
+    lastNode.setPosition(1083, -532)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupchannel_c = lastNode
@@ -714,6 +756,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -856,6 +903,11 @@ def createInstance(app,group):
         param.setValue(1, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge4_2"
 
@@ -996,6 +1048,11 @@ def createInstance(app,group):
         param.setValue(1, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge4_3"
 
@@ -1019,6 +1076,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge1"
@@ -1203,23 +1265,11 @@ def createInstance(app,group):
     del lastNode
     # End of node "Shadow2_3"
 
-    # Start of node "Merge5"
-    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge5")
-    lastNode.setLabel("Merge5")
-    lastNode.setPosition(1470, -291)
-    lastNode.setSize(104, 55)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge5 = lastNode
-
-    del lastNode
-    # End of node "Merge5"
-
     # Start of node "Shuffle1"
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("Shuffle1")
     lastNode.setLabel("Shuffle1")
-    lastNode.setPosition(1730, 602)
+    lastNode.setPosition(2190, 592)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle1 = lastNode
@@ -1236,7 +1286,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
-    lastNode.setPosition(1515, 611)
+    lastNode.setPosition(1975, 601)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
@@ -1295,6 +1345,240 @@ def createInstance(app,group):
     del lastNode
     # End of node "Crop3"
 
+    # Start of node "Merge7"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge7")
+    lastNode.setLabel("Merge7")
+    lastNode.setPosition(1925, -115)
+    lastNode.setSize(104, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge7 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
+    del lastNode
+    # End of node "Merge7"
+
+    # Start of node "Switch1"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("Switch1")
+    lastNode.setLabel("Switch1")
+    lastNode.setPosition(2182, -537)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupSwitch1 = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Switch1"
+
+    # Start of node "Switch2"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("Switch2")
+    lastNode.setLabel("Switch2")
+    lastNode.setPosition(1927, -419)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupSwitch2 = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Switch2"
+
+    # Start of node "Switch3"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("Switch3")
+    lastNode.setLabel("Switch3")
+    lastNode.setPosition(1737, -225)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupSwitch3 = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    del lastNode
+    # End of node "Switch3"
+
+    # Start of node "Dot5"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot5")
+    lastNode.setLabel("Dot5")
+    lastNode.setPosition(-105, -324)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot5 = lastNode
+
+    del lastNode
+    # End of node "Dot5"
+
+    # Start of node "Dot6"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot6")
+    lastNode.setLabel("Dot6")
+    lastNode.setPosition(1782, -330)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot6 = lastNode
+
+    del lastNode
+    # End of node "Dot6"
+
+    # Start of node "Dot7"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot7")
+    lastNode.setLabel("Dot7")
+    lastNode.setPosition(507, -400)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot7 = lastNode
+
+    del lastNode
+    # End of node "Dot7"
+
+    # Start of node "Dot8"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot8")
+    lastNode.setLabel("Dot8")
+    lastNode.setPosition(2227, -97)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot8 = lastNode
+
+    del lastNode
+    # End of node "Dot8"
+
+    # Start of node "Merge5"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge5")
+    lastNode.setLabel("Merge5")
+    lastNode.setPosition(1927, -355)
+    lastNode.setSize(104, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge5 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("stencil")
+        del param
+
+    del lastNode
+    # End of node "Merge5"
+
+    # Start of node "Dot9"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot9")
+    lastNode.setLabel("Dot9")
+    lastNode.setPosition(1836, -528)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot9 = lastNode
+
+    del lastNode
+    # End of node "Dot9"
+
+    # Start of node "Dot10"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot10")
+    lastNode.setLabel("Dot10")
+    lastNode.setPosition(1836, -334)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot10 = lastNode
+
+    del lastNode
+    # End of node "Dot10"
+
+    # Start of node "Merge6"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge6")
+    lastNode.setLabel("Merge6")
+    lastNode.setPosition(1538, -206)
+    lastNode.setSize(104, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge6 = lastNode
+
+    del lastNode
+    # End of node "Merge6"
+
+    # Start of node "Merge5_2"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge5_2")
+    lastNode.setLabel("Merge5_2")
+    lastNode.setPosition(1737, -118)
+    lastNode.setSize(104, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge5_2 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("stencil")
+        del param
+
+    del lastNode
+    # End of node "Merge5_2"
+
+    # Start of node "Dot11"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot11")
+    lastNode.setLabel("Dot11")
+    lastNode.setPosition(1583, -92)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot11 = lastNode
+
+    del lastNode
+    # End of node "Dot11"
+
+    # Start of node "Dot12"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot12")
+    lastNode.setLabel("Dot12")
+    lastNode.setPosition(1583, -525)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot12 = lastNode
+
+    del lastNode
+    # End of node "Dot12"
+
+    # Start of node "Dot13"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot13")
+    lastNode.setLabel("Dot13")
+    lastNode.setPosition(1379, -400)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot13 = lastNode
+
+    del lastNode
+    # End of node "Dot13"
+
+    # Start of node "Dot14"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot14")
+    lastNode.setLabel("Dot14")
+    lastNode.setPosition(1379, -186)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot14 = lastNode
+
+    del lastNode
+    # End of node "Dot14"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupShuffle1)
     groupTransform2.connectInput(0, groupDot3)
@@ -1312,7 +1596,7 @@ def createInstance(app,group):
     groupchannel_c.connectInput(1, groupMask)
     groupMerge4.connectInput(0, groupcolor_node)
     groupMerge4.connectInput(1, groupBlur2)
-    groupDot2.connectInput(0, groupchannel_a)
+    groupDot2.connectInput(0, groupDot5)
     groupTransform2_2.connectInput(0, groupDot3_2)
     groupDot1_2.connectInput(0, groupDot2_2)
     groupMerge2_2.connectInput(0, groupDot1_2)
@@ -1322,7 +1606,7 @@ def createInstance(app,group):
     groupcolor_node_2.connectInput(0, groupDot2_2)
     groupMerge4_2.connectInput(0, groupcolor_node_2)
     groupMerge4_2.connectInput(1, groupBlur2_2)
-    groupDot2_2.connectInput(0, groupchannel_b)
+    groupDot2_2.connectInput(0, groupDot7)
     groupTransform2_3.connectInput(0, groupDot3_3)
     groupDot1_3.connectInput(0, groupDot2_3)
     groupMerge2_3.connectInput(0, groupDot1_3)
@@ -1338,15 +1622,34 @@ def createInstance(app,group):
     groupMerge1.connectInput(3, groupShadow2)
     groupShadow2_2.connectInput(0, groupMerge4_2)
     groupShadow2_3.connectInput(0, groupMerge4)
-    groupMerge5.connectInput(0, groupchannel_c)
-    groupMerge5.connectInput(1, groupchannel_b)
-    groupMerge5.connectInput(3, groupchannel_a)
     groupShuffle1.connectInput(0, groupMerge3)
     groupShuffle1.connectInput(1, groupDot4)
-    groupDot4.connectInput(0, groupMerge5)
+    groupDot4.connectInput(0, groupMerge7)
     groupCrop1.connectInput(0, groupTransform2_3)
     groupCrop2.connectInput(0, groupTransform2_2)
     groupCrop3.connectInput(0, groupTransform2)
+    groupMerge7.connectInput(0, groupMerge5_2)
+    groupMerge7.connectInput(1, groupDot8)
+    groupMerge7.connectInput(3, groupMerge5)
+    groupSwitch1.connectInput(1, groupDot9)
+    groupSwitch2.connectInput(1, groupDot13)
+    groupSwitch3.connectInput(1, groupDot6)
+    groupDot5.connectInput(0, groupchannel_a)
+    groupDot6.connectInput(0, groupDot5)
+    groupDot7.connectInput(0, groupchannel_b)
+    groupDot8.connectInput(0, groupSwitch1)
+    groupMerge5.connectInput(0, groupSwitch2)
+    groupMerge5.connectInput(1, groupDot10)
+    groupDot9.connectInput(0, groupDot12)
+    groupDot10.connectInput(0, groupDot9)
+    groupMerge6.connectInput(0, groupDot12)
+    groupMerge6.connectInput(1, groupDot14)
+    groupMerge5_2.connectInput(0, groupSwitch3)
+    groupMerge5_2.connectInput(1, groupDot11)
+    groupDot11.connectInput(0, groupMerge6)
+    groupDot12.connectInput(0, groupchannel_c)
+    groupDot13.connectInput(0, groupDot7)
+    groupDot14.connectInput(0, groupDot13)
 
     param = groupTransform2.getParam("translate")
     param.setExpression("-thisGroup.emboss_distance.get() * thisGroup.rscale.get()", False, 1)
@@ -1458,6 +1761,15 @@ def createInstance(app,group):
     del param
     param = groupShadow2_3.getParam("blur")
     param.setExpression("thisGroup.shadow_blur.get() * thisGroup.rscale.get()", False, 0)
+    del param
+    param = groupSwitch1.getParam("which")
+    param.setExpression("thisGroup.channel_c_alpha.get()", False, 0)
+    del param
+    param = groupSwitch2.getParam("which")
+    param.setExpression("thisGroup.channel_b_alpha.get()", False, 0)
+    del param
+    param = groupSwitch3.getParam("which")
+    param.setExpression("thisGroup.channel_a_alpha.get()", False, 0)
     del param
 
     try:
