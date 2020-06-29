@@ -3,7 +3,7 @@ import random
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
-    return
+        return
 
     knob_name = thisParam.getScriptName()
     if knob_name == 'random_seed':
