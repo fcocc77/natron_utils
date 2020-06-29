@@ -54,6 +54,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.read_file = param
     del param
 
@@ -80,6 +81,18 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(True)
     lastNode.glass_fx = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
     del param
 
     param = lastNode.createSeparatorParam("sep3", "")
@@ -111,7 +124,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Mid HD")
     lastNode.resolution = param
     del param
 
@@ -147,7 +159,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(10, 0)
     lastNode.start_frame = param
     del param
 
@@ -173,8 +185,8 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(0.8227858543395996, 0)
-    param.setValue(0.7529423236846924, 1)
-    param.setValue(0.09989874064922333, 2)
+    param.setValue(0.5209956169128418, 1)
+    param.setValue(0.3613067865371704, 2)
     lastNode.color = param
     del param
 
@@ -302,7 +314,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(724, 1590)
+    lastNode.setPosition(233, 1628)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -314,7 +326,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("B")
     lastNode.setLabel("B")
-    lastNode.setPosition(370, 757)
+    lastNode.setPosition(233, 757)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupB = lastNode
@@ -391,7 +403,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("timeOffset")
     if param is not None:
-        param.setValue(1, 0)
+        param.setValue(10, 0)
         del param
 
     del lastNode
@@ -517,8 +529,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("white")
     if param is not None:
-        param.setValue(0.5583404898643494, 0)
-        param.setValue(0.8069523572921753, 1)
+        param.setValue(0.8227858543395996, 0)
+        param.setValue(0.5209956169128418, 1)
+        param.setValue(0.3613067865371704, 2)
+        param.setValue(0, 3)
         del param
 
     param = lastNode.getParam("enableMask_Mask")
@@ -1281,7 +1295,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(25, 0)
+    param.setValue(50, 0)
     lastNode.duration = param
     del param
 
@@ -1695,7 +1709,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(25, 0)
+    param.setValue(50, 0)
     lastNode.duration = param
     del param
 
@@ -2089,7 +2103,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(2, 0)
+    param.setValue(5, 0)
     lastNode.start_frame = param
     del param
 
@@ -2107,7 +2121,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(20, 0)
+    param.setValue(40, 0)
     lastNode.duration = param
     del param
 
@@ -2646,7 +2660,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Mid HD")
+    param.set("Full HD")
     lastNode.resolution = param
     del param
 
@@ -2718,14 +2732,57 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot15"
 
+    # Start of node "switch"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("switch")
+    lastNode.setLabel("switch")
+    lastNode.setPosition(233, 1396)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupswitch = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValueAtTime(0, 9, 0)
+        param.setValueAtTime(1, 10, 0)
+        param.setValueAtTime(2, 61, 0)
+        del param
+
+    del lastNode
+    # End of node "switch"
+
+    # Start of node "Dot16"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot16")
+    lastNode.setLabel("Dot16")
+    lastNode.setPosition(573, 475)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot16 = lastNode
+
+    del lastNode
+    # End of node "Dot16"
+
+    # Start of node "Dot17"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot17")
+    lastNode.setLabel("Dot17")
+    lastNode.setPosition(573, 1327)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot17 = lastNode
+
+    del lastNode
+    # End of node "Dot17"
+
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupglass_fx_switch)
+    groupOutput1.connectInput(0, groupswitch)
     groupDot3.connectInput(0, groupShape)
     groupDot4.connectInput(0, groupDot3)
     groupmix.connectInput(0, groupA)
     groupmix.connectInput(1, groupB)
     groupmix.connectInput(2, groupDot11)
-    groupstart_frame_node.connectInput(0, groupNineRender)
+    groupstart_frame_node.connectInput(0, groupNineRead1)
     groupglass_fx_switch.connectInput(0, groupDot5)
     groupglass_fx_switch.connectInput(1, groupDot9)
     groupMerge5.connectInput(0, groupDot8)
@@ -2766,12 +2823,23 @@ def createInstance(app,group):
     groupNineRender.connectInput(0, grouptransition_to_alpha)
     groupDot13.connectInput(0, groupshape_glass_1)
     groupDot15.connectInput(0, groupDot13)
+    groupswitch.connectInput(0, groupDot17)
+    groupswitch.connectInput(1, groupglass_fx_switch)
+    groupswitch.connectInput(2, groupB)
+    groupDot16.connectInput(0, groupA)
+    groupDot17.connectInput(0, groupDot16)
 
     param = groupstart_frame_node.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)
     del param
     param = groupglass_fx_switch.getParam("which")
     param.setExpression("thisGroup.glass_fx.get()", False, 0)
+    del param
+    param = groupcolorize.getParam("white")
+    param.setExpression("thisGroup.color.getValue(dimension)", False, 0)
+    param.setExpression("thisGroup.color.getValue(dimension)", False, 1)
+    param.setExpression("thisGroup.color.getValue(dimension)", False, 2)
+    param.setExpression("thisGroup.color.getValue(dimension)", False, 3)
     del param
     param = groupNineRender.getParam("speeds")
     param.setExpression("thisGroup.speeds.get()[dimension]", False, 0)

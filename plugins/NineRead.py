@@ -155,6 +155,11 @@ def createInstance(app,group):
         param.setValue("[Project]/../footage/_normal_hd/_normal_hd.jpg")
         del param
 
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
     param = lastNode.getParam("ParamExistingInstance")
     if param is not None:
         param.setValue(True)

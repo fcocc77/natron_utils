@@ -25,3 +25,4 @@ def reload_file(thisNode):
 
     filename = thisNode.getParam('prefix_dir').get() + '/' + prefix + '/' + prefix_name + '/' + prefix_name + '_###.png'
     read.getParam('filename').set(filename)
+    read.getParam('outputPremult').set(0)
