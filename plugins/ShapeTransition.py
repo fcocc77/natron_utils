@@ -179,6 +179,18 @@ def createInstance(app,group):
     lastNode.seed = param
     del param
 
+    param = lastNode.createBooleanParam("lineal_animation", "Lineal Animation")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.lineal_animation = param
+    del param
+
     param = lastNode.createSeparatorParam("sep4", "")
 
     # Add the param to the page
@@ -1300,7 +1312,7 @@ def createInstance(app,group):
     lastNode.setScriptName("transform_7")
     lastNode.setLabel("transform_7")
     lastNode.setPosition(3468, 341)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_7 = lastNode
 
