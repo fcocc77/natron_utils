@@ -185,6 +185,11 @@ def createInstance(app,group):
         param.setValue(0.5, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge1"
 
@@ -207,6 +212,11 @@ def createInstance(app,group):
         param.setValue(90, 0)
         del param
 
+    param = lastNode.getParam("black_outside")
+    if param is not None:
+        param.setValue(False)
+        del param
+
     del lastNode
     # End of node "Transform1"
 
@@ -222,6 +232,11 @@ def createInstance(app,group):
     param = lastNode.getParam("rotate")
     if param is not None:
         param.setValue(-90, 0)
+        del param
+
+    param = lastNode.getParam("black_outside")
+    if param is not None:
+        param.setValue(False)
         del param
 
     del lastNode
