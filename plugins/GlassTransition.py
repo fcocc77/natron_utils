@@ -2521,6 +2521,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.dialog = param
     del param
 
@@ -2607,14 +2608,81 @@ def createInstance(app,group):
     del lastNode
     # End of node "NineRender"
 
-    # Start of node "NineRead1"
+    # Start of node "Dot13"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot13")
+    lastNode.setLabel("Dot13")
+    lastNode.setPosition(1541, -383)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot13 = lastNode
+
+    del lastNode
+    # End of node "Dot13"
+
+    # Start of node "Dot15"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot15")
+    lastNode.setLabel("Dot15")
+    lastNode.setPosition(1541, 9)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot15 = lastNode
+
+    del lastNode
+    # End of node "Dot15"
+
+    # Start of node "switch"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("switch")
+    lastNode.setLabel("switch")
+    lastNode.setPosition(233, 1396)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupswitch = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValueAtTime(0, 9, 0)
+        param.setValueAtTime(1, 10, 0)
+        param.setValueAtTime(2, 61, 0)
+        del param
+
+    del lastNode
+    # End of node "switch"
+
+    # Start of node "Dot16"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot16")
+    lastNode.setLabel("Dot16")
+    lastNode.setPosition(573, 475)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot16 = lastNode
+
+    del lastNode
+    # End of node "Dot16"
+
+    # Start of node "Dot17"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot17")
+    lastNode.setLabel("Dot17")
+    lastNode.setPosition(573, 1327)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot17 = lastNode
+
+    del lastNode
+    # End of node "Dot17"
+
+    # Start of node "NineRead"
     lastNode = app.createNode("vv.NineRead", 1, group)
-    lastNode.setScriptName("NineRead1")
+    lastNode.setScriptName("NineRead")
     lastNode.setLabel("NineRead")
-    lastNode.setPosition(1724, 654)
+    lastNode.setPosition(1753, 654)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupNineRead1 = lastNode
+    groupNineRead = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
@@ -2706,74 +2774,7 @@ def createInstance(app,group):
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "NineRead1"
-
-    # Start of node "Dot13"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot13")
-    lastNode.setLabel("Dot13")
-    lastNode.setPosition(1541, -383)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot13 = lastNode
-
-    del lastNode
-    # End of node "Dot13"
-
-    # Start of node "Dot15"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot15")
-    lastNode.setLabel("Dot15")
-    lastNode.setPosition(1541, 9)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot15 = lastNode
-
-    del lastNode
-    # End of node "Dot15"
-
-    # Start of node "switch"
-    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("switch")
-    lastNode.setLabel("switch")
-    lastNode.setPosition(233, 1396)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupswitch = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValueAtTime(0, 9, 0)
-        param.setValueAtTime(1, 10, 0)
-        param.setValueAtTime(2, 61, 0)
-        del param
-
-    del lastNode
-    # End of node "switch"
-
-    # Start of node "Dot16"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot16")
-    lastNode.setLabel("Dot16")
-    lastNode.setPosition(573, 475)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot16 = lastNode
-
-    del lastNode
-    # End of node "Dot16"
-
-    # Start of node "Dot17"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot17")
-    lastNode.setLabel("Dot17")
-    lastNode.setPosition(573, 1327)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot17 = lastNode
-
-    del lastNode
-    # End of node "Dot17"
+    # End of node "NineRead"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupswitch)
@@ -2782,7 +2783,7 @@ def createInstance(app,group):
     groupmix.connectInput(0, groupA)
     groupmix.connectInput(1, groupB)
     groupmix.connectInput(2, groupDot11)
-    groupstart_frame_node.connectInput(0, groupNineRead1)
+    groupstart_frame_node.connectInput(0, groupNineRead)
     groupglass_fx_switch.connectInput(0, groupDot5)
     groupglass_fx_switch.connectInput(1, groupDot9)
     groupMerge5.connectInput(0, groupDot8)
@@ -2852,13 +2853,13 @@ def createInstance(app,group):
     param = groupNineRender.getParam("prefix")
     param.setExpression("thisGroup.prefix_render.get()", False, 0)
     del param
-    param = groupNineRead1.getParam("velocity")
+    param = groupNineRead.getParam("velocity")
     param.setExpression("thisGroup.speed.get()", False, 0)
     del param
-    param = groupNineRead1.getParam("resolution")
+    param = groupNineRead.getParam("resolution")
     param.setExpression("thisGroup.resolution.get()", False, 0)
     del param
-    param = groupNineRead1.getParam("prefix")
+    param = groupNineRead.getParam("prefix")
     param.setExpression("thisGroup.prefix_render.get()", False, 0)
     del param
 

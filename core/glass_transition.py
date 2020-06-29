@@ -48,6 +48,10 @@ def refresh(thisNode):
     duration = thisNode.getParam('duration').get()
     duration = value_by_speed(duration, speeds)[current_speed]
 
+    # recargar nine read
+    nine_read = getNode(thisNode, 'NineRead')
+    nine_read.getParam('reload').trigger()
+
     switch_from_duration(thisNode, duration)
 
     # actualiza las transiciones de forma, solo si esta activado el 'read_file'
