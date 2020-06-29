@@ -232,3 +232,40 @@ def get_all_nodes(app):
                             '.' + d.getScriptName() + '.' + e.getScriptName()
                         nodes.append([e, e_path])
     return nodes
+
+
+def get_connected_nodes(parent):
+    # obtiene todos los nodos conectados a un nodo padre
+    nodes = []
+
+    def add(parent):
+        inputs = parent.getMaxInputCount()
+
+        for i in range(inputs):
+            node = parent.getInput(i)
+            if node:
+                # verifica si el nodo que se va a sumar, no tiene el mismo nombre que alguno que este en la lista
+                name = node.getScriptName()
+                is_in_list = any(node.getScriptName() ==
+                                 name for node in nodes)
+                if not is_in_list:
+                    nodes.append(node)
+                    add(node)
+
+    nodes.append(parent)
+    add(parent)
+
+    return nodes
+
+
+def delete(nodes):
+    # se usa .destroy() 2 veces ya que a veces
+    # natron no borra el nodo
+    if type(nodes) is list:
+        for n in nodes:
+            n.destroy()
+        for n in nodes:
+            n.destroy()
+    else:
+        nodes.destroy()
+        nodes.destroy()

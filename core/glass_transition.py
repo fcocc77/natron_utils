@@ -1,7 +1,7 @@
 import os
 import NatronGui
 import NatronEngine
-from natron_utils import getNode, alert, value_by_speed, switch
+from natron_utils import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -20,7 +20,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         render(thisNode)
     if knob_name == 'read_file':
         read_file(thisNode, thisParam)
-
+    if knob_name == 'clean':
+        clean(thisNode, app)
     if knob_name == 'display_map':
         switch(
             thisNode,
@@ -29,6 +30,13 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
             'switch',
             'start_frame_node'
         )
+
+
+def clean(thisNode, app):
+    nine_render = getNode(thisNode, 'NineRender')
+    if question("Esta seguro que desea borrar los nodos sobrantes ?", 'Limpiar Nodos'):
+        nodes = get_connected_nodes(nine_render)
+        delete(nodes)
 
 
 def read_file(thisNode, thisParam):

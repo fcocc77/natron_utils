@@ -83,6 +83,18 @@ def createInstance(app,group):
     lastNode.glass_fx = param
     del param
 
+    param = lastNode.createButtonParam("clean", "Clean")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Borra los nodos que ya no se usan despues de hacer el prerender.")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.clean = param
+    del param
+
     param = lastNode.createButtonParam("refresh", "Refresh")
 
     # Add the param to the page
