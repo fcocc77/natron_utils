@@ -2,6 +2,7 @@ import os
 import NatronGui
 import NatronEngine
 from natron_utils import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
+from general import formats
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -11,10 +12,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'refresh':
-        refresh(thisNode)
-    if knob_name == 'speed':
-        refresh(thisNode)
-    if knob_name == 'resolution':
         refresh(thisNode)
     if knob_name == 'render_shape':
         render(thisNode)
@@ -55,6 +52,7 @@ def read_file(thisNode, thisParam):
 def refresh(thisNode):
 
     current_speed = thisNode.getParam('speed').get()
+    current_resolution = thisNode.getParam('resolution').get()
     speeds = thisNode.getParam('speeds').get()
     duration = thisNode.getParam('duration').get()
     duration = value_by_speed(duration, speeds)[current_speed]
@@ -68,7 +66,7 @@ def refresh(thisNode):
     # actualiza las transiciones de forma, solo si esta activado el 'read_file'
     read_file = thisNode.getParam('read_file').get()
     if not read_file:
-        shape_transition_refresh(thisNode, current_speed)
+        shape_transition_refresh(thisNode, current_speed, current_resolution)
 
 
 def switch_from_duration(thisNode, duration):
@@ -85,7 +83,12 @@ def switch_from_duration(thisNode, duration):
     switch.setValueAtTime(2, last_frame + 1)
 
 
-def shape_transition_refresh(thisNode, speed=1):
+def shape_transition_refresh(thisNode, speed=1, resolution=1):
+
+    shape_format = getNode(thisNode, 'shape_format')
+
+    _resolution = formats[resolution]
+    shape_format.getParam('boxSize').set(_resolution[0], _resolution[0])
 
     # diferencias de tiempo que hay entre el shape de mascara y las de vidrio
     difference_with_mask = thisNode.getParam('difference_with_mask').get()
@@ -95,6 +98,12 @@ def shape_transition_refresh(thisNode, speed=1):
     duration = value_by_speed(normal_duration, speeds)[speed]
     mask_diff = value_by_speed(difference_with_mask, speeds)[speed]
 
+    # cambia la resolucion de 'OverlayMask'
+    overlay_mask = getNode(thisNode, 'OverlayMask')
+    rscale = _resolution[0] / float(formats[1][0])
+    overlay_mask.getParam('rscale').set(rscale)
+    # ------------------------
+
     if not (normal_duration / 2) > difference_with_mask:
         alert('difference_with_mask: Este numero tiene que ser menor que el medio de la duracion.')
         return False
@@ -102,6 +111,7 @@ def shape_transition_refresh(thisNode, speed=1):
     for shape_name in ['shape_glass_1', 'shape_glass_2']:
         shape = getNode(thisNode, shape_name)
         shape.getParam('duration').set(duration)
+        shape.getParam('formatboxSize').set(_resolution[0], _resolution[1])
         shape.getParam('refresh').trigger()
 
     # la mascara de transicion tiene que ser con menor duracion que las otras formas
@@ -113,6 +123,8 @@ def shape_transition_refresh(thisNode, speed=1):
 
     transition_mask.getParam('duration').set(mask_duration)
     transition_mask.getParam('start_frame').set(start_frame)
+    transition_mask.getParam('formatboxSize').set(
+        _resolution[0], _resolution[1])
     transition_mask.getParam('refresh').trigger()
     # ----------------------------------
 

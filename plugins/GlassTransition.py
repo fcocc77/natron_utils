@@ -408,6 +408,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmix = lastNode
 
+    param = lastNode.getParam("BChannelsA")
+    if param is not None:
+        param.setValue(False)
+        del param
+
     param = lastNode.getParam("userTextArea")
     if param is not None:
         param.setValue("<Natron>(over)</Natron>")
@@ -442,7 +447,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Shape")
     lastNode.setLabel("Shape")
-    lastNode.setPosition(1378, -669)
+    lastNode.setPosition(1378, -698)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupShape = lastNode
@@ -645,14 +650,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot14"
 
-    # Start of node "OverlayMask3"
+    # Start of node "OverlayMask"
     lastNode = app.createNode("vv.OverlayMask", 1, group)
-    lastNode.setScriptName("OverlayMask3")
-    lastNode.setLabel("OverlayMask3")
+    lastNode.setScriptName("OverlayMask")
+    lastNode.setLabel("OverlayMask")
     lastNode.setPosition(1378, -59)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupOverlayMask3 = lastNode
+    groupOverlayMask = lastNode
 
 
     # Create the user parameters
@@ -999,7 +1004,7 @@ def createInstance(app,group):
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "OverlayMask3"
+    # End of node "OverlayMask"
 
     # Start of node "Shuffle4"
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
@@ -1325,7 +1330,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
+    param.setValue(75, 0)
     lastNode.duration = param
     del param
 
@@ -1740,7 +1745,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
+    param.setValue(75, 0)
     lastNode.duration = param
     del param
 
@@ -2135,7 +2140,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(5, 0)
+    param.setValue(7, 0)
     lastNode.start_frame = param
     del param
 
@@ -2153,7 +2158,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(40, 0)
+    param.setValue(60, 0)
     lastNode.duration = param
     del param
 
@@ -2461,7 +2466,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.NineRender", 1, group)
     lastNode.setScriptName("NineRender")
     lastNode.setLabel("NineRender")
-    lastNode.setPosition(1380, 419)
+    lastNode.setPosition(1380, 418)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupNineRender = lastNode
@@ -2808,9 +2813,42 @@ def createInstance(app,group):
     del lastNode
     # End of node "NineRead"
 
+    # Start of node "shape_format"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("shape_format")
+    lastNode.setLabel("shape_format")
+    lastNode.setPosition(1378, -613)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupshape_format = lastNode
+
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1920, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "shape_format"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupswitch)
-    groupDot3.connectInput(0, groupShape)
+    groupDot3.connectInput(0, groupshape_format)
     groupDot4.connectInput(0, groupDot3)
     groupmix.connectInput(0, groupA)
     groupmix.connectInput(1, groupB)
@@ -2830,9 +2868,9 @@ def createInstance(app,group):
     groupto_blue.connectInput(0, groupalpha_to_green)
     groupto_blue.connectInput(1, groupDot10)
     groupred_to_map.connectInput(0, groupDot12)
-    groupalpha_to_green.connectInput(0, groupOverlayMask3)
+    groupalpha_to_green.connectInput(0, groupOverlayMask)
     groupDot14.connectInput(0, grouptransition_mask)
-    groupOverlayMask3.connectInput(0, groupShuffle4)
+    groupOverlayMask.connectInput(0, groupShuffle4)
     groupShuffle4.connectInput(0, groupshape_glass_1)
     groupShuffle4.connectInput(1, groupDot1)
     groupDot1.connectInput(0, groupshape_glass_2)
@@ -2861,6 +2899,7 @@ def createInstance(app,group):
     groupswitch.connectInput(2, groupB)
     groupDot16.connectInput(0, groupA)
     groupDot17.connectInput(0, groupDot16)
+    groupshape_format.connectInput(0, groupShape)
 
     param = groupstart_frame_node.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)
