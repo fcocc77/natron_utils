@@ -98,7 +98,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.channel_a_alpha = param
     del param
 
@@ -1119,7 +1118,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValue(1, 0)
+        param.setValue(0, 0)
         del param
 
     del lastNode
