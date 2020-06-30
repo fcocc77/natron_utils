@@ -15,51 +15,65 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'render':
         render(thisNode)
     if knob_name == 'render_slow':
-        render(thisNode, 'slow')
+        render(thisNode, 0)
     if knob_name == 'render_normal':
-        render(thisNode, 'normal')
+        render(thisNode, 1)
     if knob_name == 'render_fast':
-        render(thisNode, 'fast')
+        render(thisNode, 2)
 
 
-def render(thisNode, one_speed=False):
-    prefix = thisNode.getParam('prefix').get()
-    prefix_dir = thisNode.getParam('prefix_dir').get() + '/' + prefix
+def set_vinarender_state(duration, speeds, speed=1, prefix='render',
+                         pixels=1, vinarender=False, thisNode=False):
+    # ajusta los parametros de un nodo de videovina dependiendo de la velocidad y resolucion,
+    # y luego lo envia a render
+
+    prefix_dir = '[Project]/../footage/' + prefix
     absolule_path = absolute(prefix_dir)
-
     if not os.path.isdir(absolule_path):
         os.makedirs(absolule_path)
 
-    speeds_names = ['slow', 'normal', 'fast']
-    resolutions = ['mid', 'hd', '4k']
+    last_frame = value_by_speed(duration, speeds)[speed]
 
-    if one_speed:
+    speeds_names = ['slow', 'normal', 'fast']
+    pixels_names = ['mid', 'hd', '4k']
+
+    speed_name = speeds_names[speed]
+    pixels_name = pixels_names[pixels]
+
+    name = speed_name + '_' + pixels_name
+
+    prefix_name = prefix + '_' + name
+    render_dir = prefix_dir + '/' + prefix_name
+
+    # si 'videovina' es 'False', busca el nodo, a partir de 'name'
+    if not vinarender:
+        vinarender = getNode(thisNode, name)
+    # ----------------------
+
+    vinarender.getParam('filename').set(
+        render_dir + '/' + prefix_name + '_###.png')
+    vinarender.getParam('job_name').set('glass_transition: ' + name)
+    vinarender.getParam('no_dialog').set(True)
+    vinarender.getParam('rgbonly').set(False)
+
+    vinarender.getParam('range').set(1, last_frame)
+    vinarender.getParam('render').trigger()
+
+
+def render(thisNode, one_speed=None):
+    prefix = thisNode.getParam('prefix').get()
+    duration = thisNode.getParam('duration').get()
+    speeds = thisNode.getParam('speeds').get()
+
+    if not one_speed == None:
         speeds_list = [one_speed]
     else:
-        speeds_list = speeds_names
+        speeds_list = range(3)
 
-    for velocity in speeds_list:
-        duration = thisNode.getParam('duration').get()
-        speeds = thisNode.getParam('speeds').get()
-
-        velocity_index = speeds_names.index(velocity)
-        last_frame = value_by_speed(duration, speeds)[velocity_index]
-
-        for resolution in resolutions:
-            name = velocity + '_' + resolution
-            render_node = getNode(thisNode, name)
-
-            prefix_name = prefix + '_' + name
-            render_dir = prefix_dir + '/' + prefix_name
-
-            render_node.getParam('filename').set(
-                render_dir + '/' + prefix_name + '_###.png')
-            render_node.getParam('job_name').set('glass_transition: ' + name)
-            render_node.getParam('no_dialog').set(True)
-            render_node.getParam('rgbonly').set(False)
-
-            render_node.getParam('range').set(1, last_frame)
-            render_node.getParam('render').trigger()
+    for speed_index in speeds_list:
+        for pixels_index in range(3):
+            set_vinarender_state(duration, speeds, speed_index, prefix,
+                                 pixels_index, thisNode=thisNode)
 
     if thisNode.getParam('dialog').get():
         alert('Se enviaron a render las 9 diferentes transiciones.')

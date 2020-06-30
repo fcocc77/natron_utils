@@ -89,18 +89,6 @@ def createInstance(app,group):
     lastNode.duration = param
     del param
 
-    param = lastNode.createPathParam("prefix_dir", "Prefix DIr")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setValue("[Project]/../footage")
-    lastNode.prefix_dir = param
-    del param
-
     param = lastNode.createStringParam("prefix", "Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
@@ -212,25 +200,13 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output1")
-    lastNode.setPosition(2389, 168)
+    lastNode.setPosition(1380, 287)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 
     del lastNode
     # End of node "Output1"
-
-    # Start of node "p4K_Input"
-    lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("p4K_Input")
-    lastNode.setLabel("4K_Input")
-    lastNode.setPosition(1155, -147)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.5, 0.2)
-    groupp4K_Input = lastNode
-
-    del lastNode
-    # End of node "p4K_Input"
 
     # Start of node "mid_hd"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
@@ -274,6 +250,11 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     groupful_hd = lastNode
 
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
     param = lastNode.getParam("NatronParamFormatChoice")
     if param is not None:
         param.set("PC_Video")
@@ -283,6 +264,17 @@ def createInstance(app,group):
     if param is not None:
         param.setValue(1920, 0)
         param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
         del param
 
     del lastNode
@@ -299,42 +291,6 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "Dot1"
-
-    # Start of node "Dot2"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot2")
-    lastNode.setLabel("Dot2")
-    lastNode.setPosition(1200, 176)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot2 = lastNode
-
-    del lastNode
-    # End of node "Dot2"
-
-    # Start of node "Dot3"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot3")
-    lastNode.setLabel("Dot3")
-    lastNode.setPosition(660, 176)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot3 = lastNode
-
-    del lastNode
-    # End of node "Dot3"
-
-    # Start of node "Dot4"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot4")
-    lastNode.setLabel("Dot4")
-    lastNode.setPosition(1798, 176)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot4 = lastNode
-
-    del lastNode
-    # End of node "Dot4"
 
     # Start of node "VinaRender1"
     lastNode = app.createNode("vv.vinarender", 1, group)
@@ -426,6 +382,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: slow_mid")
     lastNode.job_name = param
     del param
 
@@ -438,7 +395,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_slow_mid/test_slow_mid_###.png")
     lastNode.filename = param
     del param
 
@@ -480,7 +437,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(45, 1)
     lastNode.range = param
     del param
 
@@ -643,6 +600,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: normal_mid")
     lastNode.job_name = param
     del param
 
@@ -655,7 +613,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_normal_mid/test_normal_mid_###.png")
     lastNode.filename = param
     del param
 
@@ -697,7 +655,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(30, 1)
     lastNode.range = param
     del param
 
@@ -860,6 +818,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: fast_mid")
     lastNode.job_name = param
     del param
 
@@ -872,7 +831,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_fast_mid/test_fast_mid_###.png")
     lastNode.filename = param
     del param
 
@@ -914,7 +873,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(15, 1)
     lastNode.range = param
     del param
 
@@ -1077,6 +1036,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: slow_hd")
     lastNode.job_name = param
     del param
 
@@ -1089,7 +1049,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_slow_hd/test_slow_hd_###.png")
     lastNode.filename = param
     del param
 
@@ -1131,7 +1091,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(45, 1)
     lastNode.range = param
     del param
 
@@ -1294,6 +1254,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: normal_hd")
     lastNode.job_name = param
     del param
 
@@ -1306,7 +1267,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_normal_hd/test_normal_hd_###.png")
     lastNode.filename = param
     del param
 
@@ -1348,7 +1309,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(30, 1)
     lastNode.range = param
     del param
 
@@ -1511,6 +1472,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: fast_hd")
     lastNode.job_name = param
     del param
 
@@ -1523,7 +1485,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_fast_hd/test_fast_hd_###.png")
     lastNode.filename = param
     del param
 
@@ -1565,7 +1527,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(15, 1)
     lastNode.range = param
     del param
 
@@ -1728,6 +1690,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: slow_4k")
     lastNode.job_name = param
     del param
 
@@ -1740,7 +1703,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_slow_4k/test_slow_4k_###.png")
     lastNode.filename = param
     del param
 
@@ -1782,7 +1745,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(45, 1)
     lastNode.range = param
     del param
 
@@ -1945,6 +1908,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: normal_4k")
     lastNode.job_name = param
     del param
 
@@ -1957,7 +1921,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_normal_4k/test_normal_4k_###.png")
     lastNode.filename = param
     del param
 
@@ -1999,7 +1963,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(30, 1)
     lastNode.range = param
     del param
 
@@ -2162,6 +2126,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("glass_transition: fast_4k")
     lastNode.job_name = param
     del param
 
@@ -2174,7 +2139,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../renders/video.mov")
+    param.setValue("[Project]/../footage/test/test_fast_4k/test_fast_4k_###.png")
     lastNode.filename = param
     del param
 
@@ -2216,7 +2181,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(15, 1)
     lastNode.range = param
     del param
 
@@ -2289,14 +2254,23 @@ def createInstance(app,group):
     del lastNode
     # End of node "normal_mdi_2_2_2_2_2_2_2"
 
+    # Start of node "p4K"
+    lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
+    lastNode.setScriptName("p4K")
+    lastNode.setLabel("4K")
+    lastNode.setPosition(1158, -70)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupp4K = lastNode
+
+    del lastNode
+    # End of node "p4K"
+
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupDot4)
-    groupmid_hd.connectInput(0, groupDot3)
-    groupful_hd.connectInput(0, groupDot2)
-    groupDot1.connectInput(0, groupDot4)
-    groupDot2.connectInput(0, groupp4K_Input)
-    groupDot3.connectInput(0, groupDot2)
-    groupDot4.connectInput(0, groupDot2)
+    groupOutput1.connectInput(0, groupful_hd)
+    groupmid_hd.connectInput(0, groupp4K)
+    groupful_hd.connectInput(0, groupp4K)
+    groupDot1.connectInput(0, groupp4K)
     groupVinaRender1.connectInput(0, groupmid_hd)
     groupnormal_mdi.connectInput(0, groupmid_hd)
     groupnormal_mdi_2.connectInput(0, groupmid_hd)
