@@ -234,6 +234,25 @@ def get_all_nodes(app):
     return nodes
 
 
+def get_select_node(_type=None):
+    app = NatronGui.natron.getGuiInstance(0)
+
+    # encuentra el primer nodo seleccionado
+    selected = None
+    for node, path in get_all_nodes(app):
+        if _type:
+            ok_type = node.getPluginID() == _type
+        else:
+            ok_type = True
+        if ok_type:
+            if node.isNodeSelected():
+                selected = node
+                break
+    # ---------------------------
+
+    return selected
+
+
 def get_connected_nodes(parent):
     # obtiene todos los nodos conectados a un nodo padre
     nodes = []

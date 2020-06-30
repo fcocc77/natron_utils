@@ -29,7 +29,7 @@ def getIconPath():
     return "VinaRender.png"
 
 def getGrouping():
-    return "videovina"
+    return "videovina/Render"
 
 def createInstance(app,group):
     # Create all nodes in the group

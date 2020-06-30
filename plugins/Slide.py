@@ -26,7 +26,7 @@ def getVersion():
     return 1
 
 def getGrouping():
-    return "videovina"
+    return "videovina/Templates"
 
 def createInstance(app,group):
     # Create all nodes in the group

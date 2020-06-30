@@ -146,7 +146,7 @@ def render(thisNode):
         if shape_transition_refresh(thisNode, speed=speed, pixels=pixels):
             send_vinarender_state(
                 duration, speeds, speed, prefix, pixels, vinarender=vinarender)
-        alert('Se enviaron a render el actual estado.')
+        alert('Se envio a render el actual estado.')
     else:
         for speed in range(3):
             for pixels in range(3):
