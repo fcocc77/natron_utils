@@ -410,7 +410,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Transform2")
     lastNode.setLabel("Transform2")
     lastNode.setPosition(-497, -159)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform2 = lastNode
 
@@ -496,7 +496,7 @@ def createInstance(app,group):
     lastNode.setScriptName("channel_a")
     lastNode.setLabel("channel_a")
     lastNode.setPosition(-150, -434)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupchannel_a = lastNode
 
@@ -523,104 +523,24 @@ def createInstance(app,group):
     del lastNode
     # End of node "channel_a"
 
-    # Start of node "Shadow2"
-    lastNode = app.createNode("vv.DropShadow", 1, group)
-    lastNode.setScriptName("Shadow2")
-    lastNode.setLabel("Shadow2")
-    lastNode.setPosition(1082, 151)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupShadow2 = lastNode
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("angle", "Angle")
-    param.setMinimum(0, 0)
-    param.setMaximum(360, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(360, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(90, 0)
-    lastNode.angle = param
-    del param
-
-    param = lastNode.createIntParam("distance", "Distance")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.distance = param
-    del param
-
-    param = lastNode.createDoubleParam("opacity", "Opacity")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.opacity = param
-    del param
-
-    param = lastNode.createIntParam("blur", "Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.blur = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "Shadow2"
-
     # Start of node "Constant1"
     lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
     lastNode.setScriptName("Constant1")
     lastNode.setLabel("Constant1")
-    lastNode.setPosition(2190, 51)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(2190, 60)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupConstant1 = lastNode
+
+    param = lastNode.getParam("extent")
+    if param is not None:
+        param.set("size")
+        del param
+
+    param = lastNode.getParam("reformat")
+    if param is not None:
+        param.setValue(True)
+        del param
 
     param = lastNode.getParam("NatronParamFormatChoice")
     if param is not None:
@@ -643,7 +563,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge3")
     lastNode.setLabel("Merge3")
     lastNode.setPosition(2190, 284)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
 
@@ -660,7 +580,7 @@ def createInstance(app,group):
     lastNode.setScriptName("color_node")
     lastNode.setLabel("color_node")
     lastNode.setPosition(-150, -141)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.48, 0.66, 1)
     groupcolor_node = lastNode
 
@@ -680,7 +600,7 @@ def createInstance(app,group):
     lastNode.setScriptName("channel_b")
     lastNode.setLabel("channel_b")
     lastNode.setPosition(462, -509)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupchannel_b = lastNode
 
@@ -712,7 +632,7 @@ def createInstance(app,group):
     lastNode.setScriptName("channel_c")
     lastNode.setLabel("channel_c")
     lastNode.setPosition(1083, -532)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupchannel_c = lastNode
 
@@ -743,8 +663,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge4")
     lastNode.setLabel("Merge4")
-    lastNode.setPosition(-150, -15)
-    lastNode.setSize(104, 55)
+    lastNode.setPosition(-150, -7)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
 
@@ -783,7 +703,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Transform2_2")
     lastNode.setLabel("Transform2_2")
     lastNode.setPosition(114, -111)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform2_2 = lastNode
 
@@ -839,7 +759,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Blur2_2")
     lastNode.setLabel("Blur2_2")
     lastNode.setPosition(306, 28)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2_2 = lastNode
 
@@ -869,7 +789,7 @@ def createInstance(app,group):
     lastNode.setScriptName("color_node_2")
     lastNode.setLabel("color_node_2")
     lastNode.setPosition(461, -112)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.48, 0.66, 1)
     groupcolor_node_2 = lastNode
 
@@ -889,7 +809,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge4_2")
     lastNode.setLabel("Merge4_2")
     lastNode.setPosition(461, 17)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4_2 = lastNode
 
@@ -928,7 +848,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Transform2_3")
     lastNode.setLabel("Transform2_3")
     lastNode.setPosition(736, -147)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform2_3 = lastNode
 
@@ -984,7 +904,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Blur2_3")
     lastNode.setLabel("Blur2_3")
     lastNode.setPosition(928, 25)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2_3 = lastNode
 
@@ -1014,7 +934,7 @@ def createInstance(app,group):
     lastNode.setScriptName("color_node_3")
     lastNode.setLabel("color_node_3")
     lastNode.setPosition(1083, -115)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.48, 0.66, 1)
     groupcolor_node_3 = lastNode
 
@@ -1034,7 +954,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge4_3")
     lastNode.setLabel("Merge4_3")
     lastNode.setPosition(1083, 13)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4_3 = lastNode
 
@@ -1073,7 +993,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
     lastNode.setPosition(461, 294)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
@@ -1085,192 +1005,12 @@ def createInstance(app,group):
     del lastNode
     # End of node "Merge1"
 
-    # Start of node "Shadow2_2"
-    lastNode = app.createNode("vv.DropShadow", 1, group)
-    lastNode.setScriptName("Shadow2_2")
-    lastNode.setLabel("Shadow2_2")
-    lastNode.setPosition(461, 149)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupShadow2_2 = lastNode
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("angle", "Angle")
-    param.setMinimum(0, 0)
-    param.setMaximum(360, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(360, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(90, 0)
-    lastNode.angle = param
-    del param
-
-    param = lastNode.createIntParam("distance", "Distance")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.distance = param
-    del param
-
-    param = lastNode.createDoubleParam("opacity", "Opacity")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.opacity = param
-    del param
-
-    param = lastNode.createIntParam("blur", "Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.blur = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "Shadow2_2"
-
-    # Start of node "Shadow2_3"
-    lastNode = app.createNode("vv.DropShadow", 1, group)
-    lastNode.setScriptName("Shadow2_3")
-    lastNode.setLabel("Shadow2_3")
-    lastNode.setPosition(-150, 119)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupShadow2_3 = lastNode
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("angle", "Angle")
-    param.setMinimum(0, 0)
-    param.setMaximum(360, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(360, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(90, 0)
-    lastNode.angle = param
-    del param
-
-    param = lastNode.createIntParam("distance", "Distance")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.distance = param
-    del param
-
-    param = lastNode.createDoubleParam("opacity", "Opacity")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.opacity = param
-    del param
-
-    param = lastNode.createIntParam("blur", "Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.blur = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "Shadow2_3"
-
     # Start of node "Shuffle1"
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("Shuffle1")
     lastNode.setLabel("Shuffle1")
     lastNode.setPosition(2190, 592)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle1 = lastNode
 
@@ -1294,52 +1034,24 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot4"
 
-    # Start of node "Crop1"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("Crop1")
-    lastNode.setLabel("Crop1")
-    lastNode.setPosition(736, -71)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupCrop1 = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    del lastNode
-    # End of node "Crop1"
-
-    # Start of node "Crop2"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("Crop2")
-    lastNode.setLabel("Crop2")
-    lastNode.setPosition(114, -55)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupCrop2 = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    del lastNode
-    # End of node "Crop2"
-
     # Start of node "Crop3"
     lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
     lastNode.setScriptName("Crop3")
     lastNode.setLabel("Crop3")
     lastNode.setPosition(-497, -104)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop3 = lastNode
 
     param = lastNode.getParam("NatronParamFormatChoice")
     if param is not None:
         param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
         del param
 
     del lastNode
@@ -1349,8 +1061,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge7")
     lastNode.setLabel("Merge7")
-    lastNode.setPosition(1925, -115)
-    lastNode.setSize(104, 55)
+    lastNode.setPosition(1927, -115)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge7 = lastNode
 
@@ -1367,7 +1079,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
     lastNode.setPosition(2182, -537)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
 
@@ -1383,8 +1095,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch2")
     lastNode.setLabel("Switch2")
-    lastNode.setPosition(1927, -419)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1927, -408)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch2 = lastNode
 
@@ -1400,8 +1112,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch3")
     lastNode.setLabel("Switch3")
-    lastNode.setPosition(1737, -225)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1737, -224)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch3 = lastNode
 
@@ -1466,13 +1178,18 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge5")
     lastNode.setLabel("Merge5")
     lastNode.setPosition(1927, -355)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge5 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -1507,9 +1224,14 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge6")
     lastNode.setLabel("Merge6")
     lastNode.setPosition(1538, -206)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge6 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge6"
@@ -1518,14 +1240,19 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge5_2")
     lastNode.setLabel("Merge5_2")
-    lastNode.setPosition(1737, -118)
-    lastNode.setSize(104, 55)
+    lastNode.setPosition(1737, -115)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge5_2 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -1535,7 +1262,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot11")
     lastNode.setLabel("Dot11")
-    lastNode.setPosition(1583, -92)
+    lastNode.setPosition(1583, -100)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot11 = lastNode
@@ -1579,6 +1306,429 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot14"
 
+    # Start of node "Reformat3"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("Reformat3")
+    lastNode.setLabel("Reformat3")
+    lastNode.setPosition(2190, 112)
+    lastNode.setSize(104, 30)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupReformat3 = lastNode
+
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Reformat3"
+
+    # Start of node "Crop3_2"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
+    lastNode.setScriptName("Crop3_2")
+    lastNode.setLabel("Crop3_2")
+    lastNode.setPosition(114, -55)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupCrop3_2 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    del lastNode
+    # End of node "Crop3_2"
+
+    # Start of node "Crop3_3"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
+    lastNode.setScriptName("Crop3_3")
+    lastNode.setLabel("Crop3_3")
+    lastNode.setPosition(736, -71)
+    lastNode.setSize(104, 30)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupCrop3_3 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    del lastNode
+    # End of node "Crop3_3"
+
+    # Start of node "Shadow3"
+    lastNode = app.createNode("vv.DropShadow", 1, group)
+    lastNode.setScriptName("Shadow3")
+    lastNode.setLabel("Shadow3")
+    lastNode.setPosition(-150, 131)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShadow3 = lastNode
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
+    param.setMinimum(0.2, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0.2, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
+    del param
+
+    param = lastNode.createDoubleParam("angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(90, 0)
+    lastNode.angle = param
+    del param
+
+    param = lastNode.createIntParam("distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.distance = param
+    del param
+
+    param = lastNode.createDoubleParam("opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.opacity = param
+    del param
+
+    param = lastNode.createIntParam("blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.blur = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Shadow3"
+
+    # Start of node "Shadow3_2"
+    lastNode = app.createNode("vv.DropShadow", 1, group)
+    lastNode.setScriptName("Shadow3_2")
+    lastNode.setLabel("Shadow3_2")
+    lastNode.setPosition(461, 153)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShadow3_2 = lastNode
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
+    param.setMinimum(0.2, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0.2, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
+    del param
+
+    param = lastNode.createDoubleParam("angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(90, 0)
+    lastNode.angle = param
+    del param
+
+    param = lastNode.createIntParam("distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.distance = param
+    del param
+
+    param = lastNode.createDoubleParam("opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.opacity = param
+    del param
+
+    param = lastNode.createIntParam("blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.blur = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Shadow3_2"
+
+    # Start of node "Shadow3_3"
+    lastNode = app.createNode("vv.DropShadow", 1, group)
+    lastNode.setScriptName("Shadow3_3")
+    lastNode.setLabel("Shadow3_3")
+    lastNode.setPosition(1083, 153)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShadow3_3 = lastNode
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
+    param.setMinimum(0.2, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0.2, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
+    del param
+
+    param = lastNode.createDoubleParam("angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(90, 0)
+    lastNode.angle = param
+    del param
+
+    param = lastNode.createIntParam("distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.distance = param
+    del param
+
+    param = lastNode.createDoubleParam("opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.opacity = param
+    del param
+
+    param = lastNode.createIntParam("blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.blur = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Shadow3_3"
+
+    # Start of node "Crop3_3_2"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
+    lastNode.setScriptName("Crop3_3_2")
+    lastNode.setLabel("Crop3_3_2")
+    lastNode.setPosition(1927, -10)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupCrop3_3_2 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    del lastNode
+    # End of node "Crop3_3_2"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupShuffle1)
     groupTransform2.connectInput(0, groupDot3)
@@ -1588,8 +1738,7 @@ def createInstance(app,group):
     groupBlur2.connectInput(0, groupMerge2)
     groupDot3.connectInput(0, groupDot1)
     groupchannel_a.connectInput(1, groupMask)
-    groupShadow2.connectInput(0, groupMerge4_3)
-    groupMerge3.connectInput(0, groupConstant1)
+    groupMerge3.connectInput(0, groupReformat3)
     groupMerge3.connectInput(1, groupMerge1)
     groupcolor_node.connectInput(0, groupDot2)
     groupchannel_b.connectInput(1, groupMask)
@@ -1600,7 +1749,7 @@ def createInstance(app,group):
     groupTransform2_2.connectInput(0, groupDot3_2)
     groupDot1_2.connectInput(0, groupDot2_2)
     groupMerge2_2.connectInput(0, groupDot1_2)
-    groupMerge2_2.connectInput(1, groupCrop2)
+    groupMerge2_2.connectInput(1, groupCrop3_2)
     groupBlur2_2.connectInput(0, groupMerge2_2)
     groupDot3_2.connectInput(0, groupDot1_2)
     groupcolor_node_2.connectInput(0, groupDot2_2)
@@ -1610,23 +1759,19 @@ def createInstance(app,group):
     groupTransform2_3.connectInput(0, groupDot3_3)
     groupDot1_3.connectInput(0, groupDot2_3)
     groupMerge2_3.connectInput(0, groupDot1_3)
-    groupMerge2_3.connectInput(1, groupCrop1)
+    groupMerge2_3.connectInput(1, groupCrop3_3)
     groupBlur2_3.connectInput(0, groupMerge2_3)
     groupDot3_3.connectInput(0, groupDot1_3)
     groupcolor_node_3.connectInput(0, groupDot2_3)
     groupMerge4_3.connectInput(0, groupcolor_node_3)
     groupMerge4_3.connectInput(1, groupBlur2_3)
     groupDot2_3.connectInput(0, groupchannel_c)
-    groupMerge1.connectInput(0, groupShadow2_3)
-    groupMerge1.connectInput(1, groupShadow2_2)
-    groupMerge1.connectInput(3, groupShadow2)
-    groupShadow2_2.connectInput(0, groupMerge4_2)
-    groupShadow2_3.connectInput(0, groupMerge4)
+    groupMerge1.connectInput(0, groupShadow3)
+    groupMerge1.connectInput(1, groupShadow3_2)
+    groupMerge1.connectInput(3, groupShadow3_3)
     groupShuffle1.connectInput(0, groupMerge3)
     groupShuffle1.connectInput(1, groupDot4)
-    groupDot4.connectInput(0, groupMerge7)
-    groupCrop1.connectInput(0, groupTransform2_3)
-    groupCrop2.connectInput(0, groupTransform2_2)
+    groupDot4.connectInput(0, groupCrop3_3_2)
     groupCrop3.connectInput(0, groupTransform2)
     groupMerge7.connectInput(0, groupMerge5_2)
     groupMerge7.connectInput(1, groupDot8)
@@ -1650,6 +1795,13 @@ def createInstance(app,group):
     groupDot12.connectInput(0, groupchannel_c)
     groupDot13.connectInput(0, groupDot7)
     groupDot14.connectInput(0, groupDot13)
+    groupReformat3.connectInput(0, groupConstant1)
+    groupCrop3_2.connectInput(0, groupTransform2_2)
+    groupCrop3_3.connectInput(0, groupTransform2_3)
+    groupShadow3.connectInput(0, groupMerge4)
+    groupShadow3_2.connectInput(0, groupMerge4_2)
+    groupShadow3_3.connectInput(0, groupMerge4_3)
+    groupCrop3_3_2.connectInput(0, groupMerge7)
 
     param = groupTransform2.getParam("translate")
     param.setExpression("-thisGroup.emboss_distance.get() * thisGroup.rscale.get()", False, 1)
@@ -1669,15 +1821,6 @@ def createInstance(app,group):
     del param
     param = groupchannel_a.getParam("outputA")
     param.setExpression("thisGroup.mask_channel_a.get()", False, 0)
-    del param
-    param = groupShadow2.getParam("distance")
-    param.setExpression("thisGroup.shadow_distance.get() * thisGroup.rscale.get()", False, 0)
-    del param
-    param = groupShadow2.getParam("opacity")
-    param.setExpression("thisGroup.shadow.get()", False, 0)
-    del param
-    param = groupShadow2.getParam("blur")
-    param.setExpression("thisGroup.shadow_blur.get() * thisGroup.rscale.get()", False, 0)
     del param
     param = groupcolor_node.getParam("white")
     param.setExpression("thisGroup.color_a.get()[dimension]", False, 0)
@@ -1744,23 +1887,9 @@ def createInstance(app,group):
     param = groupMerge4_3.getParam("mix")
     param.setExpression("thisGroup.emboss.get()", False, 0)
     del param
-    param = groupShadow2_2.getParam("distance")
-    param.setExpression("thisGroup.shadow_distance.get() * thisGroup.rscale.get()", False, 0)
-    del param
-    param = groupShadow2_2.getParam("opacity")
-    param.setExpression("thisGroup.shadow.get()", False, 0)
-    del param
-    param = groupShadow2_2.getParam("blur")
-    param.setExpression("thisGroup.shadow_blur.get() * thisGroup.rscale.get()", False, 0)
-    del param
-    param = groupShadow2_3.getParam("distance")
-    param.setExpression("thisGroup.shadow_distance.get() * thisGroup.rscale.get()", False, 0)
-    del param
-    param = groupShadow2_3.getParam("opacity")
-    param.setExpression("thisGroup.shadow.get()", False, 0)
-    del param
-    param = groupShadow2_3.getParam("blur")
-    param.setExpression("thisGroup.shadow_blur.get() * thisGroup.rscale.get()", False, 0)
+    param = groupCrop3.getParam("size")
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
     del param
     param = groupSwitch1.getParam("which")
     param.setExpression("thisGroup.channel_c_alpha.get()", False, 0)
@@ -1770,6 +1899,58 @@ def createInstance(app,group):
     del param
     param = groupSwitch3.getParam("which")
     param.setExpression("thisGroup.channel_a_alpha.get()", False, 0)
+    del param
+    param = groupReformat3.getParam("boxSize")
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    del param
+    param = groupCrop3_2.getParam("size")
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    del param
+    param = groupCrop3_3.getParam("size")
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    del param
+    param = groupShadow3.getParam("rscale")
+    param.setExpression("thisGroup.rscale.get() ", False, 0)
+    del param
+    param = groupShadow3.getParam("distance")
+    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
+    del param
+    param = groupShadow3.getParam("opacity")
+    param.setExpression("thisGroup.shadow.get()", False, 0)
+    del param
+    param = groupShadow3.getParam("blur")
+    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
+    del param
+    param = groupShadow3_2.getParam("rscale")
+    param.setExpression("thisGroup.rscale.get() ", False, 0)
+    del param
+    param = groupShadow3_2.getParam("distance")
+    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
+    del param
+    param = groupShadow3_2.getParam("opacity")
+    param.setExpression("thisGroup.shadow.get()", False, 0)
+    del param
+    param = groupShadow3_2.getParam("blur")
+    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
+    del param
+    param = groupShadow3_3.getParam("rscale")
+    param.setExpression("thisGroup.rscale.get() ", False, 0)
+    del param
+    param = groupShadow3_3.getParam("distance")
+    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
+    del param
+    param = groupShadow3_3.getParam("opacity")
+    param.setExpression("thisGroup.shadow.get()", False, 0)
+    del param
+    param = groupShadow3_3.getParam("blur")
+    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
+    del param
+    param = groupCrop3_3_2.getParam("size")
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
     del param
 
     try:

@@ -1,5 +1,6 @@
 # vvPlugins modules
 import natron_utils
+import general
 import vvtext
 import collect_files
 import export_pyplugs

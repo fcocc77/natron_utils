@@ -22,7 +22,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         render(thisNode, 2)
 
 
-def set_vinarender_state(duration, speeds, speed=1, prefix='render',
+def send_vinarender_state(duration, speeds, speed=1, prefix='render',
                          pixels=1, vinarender=False, thisNode=False):
     # ajusta los parametros de un nodo de videovina dependiendo de la velocidad y resolucion,
     # y luego lo envia a render
@@ -72,7 +72,7 @@ def render(thisNode, one_speed=None):
 
     for speed_index in speeds_list:
         for pixels_index in range(3):
-            set_vinarender_state(duration, speeds, speed_index, prefix,
+            send_vinarender_state(duration, speeds, speed_index, prefix,
                                  pixels_index, thisNode=thisNode)
 
     if thisNode.getParam('dialog').get():

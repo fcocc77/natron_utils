@@ -3,6 +3,7 @@ import NatronGui
 import NatronEngine
 from natron_utils import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
 from general import formats
+from nine_render import send_vinarender_state
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -44,7 +45,7 @@ def read_file(thisNode, thisParam):
         thisNode,
         thisParam.get(),
         'start_frame_node',
-        'NineRender',
+        'VinaRender',
         'NineRead'
     )
 
@@ -83,12 +84,12 @@ def switch_from_duration(thisNode, duration):
     switch.setValueAtTime(2, last_frame + 1)
 
 
-def shape_transition_refresh(thisNode, speed=1, resolution=1):
+def shape_transition_refresh(thisNode, speed=1, pixels=1):
 
     shape_format = getNode(thisNode, 'shape_format')
 
-    _resolution = formats[resolution]
-    shape_format.getParam('boxSize').set(_resolution[0], _resolution[0])
+    _pixels = formats[pixels]
+    shape_format.getParam('boxSize').set(_pixels[0], _pixels[0])
 
     # diferencias de tiempo que hay entre el shape de mascara y las de vidrio
     difference_with_mask = thisNode.getParam('difference_with_mask').get()
@@ -100,7 +101,7 @@ def shape_transition_refresh(thisNode, speed=1, resolution=1):
 
     # cambia la resolucion de 'OverlayMask'
     overlay_mask = getNode(thisNode, 'OverlayMask')
-    rscale = _resolution[0] / float(formats[1][0])
+    rscale = _pixels[0] / float(formats[1][0])
     overlay_mask.getParam('rscale').set(rscale)
     # ------------------------
 
@@ -111,7 +112,7 @@ def shape_transition_refresh(thisNode, speed=1, resolution=1):
     for shape_name in ['shape_glass_1', 'shape_glass_2']:
         shape = getNode(thisNode, shape_name)
         shape.getParam('duration').set(duration)
-        shape.getParam('formatboxSize').set(_resolution[0], _resolution[1])
+        shape.getParam('formatboxSize').set(_pixels[0], _pixels[1])
         shape.getParam('refresh').trigger()
 
     # la mascara de transicion tiene que ser con menor duracion que las otras formas
@@ -124,7 +125,7 @@ def shape_transition_refresh(thisNode, speed=1, resolution=1):
     transition_mask.getParam('duration').set(mask_duration)
     transition_mask.getParam('start_frame').set(start_frame)
     transition_mask.getParam('formatboxSize').set(
-        _resolution[0], _resolution[1])
+        _pixels[0], _pixels[1])
     transition_mask.getParam('refresh').trigger()
     # ----------------------------------
 
@@ -132,15 +133,17 @@ def shape_transition_refresh(thisNode, speed=1, resolution=1):
 
 
 def render(thisNode):
-    nine_render = getNode(thisNode, 'NineRender')
-    nine_render.getParam('dialog').set(False)
+    vinarender = getNode(thisNode, 'VinaRender')
+    duration = thisNode.getParam('duration').get()
+    speeds = thisNode.getParam('speeds').get()
+    prefix = thisNode.getParam('prefix_render').get()
 
-    render_speeds = ['render_slow', 'render_normal', 'render_fast']
-
-    for i, render_speed in enumerate(render_speeds):
-        if shape_transition_refresh(thisNode, speed=i):
-            nine_render.getParam(render_speed).trigger()
-        else:
-            break
+    for speed in range(3):
+        for pixels in range(3):
+            if shape_transition_refresh(thisNode, speed=speed, pixels=pixels):
+                send_vinarender_state(
+                    duration, speeds, speed, prefix, pixels, vinarender=vinarender)
+            else:
+                break
 
     alert('Se enviaron a render las 9 diferentes transiciones.')

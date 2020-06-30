@@ -40,6 +40,23 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
+    param.setMinimum(0.2, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0.2, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
+    del param
+
     param = lastNode.createDoubleParam("angle", "Angle")
     param.setMinimum(0, 0)
     param.setMaximum(360, 0)
@@ -256,6 +273,12 @@ def createInstance(app,group):
         param.set("PC_Video")
         del param
 
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
     del lastNode
     # End of node "Crop1"
 
@@ -306,7 +329,7 @@ def createInstance(app,group):
     param.setExpression("thisGroup.opacity.get()", False, 0)
     del param
     param = groupTransform1.getParam("translate")
-    param.setExpression("thisGroup.distance.get()", False, 0)
+    param.setExpression("thisGroup.distance.get() * thisGroup.rscale.get()", False, 0)
     del param
     param = groupTransform1.getParam("rotate")
     param.setExpression("thisGroup.angle.get()", False, 0)
@@ -314,9 +337,13 @@ def createInstance(app,group):
     param = groupTransform2.getParam("rotate")
     param.setExpression("-thisGroup.angle.get()", False, 0)
     del param
+    param = groupCrop1.getParam("size")
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
+    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    del param
     param = groupBlur1.getParam("size")
-    param.setExpression("thisGroup.blur.get()", False, 0)
-    param.setExpression("thisGroup.blur.get()", False, 1)
+    param.setExpression("thisGroup.blur.get() * thisGroup.rscale.get()", False, 0)
+    param.setExpression("thisGroup.blur.get() * thisGroup.rscale.get()", False, 1)
     del param
 
     try:
