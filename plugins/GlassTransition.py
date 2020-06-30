@@ -120,6 +120,22 @@ def createInstance(app,group):
     lastNode.sep3 = param
     del param
 
+    param = lastNode.createStringParam("state", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("STATE:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.state = param
+    del param
+
     param = lastNode.createChoiceParam("resolution", "Resolution")
     entries = [ ("Mid HD", ""),
     ("Full HD", ""),
@@ -320,6 +336,18 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue("transition_01")
     lastNode.prefix_render = param
+    del param
+
+    param = lastNode.createBooleanParam("current_state", "Current State")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Solo renderiza el actual estado.")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.current_state = param
     del param
 
     param = lastNode.createButtonParam("render_shape", "render")

@@ -31,9 +31,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def clean(thisNode, app):
-    nine_render = getNode(thisNode, 'NineRender')
+    vinarender = getNode(thisNode, 'VinaRender')
     if question("Esta seguro que desea borrar los nodos sobrantes ?", 'Limpiar Nodos'):
-        nodes = get_connected_nodes(nine_render)
+        nodes = get_connected_nodes(vinarender)
         delete(nodes)
 
 
@@ -137,13 +137,23 @@ def render(thisNode):
     duration = thisNode.getParam('duration').get()
     speeds = thisNode.getParam('speeds').get()
     prefix = thisNode.getParam('prefix_render').get()
+    current_state = thisNode.getParam('current_state').get()
 
-    for speed in range(3):
-        for pixels in range(3):
-            if shape_transition_refresh(thisNode, speed=speed, pixels=pixels):
-                send_vinarender_state(
-                    duration, speeds, speed, prefix, pixels, vinarender=vinarender)
-            else:
-                break
+    if current_state:
+        pixels = thisNode.getParam('resolution').get()
+        speed = thisNode.getParam('speed').get()
 
-    alert('Se enviaron a render las 9 diferentes transiciones.')
+        if shape_transition_refresh(thisNode, speed=speed, pixels=pixels):
+            send_vinarender_state(
+                duration, speeds, speed, prefix, pixels, vinarender=vinarender)
+        alert('Se enviaron a render el actual estado.')
+    else:
+        for speed in range(3):
+            for pixels in range(3):
+                if shape_transition_refresh(thisNode, speed=speed, pixels=pixels):
+                    send_vinarender_state(
+                        duration, speeds, speed, prefix, pixels, vinarender=vinarender)
+                else:
+                    break
+
+        alert('Se enviaron a render las 9 diferentes transiciones.')
