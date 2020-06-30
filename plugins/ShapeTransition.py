@@ -1512,18 +1512,13 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
     lastNode.setPosition(3663, 986)
-    lastNode.setSize(104, 45)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
+        param.set("from")
         del param
 
     del lastNode
@@ -1557,7 +1552,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
-    lastNode.setPosition(3469, 997)
+    lastNode.setPosition(3469, 1077)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
@@ -1581,6 +1576,23 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "Dot5"
+
+    # Start of node "Clamp1"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp1")
+    lastNode.setLabel("Clamp1")
+    lastNode.setPosition(3663, 1076)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp1 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp1"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupSwitch1)
@@ -1650,8 +1662,9 @@ def createInstance(app,group):
     groupDot3.connectInput(0, groupDot5)
     groupDot4.connectInput(0, groupDot3)
     groupSwitch1.connectInput(0, groupDot5)
-    groupSwitch1.connectInput(1, groupMerge1)
+    groupSwitch1.connectInput(1, groupClamp1)
     groupDot5.connectInput(0, groupformat)
+    groupClamp1.connectInput(0, groupMerge1)
 
     param = grouptransform_1.getParam("motionBlur")
     param.setExpression("thisGroup.motion_blur.get()", False, 0)

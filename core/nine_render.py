@@ -55,6 +55,7 @@ def send_vinarender_state(duration, speeds, speed=1, prefix='render',
     vinarender.getParam('job_name').set('glass_transition: ' + name)
     vinarender.getParam('no_dialog').set(True)
     vinarender.getParam('rgbonly').set(False)
+    vinarender.getParam('instances').set(10)
 
     vinarender.getParam('range').set(1, last_frame)
     vinarender.getParam('render').trigger()
