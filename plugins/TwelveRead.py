@@ -84,18 +84,6 @@ def createInstance(app,group):
     lastNode.speed = param
     del param
 
-    param = lastNode.createPathParam("prefix_dir", "Prefix Dir")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Directorio donde estan los archivos con prefijo")
-    param.setAddNewLine(True)
-    param.setValue("[Project]/../footage")
-    lastNode.prefix_dir = param
-    del param
-
     param = lastNode.createStringParam("prefix", "Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 

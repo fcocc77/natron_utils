@@ -147,11 +147,11 @@ def render(thisNode):
         alert('Se envio a render el actual estado.')
     else:
         for speed in range(3):
-            for _format in range(3):
+            for _format in range(4):
                 if shape_transition_refresh(thisNode, speed=speed, format=_format):
                     send_vinarender_state(
                         duration, speeds, speed, prefix, _format, vinarender=vinarender)
                 else:
                     break
 
-        alert('Se enviaron a render las 9 diferentes transiciones.')
+        alert('Se enviaron a render las 12 diferentes transiciones.')

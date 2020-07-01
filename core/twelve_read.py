@@ -29,8 +29,8 @@ def reload_file(thisNode):
     prefix_name = prefix + '_' + current_speed + '_' + current_format
 
     filename_param = read.getParam('filename')
-    filename = thisNode.getParam('prefix_dir').get(
-    ) + '/' + prefix + '/' + prefix_name + '/' + prefix_name + '_###.png'
+    filename = '[Project]/../footage/' + prefix + '/' + \
+        prefix_name + '/' + prefix_name + '_###.png'
 
     if filename_param.get() == filename:
         filename_param.reloadFile()
