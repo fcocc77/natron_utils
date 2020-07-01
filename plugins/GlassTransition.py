@@ -591,6 +591,17 @@ def createInstance(app,group):
         param.setValue(1.03, 1)
         del param
 
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(960, 0)
+        param.setValue(540, 1)
+        del param
+
+    param = lastNode.getParam("transformCenterChanged")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "Transform1"
 
@@ -3007,6 +3018,10 @@ def createInstance(app,group):
     param = groupBlur1.getParam("size")
     param.setExpression("index = thisGroup.format.get()\n\nvalue = 4\nret = value * general.rscale[index]", True, 0)
     param.setExpression("index = thisGroup.format.get()\n\nvalue = 4\nret = value * general.rscale[index]", True, 1)
+    del param
+    param = groupTransform1.getParam("center")
+    param.setExpression("index = thisGroup.format.get()\nret = general.formats[index][dimension] / 2", True, 0)
+    param.setExpression("index = thisGroup.format.get()\nret = general.formats[index][dimension] / 2", True, 1)
     del param
     param = groupcolorize.getParam("white")
     param.setExpression("thisGroup.color.getValue(dimension)", False, 0)
