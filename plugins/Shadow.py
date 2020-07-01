@@ -40,11 +40,14 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.2, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.2, 0)
-    param.setDisplayMaximum(4, 0)
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Mid HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -53,8 +56,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    lastNode.format = param
     del param
 
     param = lastNode.createDoubleParam("angle", "Angle")
@@ -263,7 +265,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
     lastNode.setScriptName("Crop1")
     lastNode.setLabel("Crop1")
-    lastNode.setPosition(1093, 297)
+    lastNode.setPosition(1093, 298)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop1 = lastNode
@@ -329,7 +331,7 @@ def createInstance(app,group):
     param.setExpression("thisGroup.opacity.get()", False, 0)
     del param
     param = groupTransform1.getParam("translate")
-    param.setExpression("thisGroup.distance.get() * thisGroup.rscale.get()", False, 0)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.distance.get() * general.rscale[format]", True, 0)
     del param
     param = groupTransform1.getParam("rotate")
     param.setExpression("thisGroup.angle.get()", False, 0)
@@ -338,12 +340,12 @@ def createInstance(app,group):
     param.setExpression("-thisGroup.angle.get()", False, 0)
     del param
     param = groupCrop1.getParam("size")
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    param.setExpression("format_index = thisGroup.format.get()\nformat = general.formats[format_index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
+    param.setExpression("format_index = thisGroup.format.get()\nformat = general.formats[format_index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
     param = groupBlur1.getParam("size")
-    param.setExpression("thisGroup.blur.get() * thisGroup.rscale.get()", False, 0)
-    param.setExpression("thisGroup.blur.get() * thisGroup.rscale.get()", False, 1)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.blur.get()  * general.rscale[format]", True, 0)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.blur.get()  * general.rscale[format]", True, 1)
     del param
 
     try:

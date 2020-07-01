@@ -72,15 +72,30 @@ def createInstance(app,group):
     lastNode.generate_inputs = param
     del param
 
-    param = lastNode.createInt2DParam("frameRange", "Frame Range")
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Mid HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createIntParam("start_frame", "Start Frame")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -90,15 +105,14 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(1, 0)
-    param.setValue(100, 1)
-    lastNode.frameRange = param
+    lastNode.start_frame = param
     del param
 
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.1, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.1, 0)
-    param.setDisplayMaximum(4, 0)
+    param = lastNode.createIntParam("duration", "Duration")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -107,8 +121,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    param.setValue(100, 0)
+    lastNode.duration = param
     del param
 
     param = lastNode.createColorParam("color", "Color", False)
@@ -244,7 +258,6 @@ def createInstance(app,group):
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(1, 0)
         param.setValue(100, 1)
         del param
 
@@ -352,7 +365,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(-519, 721)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -420,7 +433,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
     lastNode.setPosition(216, 834)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
 
@@ -432,7 +445,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
     lastNode.setPosition(-519, 219)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
 
@@ -444,7 +457,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot5")
     lastNode.setLabel("Dot5")
     lastNode.setPosition(-162, 219)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot5 = lastNode
 
@@ -473,11 +486,6 @@ def createInstance(app,group):
     param = lastNode.getParam("NatronParamFormatChoice")
     if param is not None:
         param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("size")
-    if param is not None:
-        param.setValue(1080, 1)
         del param
 
     param = lastNode.getParam("color")
@@ -529,13 +537,6 @@ def createInstance(app,group):
     groupDot5.connectInput(0, groupImage)
     groupTransform.connectInput(0, groupConstant1)
 
-    param = groupFrameRange.getParam("frameRange")
-    param.setExpression("thisGroup.frameRange.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.frameRange.getValue(dimension)", False, 1)
-    del param
-    param = groupTimeOffset.getParam("timeOffset")
-    param.setExpression("thisGroup.frameRange.getValue(0)", False, 0)
-    del param
     param = groupMerge2.getParam("mix")
     param.setExpression("if thisGroup.include_texts.get():\n\tret = 1\nelse:\n\tret = 0", True, 0)
     del param

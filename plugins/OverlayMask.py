@@ -40,11 +40,14 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.1, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.1, 0)
-    param.setDisplayMaximum(4, 0)
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Mid HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -53,8 +56,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    lastNode.format = param
     del param
 
     param = lastNode.createSeparatorParam("sep2", "")
@@ -409,7 +411,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Transform2")
     lastNode.setLabel("Transform2")
     lastNode.setPosition(-497, -159)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform2 = lastNode
 
@@ -464,8 +466,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
     lastNode.setScriptName("Blur2")
     lastNode.setLabel("Blur2")
-    lastNode.setPosition(-305, -1)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-308, 0)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2 = lastNode
 
@@ -702,7 +704,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Transform2_2")
     lastNode.setLabel("Transform2_2")
     lastNode.setPosition(114, -111)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform2_2 = lastNode
 
@@ -758,7 +760,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Blur2_2")
     lastNode.setLabel("Blur2_2")
     lastNode.setPosition(306, 28)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2_2 = lastNode
 
@@ -847,7 +849,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Transform2_3")
     lastNode.setLabel("Transform2_3")
     lastNode.setPosition(736, -147)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform2_3 = lastNode
 
@@ -903,7 +905,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Blur2_3")
     lastNode.setLabel("Blur2_3")
     lastNode.setPosition(928, 25)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2_3 = lastNode
 
@@ -1038,7 +1040,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Crop3")
     lastNode.setLabel("Crop3")
     lastNode.setPosition(-497, -104)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop3 = lastNode
 
@@ -1310,7 +1312,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat3")
     lastNode.setLabel("Reformat3")
     lastNode.setPosition(2190, 112)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat3 = lastNode
 
@@ -1366,7 +1368,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Crop3_3")
     lastNode.setLabel("Crop3_3")
     lastNode.setPosition(736, -71)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop3_3 = lastNode
 
@@ -1396,11 +1398,14 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.2, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.2, 0)
-    param.setDisplayMaximum(4, 0)
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Mid HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -1409,8 +1414,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
     del param
 
     param = lastNode.createDoubleParam("angle", "Angle")
@@ -1483,6 +1488,23 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(50, 0)
     lastNode.blur = param
+    del param
+
+    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
+    param.setMinimum(0.2, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0.2, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -1503,11 +1525,14 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.2, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.2, 0)
-    param.setDisplayMaximum(4, 0)
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Mid HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -1516,8 +1541,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
     del param
 
     param = lastNode.createDoubleParam("angle", "Angle")
@@ -1590,6 +1615,23 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(50, 0)
     lastNode.blur = param
+    del param
+
+    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
+    param.setMinimum(0.2, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0.2, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -1610,11 +1652,14 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.2, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.2, 0)
-    param.setDisplayMaximum(4, 0)
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Mid HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -1623,8 +1668,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
     del param
 
     param = lastNode.createDoubleParam("angle", "Angle")
@@ -1697,6 +1742,23 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(50, 0)
     lastNode.blur = param
+    del param
+
+    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
+    param.setMinimum(0.2, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0.2, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -1803,11 +1865,11 @@ def createInstance(app,group):
     groupCrop3_3_2.connectInput(0, groupMerge7)
 
     param = groupTransform2.getParam("translate")
-    param.setExpression("-thisGroup.emboss_distance.get() * thisGroup.rscale.get()", False, 1)
+    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 1)
     del param
     param = groupBlur2.getParam("size")
-    param.setExpression("thisGroup.emboss_blur.get() * thisGroup.rscale.get()", False, 0)
-    param.setExpression("thisGroup.emboss_blur.get() * thisGroup.rscale.get()", False, 1)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 0)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 1)
     del param
     param = groupchannel_a.getParam("outputR")
     param.setExpression("thisGroup.mask_channel_a.get()", False, 0)
@@ -1855,11 +1917,11 @@ def createInstance(app,group):
     param.setExpression("thisGroup.emboss.get()", False, 0)
     del param
     param = groupTransform2_2.getParam("translate")
-    param.setExpression("-thisGroup.emboss_distance.get() * thisGroup.rscale.get()", False, 1)
+    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 1)
     del param
     param = groupBlur2_2.getParam("size")
-    param.setExpression("thisGroup.emboss_blur.get() * thisGroup.rscale.get()", False, 0)
-    param.setExpression("thisGroup.emboss_blur.get() * thisGroup.rscale.get()", False, 1)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 0)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 1)
     del param
     param = groupcolor_node_2.getParam("white")
     param.setExpression("thisGroup.color_b.get()[dimension]", False, 0)
@@ -1871,11 +1933,11 @@ def createInstance(app,group):
     param.setExpression("thisGroup.emboss.get()", False, 0)
     del param
     param = groupTransform2_3.getParam("translate")
-    param.setExpression("-thisGroup.emboss_distance.get() * thisGroup.rscale.get()", False, 1)
+    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 1)
     del param
     param = groupBlur2_3.getParam("size")
-    param.setExpression("thisGroup.emboss_blur.get() * thisGroup.rscale.get()", False, 0)
-    param.setExpression("thisGroup.emboss_blur.get() * thisGroup.rscale.get()", False, 1)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 0)
+    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 1)
     del param
     param = groupcolor_node_3.getParam("white")
     param.setExpression("thisGroup.color_c.get()[dimension]", False, 0)
@@ -1887,8 +1949,8 @@ def createInstance(app,group):
     param.setExpression("thisGroup.emboss.get()", False, 0)
     del param
     param = groupCrop3.getParam("size")
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
     param = groupSwitch1.getParam("which")
     param.setExpression("thisGroup.channel_c_alpha.get()", False, 0)
@@ -1900,19 +1962,19 @@ def createInstance(app,group):
     param.setExpression("thisGroup.channel_a_alpha.get()", False, 0)
     del param
     param = groupReformat3.getParam("boxSize")
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
     param = groupCrop3_2.getParam("size")
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
     param = groupCrop3_3.getParam("size")
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
-    param = groupShadow3.getParam("rscale")
-    param.setExpression("thisGroup.rscale.get() ", False, 0)
+    param = groupShadow3.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
     del param
     param = groupShadow3.getParam("distance")
     param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
@@ -1923,8 +1985,8 @@ def createInstance(app,group):
     param = groupShadow3.getParam("blur")
     param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
     del param
-    param = groupShadow3_2.getParam("rscale")
-    param.setExpression("thisGroup.rscale.get() ", False, 0)
+    param = groupShadow3_2.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
     del param
     param = groupShadow3_2.getParam("distance")
     param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
@@ -1935,8 +1997,8 @@ def createInstance(app,group):
     param = groupShadow3_2.getParam("blur")
     param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
     del param
-    param = groupShadow3_3.getParam("rscale")
-    param.setExpression("thisGroup.rscale.get() ", False, 0)
+    param = groupShadow3_3.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
     del param
     param = groupShadow3_3.getParam("distance")
     param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
@@ -1948,8 +2010,8 @@ def createInstance(app,group):
     param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
     del param
     param = groupCrop3_3_2.getParam("size")
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 0)
-    param.setExpression("format = general.formats[1]\nx = format[0]\ny = format[1]\n\nrscale = thisGroup.rscale.get()\n\nif dimension == 0:\n\tret = x * rscale\nelse:\n\tret = y * rscale", True, 1)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
+    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
 
     try:
