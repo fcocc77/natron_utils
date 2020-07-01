@@ -1,7 +1,6 @@
 # Este plugin hace 9 renders con los distintos formatos y velocidades:
 # HD Medio, Full Hd y 4K; Lento, Normal y Rapido
 import os
-import NatronGui
 import NatronEngine
 from natron_utils import getNode, alert, value_by_speed, absolute
 

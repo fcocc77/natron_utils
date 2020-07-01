@@ -133,6 +133,23 @@ def createInstance(app,group):
     lastNode.filename = param
     del param
 
+    param = lastNode.createDoubleParam("fps", "FPS")
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.fps = param
+    del param
+
     param = lastNode.createButtonParam("render", "Render")
 
     # Add the param to the page

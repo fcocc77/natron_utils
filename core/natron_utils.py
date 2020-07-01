@@ -1,7 +1,10 @@
 from util import *
-import NatronGui
 import NatronEngine
 from PySide.QtGui import QMessageBox
+try:
+    import NatronGui
+except:
+    None
 
 
 def copy(node, group=None):
@@ -201,6 +204,10 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
 
 def alert(message, title='Alert'):
     NatronGui.natron.informationDialog(title, str(message))
+
+
+def warning(title, message):
+    NatronGui.natron.warningDialog(title, message)
 
 
 def value_by_speed(value, speeds=[0, 0, 0]):

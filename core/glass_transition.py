@@ -1,5 +1,4 @@
 import os
-import NatronGui
 import NatronEngine
 from natron_utils import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
 from general import formats

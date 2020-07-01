@@ -1,8 +1,7 @@
 import os
 import shutil
-import NatronGui
 from util import jread
-from natron_utils import get_connected_nodes, saveProject, absolute
+from natron_utils import get_connected_nodes, saveProject, absolute, warning
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -86,7 +85,7 @@ def check_project(thisNode):
 
         message = line1 + '\n\n' + local_filename + \
             '\n\n' + line2 + '\n\n' + disconnect_filename
-        NatronGui.natron.warningDialog('FileName Error', message)
+        warning('FileName Error', message)
         return False
 
 
@@ -127,8 +126,7 @@ def get_node_path(thisNode, app):
 def render(thisNode, app):
     node_input = thisNode.getInput(0)
     if not node_input:
-        NatronGui.natron.warningDialog(
-            'VinaRender', '!You must connect the image.')
+        warning('VinaRender', '!You must connect the image.')
         return
 
     if not check_project(thisNode):
@@ -180,7 +178,7 @@ def render(thisNode, app):
            + ' -firstFrame ' + str(first_frame)
            + ' -lastFrame ' + str(last_frame)
            + ' -taskSize ' + str(task_size)
-           + ' -project "' + new_project + '"'
+           + ' -project "' + project + '"'
            + ' -software ' + software
            + ' -render ' + render
            + ' -extra ' + output
@@ -190,4 +188,4 @@ def render(thisNode, app):
     os.system(cmd)
 
     if (not thisNode.no_dialog.get()):
-        NatronGui.natron.informationDialog('VinaRender', 'Render Sended.')
+        alert('Render Sended.', 'VinaRender')

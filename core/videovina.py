@@ -1,8 +1,7 @@
 import random
 import os
 import shutil
-import NatronGui
-from natron_utils import copy, getNode, question, alert, createNode
+from natron_utils import copy, getNode, question, alert, createNode, warning
 from transition import directional_transition
 from util import jread, jwrite
 from time import sleep
@@ -490,8 +489,8 @@ def generate_base_slides(thisNode, app):
     refresh(thisNode, app)
 
     if current_slides:
-        NatronGui.natron.informationDialog(
-            'VideoVina', 'Se han creado ' + str(current_slides) + ' Slides base.')
+        alert('Se han creado ' + str(current_slides) +
+              ' Slides base.', 'VideoVina')
 
 
 def get_slide(thisNode, index):
@@ -677,17 +676,17 @@ def generate_production_slides(thisNode, app, amount, force=False, reformat=True
 
     if not force:
         if not slides_count:
-            NatronGui.natron.warningDialog(
+            warning(
                 'Production Slides', 'No hay ninguna slide base creada.')
             return False
 
         if amount <= base_amount:
-            NatronGui.natron.warningDialog(
+            warning(
                 'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.')
             return False
 
         if amount == slides_count:
-            NatronGui.natron.warningDialog(
+            warning(
                 'Production Slides', 'Ya existen ' + str(amount) + ' slides.')
             return False
 
