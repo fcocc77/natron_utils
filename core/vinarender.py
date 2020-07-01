@@ -2,7 +2,7 @@ import os
 import shutil
 import NatronGui
 from util import jread
-from natron_utils import get_all_nodes, saveProject, absolute
+from natron_utils import get_connected_nodes, saveProject, absolute
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -38,8 +38,7 @@ def change_paramaters(thisNode):
     thisNode.reading.outputPremult.setValue(0)
 
 
-def check_project(app):
-
+def check_project(thisNode):
     path_list = jread('/opt/vinarender/etc/preferences_s.json').paths.system
     paths = []
     for r in path_list:
@@ -53,7 +52,7 @@ def check_project(app):
 
     ok = True
 
-    for node, node_path in get_all_nodes(app):
+    for node in get_connected_nodes(thisNode):
         filename_param = node.getParam("filename")
         if filename_param:
             filename = filename_param.get()
@@ -64,7 +63,7 @@ def check_project(app):
             if relative in filename:
                 None
             elif not os.path.isdir(dirname):
-                disconnect_filename += node_path + ' = ' + filename + '\n'
+                disconnect_filename += node.getLabel() + ' = ' + filename + '\n'
                 ok = False
             else:
                 is_in_vinarender_paths = False
@@ -73,7 +72,7 @@ def check_project(app):
                         is_in_vinarender_paths = True
                 if not is_in_vinarender_paths:
                     ok = False
-                    local_filename += node_path + ' = ' + filename + '\n'
+                    local_filename += node.getLabel() + ' = ' + filename + '\n'
 
     if ok:
         return True
@@ -132,7 +131,7 @@ def render(thisNode, app):
             'VinaRender', '!You must connect the image.')
         return
 
-    if not check_project(app):
+    if not check_project(thisNode):
         return
 
     rgb_only = thisNode.rgbonly.get()
