@@ -13,8 +13,8 @@ import merge_matte
 import videovina
 import resolution_expand
 import multi_photos
-import nine_render
-import nine_read
+import twelve_render
+import twelve_read
 import glass_transition
 import util
 # --------------

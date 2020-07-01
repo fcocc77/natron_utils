@@ -3,7 +3,7 @@ import NatronGui
 import NatronEngine
 from natron_utils import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
 from general import formats
-from nine_render import send_vinarender_state
+from twelve_render import send_vinarender_state
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -38,36 +38,36 @@ def clean(thisNode, app):
 
 
 def read_file(thisNode, thisParam):
-    nine_read = getNode(thisNode, 'NineRead')
-    nine_read.getParam('reload').trigger()
+    twelve_read = getNode(thisNode, 'TwelveRead')
+    twelve_read.getParam('reload').trigger()
 
     switch(
         thisNode,
         thisParam.get(),
         'start_frame_node',
         'VinaRender',
-        'NineRead'
+        'TwelveRead'
     )
 
 
 def refresh(thisNode):
 
     current_speed = thisNode.getParam('speed').get()
-    current_resolution = thisNode.getParam('resolution').get()
+    current_format = thisNode.getParam('format').get()
     speeds = thisNode.getParam('speeds').get()
     duration = thisNode.getParam('duration').get()
     duration = value_by_speed(duration, speeds)[current_speed]
 
     # recargar nine read
-    nine_read = getNode(thisNode, 'NineRead')
-    nine_read.getParam('reload').trigger()
+    twelve_read = getNode(thisNode, 'TwelveRead')
+    twelve_read.getParam('reload').trigger()
 
     switch_from_duration(thisNode, duration)
 
     # actualiza las transiciones de forma, solo si esta activado el 'read_file'
     read_file = thisNode.getParam('read_file').get()
     if not read_file:
-        shape_transition_refresh(thisNode, current_speed, current_resolution)
+        shape_transition_refresh(thisNode, current_speed, current_format)
 
 
 def switch_from_duration(thisNode, duration):
@@ -84,11 +84,11 @@ def switch_from_duration(thisNode, duration):
     switch.setValueAtTime(2, last_frame + 1)
 
 
-def shape_transition_refresh(thisNode, speed=1, pixels=1):
+def shape_transition_refresh(thisNode, speed=1, format=1):
 
     shape_format = getNode(thisNode, 'shape_format')
 
-    _pixels = formats[pixels]
+    _pixels = formats[format]
     shape_format.getParam('boxSize').set(_pixels[0], _pixels[0])
 
     # diferencias de tiempo que hay entre el shape de mascara y las de vidrio
@@ -99,10 +99,9 @@ def shape_transition_refresh(thisNode, speed=1, pixels=1):
     duration = value_by_speed(normal_duration, speeds)[speed]
     mask_diff = value_by_speed(difference_with_mask, speeds)[speed]
 
-    # cambia la resolucion de 'OverlayMask'
+    # cambia el formato de 'OverlayMask'
     overlay_mask = getNode(thisNode, 'OverlayMask')
-    rscale = _pixels[0] / float(formats[1][0])
-    overlay_mask.getParam('rscale').set(rscale)
+    overlay_mask.getParam('format').set(format)
     # ------------------------
 
     if not (normal_duration / 2) > difference_with_mask:
@@ -112,7 +111,7 @@ def shape_transition_refresh(thisNode, speed=1, pixels=1):
     for shape_name in ['shape_glass_1', 'shape_glass_2']:
         shape = getNode(thisNode, shape_name)
         shape.getParam('duration').set(duration)
-        shape.getParam('formatboxSize').set(_pixels[0], _pixels[1])
+        shape.getParam('format').set(format)
         shape.getParam('refresh').trigger()
 
     # la mascara de transicion tiene que ser con menor duracion que las otras formas
@@ -124,8 +123,7 @@ def shape_transition_refresh(thisNode, speed=1, pixels=1):
 
     transition_mask.getParam('duration').set(mask_duration)
     transition_mask.getParam('start_frame').set(start_frame)
-    transition_mask.getParam('formatboxSize').set(
-        _pixels[0], _pixels[1])
+    transition_mask.getParam('format').set(format)
     transition_mask.getParam('refresh').trigger()
     # ----------------------------------
 
@@ -140,19 +138,19 @@ def render(thisNode):
     current_state = thisNode.getParam('current_state').get()
 
     if current_state:
-        pixels = thisNode.getParam('resolution').get()
+        _format = thisNode.getParam('format').get()
         speed = thisNode.getParam('speed').get()
 
-        if shape_transition_refresh(thisNode, speed=speed, pixels=pixels):
+        if shape_transition_refresh(thisNode, speed=speed, format=_format):
             send_vinarender_state(
-                duration, speeds, speed, prefix, pixels, vinarender=vinarender)
+                duration, speeds, speed, prefix, _format, vinarender=vinarender)
         alert('Se envio a render el actual estado.')
     else:
         for speed in range(3):
-            for pixels in range(3):
-                if shape_transition_refresh(thisNode, speed=speed, pixels=pixels):
+            for _format in range(3):
+                if shape_transition_refresh(thisNode, speed=speed, format=_format):
                     send_vinarender_state(
-                        duration, speeds, speed, prefix, pixels, vinarender=vinarender)
+                        duration, speeds, speed, prefix, _format, vinarender=vinarender)
                 else:
                     break
 

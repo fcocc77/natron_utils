@@ -8,25 +8,25 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     knob_name = thisParam.getScriptName()
 
-    if knob_name == 'reload' or knob_name == 'velocity' or knob_name == 'resolution':
+    if knob_name == 'reload' or knob_name == 'speed' or knob_name == 'format':
         reload_file(thisNode)
 
 
 def reload_file(thisNode):
     read = getNode(thisNode, 'read')
 
-    resolutions = ['mid', 'hd', '4k']
+    formats_name = ['quarter', 'half', 'hd', '4k']
     speeds = ['slow', 'normal', 'fast']
 
-    velocity = thisNode.getParam('velocity').get()
-    resolution = thisNode.getParam('resolution').get()
+    speed = thisNode.getParam('speed').get()
+    format = thisNode.getParam('format').get()
 
-    current_velocity = speeds[velocity]
-    current_resolution = resolutions[resolution]
+    current_speed = speeds[speed]
+    current_format = formats_name[format]
 
     prefix = thisNode.getParam('prefix').get()
 
-    prefix_name = prefix + '_' + current_velocity + '_' + current_resolution
+    prefix_name = prefix + '_' + current_speed + '_' + current_format
 
     filename_param = read.getParam('filename')
     filename = thisNode.getParam('prefix_dir').get(

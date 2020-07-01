@@ -6,6 +6,7 @@ from natron_utils import copy, getNode, question, alert, createNode
 from transition import directional_transition
 from util import jread, jwrite
 from time import sleep
+from general import formats
 
 # separacion de los nodos en horizontal
 xdistance = 200
@@ -378,12 +379,10 @@ def delete_slide(thisNode, slide_number):
 def get_resolution(thisNode):
     # obtiene la correcta resolucion a partir de una escala
     # tomando como referencia el 1920x1080
-    rscale = thisNode.rscale.get()
+    format_index = thisNode.format.get()
+    pixels = formats[format_index]
 
-    width = 1920 * rscale
-    hight = 1080 * rscale
-
-    return [width, hight]
+    return pixels
 
 
 def generate_black():
@@ -456,7 +455,10 @@ def generate_base_slides(thisNode, app):
 
             slide.connectInput(0, reformat)
 
-            transition = app.createNode('vv.FlareTransition', 2, thisNode)
+            transition_param = thisNode.getParam('transition')
+            transition_name = 'vv.' + \
+                transition_param.getOption(transition_param.get())
+            transition = app.createNode(transition_name, 2, thisNode)
             transition_name = 'slide_' + str(i) + '_transition'
             transition.setLabel(transition_name)
             transition.setColor(.4, .5, .4)

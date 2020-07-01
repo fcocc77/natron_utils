@@ -44,8 +44,8 @@ def distribute(thisNode):
         duration -= stencil_gap
     # ------------------
 
-    width = thisNode.format.boxSize.getValue(0)
-    hight = thisNode.format.boxSize.getValue(1)
+    width = thisNode.reformat.boxSize.getValue(0)
+    hight = thisNode.reformat.boxSize.getValue(1)
 
     # ajusta la direccion de la forma
     rotate = thisNode.getNode('direction_transform').getParam('rotate')

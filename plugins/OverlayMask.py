@@ -41,7 +41,8 @@ def createInstance(app,group):
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
     param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Mid HD - 960 x 540", ""),
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
     ("Full HD - 1920 x 1080", ""),
     ("4K - 3840 x 2160", "")]
     param.setOptions(entries)
@@ -398,7 +399,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Mask")
     lastNode.setLabel("Mask")
-    lastNode.setPosition(462, -612)
+    lastNode.setPosition(462, -673)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupMask = lastNode
@@ -1386,387 +1387,6 @@ def createInstance(app,group):
     del lastNode
     # End of node "Crop3_3"
 
-    # Start of node "Shadow3"
-    lastNode = app.createNode("vv.DropShadow", 1, group)
-    lastNode.setScriptName("Shadow3")
-    lastNode.setLabel("Shadow3")
-    lastNode.setPosition(-150, 131)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupShadow3 = lastNode
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Mid HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
-    lastNode.format = param
-    del param
-
-    param = lastNode.createDoubleParam("angle", "Angle")
-    param.setMinimum(0, 0)
-    param.setMaximum(360, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(360, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(90, 0)
-    lastNode.angle = param
-    del param
-
-    param = lastNode.createIntParam("distance", "Distance")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.distance = param
-    del param
-
-    param = lastNode.createDoubleParam("opacity", "Opacity")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.opacity = param
-    del param
-
-    param = lastNode.createIntParam("blur", "Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.blur = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.2, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.2, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "Shadow3"
-
-    # Start of node "Shadow3_2"
-    lastNode = app.createNode("vv.DropShadow", 1, group)
-    lastNode.setScriptName("Shadow3_2")
-    lastNode.setLabel("Shadow3_2")
-    lastNode.setPosition(461, 153)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupShadow3_2 = lastNode
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Mid HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
-    lastNode.format = param
-    del param
-
-    param = lastNode.createDoubleParam("angle", "Angle")
-    param.setMinimum(0, 0)
-    param.setMaximum(360, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(360, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(90, 0)
-    lastNode.angle = param
-    del param
-
-    param = lastNode.createIntParam("distance", "Distance")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.distance = param
-    del param
-
-    param = lastNode.createDoubleParam("opacity", "Opacity")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.opacity = param
-    del param
-
-    param = lastNode.createIntParam("blur", "Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.blur = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.2, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.2, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "Shadow3_2"
-
-    # Start of node "Shadow3_3"
-    lastNode = app.createNode("vv.DropShadow", 1, group)
-    lastNode.setScriptName("Shadow3_3")
-    lastNode.setLabel("Shadow3_3")
-    lastNode.setPosition(1083, 153)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupShadow3_3 = lastNode
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Mid HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
-    lastNode.format = param
-    del param
-
-    param = lastNode.createDoubleParam("angle", "Angle")
-    param.setMinimum(0, 0)
-    param.setMaximum(360, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(360, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(90, 0)
-    lastNode.angle = param
-    del param
-
-    param = lastNode.createIntParam("distance", "Distance")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.distance = param
-    del param
-
-    param = lastNode.createDoubleParam("opacity", "Opacity")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.opacity = param
-    del param
-
-    param = lastNode.createIntParam("blur", "Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.blur = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.2, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.2, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "Shadow3_3"
-
     # Start of node "Crop3_3_2"
     lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
     lastNode.setScriptName("Crop3_3_2")
@@ -1789,6 +1409,339 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "Crop3_3_2"
+
+    # Start of node "Shadow2"
+    lastNode = app.createNode("vv.DropShadow", 1, group)
+    lastNode.setScriptName("Shadow2")
+    lastNode.setLabel("Shadow2")
+    lastNode.setPosition(1083, 97)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShadow2 = lastNode
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
+    del param
+
+    param = lastNode.createDoubleParam("angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(90, 0)
+    lastNode.angle = param
+    del param
+
+    param = lastNode.createIntParam("distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.distance = param
+    del param
+
+    param = lastNode.createDoubleParam("opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.opacity = param
+    del param
+
+    param = lastNode.createIntParam("blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.blur = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Shadow2"
+
+    # Start of node "Shadow2_2"
+    lastNode = app.createNode("vv.DropShadow", 1, group)
+    lastNode.setScriptName("Shadow2_2")
+    lastNode.setLabel("Shadow2_2")
+    lastNode.setPosition(461, 108)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShadow2_2 = lastNode
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
+    del param
+
+    param = lastNode.createDoubleParam("angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(90, 0)
+    lastNode.angle = param
+    del param
+
+    param = lastNode.createIntParam("distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.distance = param
+    del param
+
+    param = lastNode.createDoubleParam("opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.opacity = param
+    del param
+
+    param = lastNode.createIntParam("blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.blur = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Shadow2_2"
+
+    # Start of node "Shadow2_3"
+    lastNode = app.createNode("vv.DropShadow", 1, group)
+    lastNode.setScriptName("Shadow2_3")
+    lastNode.setLabel("Shadow2_3")
+    lastNode.setPosition(-150, 87)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShadow2_3 = lastNode
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
+    del param
+
+    param = lastNode.createDoubleParam("angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(90, 0)
+    lastNode.angle = param
+    del param
+
+    param = lastNode.createIntParam("distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.distance = param
+    del param
+
+    param = lastNode.createDoubleParam("opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.opacity = param
+    del param
+
+    param = lastNode.createIntParam("blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.blur = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Shadow2_3"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupShuffle1)
@@ -1827,9 +1780,9 @@ def createInstance(app,group):
     groupMerge4_3.connectInput(0, groupcolor_node_3)
     groupMerge4_3.connectInput(1, groupBlur2_3)
     groupDot2_3.connectInput(0, groupchannel_c)
-    groupMerge1.connectInput(0, groupShadow3)
-    groupMerge1.connectInput(1, groupShadow3_2)
-    groupMerge1.connectInput(3, groupShadow3_3)
+    groupMerge1.connectInput(0, groupShadow2_3)
+    groupMerge1.connectInput(1, groupShadow2_2)
+    groupMerge1.connectInput(3, groupShadow2)
     groupShuffle1.connectInput(0, groupMerge3)
     groupShuffle1.connectInput(1, groupDot4)
     groupDot4.connectInput(0, groupCrop3_3_2)
@@ -1859,10 +1812,10 @@ def createInstance(app,group):
     groupReformat3.connectInput(0, groupConstant1)
     groupCrop3_2.connectInput(0, groupTransform2_2)
     groupCrop3_3.connectInput(0, groupTransform2_3)
-    groupShadow3.connectInput(0, groupMerge4)
-    groupShadow3_2.connectInput(0, groupMerge4_2)
-    groupShadow3_3.connectInput(0, groupMerge4_3)
     groupCrop3_3_2.connectInput(0, groupMerge7)
+    groupShadow2.connectInput(0, groupMerge4_3)
+    groupShadow2_2.connectInput(0, groupMerge4_2)
+    groupShadow2_3.connectInput(0, groupMerge4)
 
     param = groupTransform2.getParam("translate")
     param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 1)
@@ -1973,45 +1926,45 @@ def createInstance(app,group):
     param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
     param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
-    param = groupShadow3.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
-    del param
-    param = groupShadow3.getParam("distance")
-    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
-    del param
-    param = groupShadow3.getParam("opacity")
-    param.setExpression("thisGroup.shadow.get()", False, 0)
-    del param
-    param = groupShadow3.getParam("blur")
-    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
-    del param
-    param = groupShadow3_2.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
-    del param
-    param = groupShadow3_2.getParam("distance")
-    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
-    del param
-    param = groupShadow3_2.getParam("opacity")
-    param.setExpression("thisGroup.shadow.get()", False, 0)
-    del param
-    param = groupShadow3_2.getParam("blur")
-    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
-    del param
-    param = groupShadow3_3.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
-    del param
-    param = groupShadow3_3.getParam("distance")
-    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
-    del param
-    param = groupShadow3_3.getParam("opacity")
-    param.setExpression("thisGroup.shadow.get()", False, 0)
-    del param
-    param = groupShadow3_3.getParam("blur")
-    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
-    del param
     param = groupCrop3_3_2.getParam("size")
     param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
     param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
+    del param
+    param = groupShadow2.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
+    del param
+    param = groupShadow2.getParam("distance")
+    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
+    del param
+    param = groupShadow2.getParam("opacity")
+    param.setExpression("thisGroup.shadow.get()", False, 0)
+    del param
+    param = groupShadow2.getParam("blur")
+    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
+    del param
+    param = groupShadow2_2.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
+    del param
+    param = groupShadow2_2.getParam("distance")
+    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
+    del param
+    param = groupShadow2_2.getParam("opacity")
+    param.setExpression("thisGroup.shadow.get()", False, 0)
+    del param
+    param = groupShadow2_2.getParam("blur")
+    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
+    del param
+    param = groupShadow2_3.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
+    del param
+    param = groupShadow2_3.getParam("distance")
+    param.setExpression("thisGroup.shadow_distance.get() ", False, 0)
+    del param
+    param = groupShadow2_3.getParam("opacity")
+    param.setExpression("thisGroup.shadow.get()", False, 0)
+    del param
+    param = groupShadow2_3.getParam("blur")
+    param.setExpression("thisGroup.shadow_blur.get() ", False, 0)
     del param
 
     try:

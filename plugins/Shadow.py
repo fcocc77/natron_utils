@@ -41,7 +41,8 @@ def createInstance(app,group):
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
     param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Mid HD - 960 x 540", ""),
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
     ("Full HD - 1920 x 1080", ""),
     ("4K - 3840 x 2160", "")]
     param.setOptions(entries)
@@ -127,6 +128,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(1, 0)
     lastNode.blur = param
     del param
 
@@ -310,8 +312,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(0, 0)
-        param.setValue(0, 1)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
         del param
 
     del lastNode

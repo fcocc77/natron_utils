@@ -23,7 +23,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def send_vinarender_state(duration, speeds, speed=1, prefix='render',
-                         pixels=1, vinarender=False, thisNode=False):
+                          format=1, vinarender=False, thisNode=False):
     # ajusta los parametros de un nodo de videovina dependiendo de la velocidad y resolucion,
     # y luego lo envia a render
 
@@ -35,12 +35,12 @@ def send_vinarender_state(duration, speeds, speed=1, prefix='render',
     last_frame = value_by_speed(duration, speeds)[speed]
 
     speeds_names = ['slow', 'normal', 'fast']
-    pixels_names = ['mid', 'hd', '4k']
+    formats_name = ['quarter', 'half', 'hd', '4k']
 
     speed_name = speeds_names[speed]
-    pixels_name = pixels_names[pixels]
+    format_name = formats_name[format]
 
-    name = speed_name + '_' + pixels_name
+    name = speed_name + '_' + format_name
 
     prefix_name = prefix + '_' + name
     render_dir = prefix_dir + '/' + prefix_name
@@ -74,7 +74,7 @@ def render(thisNode, one_speed=None):
     for speed_index in speeds_list:
         for pixels_index in range(3):
             send_vinarender_state(duration, speeds, speed_index, prefix,
-                                 pixels_index, thisNode=thisNode)
+                                  pixels_index, thisNode=thisNode)
 
     if thisNode.getParam('dialog').get():
         alert('Se enviaron a render las 9 diferentes transiciones.')

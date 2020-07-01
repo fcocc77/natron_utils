@@ -86,11 +86,15 @@ def createInstance(app,group):
     lastNode.general = param
     del param
 
-    param = lastNode.createInt2DParam("formatboxSize", "Size")
-    param.setDefaultValue(200, 0)
-    param.restoreDefaultValue(0)
-    param.setDefaultValue(200, 1)
-    param.restoreDefaultValue(1)
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -98,10 +102,8 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.formatboxSize = param
+    param.setAnimationEnabled(True)
+    lastNode.format = param
     del param
 
     param = lastNode.createChoiceParam("direction", "Direction")
@@ -454,7 +456,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Shape")
     lastNode.setLabel("Shape")
-    lastNode.setPosition(1258, -215)
+    lastNode.setPosition(1258, -303)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupShape = lastNode
@@ -467,7 +469,7 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_width_1")
     lastNode.setLabel("shape_width_1")
     lastNode.setPosition(1431, 159)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupshape_width_1 = lastNode
 
@@ -486,14 +488,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("shape_mask_1")
     lastNode.setLabel("shape_mask_1")
-    lastNode.setPosition(1257, 249)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(1257, 236)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_1 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
+        param.set("from")
         del param
 
     param = lastNode.getParam("userTextArea")
@@ -552,14 +554,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("shape_mask_2")
     lastNode.setLabel("shape_mask_2")
-    lastNode.setPosition(1662, 244)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(1662, 246)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_2 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
+        param.set("from")
         del param
 
     param = lastNode.getParam("userTextArea")
@@ -618,14 +620,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("shape_mask_3")
     lastNode.setLabel("shape_mask_3")
-    lastNode.setPosition(1997, 245)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(1997, 247)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_3 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
+        param.set("from")
         del param
 
     param = lastNode.getParam("userTextArea")
@@ -684,14 +686,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("shape_mask_4")
     lastNode.setLabel("shape_mask_4")
-    lastNode.setPosition(2344, 239)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(2344, 241)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_4 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
+        param.set("from")
         del param
 
     param = lastNode.getParam("userTextArea")
@@ -751,13 +753,13 @@ def createInstance(app,group):
     lastNode.setScriptName("shape_mask_5")
     lastNode.setLabel("shape_mask_5")
     lastNode.setPosition(2706, 245)
-    lastNode.setSize(104, 45)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_5 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
+        param.set("from")
         del param
 
     param = lastNode.getParam("userTextArea")
@@ -816,14 +818,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("shape_mask_6")
     lastNode.setLabel("shape_mask_6")
-    lastNode.setPosition(3099, 269)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(3099, 247)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_6 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
+        param.set("from")
         del param
 
     param = lastNode.getParam("userTextArea")
@@ -882,14 +884,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("shape_mask_7")
     lastNode.setLabel("shape_mask_7")
-    lastNode.setPosition(3468, 236)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(3468, 237)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshape_mask_7 = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
-        param.set("stencil")
+        param.set("from")
         del param
 
     param = lastNode.getParam("userTextArea")
@@ -996,8 +998,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("merge_6")
     lastNode.setLabel("merge_6")
-    lastNode.setPosition(3099, 458)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(3099, 461)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_6 = lastNode
 
@@ -1013,7 +1015,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("merge_7")
     lastNode.setLabel("merge_7")
-    lastNode.setPosition(3468, 458)
+    lastNode.setPosition(3468, 461)
     lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_7 = lastNode
@@ -1030,7 +1032,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("merge_1")
     lastNode.setLabel("merge_1")
-    lastNode.setPosition(1257, 461)
+    lastNode.setPosition(1257, 466)
     lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge_1 = lastNode
@@ -1047,8 +1049,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform_1")
     lastNode.setLabel("transform_1")
-    lastNode.setPosition(1257, 380)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(1257, 384)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_1 = lastNode
 
@@ -1091,7 +1093,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform_2")
     lastNode.setLabel("transform_2")
-    lastNode.setPosition(1662, 339)
+    lastNode.setPosition(1662, 376)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_2 = lastNode
@@ -1135,7 +1137,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform_3")
     lastNode.setLabel("transform_3")
-    lastNode.setPosition(1997, 326)
+    lastNode.setPosition(1997, 380)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_3 = lastNode
@@ -1179,7 +1181,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform_4")
     lastNode.setLabel("transform_4")
-    lastNode.setPosition(2344, 327)
+    lastNode.setPosition(2344, 388)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_4 = lastNode
@@ -1223,7 +1225,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform_5")
     lastNode.setLabel("transform_5")
-    lastNode.setPosition(2706, 337)
+    lastNode.setPosition(2706, 388)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_5 = lastNode
@@ -1267,8 +1269,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform_6")
     lastNode.setLabel("transform_6")
-    lastNode.setPosition(3099, 347)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(3099, 387)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_6 = lastNode
 
@@ -1311,7 +1313,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform_7")
     lastNode.setLabel("transform_7")
-    lastNode.setPosition(3468, 341)
+    lastNode.setPosition(3468, 383)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform_7 = lastNode
@@ -1356,7 +1358,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Crop2")
     lastNode.setLabel("Crop2")
     lastNode.setPosition(3468, 561)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop2 = lastNode
 
@@ -1378,8 +1380,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
     lastNode.setScriptName("Crop3")
     lastNode.setLabel("Crop3")
-    lastNode.setPosition(1258, -105)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(1258, -161)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupCrop3 = lastNode
 
@@ -1407,7 +1409,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat1_2_2")
     lastNode.setLabel("Reformat1_2_2")
     lastNode.setPosition(981, 472)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat1_2_2 = lastNode
 
@@ -1440,7 +1442,7 @@ def createInstance(app,group):
     lastNode.setScriptName("direction_transform")
     lastNode.setLabel("direction_transform")
     lastNode.setPosition(3468, 616)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupdirection_transform = lastNode
 
@@ -1457,14 +1459,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "direction_transform"
 
-    # Start of node "format"
+    # Start of node "reformat"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("format")
-    lastNode.setLabel("format")
-    lastNode.setPosition(3469, 726)
-    lastNode.setSize(104, 30)
+    lastNode.setScriptName("reformat")
+    lastNode.setLabel("reformat")
+    lastNode.setPosition(3468, 730)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupformat = lastNode
+    groupreformat = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
@@ -1488,7 +1490,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "format"
+    # End of node "reformat"
 
     # Start of node "TimeOffset1"
     lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
@@ -1511,7 +1513,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(3663, 986)
+    lastNode.setPosition(3705, 986)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
@@ -1521,20 +1523,13 @@ def createInstance(app,group):
         param.set("from")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge1"
-
-    # Start of node "Dot3"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot3")
-    lastNode.setLabel("Dot3")
-    lastNode.setPosition(3708, 858)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot3 = lastNode
-
-    del lastNode
-    # End of node "Dot3"
 
     # Start of node "Dot4"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -1552,7 +1547,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
-    lastNode.setPosition(3469, 1077)
+    lastNode.setPosition(3469, 1088)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
@@ -1581,7 +1576,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
     lastNode.setScriptName("Clamp1")
     lastNode.setLabel("Clamp1")
-    lastNode.setPosition(3663, 1076)
+    lastNode.setPosition(3705, 1087)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.48, 0.66, 1)
     groupClamp1 = lastNode
@@ -1594,13 +1589,194 @@ def createInstance(app,group):
     del lastNode
     # End of node "Clamp1"
 
+    # Start of node "FrameHold1"
+    lastNode = app.createNode("net.sf.openfx.FrameHold", 1, group)
+    lastNode.setScriptName("FrameHold1")
+    lastNode.setLabel("FrameHold1")
+    lastNode.setPosition(1258, -81)
+    lastNode.setSize(104, 45)
+    lastNode.setColor(0.7, 0.65, 0.35)
+    groupFrameHold1 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(frame 0)</Natron>")
+        del param
+
+    del lastNode
+    # End of node "FrameHold1"
+
+    # Start of node "Clamp3"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp3")
+    lastNode.setLabel("Clamp3")
+    lastNode.setPosition(1257, 314)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp3 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp3"
+
+    # Start of node "Clamp4"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp4")
+    lastNode.setLabel("Clamp4")
+    lastNode.setPosition(1662, 321)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp4 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp4"
+
+    # Start of node "Clamp5"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp5")
+    lastNode.setLabel("Clamp5")
+    lastNode.setPosition(1997, 321)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp5 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp5"
+
+    # Start of node "Clamp6"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp6")
+    lastNode.setLabel("Clamp6")
+    lastNode.setPosition(2344, 324)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp6 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp6"
+
+    # Start of node "Clamp2"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp2")
+    lastNode.setLabel("Clamp2")
+    lastNode.setPosition(2706, 329)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp2 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp2"
+
+    # Start of node "Clamp7"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp7")
+    lastNode.setLabel("Clamp7")
+    lastNode.setPosition(3099, 326)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp7 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp7"
+
+    # Start of node "Clamp8"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp8")
+    lastNode.setLabel("Clamp8")
+    lastNode.setPosition(3468, 321)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp8 = lastNode
+
+    param = lastNode.getParam("premult")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Clamp8"
+
+    # Start of node "Dot3"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot3")
+    lastNode.setLabel("Dot3")
+    lastNode.setPosition(3750, 858)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot3 = lastNode
+
+    del lastNode
+    # End of node "Dot3"
+
+    # Start of node "Reformat1"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("Reformat1")
+    lastNode.setLabel("Reformat1")
+    lastNode.setPosition(1258, -242)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupReformat1 = lastNode
+
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1920, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "Reformat1"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupSwitch1)
     groupshape_width_1.connectInput(0, groupDot1)
     groupshape_mask_1.connectInput(0, groupDot1)
     groupshape_mask_1.connectInput(1, groupshape_width_1)
     groupDot1.connectInput(0, groupDot2)
-    groupDot2.connectInput(0, groupCrop3)
+    groupDot2.connectInput(0, groupFrameHold1)
     groupshape_width_2.connectInput(0, groupDot1_3)
     groupshape_mask_2.connectInput(0, groupDot1_3)
     groupshape_mask_2.connectInput(1, groupshape_width_2)
@@ -1645,26 +1821,35 @@ def createInstance(app,group):
     groupmerge_7.connectInput(1, grouptransform_7)
     groupmerge_1.connectInput(0, groupReformat1_2_2)
     groupmerge_1.connectInput(1, grouptransform_1)
-    grouptransform_1.connectInput(0, groupshape_mask_1)
-    grouptransform_2.connectInput(0, groupshape_mask_2)
-    grouptransform_3.connectInput(0, groupshape_mask_3)
-    grouptransform_4.connectInput(0, groupshape_mask_4)
-    grouptransform_5.connectInput(0, groupshape_mask_5)
-    grouptransform_6.connectInput(0, groupshape_mask_6)
-    grouptransform_7.connectInput(0, groupshape_mask_7)
+    grouptransform_1.connectInput(0, groupClamp3)
+    grouptransform_2.connectInput(0, groupClamp4)
+    grouptransform_3.connectInput(0, groupClamp5)
+    grouptransform_4.connectInput(0, groupClamp6)
+    grouptransform_5.connectInput(0, groupClamp2)
+    grouptransform_6.connectInput(0, groupClamp7)
+    grouptransform_7.connectInput(0, groupClamp8)
     groupCrop2.connectInput(0, groupmerge_7)
-    groupCrop3.connectInput(0, groupShape)
+    groupCrop3.connectInput(0, groupReformat1)
     groupdirection_transform.connectInput(0, groupCrop2)
-    groupformat.connectInput(0, groupdirection_transform)
+    groupreformat.connectInput(0, groupdirection_transform)
     groupTimeOffset1.connectInput(0, groupDot4)
     groupMerge1.connectInput(0, groupDot3)
     groupMerge1.connectInput(1, groupTimeOffset1)
-    groupDot3.connectInput(0, groupDot5)
     groupDot4.connectInput(0, groupDot3)
     groupSwitch1.connectInput(0, groupDot5)
     groupSwitch1.connectInput(1, groupClamp1)
-    groupDot5.connectInput(0, groupformat)
+    groupDot5.connectInput(0, groupreformat)
     groupClamp1.connectInput(0, groupMerge1)
+    groupFrameHold1.connectInput(0, groupCrop3)
+    groupClamp3.connectInput(0, groupshape_mask_1)
+    groupClamp4.connectInput(0, groupshape_mask_2)
+    groupClamp5.connectInput(0, groupshape_mask_3)
+    groupClamp6.connectInput(0, groupshape_mask_4)
+    groupClamp2.connectInput(0, groupshape_mask_5)
+    groupClamp7.connectInput(0, groupshape_mask_6)
+    groupClamp8.connectInput(0, groupshape_mask_7)
+    groupDot3.connectInput(0, groupDot5)
+    groupReformat1.connectInput(0, groupShape)
 
     param = grouptransform_1.getParam("motionBlur")
     param.setExpression("thisGroup.motion_blur.get()", False, 0)
@@ -1688,25 +1873,30 @@ def createInstance(app,group):
     param.setExpression("thisGroup.motion_blur.get()", False, 0)
     del param
     param = groupCrop2.getParam("size")
-    param.setExpression("thisGroup.format.boxSize.getValue(0)", False, 0)
-    param.setExpression("thisGroup.format.boxSize.getValue(0)", False, 1)
+    param.setExpression("thisGroup.reformat.boxSize.getValue(0)", False, 0)
+    param.setExpression("thisGroup.reformat.boxSize.getValue(0)", False, 1)
     del param
     param = groupCrop3.getParam("size")
-    param.setExpression("thisGroup.format.boxSize.getValue(0)", False, 0)
-    param.setExpression("thisGroup.format.boxSize.getValue(0)", False, 1)
+    param.setExpression("thisGroup.reformat.boxSize.getValue(0)", False, 0)
+    param.setExpression("thisGroup.reformat.boxSize.getValue(0)", False, 1)
     del param
     param = groupReformat1_2_2.getParam("boxSize")
-    param.setExpression("thisGroup.format.boxSize.getValue(0)", False, 0)
-    param.setExpression("thisGroup.format.boxSize.getValue(0)", False, 1)
+    param.setExpression("thisGroup.reformat.boxSize.getValue(0)", False, 0)
+    param.setExpression("thisGroup.reformat.boxSize.getValue(0)", False, 1)
     del param
-    param = groupformat.getParam("boxSize")
-    group.getParam("formatboxSize").setAsAlias(param)
+    param = groupreformat.getParam("boxSize")
+    param.setExpression("format_index = thisGroup.format.get()\nret = general.formats[format_index][dimension]", True, 0)
+    param.setExpression("format_index = thisGroup.format.get()\nret = general.formats[format_index][dimension]", True, 1)
     del param
     param = groupTimeOffset1.getParam("timeOffset")
     param.setExpression("duration = thisGroup.duration.get()\nstencil_gap = thisGroup.stencil_self_gap.get()\ngap = (duration * float(stencil_gap)) / 50\n\nret = gap", True, 0)
     del param
     param = groupSwitch1.getParam("which")
     param.setExpression("thisGroup.stencil_self.get()", False, 0)
+    del param
+    param = groupReformat1.getParam("boxSize")
+    param.setExpression("index = thisGroup.format.get()\nret = general.formats[index][0]", True, 0)
+    param.setExpression("index = thisGroup.format.get()\nret = general.formats[index][0]", True, 1)
     del param
 
     try:
