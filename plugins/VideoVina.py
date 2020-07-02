@@ -161,7 +161,27 @@ def createInstance(app,group):
     lastNode.update_videovina_project = param
     del param
 
-    param = lastNode.createChoiceParam("velocity", "Velocity")
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
     entries = [ ("Slow", ""),
     ("Normal", ""),
     ("Fast", "")]
@@ -178,7 +198,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.set("Fast")
-    lastNode.velocity = param
+    lastNode.speed = param
     del param
 
     param = lastNode.createInt3DParam("speeds", "Speeds")
@@ -223,25 +243,8 @@ def createInstance(app,group):
     param.setHelp("esta velocidad de frames corresponde a la velocidad normal,\ny calculta la velocidad final dependiendo de la velocidad de la slide ( Slow, Normal, Fast )\n")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(36, 0)
+    param.setValue(30, 0)
     lastNode.transition_duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Resolution Scale")
-    param.setMinimum(0.1, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0.1, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.2, 0)
-    lastNode.rscale = param
     del param
 
     param = lastNode.createChoiceParam("default_color", "Default Color")
@@ -357,6 +360,22 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/christmas")
     lastNode.reference_pictures = param
+    del param
+
+    param = lastNode.createChoiceParam("transition", "Transition")
+    entries = [ ("FlareTransition", ""),
+    ("GlassTransition", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.transition = param
     del param
 
     param = lastNode.createIntParam("amount_slide", "Base Slide")
@@ -702,16 +721,16 @@ def createInstance(app,group):
     lastNode.refreshUserParamsGUI()
     del lastNode
 
-    # Start of node "Output3"
+    # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output3")
     lastNode.setPosition(1923, -560)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupOutput3 = lastNode
+    groupOutput1 = lastNode
 
     del lastNode
-    # End of node "Output3"
+    # End of node "Output1"
 
     # Now that all nodes are created we can connect them together, restore expressions
     try:

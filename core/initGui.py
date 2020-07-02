@@ -38,6 +38,8 @@ def reload_nodes():
                     print(module_name + ': has updated.')
                 except:
                     None
+        if ext == 'png':
+            shutil.copy(develop_module, natron_plugin)
 
     # recarga los modulos de core
     for module in os.listdir(core):

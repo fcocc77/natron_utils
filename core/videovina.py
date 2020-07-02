@@ -122,14 +122,14 @@ def set_default_color(thisNode, thisParam):
 
 def refresh(thisNode, app):
 
-    velocity = thisNode.velocity.get()
-    rscale = thisNode.rscale.get()
+    speed = thisNode.speed.get()
+    _format = thisNode.format.get()
     color = thisNode.color.get()
     speeds = thisNode.speeds.get()
 
     normal_speed = speeds[1]
 
-    slide_frames = speeds[velocity]
+    slide_frames = speeds[speed]
 
     # esta velocidad de frames corresponde a la velocidad normal,
     # y calculta la velocidad final dependiendo de la velocidad de la slide
@@ -175,14 +175,18 @@ def refresh(thisNode, app):
 
     for i, obj in enumerate(slides):
         slide = obj['slide']
-        frame_range = slide.getParam('frameRange')
+        start_frame_slide = slide.getParam('start_frame')
         color_slide = slide.getParam('color')
-        rscale_slide = slide.getParam('rscale')
+        format_slide = slide.getParam('format')
+        speeds_slide = slide.getParam('speeds')
+        speed_slide = slide.getParam('speed')
 
         color_slide.set(color[0], color[1], color[2], color[3])
-        rscale_slide.set(rscale)
+        speeds_slide.set(speeds[0], speeds[1], speeds[2])
+        speed_slide.set(speed)
+        format_slide.set(_format)
 
-        frame_range.set(first_frame, last_frame)
+        start_frame_slide.set(first_frame)
 
         # Transition
         transition = obj['transition']
@@ -193,6 +197,9 @@ def refresh(thisNode, app):
             start_frame = (last_frame - (transition_frames / 2)) - slide_frames
         transition.getParam('start_frame').set(start_frame)
         transition.getParam('duration').set(transition_frames)
+        transition.getParam('format').set(_format)
+        transition.getParam('speed').set(speed)
+        transition.getParam('speeds').set(speeds[0], speeds[1], speeds[2])
         transition.getParam('refresh').trigger()
         # --------------------
 
@@ -868,9 +875,9 @@ def export_overlap_frames(thisNode, template_name, central_frame, resources):
 def export_videovina_info(thisNode, app, project_path):
 
     # obtiene la duracion de las slides
-    velocity = thisNode.velocity.get()
+    speed = thisNode.speed.get()
     speeds = thisNode.speeds.get()
-    slide_frames = speeds[velocity]
+    slide_frames = speeds[speed]
     # -----------------
 
     # el frame central de la slide
@@ -898,7 +905,7 @@ def update_videovina_project(thisNode, app):
     # leer datos del proyecto json de videovina
     color = project.states.app.color
     timeline = project.states.app.timeline
-    velocity = project.states.preview.speed
+    speed = project.states.preview.speed
     song = project.states.app.song
     global_font = project.states.app.font
     # ----------------
@@ -906,7 +913,7 @@ def update_videovina_project(thisNode, app):
     # modifica los datos del proyecto natron
     thisNode.getParam('color').set(
         color[0] / 255.0, color[1] / 255.0, color[2] / 255.0, 1)
-    thisNode.getParam('velocity').set(velocity)
+    thisNode.getParam('speed').set(speed)
     # ------------------
 
     photos = []

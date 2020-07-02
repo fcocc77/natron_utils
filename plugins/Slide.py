@@ -25,6 +25,9 @@ def getLabel():
 def getVersion():
     return 1
 
+def getIconPath():
+    return "Slide.png"
+
 def getGrouping():
     return "videovina/Templates"
 
@@ -73,7 +76,8 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Mid HD - 960 x 540", ""),
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
     ("Full HD - 1920 x 1080", ""),
     ("4K - 3840 x 2160", "")]
     param.setOptions(entries)
@@ -88,7 +92,54 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
     lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createInt3DParam("speeds", "Speeds")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    param.setValue(100, 1)
+    param.setValue(100, 2)
+    lastNode.speeds = param
     del param
 
     param = lastNode.createIntParam("start_frame", "Start Frame")
@@ -106,23 +157,6 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(1, 0)
     lastNode.start_frame = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
     del param
 
     param = lastNode.createColorParam("color", "Color", False)
