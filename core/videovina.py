@@ -654,12 +654,9 @@ def update_post_fx(thisNode, app, workarea):
     post_fx_dot.disconnectInput(0)
     post_fx_dot.connectInput(0, dissolve)
 
-    # output
-    output = getNode(workarea, 'Output1')
-    if not output:
-        output = createNode('output', 'Output1', workarea)
-    output.setPosition(last_posx + 200, 1100)
-    output.connectInput(0, post_fx_dot)
+    # VideoVina nodo como ultimo
+    thisNode.setPosition(last_posx + 200, 1100)
+    thisNode.connectInput(0, post_fx_dot)
 
     # si es que existe un viewer lo posiciona correctamente
     viewer = None
