@@ -17,8 +17,20 @@ def update_node():
     parent = get_parent(node)
     position = node.getPosition()
 
+    node.setPosition(position[0] + 150, position[1])
+    node.setColor(1, 0, 0)
+    node.setLabel('delete_' + label)
+
     new_node = copy(node, parent)
-    new_node.setPosition(position[0] + 200, position[1])
+
+    # conecta las entradas del antiguo nodo al nuevo nodo
+    for i in range(node.getMaxInputCount()):
+        input_node = node.getInput(i)
+        if input_node:
+            new_node.connectInput(i, input_node)
+            node.disconnectInput(i)
+
+    new_node.setPosition(position[0], position[1])
     new_node.setLabel(label)
 
 

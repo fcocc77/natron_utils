@@ -112,7 +112,8 @@ def copy(node, group=None):
         for p in node.getParams():
             name = p.getScriptName()
             param = new_node.getParam(name)
-            param.copy(p)
+            if param:
+                param.copy(p)
 
     new_node.setScriptName(node.getScriptName())
     new_node.refreshUserParamsGUI()
@@ -283,10 +284,14 @@ def delete(nodes):
     # natron no borra el nodo
     if type(nodes) is list:
         for n in nodes:
+            n.setPosition(10000, 10000)
             n.destroy()
         for n in nodes:
             n.destroy()
     else:
+        # mueve el nodo a otro lado, por que a veces queda el nodo en el node graph
+        nodes.setPosition(10000, 10000)
+
         nodes.destroy()
         nodes.destroy()
 
