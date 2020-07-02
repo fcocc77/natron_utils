@@ -1,7 +1,7 @@
 import random
 import os
 import shutil
-from natron_utils import copy, getNode, question, alert, createNode, warning, get_parent
+from natron_extent import copy, getNode, question, alert, createNode, warning, get_parent
 from transition import directional_transition
 from util import jread, jwrite
 from time import sleep

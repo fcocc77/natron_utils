@@ -1,6 +1,6 @@
 import os
 import NatronEngine
-from natron_utils import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
+from natron_extent import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
 from general import formats
 from twelve_render import send_vinarender_state
 

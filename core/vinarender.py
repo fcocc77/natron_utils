@@ -1,7 +1,7 @@
 import os
 import shutil
 from util import jread
-from natron_utils import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
+from natron_extent import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):

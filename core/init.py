@@ -1,5 +1,5 @@
 # vvPlugins modules
-import natron_utils
+import natron_extent
 import general
 import vvtext
 import flare_transition

@@ -2,7 +2,7 @@
 # HD Medio, Full Hd y 4K; Lento, Normal y Rapido
 import os
 import NatronEngine
-from natron_utils import getNode, alert, value_by_speed, absolute
+from natron_extent import getNode, alert, value_by_speed, absolute
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):

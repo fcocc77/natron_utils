@@ -243,21 +243,15 @@ def get_all_nodes():
 
 
 def get_select_node(_type=None):
-
-    # encuentra el primer nodo seleccionado
-    selected = None
-    for node, path in get_all_nodes():
+    app = NatronGui.natron.getGuiInstance(0)
+    for node in app.getSelectedNodes():
         if _type:
-            ok_type = node.getPluginID() == _type
+            if node.getPluginID() == _type:
+                return node
         else:
-            ok_type = True
-        if ok_type:
-            if node.isNodeSelected():
-                selected = node
-                break
-    # ---------------------------
+            return node
 
-    return selected
+    return None
 
 
 def get_connected_nodes(parent):
