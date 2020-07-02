@@ -92,7 +92,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     lastNode.format = param
     del param
 
@@ -136,9 +135,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
+    param.setValue(150, 0)
     param.setValue(100, 1)
-    param.setValue(100, 2)
+    param.setValue(50, 2)
     lastNode.speeds = param
     del param
 
@@ -285,14 +284,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.FrameRange", 1, group)
     lastNode.setScriptName("FrameRange")
     lastNode.setLabel("FrameRange")
-    lastNode.setPosition(-207, 990)
+    lastNode.setPosition(-207, 992)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameRange = lastNode
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(100, 1)
+        param.setValue(1, 0)
+        param.setValue(101, 1)
         del param
 
     param = lastNode.getParam("before")
@@ -305,11 +305,6 @@ def createInstance(app,group):
         param.set("hold")
         del param
 
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
-        del param
-
     del lastNode
     # End of node "FrameRange"
 
@@ -317,7 +312,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
     lastNode.setScriptName("TimeOffset")
     lastNode.setLabel("TimeOffset")
-    lastNode.setPosition(-207, 918)
+    lastNode.setPosition(-207, 917)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupTimeOffset = lastNode
@@ -571,6 +566,13 @@ def createInstance(app,group):
     groupDot5.connectInput(0, groupImage)
     groupTransform.connectInput(0, groupConstant1)
 
+    param = groupFrameRange.getParam("frameRange")
+    param.setExpression("start_frame = thisGroup.start_frame.get()\nspeed = thisGroup.speed.get()\nduration = thisGroup.speeds.get()[speed]\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 0)
+    param.setExpression("start_frame = thisGroup.start_frame.get()\nspeed = thisGroup.speed.get()\nduration = thisGroup.speeds.get()[speed]\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 1)
+    del param
+    param = groupTimeOffset.getParam("timeOffset")
+    param.setExpression("thisGroup.start_frame.get()", False, 0)
+    del param
     param = groupMerge2.getParam("mix")
     param.setExpression("if thisGroup.include_texts.get():\n\tret = 1\nelse:\n\tret = 0", True, 0)
     del param

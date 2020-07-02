@@ -1,7 +1,7 @@
 import os
 import shutil
 from util import jread
-from natron_utils import get_connected_nodes, saveProject, absolute, warning, alert
+from natron_utils import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -89,40 +89,6 @@ def check_project(thisNode):
         return False
 
 
-def get_node_path(thisNode, app):
-    # encuentra la ruta completa del nodo, si es que
-    # el nodo a buscar esta dentro de un grupo.
-
-    vina_name = thisNode.getScriptName()
-    vina_position = thisNode.getPosition()[0]
-
-    found = None
-    for a in app.getChildren():
-        a_name = a.getScriptName()
-        a_pos = a.getPosition()[0]
-        if a_name == vina_name:
-            if a_pos == vina_position:
-                found = ''
-                break
-
-        for b in a.getChildren():
-            b_name = b.getScriptName()
-            b_pos = b.getPosition()[0]
-            if b_name == vina_name:
-                if b_pos == vina_position:
-                    found = a_name + '.'
-                    break
-
-            for c in b.getChildren():
-                c_name = c.getScriptName()
-                c_pos = c.getPosition()[0]
-                if c_name == vina_name:
-                    if c_pos == vina_position:
-                        found = a_name + '.' + b_name + '.'
-                        break
-    return found
-
-
 def render(thisNode, app):
     node_input = thisNode.getInput(0)
     if not node_input:
@@ -153,8 +119,12 @@ def render(thisNode, app):
     server_group = 'Natron'
     task_size = thisNode.task_size.get()
     software = 'Natron'
-    render = get_node_path(thisNode, app) + \
-        thisNode.getScriptName() + '.' + output_node
+
+    node_path = get_node_path(thisNode)
+    if node_path:
+        node_path += '.'
+    render = node_path + thisNode.getScriptName() + '.' + output_node
+
     output = absolute(thisNode.filename.getValue())
     instances = thisNode.instances.getValue()
     project = saveProject()

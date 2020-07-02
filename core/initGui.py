@@ -8,6 +8,7 @@ import NatronGui
 import collect_files
 import export_pyplugs
 import backup
+import update_node
 
 
 def reload_nodes():

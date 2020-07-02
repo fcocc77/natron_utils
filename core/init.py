@@ -2,7 +2,7 @@
 import natron_utils
 import general
 import vvtext
-import transition
+import flare_transition
 import shape_transition
 import ink
 import vinarender

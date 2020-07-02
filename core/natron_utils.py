@@ -219,7 +219,8 @@ def value_by_speed(value, speeds=[0, 0, 0]):
     return [slow, value, fast]
 
 
-def get_all_nodes(app):
+def get_all_nodes():
+    app = NatronGui.natron.getGuiInstance(0)
     nodes = []
     for a in app.getChildren():
         a_path = a.getScriptName()
@@ -242,11 +243,10 @@ def get_all_nodes(app):
 
 
 def get_select_node(_type=None):
-    app = NatronGui.natron.getGuiInstance(0)
 
     # encuentra el primer nodo seleccionado
     selected = None
-    for node, path in get_all_nodes(app):
+    for node, path in get_all_nodes():
         if _type:
             ok_type = node.getPluginID() == _type
         else:
@@ -295,3 +295,49 @@ def delete(nodes):
     else:
         nodes.destroy()
         nodes.destroy()
+
+
+def get_node_path(node):
+    # encuentra la ruta completa del nodo, si es que
+    # el nodo a buscar esta dentro de un grupo.
+    app = NatronGui.natron.getGuiInstance(0)
+
+    node_name = node.getScriptName()
+    node_position = node.getPosition()[0]
+
+    found = None
+    for a in app.getChildren():
+        a_name = a.getScriptName()
+        a_pos = a.getPosition()[0]
+        if a_name == node_name:
+            if a_pos == node_position:
+                found = ''
+                break
+
+        for b in a.getChildren():
+            b_name = b.getScriptName()
+            b_pos = b.getPosition()[0]
+            if b_name == node_name:
+                if b_pos == node_position:
+                    found = a_name
+                    break
+
+            for c in b.getChildren():
+                c_name = c.getScriptName()
+                c_pos = c.getPosition()[0]
+                if c_name == node_name:
+                    if c_pos == node_position:
+                        found = a_name + '.' + b_name
+                        break
+    return found
+
+
+def get_parent(node):
+    # obtiene el nodo padre
+    app = NatronGui.natron.getGuiInstance(0)
+    node_path = get_node_path(node)
+
+    if node_path:
+        return eval('app.getNode("' + node_path + '")')
+    else:
+        return app

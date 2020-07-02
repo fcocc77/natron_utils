@@ -721,18 +721,32 @@ def createInstance(app,group):
     lastNode.refreshUserParamsGUI()
     del lastNode
 
-    # Start of node "Output1"
-    lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
-    lastNode.setLabel("Output3")
-    lastNode.setPosition(1923, -560)
+    # Start of node "LastNode"
+    lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
+    lastNode.setScriptName("LastNode")
+    lastNode.setLabel("LastNode")
+    lastNode.setPosition(1920, -662)
     lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupOutput1 = lastNode
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupLastNode = lastNode
 
     del lastNode
-    # End of node "Output1"
+    # End of node "LastNode"
+
+    # Start of node "Output2"
+    lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
+    lastNode.setLabel("Output2")
+    lastNode.setPosition(1920, -563)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupOutput2 = lastNode
+
+    del lastNode
+    # End of node "Output2"
 
     # Now that all nodes are created we can connect them together, restore expressions
+    groupOutput2.connectInput(0, groupLastNode)
+
     try:
         extModule = sys.modules["VideoVinaExt"]
     except KeyError:

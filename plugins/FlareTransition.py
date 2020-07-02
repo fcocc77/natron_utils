@@ -29,14 +29,19 @@ def getIconPath():
     return "Transition.png"
 
 def getGrouping():
-    return "videovina/Transition"
+    return "videovina/Transitions"
 
 def createInstance(app,group):
     # Create all nodes in the group
 
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = group
-    lastNode.setColor(0.7, 0.7, 0.7)
+    lastNode.setColor(0.4, 0.5, 0.4)
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("flare_transition.main")
+        del param
+
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
@@ -216,7 +221,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(31, 0)
+    param.setValue(100, 0)
     param.setVisibleByDefault(False)
     lastNode.current_speed = param
     del param
@@ -242,8 +247,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
-    param.setValue(31, 1)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
     param.setValue(50, 2)
     lastNode.speeds = param
     del param
@@ -303,7 +308,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(100, 0)
     lastNode.start_frame = param
     del param
 
@@ -320,7 +325,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
+    param.setValue(30, 0)
     lastNode.duration = param
     del param
 
@@ -366,26 +371,6 @@ def createInstance(app,group):
     lastNode.sep5 = param
     del param
 
-    param = lastNode.createDouble2DParam("value_range", "Value Range")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setMinimum(-2147483648, 1)
-    param.setMaximum(2147483647, 1)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.value_range = param
-    del param
-
     param = lastNode.createColorParam("flare_color", "Flare Color", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
@@ -426,6 +411,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(10, 0)
     lastNode.blur = param
     del param
 
@@ -442,6 +428,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
     lastNode.exaggeration = param
     del param
 
@@ -458,6 +445,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
     lastNode.exaggeration_value = param
     del param
 
@@ -466,16 +454,16 @@ def createInstance(app,group):
     lastNode.refreshUserParamsGUI()
     del lastNode
 
-    # Start of node "Output1_2"
+    # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output_2")
     lastNode.setPosition(1046, 484)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupOutput1_2 = lastNode
+    groupOutput1 = lastNode
 
     del lastNode
-    # End of node "Output1_2"
+    # End of node "Output1"
 
     # Start of node "A"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
@@ -493,8 +481,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("B")
     lastNode.setLabel("B")
-    lastNode.setPosition(1042, -102)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1046, -126)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupB = lastNode
 
@@ -512,10 +500,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(0.15, 8, 0)
-        param.setValueAtTime(0.85, 14, 0)
-        param.setValueAtTime(1, 21, 0)
+        param.setValueAtTime(0, 100, 0)
+        param.setValueAtTime(0.15, 110.5, 0)
+        param.setValueAtTime(0.85, 119.5, 0)
+        param.setValueAtTime(1, 130, 0)
         del param
 
     del lastNode
@@ -537,9 +525,9 @@ def createInstance(app,group):
 
     param = lastNode.getParam("mix")
     if param is not None:
-        param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(1, 11, 0)
-        param.setValueAtTime(0, 21, 0)
+        param.setValueAtTime(0, 100, 0)
+        param.setValueAtTime(1, 115, 0)
+        param.setValueAtTime(0, 130, 0)
         del param
 
     del lastNode
@@ -550,7 +538,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Grade1")
     lastNode.setLabel("Grade1")
     lastNode.setPosition(1506, 238)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.48, 0.66, 1)
     groupGrade1 = lastNode
 
@@ -576,12 +564,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(10, 11, 0)
-        param.setValueAtTime(0, 21, 0)
-        param.setValueAtTime(0, 1, 1)
-        param.setValueAtTime(10, 11, 1)
-        param.setValueAtTime(0, 21, 1)
+        param.setValueAtTime(0, 100, 0)
+        param.setValueAtTime(10, 115, 0)
+        param.setValueAtTime(0, 130, 0)
+        param.setValueAtTime(0, 100, 1)
+        param.setValueAtTime(10, 115, 1)
+        param.setValueAtTime(0, 130, 1)
         del param
 
     param = lastNode.getParam("boundary")
@@ -603,7 +591,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("timeOffset")
     if param is not None:
-        param.setValue(1, 0)
+        param.setValue(100, 0)
         del param
 
     del lastNode
@@ -618,6 +606,11 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat2 = lastNode
 
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
     param = lastNode.getParam("NatronParamFormatChoice")
     if param is not None:
         param.set("PC_Video")
@@ -629,6 +622,17 @@ def createInstance(app,group):
         param.setValue(1080, 1)
         del param
 
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "Reformat2"
 
@@ -636,8 +640,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Flare")
     lastNode.setLabel("Flare")
-    lastNode.setPosition(1506, 106)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1506, 104)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupFlare = lastNode
 
@@ -645,7 +649,7 @@ def createInstance(app,group):
     # End of node "Flare"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1_2.connectInput(0, groupflare_merge)
+    groupOutput1.connectInput(0, groupflare_merge)
     groupDissolve1.connectInput(0, groupA)
     groupDissolve1.connectInput(1, groupB)
     groupflare_merge.connectInput(0, groupBlur)
@@ -664,13 +668,17 @@ def createInstance(app,group):
     param = groupflares_time_offset.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)
     del param
+    param = groupReformat2.getParam("boxSize")
+    param.setExpression("thisGroup.current_format.get()[dimension]", False, 0)
+    param.setExpression("thisGroup.current_format.get()[dimension]", False, 1)
+    del param
 
+    param = group.getParam("rscale")
+    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
+    del param
     param = group.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
     del param
     param = group.getParam("current_speed")
     param.setExpression("index = thisNode.speed.get()\nret = thisNode.speeds.get()[index]", True, 0)
