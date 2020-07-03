@@ -1,2 +1,3 @@
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
+    ☐ crear opcion para enviar a vinarender, los 1200 proyectos '.ntp' para produccion, haciendole un testing a cada proyecto para verificar si esta ok
