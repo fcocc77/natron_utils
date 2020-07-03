@@ -418,8 +418,8 @@ def createInstance(app,group):
     # Start of node "B"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("B")
-    lastNode.setLabel("B")
-    lastNode.setPosition(233, 757)
+    lastNode.setLabel("A")
+    lastNode.setPosition(724, 371)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupB = lastNode
@@ -430,8 +430,8 @@ def createInstance(app,group):
     # Start of node "A"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("A")
-    lastNode.setLabel("A")
-    lastNode.setPosition(724, 467)
+    lastNode.setLabel("B")
+    lastNode.setPosition(233, 361)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupA = lastNode
@@ -471,11 +471,6 @@ def createInstance(app,group):
     lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmix = lastNode
-
-    param = lastNode.getParam("BChannelsA")
-    if param is not None:
-        param.setValue(False)
-        del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
@@ -985,7 +980,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot16")
     lastNode.setLabel("Dot16")
-    lastNode.setPosition(573, 475)
+    lastNode.setPosition(573, 640)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot16 = lastNode
@@ -1038,14 +1033,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "shape_format"
 
-    # Start of node "VinaRender"
+    # Start of node "vinarender_He7"
     lastNode = app.createNode("vv.vinarender", 1, group)
-    lastNode.setScriptName("VinaRender")
+    lastNode.setScriptName("vinarender_He7")
     lastNode.setLabel("VinaRender")
     lastNode.setPosition(1380, 410)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupVinaRender = lastNode
+    groupvinarender_He7 = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
@@ -1143,6 +1138,23 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setValue("[Project]/../footage/transition_01/transition_01_fast_4k/transition_01_fast_4k_###.png")
     lastNode.filename = param
+    del param
+
+    param = lastNode.createDoubleParam("fps", "FPS")
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.fps = param
     del param
 
     param = lastNode.createButtonParam("render", "Render")
@@ -1254,7 +1266,7 @@ def createInstance(app,group):
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "VinaRender"
+    # End of node "vinarender_He7"
 
     # Start of node "shape_glass_1"
     lastNode = app.createNode("vv.ShapeTransition", 1, group)
@@ -2954,12 +2966,36 @@ def createInstance(app,group):
     del lastNode
     # End of node "TwelveRead2"
 
+    # Start of node "Dot18"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot18")
+    lastNode.setLabel("Dot18")
+    lastNode.setPosition(278, 760)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot18 = lastNode
+
+    del lastNode
+    # End of node "Dot18"
+
+    # Start of node "Dot19"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot19")
+    lastNode.setLabel("Dot19")
+    lastNode.setPosition(769, 640)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot19 = lastNode
+
+    del lastNode
+    # End of node "Dot19"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupswitch)
     groupDot3.connectInput(0, groupshape_format)
     groupDot4.connectInput(0, groupDot3)
-    groupmix.connectInput(0, groupA)
-    groupmix.connectInput(1, groupB)
+    groupmix.connectInput(0, groupDot19)
+    groupmix.connectInput(1, groupDot18)
     groupmix.connectInput(2, groupDot11)
     groupstart_frame_node.connectInput(0, groupTwelveRead2)
     groupglass_fx_switch.connectInput(0, groupDot5)
@@ -2999,15 +3035,17 @@ def createInstance(app,group):
     groupDot15.connectInput(0, groupDot13)
     groupswitch.connectInput(0, groupDot17)
     groupswitch.connectInput(1, groupglass_fx_switch)
-    groupswitch.connectInput(2, groupB)
-    groupDot16.connectInput(0, groupA)
+    groupswitch.connectInput(2, groupDot18)
+    groupDot16.connectInput(0, groupDot19)
     groupDot17.connectInput(0, groupDot16)
     groupshape_format.connectInput(0, groupShape)
-    groupVinaRender.connectInput(0, grouptransition_to_alpha)
+    groupvinarender_He7.connectInput(0, grouptransition_to_alpha)
     groupshape_glass_1.connectInput(0, groupDot3)
     groupshape_glass_2.connectInput(0, groupDot4)
     grouptransition_mask.connectInput(0, groupDot2)
     groupOverlayMask.connectInput(0, groupShuffle4)
+    groupDot18.connectInput(0, groupA)
+    groupDot19.connectInput(0, groupB)
 
     param = groupstart_frame_node.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)
