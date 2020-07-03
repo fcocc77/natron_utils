@@ -4,13 +4,17 @@
 # no fue borrado.
 import NatronGui
 from PySide import QtCore
-from natron_extent import get_parent, get_select_node, copy, get_output_nodes
+from natron_extent import get_parent, get_select_node, copy, get_output_nodes, warning
 
 
 def update_node():
     app = NatronGui.natron.getGuiInstance(0)
 
     node = get_select_node()
+
+    if not node:
+        warning('Update Node', 'Debe seleccionar un nodo.')
+        return
 
     _id = node.getPluginID()
     label = node.getLabel()

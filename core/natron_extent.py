@@ -36,50 +36,74 @@ def copy(node, group=None):
                 # identifica que tipo de parametro es, para poder crearlo en el nuevo nodo
                 if _type == NatronEngine.BooleanParam:
                     param = new_node.createBooleanParam(name, label)
+
                 elif _type == NatronEngine.ButtonParam:
                     param = new_node.createButtonParam(name, label)
+
                 elif _type == NatronEngine.ChoiceParam:
                     param = new_node.createChoiceParam(name, label)
+                    options = []
+                    for o in p.getOptions():
+                        options.append((o, None))
+                    param.setOptions(options)
+
                 elif _type == NatronEngine.ColorParam:
                     useAlpha = False
                     param = new_node.createColorParam(name, label, useAlpha)
+
                 elif _type == NatronEngine.Double2DParam:
                     param = new_node.createDouble2DParam(name, label)
+
                 elif _type == NatronEngine.Double3DParam:
                     param = new_node.createDouble3DParam(name, label)
+
                 elif _type == NatronEngine.DoubleParam:
                     param = new_node.createDoubleParam(name, label)
+
                 elif _type == NatronEngine.FileParam:
                     param = new_node.createFileParam(name, label)
+
                 elif _type == NatronEngine.GroupParam:
                     param = new_node.createGroupParam(name, label)
+
                 elif _type == NatronEngine.Int2DParam:
                     param = new_node.createInt2DParam(name, label)
+
                 elif _type == NatronEngine.Int3DParam:
                     param = new_node.createInt3DParam(name, label)
+
                 elif _type == NatronEngine.IntParam:
                     param = new_node.createIntParam(name, label)
+
                 elif _type == NatronEngine.OutputFileParam:
                     param = new_node.createOutputFileParam(name, label)
+
                 elif _type == NatronEngine.PageParam:
                     param = new_node.createPageParam(name, label)
+
                 elif _type == NatronEngine.ParametricParam:
                     nbCurves = 0
                     param = new_node.createParametricParam(
                         name, label, nbCurves)
+
                 elif _type == NatronEngine.PathParam:
                     param = new_node.createPathParam(name, label)
+
                 elif _type == NatronEngine.StringParam:
                     param = new_node.createStringParam(name, label)
-                    # usar esto si es un label:
-                    # param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+                    # si no tiene label, lo mas probable que sea una "eStringTypeLabel"
+                    if not param.getLabel():
+                        param.setType(
+                            NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
 
                 if param:
                     if hasattr(p, 'getMinimum'):
                         param.setMinimum(p.getMinimum())
                         param.setMaximum(p.getMaximum())
 
-            param.copy(p)
+            if param:
+                param.setAddNewLine(p.getAddNewLine())
+                param.copy(p)
 
         # crea una lista con los nodos hijos, para despues
         # conectarlos, cuando ya esten todos creados
@@ -92,7 +116,6 @@ def copy(node, group=None):
             # datos del nodo de origen
             name = child.getScriptName()
             label = child.getLabel()
-            input_count = child.getMaxInputCount()
             position = child.getPosition()
             size = child.getSize()
             # ---------------
@@ -102,7 +125,7 @@ def copy(node, group=None):
             _node.setSize(size[0], size[1])
             _node.setLabel(label)
 
-            for i in range(input_count):
+            for i in range(child.getMaxInputCount()):
                 inode = child.getInput(i)
                 if inode:
                     iname = inode.getScriptName()
