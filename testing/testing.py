@@ -9,9 +9,10 @@ from videovina import get_slides
 project = '/home/pancho/Documents/GitHub/videovina/private/templates_base/base/comp/base.ntp'
 
 app.loadProject(project)
+slides = get_slides(app)
 
 # datos correctos
-slide_amount = 7
+slide_amount = 5
 _format = 1  # quarter, half, hd, 4k
 speed = 0  # Slow, Normal, Fast
 # -------------------
@@ -35,12 +36,6 @@ def slide_testing(message, error):
             error='Nodos con error: ' + error)
 
 
-slides = get_slides(app)
-
-
-testing('Cantidad de slides', len(slides), slide_amount)
-
-
 format_error = ''
 speed_error = ''
 for i, slide in enumerate(slides):
@@ -51,6 +46,6 @@ for i, slide in enumerate(slides):
     if not transition.getParam('speed').get() == speed:
         speed_error += transition.getLabel() + ', '
 
-
+testing('Cantidad de slides', len(slides), slide_amount)
 slide_testing('Formato', format_error)
 slide_testing('Speed', speed_error)
