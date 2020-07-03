@@ -1,12 +1,16 @@
 import os
 import shutil
-from util import jread
+from util import jread, hash_generator
 from natron_extent import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
+        # script name unico para identificar el nodo cuando renderizamos
+        thisNode.setScriptName('vinarender_' + str(hash_generator(3)))
         return
+
+    thisNode.setLabel('VinaRender')
 
     knob_name = thisParam.getScriptName()
 
