@@ -4,7 +4,7 @@
 # no fue borrado.
 import NatronGui
 from PySide import QtCore
-from natron_extent import get_parent, get_select_node, copy
+from natron_extent import get_parent, get_select_node, copy, get_output_nodes
 
 
 def update_node():
@@ -29,6 +29,11 @@ def update_node():
         if input_node:
             new_node.connectInput(i, input_node)
             node.disconnectInput(i)
+
+    # conecta las nodos de salida
+    for output_node, i in get_output_nodes(node):
+        output_node.disconnectInput(i)
+        output_node.connectInput(i, new_node)
 
     new_node.setPosition(position[0], position[1])
     new_node.setLabel(label)

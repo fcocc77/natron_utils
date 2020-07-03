@@ -340,3 +340,15 @@ def get_parent(node):
         return eval('app.getNode("' + node_path + '")')
     else:
         return app
+
+
+def get_output_nodes(node):
+    nodes = []
+    for n, path in get_all_nodes():
+        for i in range(n.getMaxInputCount()):
+            input_node = n.getInput(i)
+            if input_node:
+                if input_node.getScriptName() == node.getScriptName():
+                    nodes.append([n, i])
+
+    return nodes
