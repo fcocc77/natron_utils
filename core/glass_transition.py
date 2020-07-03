@@ -1,6 +1,6 @@
 import os
 import NatronEngine
-from natron_extent import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete
+from natron_extent import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete, refresh_expressions, warning, input_connected
 from general import formats
 from twelve_render import send_vinarender_state
 
@@ -50,6 +50,7 @@ def read_file(thisNode, thisParam):
 
 
 def refresh(thisNode):
+    refresh_expressions(thisNode)
 
     current_speed = thisNode.getParam('speed').get()
     current_format = thisNode.getParam('format').get()
@@ -135,6 +136,11 @@ def render(thisNode):
     speeds = thisNode.getParam('speeds').get()
     prefix = thisNode.getParam('prefix_render').get()
     current_state = thisNode.getParam('current_state').get()
+
+    if not input_connected(thisNode, 2):
+        # verifica que el input de 'shape' este conectado
+        warning('Shape', "El input 'Shape' no esta conectado.")
+        return
 
     if current_state:
         _format = thisNode.getParam('format').get()

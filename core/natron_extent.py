@@ -390,3 +390,13 @@ def get_output_nodes(node):
                     nodes.append([n, i])
 
     return nodes
+
+
+def input_connected(node, _input=0):
+    # si el bounding box es 0, significa que no hay imagen conectada
+    input_node = node.getInput(_input)
+    if input_node:
+        if input_node.getRegionOfDefinition(0, 0).x2:
+            return True
+
+    return False

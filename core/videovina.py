@@ -203,6 +203,11 @@ def refresh(thisNode, app, workarea):
 
         start_frame_slide.set(first_frame)
 
+        reformat = obj['reformat']
+        if reformat:
+            reformat.getParam('boxSize').set(width, hight)
+            reformat.getParam('refresh').trigger()
+
         # Transition
         transition = obj['transition']
         if i == 0:
@@ -217,11 +222,6 @@ def refresh(thisNode, app, workarea):
         transition.getParam('speeds').set(speeds[0], speeds[1], speeds[2])
         transition.getParam('refresh').trigger()
         # --------------------
-
-        reformat = obj['reformat']
-        if reformat:
-            reformat.getParam('boxSize').set(width, hight)
-            reformat.getParam('refresh').trigger()
 
         # si es el primer slide, le sumamos la mitad de la duracion de la transicion,
         # ya que la primera transicion va a negro.
