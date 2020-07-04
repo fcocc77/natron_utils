@@ -37,60 +37,6 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createStringParam("general_label", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    GENERAL :")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.general_label = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep2", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
-    del param
-
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep4", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep4 = param
-    del param
-
     param = lastNode.createStringParam("state_label", "State")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
     param.setDefaultValue("- - - - - - - >    STATE :")
@@ -105,19 +51,6 @@ def createInstance(app,group):
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
     lastNode.state_label = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep7", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep7 = param
     del param
 
     param = lastNode.createChoiceParam("format", "Format")
@@ -140,47 +73,6 @@ def createInstance(app,group):
     lastNode.format = param
     del param
 
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    param.setVisibleByDefault(False)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    param.setVisibleByDefault(False)
-    lastNode.rscale = param
-    del param
-
     param = lastNode.createChoiceParam("speed", "Speed")
     entries = [ ("Slow", ""),
     ("Normal", ""),
@@ -195,16 +87,12 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.speed = param
     del param
 
-    param = lastNode.createIntParam("current_speed", "Current Speed")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
+    param = lastNode.createButtonParam("refresh", "Refresh")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -212,40 +100,11 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(31, 0)
-    param.setVisibleByDefault(False)
-    lastNode.current_speed = param
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
     del param
 
-    param = lastNode.createInt3DParam("speeds", "Speeds")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-    param.setDisplayMinimum(0, 2)
-    param.setDisplayMaximum(100, 2)
-    param.setDefaultValue(0, 2)
-    param.restoreDefaultValue(2)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(10, 0)
-    param.setValue(31, 1)
-    param.setValue(50, 2)
-    lastNode.speeds = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep1", "")
+    param = lastNode.createSeparatorParam("sep5", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -255,7 +114,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
+    lastNode.sep5 = param
     del param
 
     param = lastNode.createStringParam("time_label", "")
@@ -272,19 +131,6 @@ def createInstance(app,group):
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
     lastNode.time_label = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep3", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
     del param
 
     param = lastNode.createIntParam("start_frame", "Start Frame")
@@ -304,21 +150,31 @@ def createInstance(app,group):
     lastNode.start_frame = param
     del param
 
-    param = lastNode.createIntParam("duration", "Duration")
+    param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    lastNode.durations = param
     del param
 
     param = lastNode.createSeparatorParam("sep6", "")
@@ -350,21 +206,65 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
-    param = lastNode.createSeparatorParam("sep5", "")
+    lastNode.exp = lastNode.createPageParam("exp", "Exp")
+    param = lastNode.createInt2DParam("current_format", "Current Format")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.exp.addParam(param)
 
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep5 = param
+    param.setAnimationEnabled(True)
+    param.setValue(1920, 0)
+    param.setValue(1080, 1)
+    lastNode.current_format = param
+    del param
+
+    param = lastNode.createIntParam("duration", "Current Duration")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.exp.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.duration = param
+    del param
+
+    param = lastNode.createDoubleParam("rscale", "Rscale")
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.exp.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.rscale = param
     del param
 
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -401,8 +301,8 @@ def createInstance(app,group):
     param = group.getParam("rscale")
     param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
     del param
-    param = group.getParam("current_speed")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.speeds.get()[index]", True, 0)
+    param = group.getParam("duration")
+    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
     del param
     try:
         extModule = sys.modules["BaseExt"]
