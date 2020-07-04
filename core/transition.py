@@ -24,6 +24,16 @@ def back_and_forth_transition(param, duration, start_frame, values):
         param.setInterpolationAtTime(last_frame,  horizontal, dimension)
 
 
+def lineal_transition(param, start_frame, duration, values, dimension=None):
+    if not dimension == None:
+        directional_transition(param, duration, 0, 0,
+                               start_frame, values, dimension)
+    else:
+        for dimension in range(param.getNumDimensions()):
+            directional_transition(param, duration, 0, 0,
+                                   start_frame, values, dimension)
+
+
 def directional_transition(param, duration, exaggeration_time, exaggeration_value, start_frame, values, dimension=0):
 
     exaggeration_value = 1 - exaggeration_value
@@ -31,8 +41,8 @@ def directional_transition(param, duration, exaggeration_time, exaggeration_valu
     first_frame = start_frame
     last_frame = first_frame + duration
 
-    value_a = values[0]
-    value_b = values[1]
+    value_a = float(values[0])
+    value_b = float(values[1])
 
     if value_a > value_b:
         value_range = value_a - value_b

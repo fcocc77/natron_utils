@@ -1,3 +1,48 @@
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
     ☐ crear opcion para enviar a vinarender, los 1200 proyectos '.ntp' para produccion, haciendole un testing a cada proyecto para verificar si esta ok
+Templates:
+    birthday_01:
+    birthday_02:
+    birthday_03:    
+    baby_01:
+    baby_02:
+    baby_03:
+    christmas_01:
+    christmas_02:
+    christmas_03:
+    family_01:
+        ☐ ink
+    family_02:
+        ☐ glass
+    family_03:
+    kid_01:
+    kid_02:
+    kid_03:
+    travel_01:
+        ☐ cambiar nombre de vacaciones po viaje
+        ☐ ink
+    travel_02:
+        ☐ glass
+    travel_03:
+    love_01:
+        ☐ vidrios con corazones
+    love_02:
+    love_03:
+    wedding_01:
+        ☐ Sacar fotos con hojas y flores
+    wedding_02:
+        ☐ color rojiso de atardecer
+    wedding_03:
+Templates Bases:
+    ink:
+    glass:
+        ☐ textura de rasguños
+        transition:
+            ☐ poner otra opcion de transicion, con movimiento de la imagen
+    photos:
+        ☐ cuadros de fotos antiguas
+    stroke:
+        ☐ trazos de pintura
+    draw:
+        ☐ hacer texto que aparesca como trazo y que se mueva con un zoom
