@@ -151,6 +151,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(1, 0)
     lastNode.start_frame = param
     del param
 
@@ -229,41 +230,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Left - Right")
     lastNode.movement = param
-    del param
-
-    param = lastNode.createIntParam("break_frame", "Break Frame")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Frame donde la animacion va a tener un quebre rapido")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(24, 0)
-    lastNode.break_frame = param
-    del param
-
-    param = lastNode.createIntParam("break_frame_duration", "Break Frame Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(4, 0)
-    lastNode.break_frame_duration = param
     del param
 
     param = lastNode.createDoubleParam("level", "Level")
@@ -279,8 +247,72 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(5, 0)
+    param.setValue(7, 0)
     lastNode.level = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep7 = param
+    del param
+
+    param = lastNode.createIntParam("break_point", "Break Point")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Porcentaje donde la animacion va a tener un quebre rapido")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.break_point = param
+    del param
+
+    param = lastNode.createIntParam("break_point_duration", "Break Point Duration")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(10, 0)
+    lastNode.break_point_duration = param
+    del param
+
+    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.exaggeration = param
     del param
 
     lastNode.exp = lastNode.createPageParam("exp", "Exp")
@@ -377,16 +409,20 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform = lastNode
 
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValueAtTime(-350, 1, 0)
+        param.setValueAtTime(-203, 22, 0)
+        param.setValueAtTime(-196, 23, 0)
+        param.setValueAtTime(189, 28, 0)
+        param.setValueAtTime(196, 29, 0)
+        param.setValueAtTime(350, 51, 0)
+        del param
+
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValueAtTime(1, 0, 0)
-        param.setValueAtTime(0.5, 24, 0)
-        param.setValueAtTime(1.019, 28, 0)
-        param.setValueAtTime(2.038, 50, 0)
-        param.setValueAtTime(1, 0, 1)
-        param.setValueAtTime(0.5, 24, 1)
-        param.setValueAtTime(1.019, 28, 1)
-        param.setValueAtTime(2.038, 50, 1)
+        param.setValue(1.364583333333333, 0)
+        param.setValue(1.364583333333333, 1)
         del param
 
     param = lastNode.getParam("center")
@@ -406,7 +442,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("Reformat1")
     lastNode.setLabel("Reformat1")
-    lastNode.setPosition(767, 112)
+    lastNode.setPosition(767, 95)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat1 = lastNode

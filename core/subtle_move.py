@@ -1,4 +1,5 @@
 from natron_extent import getNode
+import NatronEngine
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -11,7 +12,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         refresh(thisNode)
 
 
-def animation(param, start_frame, duration, values, break_frame, break_duration, dimension=None):
+def animation(param, start_frame, duration, values, break_point, break_duration, exaggeration=0, dimension=None):
 
     if dimension == None:
         dimensions = range(param.getNumDimensions())
@@ -19,6 +20,10 @@ def animation(param, start_frame, duration, values, break_frame, break_duration,
         dimensions = [dimension]
 
     for dimension in dimensions:
+
+        horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
+        lineal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeLinear
+
         first_frame = start_frame
         last_frame = first_frame + duration
 
@@ -29,12 +34,54 @@ def animation(param, start_frame, duration, values, break_frame, break_duration,
 
         param.setValueAtTime(value_a, first_frame, dimension)
         param.setValueAtTime(value_b, last_frame, dimension)
+        param.setInterpolationAtTime(first_frame, lineal, dimension)
+        param.setInterpolationAtTime(last_frame, lineal, dimension)
 
-        first_frame_break = break_frame
-        last_frame_break = break_frame + break_duration
+        break_point_duration = (break_duration * duration) / 100
+        first_frame_break = (break_point * duration) / 100
+        last_frame_break = first_frame_break + break_point_duration
 
-        param.setValueAtTime(value_a/2, first_frame_break, dimension)
-        param.setValueAtTime(value_b/2, last_frame_break, dimension)
+        # resta la mitad de la duracion del quebre para que quede centrado
+        first_frame_break -= break_point_duration / 2
+        last_frame_break -= break_point_duration / 2
+
+        break_point_value_a = param.getValueAtTime(
+            first_frame_break, dimension)
+        break_point_value_b = param.getValueAtTime(
+            last_frame_break, dimension)
+
+        # exaggeration
+        exagg_a = abs(value_a - break_point_value_a) * exaggeration
+        exagg_b = abs(value_b - break_point_value_b) * exaggeration
+
+        if value_a > value_b:
+            break_point_value_a += exagg_a
+            break_point_value_b -= exagg_b
+        else:
+            break_point_value_a -= exagg_a
+            break_point_value_b += exagg_b
+        # -------------
+
+        param.setValueAtTime(break_point_value_a, first_frame_break, dimension)
+        param.setValueAtTime(break_point_value_b, last_frame_break, dimension)
+
+        # deja en lineal los 2 key del punto de quebre
+        param.setInterpolationAtTime(first_frame_break, lineal, dimension)
+        param.setInterpolationAtTime(last_frame_break, lineal, dimension)
+
+        # le suma un frame antes y despues del puto de quebre, para que solo el
+        # punto de quebre tenga interpolacion horizontal y el resto lineal
+        after_frame = last_frame_break + 1
+        after_value = param.getValueAtTime(after_frame, dimension)
+        param.setValueAtTime(after_value, after_frame, dimension)
+
+        before_frame = first_frame_break - 1
+        before_value = param.getValueAtTime(before_frame, dimension)
+        param.setValueAtTime(before_value, before_frame, dimension)
+        # -----------------------------
+        # cambia a horizontal la interpolacion del punto de quebre, por que ya se crearon los key 'after' y 'before'
+        param.setInterpolationAtTime(first_frame_break, horizontal, dimension)
+        param.setInterpolationAtTime(last_frame_break, horizontal, dimension)
 
 
 def refresh(thisNode):
@@ -49,8 +96,9 @@ def refresh(thisNode):
     level = thisNode.getParam('level').get()
     current_format = thisNode.getParam('current_format').get()
     rscale = thisNode.getParam('rscale').get()
-    break_frame = thisNode.getParam('break_frame').get()
-    break_duration = thisNode.getParam('break_frame_duration').get()
+    break_point = thisNode.getParam('break_point').get()
+    break_duration = thisNode.getParam('break_point_duration').get()
+    exaggeration = thisNode.getParam('exaggeration').get()
 
     width = current_format[0]
     height = current_format[1]
@@ -90,4 +138,6 @@ def refresh(thisNode):
     # ---------------------
 
     animation(param, start_frame, duration, [
-        values[0], values[1]], break_frame, break_duration, dimension=values[2])
+        values[0], values[1]], break_point, break_duration,
+        exaggeration=exaggeration, dimension=values[2]
+    )
