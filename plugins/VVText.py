@@ -29,7 +29,7 @@ def getVersion():
     return 1
 
 def getGrouping():
-    return "videovina/Draw"
+    return "videovina/Texts"
 
 def createInstance(app,group):
     # Create all nodes in the group
