@@ -23,7 +23,7 @@ def getLabel():
     return "VVText"
 
 def getIconPath():
-    return "VVText.png"
+    return "Text.png"
 
 def getVersion():
     return 1

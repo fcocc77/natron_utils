@@ -18,4 +18,6 @@ import subtle_move
 import transition
 import slide_base
 import glass_slide
+import glass_text
+import text_base
 # --------------
