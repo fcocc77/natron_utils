@@ -51,6 +51,9 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
         break_point_value_b = param.getValueAtTime(
             last_frame_break, dimension)
 
+        if not exaggeration:
+            return
+
         # exaggeration
         exagg_a = abs(value_a - break_point_value_a) * exaggeration
         exagg_b = abs(value_b - break_point_value_b) * exaggeration
