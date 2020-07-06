@@ -1,6 +1,7 @@
 from natron_extent import getNode
 import NatronEngine
 from math import cos, sin
+from base import link_to_parent
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -8,6 +9,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         return
 
     knob_name = thisParam.getScriptName()
+
+    link_to_parent(thisNode, thisParam, thisGroup)
 
     if knob_name == 'refresh':
         refresh(thisNode)

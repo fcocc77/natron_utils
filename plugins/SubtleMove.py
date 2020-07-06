@@ -25,6 +25,9 @@ def getLabel():
 def getVersion():
     return 1
 
+def getIconPath():
+    return "Animation.png"
+
 def getGrouping():
     return "videovina/Animations"
 
@@ -95,6 +98,18 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")
@@ -426,11 +441,6 @@ def createInstance(app,group):
     if param is not None:
         param.setValue(1.260416666666667, 0)
         param.setValue(1.260416666666667, 1)
-        del param
-
-    param = lastNode.getParam("center")
-    if param is not None:
-        param.setValue(540, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")

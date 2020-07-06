@@ -2,7 +2,7 @@
 # HD Medio, Full Hd y 4K; Lento, Normal y Rapido
 import os
 import NatronEngine
-from natron_extent import getNode, alert, value_by_speed, absolute
+from natron_extent import getNode, alert, value_by_durations, absolute
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -31,7 +31,7 @@ def send_vinarender_state(duration, speeds, speed=1, prefix='render',
     if not os.path.isdir(absolule_path):
         os.makedirs(absolule_path)
 
-    last_frame = value_by_speed(duration, speeds)[speed]
+    last_frame = value_by_durations(duration, speeds)[speed]
 
     speeds_names = ['slow', 'normal', 'fast']
     formats_name = ['quarter', 'half', 'hd', '4k']

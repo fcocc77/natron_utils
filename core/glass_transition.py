@@ -1,6 +1,6 @@
 import os
 import NatronEngine
-from natron_extent import getNode, alert, value_by_speed, switch, get_connected_nodes, question, delete, refresh_expressions, warning, input_connected
+from natron_extent import getNode, alert, value_by_durations, switch, get_connected_nodes, question, delete, refresh_expressions, warning, input_connected
 from general import formats
 from twelve_render import send_vinarender_state
 
@@ -56,7 +56,7 @@ def refresh(thisNode):
     current_format = thisNode.getParam('format').get()
     speeds = thisNode.getParam('speeds').get()
     duration = thisNode.getParam('duration').get()
-    duration = value_by_speed(duration, speeds)[current_speed]
+    duration = value_by_durations(duration, speeds)[current_speed]
 
     # recargar nine read
     twelve_read = getNode(thisNode, 'TwelveRead')
@@ -96,8 +96,8 @@ def shape_transition_refresh(thisNode, speed=1, format=1):
 
     speeds = thisNode.getParam('speeds').get()
     normal_duration = thisNode.getParam('duration').get()
-    duration = value_by_speed(normal_duration, speeds)[speed]
-    mask_diff = value_by_speed(difference_with_mask, speeds)[speed]
+    duration = value_by_durations(normal_duration, speeds)[speed]
+    mask_diff = value_by_durations(difference_with_mask, speeds)[speed]
 
     # cambia el formato de 'OverlayMask'
     overlay_mask = getNode(thisNode, 'OverlayMask')
