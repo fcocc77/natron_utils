@@ -16,4 +16,5 @@ import glass_transition
 import util
 import subtle_move
 import transition
+import slide_base
 # --------------

@@ -31,9 +31,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'refresh':
         refresh(thisNode, app, workarea)
 
-    elif knob_name == 'generate_inputs':
-        extra_picture_inputs(thisNode, app, workarea)
-
     elif knob_name == 'duplicate_slides':
         duplicate_slides(thisNode, app, workarea)
 
@@ -296,24 +293,6 @@ def connect_slide_inputs(slides, current_slide):
             slide.connectInput(i, reformat)
 
             connect_node += 1
-
-
-def extra_picture_inputs(thisNode, app, workarea):
-    amount = thisNode.input_amount.getValue()
-    count = thisNode.getMaxInputCount()
-
-    if amount + 1 <= count:
-        alert('Ya existen ' + str(amount) + ' inputs extra.', 'Slide inputs')
-        return
-
-    posx = 0
-    for i in range(amount):
-        name = 'E-' + str(i + 1)
-        _input = getNode(workarea, name)
-        if not _input:
-            _input = createNode('input', name, workarea, position=[posx, 0])
-
-        posx += 200
 
 
 def generate_random_pictures(thisNode, app, workarea, amount):
