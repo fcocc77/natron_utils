@@ -1,5 +1,6 @@
 from natron_extent import getNode
 import NatronEngine
+from math import cos, sin
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -87,6 +88,7 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
 def refresh(thisNode):
     transform = getNode(thisNode, 'Transform')
     scale = transform.getParam('scale')
+    rotate = transform.getParam('rotate')
     translate = transform.getParam('translate')
     center = transform.getParam('center')
 
@@ -103,39 +105,65 @@ def refresh(thisNode):
     width = current_format[0]
     height = current_format[1]
 
-    param = translate
-    translate_level = level * 50 * rscale
-
-    # calcula la escala para que la translacion siempre quede dentro de cuadro
-    scale_for_translate_x = ((translate_level * 2) / width) + 1
-    scale_for_translate_y = ((translate_level * 2) / height) + 1
-    # --------------------
-
-    scale_level = 1 + (level * 0.2)
-    if movement == 0:
-        values = [-translate_level, translate_level, 0, scale_for_translate_x]
-    if movement == 1:
-        values = [translate_level, -translate_level, 0, scale_for_translate_x]
-    if movement == 2:
-        values = [translate_level, -translate_level, 1, scale_for_translate_y]
-    if movement == 3:
-        values = [-translate_level, translate_level, 1, scale_for_translate_y]
-    if movement == 4:
-        values = [1, scale_level, None, 0]
-        param = scale
-    if movement == 5:
-        values = [scale_level, 1, None, 0]
-        param = scale
-
     scale.restoreDefaultValue(0)
     scale.restoreDefaultValue(1)
-
-    # translate
+    rotate.restoreDefaultValue(0)
     translate.restoreDefaultValue(0)
     translate.restoreDefaultValue(1)
     center.set(width / 2, height / 2)
-    scale.set(values[3], values[3])
-    # ---------------------
+
+    # Movimiento de translacion
+    if movement <= 3:
+        param = translate
+        translate_level = level * 50 * rscale
+
+        # calcula la escala para que la translacion siempre quede dentro de cuadro
+        scale_for_translate_x = ((translate_level * 2) / width) + 1
+        scale_for_translate_y = ((translate_level * 2) / height) + 1
+
+        if movement == 0:
+            values = [-translate_level, translate_level,
+                      0, scale_for_translate_x]
+        if movement == 1:
+            values = [translate_level, -translate_level,
+                      0, scale_for_translate_x]
+        if movement == 2:
+            values = [translate_level, -translate_level,
+                      1, scale_for_translate_y]
+        if movement == 3:
+            values = [-translate_level, translate_level,
+                      1, scale_for_translate_y]
+
+        scale.set(values[3], values[3])
+
+    # Movimiento de escala
+    scale_level = 1 + (level * 0.2)
+    if movement == 4:
+        values = [1, scale_level, None]
+        param = scale
+    if movement == 5:
+        values = [scale_level, 1, None]
+        param = scale
+
+    # Movimiento de rotacion
+    if movement >= 6:
+        rotate_level = 4.5 * level
+
+        # calcula la escala a partir de la rotacion, para que
+        # la imagen quede siempre dentro de cuadro
+        rotate_quarter = abs(rotate_level / 55.0)
+        new_width = height * cos(rotate_quarter) + width * sin(rotate_quarter)
+        scale_for_rotate = abs(new_width / height)
+        # ----------------------
+
+        scale.set(scale_for_rotate, scale_for_rotate)
+
+        if movement == 6:
+            values = [rotate_level, -rotate_level, None]
+            param = rotate
+        if movement == 7:
+            values = [-rotate_level, rotate_level, None]
+            param = rotate
 
     animation(param, start_frame, duration, [
         values[0], values[1]], break_point, break_duration,

@@ -33,7 +33,7 @@ def createInstance(app,group):
 
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = group
-    lastNode.setColor(0.2941, 0.9412, 1)
+    lastNode.setColor(0.702, 0.702, 0.702)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
         param.setValue("subtle_move.main")
@@ -217,7 +217,10 @@ def createInstance(app,group):
     ("Up - Down", ""),
     ("Down - Up", ""),
     ("Zoom In", ""),
-    ("Zoom Out", "")]
+    ("Zoom Out", ""),
+    ("Rotate to Right", ""),
+    ("Rotate to Left", ""),
+    ("", "")]
     param.setOptions(entries)
     del entries
     param.setDefaultValue("Zoom In")
@@ -247,7 +250,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(7, 0)
+    param.setValue(5, 0)
     lastNode.level = param
     del param
 
@@ -392,7 +395,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Image")
     lastNode.setLabel("Image")
-    lastNode.setPosition(767, 30)
+    lastNode.setPosition(767, 116)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupImage = lastNode
@@ -411,18 +414,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-350, 1, 0)
-        param.setValueAtTime(-203, 22, 0)
-        param.setValueAtTime(-196, 23, 0)
-        param.setValueAtTime(189, 28, 0)
-        param.setValueAtTime(196, 29, 0)
-        param.setValueAtTime(350, 51, 0)
+        param.setValueAtTime(-250, 1, 0)
+        param.setValueAtTime(-145, 22, 0)
+        param.setValueAtTime(-140, 23, 0)
+        param.setValueAtTime(135, 28, 0)
+        param.setValueAtTime(140, 29, 0)
+        param.setValueAtTime(250, 51, 0)
         del param
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.364583333333333, 0)
-        param.setValue(1.364583333333333, 1)
+        param.setValue(1.260416666666667, 0)
+        param.setValue(1.260416666666667, 1)
         del param
 
     param = lastNode.getParam("center")
@@ -438,48 +441,9 @@ def createInstance(app,group):
     del lastNode
     # End of node "Transform"
 
-    # Start of node "Reformat1"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat1")
-    lastNode.setLabel("Reformat1")
-    lastNode.setPosition(767, 95)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat1 = lastNode
-
-    param = lastNode.getParam("reformatType")
-    if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Reformat1"
-
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupTransform)
-    groupTransform.connectInput(0, groupReformat1)
-    groupReformat1.connectInput(0, groupImage)
-
-    param = groupReformat1.getParam("boxSize")
-    param.setExpression("thisGroup.current_format.get()[dimension]", False, 0)
-    param.setExpression("thisGroup.current_format.get()[dimension]", False, 1)
-    del param
+    groupTransform.connectInput(0, groupImage)
 
     param = group.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
