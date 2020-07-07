@@ -12,7 +12,10 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         refresh(thisNode)
 
 
-def animation(param, values, start_frame, duration, bound=[0, False, False], dimension=None):
+def animation(param, values, start_frame, duration, bound, direction, exaggeration, dimension=None):
+    lineal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeLinear
+    horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
+
     value_a = float(values[0])
     value_b = float(values[1])
 
@@ -28,26 +31,53 @@ def animation(param, values, start_frame, duration, bound=[0, False, False], dim
         param.setValueAtTime(value_a, first_frame, dimension)
         param.setValueAtTime(value_b, last_frame, dimension)
 
-        # bound key frame
-        bound_value = (abs(value_a - value_b) / 3) * bound[0]
-        bound_duration = duration / 3
-        if value_a < value_b:
-            bound_value_a = value_a - bound_value
-            bound_value_b = value_b + bound_value
-        else:
-            bound_value_a = value_a + bound_value
-            bound_value_b = value_b - bound_value
+        if bound:
 
-        if bound[1]:
-            param.setValueAtTime(bound_value_a, first_frame +
-                                 bound_duration, dimension)
-        if bound[2]:
-            param.setValueAtTime(bound_value_b, last_frame -
-                                 bound_duration, dimension)
+            # bound key frame
+            bound_value = (abs(value_a - value_b) / 3) * bound
+            bound_duration = duration / 2
 
-        horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
-        param.setInterpolationAtTime(first_frame,  horizontal, dimension)
-        param.setInterpolationAtTime(last_frame,  horizontal, dimension)
+            def bound_animation(value, reverse):
+                if reverse:
+                    bound_value_b = value - bound_value
+
+                else:
+                    bound_value_b = value + bound_value
+
+                bound_key = last_frame - bound_duration
+                param.setValueAtTime(bound_value_b, bound_key, dimension)
+
+                if exaggeration:
+                    post_bound_key = last_frame - duration / 4
+                    post_bound_value = param.getValueAtTime(post_bound_key, dimension)
+                    exaggeration_add = abs(post_bound_value - bound_value_b) * exaggeration
+                    if reverse:
+                        post_bound_value -= exaggeration_add
+                    else:
+                        post_bound_value += exaggeration_add
+
+                    param.setValueAtTime(post_bound_value, post_bound_key, dimension)
+
+                    pre_bound_key = bound_key - duration / 4
+                    pre_bound_value = param.getValueAtTime(pre_bound_key, dimension)
+                    exaggeration_add = abs(pre_bound_value - bound_value_b) * exaggeration
+                    if reverse:
+                        pre_bound_value -= exaggeration_add
+                    else:
+                        pre_bound_value += exaggeration_add
+
+                    param.setValueAtTime(pre_bound_value, pre_bound_key, dimension)
+
+            param.setInterpolationAtTime(first_frame, horizontal, dimension)
+            param.setInterpolationAtTime(last_frame, horizontal, dimension)
+
+            if direction == 'input':
+                reverse = value_b < value_a
+                bound_animation(value_b, reverse)
+
+            if direction == 'output':
+                reverse = value_b > value_a
+                bound_animation(value_a, reverse)
 
 
 def refresh(thisNode):
@@ -62,10 +92,10 @@ def refresh(thisNode):
     input_move = thisNode.getParam('input_move').get()
     output_move = thisNode.getParam('output_move').get()
     duration = thisNode.getParam('duration').get()
+    exaggeration = thisNode.getParam('exaggeration').get()
     bound = thisNode.getParam('bound').get()
     durations = thisNode.getParam('durations').get()
-    transition_duration_percent = thisNode.getParam(
-        'transition_duration').get()
+    transition_duration_percent = thisNode.getParam('transition_duration').get()
 
     current_format = thisNode.getParam('current_format').get()
     width = current_format[0]
@@ -97,12 +127,17 @@ def refresh(thisNode):
 
     # transicion de entrada
     def translate_input_anim(value, dimension=0):
-        animation(translate, [value, 0], start_frame,
-                  transition_duration, [bound, False, True], dimension=dimension)
+        animation(translate, [value, 0],
+                  start_frame,
+                  transition_duration,
+                  bound,
+                  'input',
+                  exaggeration,
+                  dimension=dimension)
 
     def scale_input_anim(value_a, value_b):
-        animation(scale, [value_a, value_b], start_frame,
-                  transition_duration, [bound, False, True])
+        animation(scale, [value_a, value_b], start_frame, transition_duration,
+                  bound, 'input', exaggeration)
 
     if input_move == 0:
         translate_input_anim(value_x1)
@@ -122,12 +157,17 @@ def refresh(thisNode):
     start_frame_output = duration - transition_duration
 
     def translate_output_anim(value, dimension=0):
-        animation(translate, [0, value], start_frame_output,
-                  transition_duration, [bound, True, False], dimension=dimension)
+        animation(translate, [0, value],
+                  start_frame_output,
+                  transition_duration,
+                  bound,
+                  'output',
+                  exaggeration,
+                  dimension=dimension)
 
     def scale_output_anim(value_a, value_b):
         animation(scale, [value_a, value_b], start_frame_output,
-                  transition_duration, [bound, True, False])
+                  transition_duration, bound, 'output', exaggeration)
 
     if output_move == 0:
         translate_output_anim(value_x1)
