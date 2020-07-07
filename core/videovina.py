@@ -137,11 +137,11 @@ def refresh(thisNode, app, workarea):
     speed = thisNode.speed.get()
     _format = thisNode.format.get()
     color = thisNode.color.get()
-    speeds = thisNode.speeds.get()
+    durations = thisNode.durations.get()
 
-    normal_speed = speeds[1]
+    normal_speed = durations[1]
 
-    slide_frames = speeds[speed]
+    slide_frames = durations[speed]
 
     # esta velocidad de frames corresponde a la velocidad normal,
     # y calculta la velocidad final dependiendo de la velocidad de la slide
@@ -190,11 +190,11 @@ def refresh(thisNode, app, workarea):
         start_frame_slide = slide.getParam('start_frame')
         color_slide = slide.getParam('color')
         format_slide = slide.getParam('format')
-        speeds_slide = slide.getParam('speeds')
+        durations_slide = slide.getParam('durations')
         speed_slide = slide.getParam('speed')
 
         color_slide.set(color[0], color[1], color[2], color[3])
-        speeds_slide.set(speeds[0], speeds[1], speeds[2])
+        durations_slide.set(durations[0], durations[1], durations[2])
         speed_slide.set(speed)
         format_slide.set(_format)
 
@@ -216,7 +216,7 @@ def refresh(thisNode, app, workarea):
         transition.getParam('duration').set(transition_frames)
         transition.getParam('format').set(_format)
         transition.getParam('speed').set(speed)
-        transition.getParam('speeds').set(speeds[0], speeds[1], speeds[2])
+        transition.getParam('durations').set(durations[0], durations[1], durations[2])
         transition.getParam('refresh').trigger()
         # --------------------
 
@@ -865,8 +865,8 @@ def export_videovina_info(thisNode, app, workarea, project_path):
 
     # obtiene la duracion de las slides
     speed = thisNode.speed.get()
-    speeds = thisNode.speeds.get()
-    slide_frames = speeds[speed]
+    durations = thisNode.durations.get()
+    slide_frames = durations[speed]
     # -----------------
 
     # deja el proyecto en hd medio para que sea mas rapido cada render
@@ -1023,17 +1023,17 @@ def export_default_project(thisNode, app, workarea, project_path):
     project.states.app.font = font
 
     frame_rate = 30.0
-    speeds = thisNode.getParam('speeds').get()
+    durations = thisNode.getParam('durations').get()
     transition = thisNode.getParam('transition_duration').get() / frame_rate
     project.states.preview.transition_duration = [
-        (transition * speeds[0]) / 100,
-        (transition * speeds[1]) / 100,
-        (transition * speeds[2]) / 100
+        (transition * durations[0]) / 100,
+        (transition * durations[1]) / 100,
+        (transition * durations[2]) / 100
     ]
-    project.states.preview.speeds = [
-        speeds[0] / frame_rate,
-        speeds[1] / frame_rate,
-        speeds[2] / frame_rate
+    project.states.preview.durations = [
+        durations[0] / frame_rate,
+        durations[1] / frame_rate,
+        durations[2] / frame_rate
     ]
 
     # song
