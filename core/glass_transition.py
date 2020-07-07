@@ -54,9 +54,9 @@ def refresh(thisNode):
 
     current_speed = thisNode.getParam('speed').get()
     current_format = thisNode.getParam('format').get()
-    speeds = thisNode.getParam('speeds').get()
+    durations = thisNode.getParam('durations').get()
     duration = thisNode.getParam('duration').get()
-    duration = value_by_durations(duration, speeds)[current_speed]
+    duration = value_by_durations(duration, durations)[current_speed]
 
     # recargar nine read
     twelve_read = getNode(thisNode, 'TwelveRead')
@@ -94,10 +94,10 @@ def shape_transition_refresh(thisNode, speed=1, format=1):
     # diferencias de tiempo que hay entre el shape de mascara y las de vidrio
     difference_with_mask = thisNode.getParam('difference_with_mask').get()
 
-    speeds = thisNode.getParam('speeds').get()
+    durations = thisNode.getParam('durations').get()
     normal_duration = thisNode.getParam('duration').get()
-    duration = value_by_durations(normal_duration, speeds)[speed]
-    mask_diff = value_by_durations(difference_with_mask, speeds)[speed]
+    duration = value_by_durations(normal_duration, durations)[speed]
+    mask_diff = value_by_durations(difference_with_mask, durations)[speed]
 
     # cambia el formato de 'OverlayMask'
     overlay_mask = getNode(thisNode, 'OverlayMask')
@@ -133,7 +133,7 @@ def shape_transition_refresh(thisNode, speed=1, format=1):
 def render(thisNode):
     vinarender = getNode(thisNode, 'VinaRender')
     duration = thisNode.getParam('duration').get()
-    speeds = thisNode.getParam('speeds').get()
+    durations = thisNode.getParam('durations').get()
     prefix = thisNode.getParam('prefix_render').get()
     current_state = thisNode.getParam('current_state').get()
 
@@ -148,14 +148,14 @@ def render(thisNode):
 
         if shape_transition_refresh(thisNode, speed=speed, format=_format):
             send_vinarender_state(
-                duration, speeds, speed, prefix, _format, vinarender=vinarender)
+                duration, durations, speed, prefix, _format, vinarender=vinarender)
         alert('Se envio a render el actual estado.')
     else:
         for speed in range(3):
             for _format in range(4):
                 if shape_transition_refresh(thisNode, speed=speed, format=_format):
                     send_vinarender_state(
-                        duration, speeds, speed, prefix, _format, vinarender=vinarender)
+                        duration, durations, speed, prefix, _format, vinarender=vinarender)
                 else:
                     break
 

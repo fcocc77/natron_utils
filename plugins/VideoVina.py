@@ -70,18 +70,6 @@ def createInstance(app,group):
     lastNode.sep6 = param
     del param
 
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
     param = lastNode.createButtonParam("save_production", "Save Production Projects")
 
     # Add the param to the page
@@ -89,7 +77,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("Guarda una versión de producción, elimina todo\nlo innecesario, y procesa las capas que no serán modificadas")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     lastNode.save_production = param
     del param
@@ -104,6 +92,87 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.videovina_info = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep10", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep10 = param
+    del param
+
+    param = lastNode.createStringParam("state_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.set("Fast")
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
     del param
 
     param = lastNode.createSeparatorParam("sep2", "")
@@ -121,7 +190,7 @@ def createInstance(app,group):
 
     param = lastNode.createStringParam("production_slide_label", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("PRODUCTION SLIDE:")
+    param.setDefaultValue("- - - - - - - >    PRODUCTION SLIDE :")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -161,47 +230,7 @@ def createInstance(app,group):
     lastNode.update_videovina_project = param
     del param
 
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.format = param
-    del param
-
-    param = lastNode.createChoiceParam("speed", "Speed")
-    entries = [ ("Slow", ""),
-    ("Normal", ""),
-    ("Fast", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Normal")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Fast")
-    lastNode.speed = param
-    del param
-
-    param = lastNode.createInt3DParam("speeds", "Speeds")
+    param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -220,12 +249,12 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(150, 0)
     param.setValue(100, 1)
     param.setValue(50, 2)
-    lastNode.speeds = param
+    lastNode.durations = param
     del param
 
     param = lastNode.createIntParam("transition_duration", "Transition Duration")
@@ -336,7 +365,7 @@ def createInstance(app,group):
 
     param = lastNode.createStringParam("develop_slide", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("DEVELOP SLIDE:")
+    param.setDefaultValue("- - - - - - - >    DEVELOP SLIDE :")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -358,8 +387,23 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
     param.setAddNewLine(True)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/christmas")
+    param.setValue("/mnt/server_01/jssa/footage/fotos")
     lastNode.reference_pictures = param
+    del param
+
+    param = lastNode.createChoiceParam("slide", "Slide")
+    entries = [ ("GlassSlide", ""),("SlideBase", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.slide = param
     del param
 
     param = lastNode.createChoiceParam("transition", "Transition")
@@ -373,8 +417,9 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.set("GlassTransition")
     lastNode.transition = param
     del param
 
@@ -393,7 +438,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(5, 0)
+    param.setValue(4, 0)
     lastNode.amount_slide = param
     del param
 
@@ -453,7 +498,7 @@ def createInstance(app,group):
 
     param = lastNode.createStringParam("default_project", "Default Project")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("DEFAULT PROJECT:")
+    param.setDefaultValue("- - - - - - - >    DEFAULT PROJECT :")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -733,19 +778,19 @@ def createInstance(app,group):
     del lastNode
     # End of node "LastNode"
 
-    # Start of node "Output2"
+    # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output2")
     lastNode.setPosition(1920, -563)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupOutput2 = lastNode
+    groupOutput1 = lastNode
 
     del lastNode
-    # End of node "Output2"
+    # End of node "Output1"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput2.connectInput(0, groupLastNode)
+    groupOutput1.connectInput(0, groupLastNode)
 
     try:
         extModule = sys.modules["VideoVinaExt"]

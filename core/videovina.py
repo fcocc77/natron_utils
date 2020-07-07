@@ -441,7 +441,9 @@ def generate_base_slides(thisNode, app, workarea):
             # -------------------
             current_slides += 1
 
-            slide = app.createNode('vv.slide', 2, workarea)
+            slide_param = thisNode.getParam('slide')
+            slide_id = 'vv.' + slide_param.getOption(slide_param.get())
+            slide = app.createNode(slide_id, 2, workarea)
             slide_name = 'slide_' + str(i)
             slide.setLabel(slide_name)
             slide.setPosition(posx, 0)
@@ -456,9 +458,8 @@ def generate_base_slides(thisNode, app, workarea):
             slide.connectInput(0, reformat)
 
             transition_param = thisNode.getParam('transition')
-            transition_name = 'vv.' + \
-                transition_param.getOption(transition_param.get())
-            transition = app.createNode(transition_name, 2, workarea)
+            transition_id = 'vv.' + transition_param.getOption(transition_param.get())
+            transition = app.createNode(transition_id, 2, workarea)
             transition_name = 'slide_' + str(i) + '_transition'
             transition.setLabel(transition_name)
             transition.setColor(.4, .5, .4)

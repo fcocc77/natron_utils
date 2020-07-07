@@ -21,7 +21,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         render(thisNode, 2)
 
 
-def send_vinarender_state(duration, speeds, speed=1, prefix='render',
+def send_vinarender_state(duration, durations, speed=1, prefix='render',
                           format=1, vinarender=False, thisNode=False):
     # ajusta los parametros de un nodo de videovina dependiendo de la velocidad y resolucion,
     # y luego lo envia a render
@@ -31,7 +31,7 @@ def send_vinarender_state(duration, speeds, speed=1, prefix='render',
     if not os.path.isdir(absolule_path):
         os.makedirs(absolule_path)
 
-    last_frame = value_by_durations(duration, speeds)[speed]
+    last_frame = value_by_durations(duration, durations)[speed]
 
     speeds_names = ['slow', 'normal', 'fast']
     formats_name = ['quarter', 'half', 'hd', '4k']
@@ -63,7 +63,7 @@ def send_vinarender_state(duration, speeds, speed=1, prefix='render',
 def render(thisNode, one_speed=None):
     prefix = thisNode.getParam('prefix').get()
     duration = thisNode.getParam('duration').get()
-    speeds = thisNode.getParam('speeds').get()
+    durations = thisNode.getParam('durations').get()
 
     if not one_speed == None:
         speeds_list = [one_speed]
@@ -72,7 +72,7 @@ def render(thisNode, one_speed=None):
 
     for speed_index in speeds_list:
         for pixels_index in range(3):
-            send_vinarender_state(duration, speeds, speed_index, prefix,
+            send_vinarender_state(duration, durations, speed_index, prefix,
                                   pixels_index, thisNode=thisNode)
 
     if thisNode.getParam('dialog').get():

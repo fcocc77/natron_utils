@@ -45,7 +45,7 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createInt3DParam("speeds", "Speeds")
+    param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -69,7 +69,7 @@ def createInstance(app,group):
     param.setValue(150, 0)
     param.setValue(100, 1)
     param.setValue(50, 2)
-    lastNode.speeds = param
+    lastNode.durations = param
     del param
 
     param = lastNode.createIntParam("duration", "Duration")

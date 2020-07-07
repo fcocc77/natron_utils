@@ -248,7 +248,7 @@ def createInstance(app,group):
     lastNode.prerender = param
     del param
 
-    param = lastNode.createInt3DParam("speeds", "Speeds")
+    param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -272,7 +272,7 @@ def createInstance(app,group):
     param.setValue(150, 0)
     param.setValue(100, 1)
     param.setValue(50, 2)
-    lastNode.speeds = param
+    lastNode.durations = param
     del param
 
     param = lastNode.createIntParam("duration", "Duration")
@@ -1033,14 +1033,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "shape_format"
 
-    # Start of node "vinarender_He7"
+    # Start of node "vinarender_xcf"
     lastNode = app.createNode("vv.vinarender", 1, group)
-    lastNode.setScriptName("vinarender_He7")
+    lastNode.setScriptName("vinarender_xcf")
     lastNode.setLabel("VinaRender")
     lastNode.setPosition(1380, 410)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupvinarender_He7 = lastNode
+    groupvinarender_xcf = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
@@ -1266,7 +1266,7 @@ def createInstance(app,group):
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "vinarender_He7"
+    # End of node "vinarender_xcf"
 
     # Start of node "shape_glass_1"
     lastNode = app.createNode("vv.ShapeTransition", 1, group)
@@ -3039,7 +3039,7 @@ def createInstance(app,group):
     groupDot16.connectInput(0, groupDot19)
     groupDot17.connectInput(0, groupDot16)
     groupshape_format.connectInput(0, groupShape)
-    groupvinarender_He7.connectInput(0, grouptransition_to_alpha)
+    groupvinarender_xcf.connectInput(0, grouptransition_to_alpha)
     groupshape_glass_1.connectInput(0, groupDot3)
     groupshape_glass_2.connectInput(0, groupDot4)
     grouptransition_mask.connectInput(0, groupDot2)
