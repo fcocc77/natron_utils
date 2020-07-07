@@ -194,9 +194,17 @@ def refresh(thisNode, app, workarea):
         speed_slide = slide.getParam('speed')
 
         color_slide.set(color[0], color[1], color[2], color[3])
-        durations_slide.set(durations[0], durations[1], durations[2])
         speed_slide.set(speed)
         format_slide.set(_format)
+
+        if i == 0:
+            # si es el primer frame, le suma la mitad de transicion a cada dimension
+            durations_slide.set(
+                durations[0] + mid_transition_frames,
+                durations[1] + mid_transition_frames,
+                durations[2] + mid_transition_frames)
+        else:
+            durations_slide.set(durations[0], durations[1], durations[2])
 
         start_frame_slide.set(first_frame)
 

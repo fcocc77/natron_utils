@@ -258,10 +258,11 @@ def value_by_durations(value, durations=[0, 0, 0]):
     return [slow, value, fast]
 
 
-def get_all_nodes():
-    app = NatronGui.natron.getGuiInstance(0)
+def get_all_nodes(group=None):
+    if not group:
+        group = NatronGui.natron.getGuiInstance(0)
     nodes = []
-    for a in app.getChildren():
+    for a in group.getChildren():
         a_path = a.getScriptName()
         nodes.append([a, a_path])
         for b in a.getChildren():
@@ -294,6 +295,9 @@ def get_select_node(_type=None):
 
 
 def get_connected_nodes(parent):
+    if not parent:
+        return []
+
     # obtiene todos los nodos conectados a un nodo padre
     nodes = []
 
@@ -332,6 +336,21 @@ def delete(nodes):
 
         nodes.destroy()
         nodes.destroy()
+
+
+def dots_delete(node):
+    # borra todos los dot de un grupo para aligerar el proyecto
+    dots = []
+    for node, path in get_all_nodes(node):
+        if node.getPluginID() == 'fr.inria.built-in.Dot':
+            dot_input = node.getInput(0)
+            for o_node, o_input in get_output_nodes(node):
+                o_node.disconnectInput(o_input)
+                o_node.connectInput(o_input, dot_input)
+
+            dots.append(node)
+
+    delete(dots)
 
 
 def get_node_path(node):

@@ -1,6 +1,6 @@
 import os
 import NatronEngine
-from natron_extent import getNode, alert, value_by_durations, switch, get_connected_nodes, question, delete, refresh_expressions, warning, input_connected
+from natron_extent import getNode, alert, value_by_durations, switch, get_connected_nodes, question, delete, refresh_expressions, warning, input_connected, dots_delete
 from general import formats
 from twelve_render import send_vinarender_state
 
@@ -34,6 +34,7 @@ def clean(thisNode, app):
     if question("Esta seguro que desea borrar los nodos sobrantes ?", 'Limpiar Nodos'):
         nodes = get_connected_nodes(vinarender)
         delete(nodes)
+        dots_delete(thisNode)
 
 
 def read_file(thisNode, thisParam):
