@@ -26,7 +26,7 @@ def getVersion():
     return 1
 
 def getIconPath():
-    return "Animations.png"
+    return "Animation.png"
 
 def getGrouping():
     return "videovina/Animations"
@@ -97,8 +97,19 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Fast")
     lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")
@@ -220,8 +231,8 @@ def createInstance(app,group):
     ("Right - Left", ""),
     ("Up - Down", ""),
     ("Down - Up", ""),
-    ("Zoom In", ""),
-    ("Zoom Out", "")]
+    ("Scale In", ""),
+    ("Scale Out", "")]
     param.setOptions(entries)
     del entries
 
@@ -232,7 +243,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Up - Down")
     lastNode.input_move = param
     del param
 
@@ -241,8 +251,8 @@ def createInstance(app,group):
     ("Right - Left", ""),
     ("Up - Down", ""),
     ("Down - Up", ""),
-    ("Zoom In", ""),
-    ("Zoom Out", "")]
+    ("Scale In", ""),
+    ("Scale Out", "")]
     param.setOptions(entries)
     del entries
 
@@ -253,7 +263,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Down - Up")
     lastNode.output_move = param
     del param
 
@@ -272,8 +281,58 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(26, 0)
+    param.setValue(25, 0)
     lastNode.transition_duration = param
+    del param
+
+    param = lastNode.createDoubleParam("bound", "Bound")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
+    lastNode.bound = param
+    del param
+
+    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
+    lastNode.exaggeration = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
     del param
 
     lastNode.exp = lastNode.createPageParam("exp", "Exp")
@@ -312,7 +371,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
+    param.setValue(100, 0)
     lastNode.duration = param
     del param
 
@@ -341,7 +400,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(767, 295)
+    lastNode.setPosition(767, 285)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -353,7 +412,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Input")
     lastNode.setLabel("Input")
-    lastNode.setPosition(767, 81)
+    lastNode.setPosition(767, 52)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupInput = lastNode
@@ -365,17 +424,23 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform")
     lastNode.setLabel("transform")
-    lastNode.setPosition(767, 186)
+    lastNode.setPosition(767, 177)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(-906, 1, 1)
-        param.setValueAtTime(0, 14, 1)
-        param.setValueAtTime(0, 37, 1)
-        param.setValueAtTime(592, 50, 1)
+        param.setValueAtTime(-1685, 1, 0)
+        param.setValueAtTime(224.6053102715824, 8, 0)
+        param.setValueAtTime(393.1666666666666, 14, 0)
+        param.setValueAtTime(334.1916666666666, 20, 0)
+        param.setValueAtTime(0, 26, 0)
+        param.setValueAtTime(0, 75, 0)
+        param.setValueAtTime(340.9830526475497, 82, 0)
+        param.setValueAtTime(393.1666666666666, 88, 0)
+        param.setValueAtTime(198.3385416666666, 94, 0)
+        param.setValueAtTime(-1685, 100, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -389,12 +454,21 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
+    param = lastNode.getParam("motionBlur")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
     del lastNode
     # End of node "transform"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, grouptransform)
     grouptransform.connectInput(0, groupInput)
+
+    param = grouptransform.getParam("motionBlur")
+    param.setExpression("thisGroup.motion_blur.get()", False, 0)
+    del param
 
     param = group.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)

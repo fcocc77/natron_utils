@@ -1,12 +1,13 @@
 import NatronEngine
 from natron_extent import getNode
-
+from base import link_to_parent
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
-
     knob_name = thisParam.getScriptName()
+
+    link_to_parent(thisNode, thisParam, thisGroup)
 
     if knob_name == 'refresh':
         refresh(thisNode)
@@ -68,14 +69,17 @@ def animation(param, values, start_frame, duration, bound, direction, exaggerati
 
                     param.setValueAtTime(pre_bound_value, pre_bound_key, dimension)
 
-            param.setInterpolationAtTime(first_frame, horizontal, dimension)
-            param.setInterpolationAtTime(last_frame, horizontal, dimension)
-
             if direction == 'input':
+                param.setInterpolationAtTime(first_frame, lineal, dimension)
+                param.setInterpolationAtTime(last_frame, horizontal, dimension)
+
                 reverse = value_b < value_a
                 bound_animation(value_b, reverse)
 
             if direction == 'output':
+                param.setInterpolationAtTime(first_frame, horizontal, dimension)
+                param.setInterpolationAtTime(last_frame, lineal, dimension)
+
                 reverse = value_b > value_a
                 bound_animation(value_a, reverse)
 

@@ -1,12 +1,14 @@
 from natron_extent import getNode, value_by_durations
 import NatronEngine
+from base import link_to_parent
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
-
     knob_name = thisParam.getScriptName()
+
+    link_to_parent(thisNode, thisParam, thisGroup)
 
     if knob_name == 'refresh':
         refresh(thisNode)
@@ -98,7 +100,6 @@ def refresh(thisNode):
     elif output_box == 1:
         animation(translate, [0, value_x], start_frame_output,
                   transition_duration, dimension=0)
-
 
     elif output_box == 4:
 
