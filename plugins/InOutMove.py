@@ -25,6 +25,9 @@ def getLabel():
 def getVersion():
     return 1
 
+def getIconPath():
+    return "Animations.png"
+
 def getGrouping():
     return "videovina/Animations"
 
@@ -94,6 +97,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.set("Fast")
     lastNode.speed = param
     del param
 
@@ -228,6 +232,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Up - Down")
     lastNode.input_move = param
     del param
 
@@ -248,7 +253,27 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.set("Down - Up")
     lastNode.output_move = param
+    del param
+
+    param = lastNode.createIntParam("transition_duration", "Transition Duration")
+    param.setMinimum(0, 0)
+    param.setMaximum(50, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(50, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(26, 0)
+    lastNode.transition_duration = param
     del param
 
     lastNode.exp = lastNode.createPageParam("exp", "Exp")
@@ -287,7 +312,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
+    param.setValue(50, 0)
     lastNode.duration = param
     del param
 
@@ -324,17 +349,17 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Input1"
+    # Start of node "Input"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Input1")
-    lastNode.setLabel("Input1")
-    lastNode.setPosition(767, 120)
-    lastNode.setSize(104, 30)
+    lastNode.setScriptName("Input")
+    lastNode.setLabel("Input")
+    lastNode.setPosition(767, 81)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupInput1 = lastNode
+    groupInput = lastNode
 
     del lastNode
-    # End of node "Input1"
+    # End of node "Input"
 
     # Start of node "transform"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
@@ -345,10 +370,18 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform = lastNode
 
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValueAtTime(-906, 1, 1)
+        param.setValueAtTime(0, 14, 1)
+        param.setValueAtTime(0, 37, 1)
+        param.setValueAtTime(592, 50, 1)
+        del param
+
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(944.5, 0)
-        param.setValue(576, 1)
+        param.setValue(1459.5, 0)
+        param.setValue(697, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -361,7 +394,7 @@ def createInstance(app,group):
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, grouptransform)
-    grouptransform.connectInput(0, groupInput1)
+    grouptransform.connectInput(0, groupInput)
 
     param = group.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
