@@ -1,7 +1,7 @@
 import random
 import os
 import shutil
-from natron_extent import copy, getNode, question, alert, createNode, warning, get_parent
+from natron_extent import copy, getNode, question, alert, createNode, warning, get_parent, run
 from transition import directional_transition
 from util import jread, jwrite
 from time import sleep
@@ -60,6 +60,16 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     elif knob_name == 'transfer_to_static':
         transfer_to_static(thisNode, app, project_path)
+
+    elif knob_name == 'clean':
+        clean(thisNode, workarea)
+
+
+def clean(thisNode, workarea):
+    if question("Esta seguro que desea aligerar todos las slides ?", 'Limpiar Slides'):
+        for slide in get_slides(workarea):
+            transition = slide['transition']
+            run(transition, 'clean', (transition, False))
 
 
 def play_song(thisNode, play=True):

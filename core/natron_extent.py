@@ -154,6 +154,23 @@ def saveProject():
     return project_path
 
 
+def run(node, func_name, args=[]):
+    # esta funcion llama a una funcion del plugin
+
+    onParamChanged = node.getParam('onParamChanged')
+    func = False
+    if onParamChanged:
+        core_module = onParamChanged.get().split('.')[0]
+        try:
+            exec('from ' + core_module + ' import ' + func_name)
+            func = eval(func_name)
+        except:
+            None
+
+    if func:
+        func(*args)
+
+
 def absolute(path):
     app = NatronGui.natron.getGuiInstance(0)
     base_project = app.getProjectParam('projectPath').get()
@@ -323,17 +340,30 @@ def delete(nodes):
         nodes.destroy()
 
 
-def dots_delete(node):
+def dots_delete(parent_node):
     # borra todos los dot de un grupo para aligerar el proyecto
-    dots = []
-    for node, path in get_all_nodes(node):
-        if node.getPluginID() == 'fr.inria.built-in.Dot':
-            dot_input = node.getInput(0)
-            for o_node, o_input in get_output_nodes(node):
-                o_node.disconnectInput(o_input)
-                o_node.connectInput(o_input, dot_input)
 
+    def find_input(node, i):
+        # encuentra el nodo origen, omitiendo los 'dot'
+        input_node = node.getInput(i)
+        if input_node:
+            if input_node.getPluginID() == 'fr.inria.built-in.Dot':
+                return find_input(input_node, 0)
+            else:
+                return input_node
+        else:
+            return None
+
+    dots = []
+    for node in parent_node.getChildren():
+        if node.getPluginID() == 'fr.inria.built-in.Dot':
             dots.append(node)
+        else:
+            for i in range(node.getMaxInputCount()):
+                input_node = find_input(node, i)
+                if input_node:
+                    node.disconnectInput(i)
+                    node.connectInput(i, input_node)
 
     delete(dots)
 

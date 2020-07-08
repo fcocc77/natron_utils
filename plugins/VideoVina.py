@@ -94,6 +94,18 @@ def createInstance(app,group):
     lastNode.videovina_info = param
     del param
 
+    param = lastNode.createButtonParam("clean", "Clean")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.clean = param
+    del param
+
     param = lastNode.createSeparatorParam("sep10", "")
 
     # Add the param to the page
@@ -392,7 +404,8 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("slide", "Slide")
-    entries = [ ("GlassSlide", ""),("SlideBase", "")]
+    entries = [ ("GlassSlide", ""),
+    ("SlideBase", "")]
     param.setOptions(entries)
     del entries
 
@@ -438,7 +451,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(4, 0)
+    param.setValue(1, 0)
     lastNode.amount_slide = param
     del param
 

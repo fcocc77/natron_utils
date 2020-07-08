@@ -20,7 +20,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'read_file':
         read_file(thisNode, thisParam)
     if knob_name == 'clean':
-        clean(thisNode, app)
+        clean(thisNode)
     if knob_name == 'display_map':
         switch(
             thisNode,
@@ -31,12 +31,18 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         )
 
 
-def clean(thisNode, app):
-    vinarender = getNode(thisNode, 'VinaRender')
-    if question("Esta seguro que desea borrar los nodos sobrantes ?", 'Limpiar Nodos'):
+def clean(thisNode, dialog=True):
+    def action():
+        vinarender = getNode(thisNode, 'VinaRender')
         nodes = get_connected_nodes(vinarender)
         delete(nodes)
-        # dots_delete(thisNode)
+        dots_delete(thisNode)
+
+    if dialog:
+        if question("Esta seguro que desea borrar los nodos sobrantes ?", 'Limpiar Nodos'):
+            action()
+    else:
+        action()
 
 
 def read_file(thisNode, thisParam):

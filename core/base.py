@@ -30,6 +30,9 @@ def link_to_parent(thisNode, thisParam, thisGroup):
 def children_refresh(thisParam, thisNode):
     # actualiza todos los nodos hijos, si presionamos el boton refresh,
     # y si es que el nodo hijo tiene el parametro de 'refresh'
+    if not thisParam:
+        return
+
     if thisParam.getScriptName() == 'refresh':
         for node in thisNode.getChildren():
             refresh = node.getParam('refresh')
