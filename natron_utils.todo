@@ -1,6 +1,7 @@
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
     ☐ crear opcion para enviar a vinarender, los 1200 proyectos '.ntp' para produccion, haciendole un testing a cada proyecto para verificar si esta ok
+    ☐ crear alguna forma de dividir el proyecto con un maximo de 7 slide, para que abra mas rapido y que en vinarender detecte que proyecto dividido corresponde al rango de frames.
 Templates:
     birthday_01:
     birthday_02:

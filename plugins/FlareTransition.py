@@ -226,7 +226,7 @@ def createInstance(app,group):
     lastNode.current_speed = param
     del param
 
-    param = lastNode.createInt3DParam("speeds", "Speeds")
+    param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -250,7 +250,7 @@ def createInstance(app,group):
     param.setValue(150, 0)
     param.setValue(100, 1)
     param.setValue(50, 2)
-    lastNode.speeds = param
+    lastNode.durations = param
     del param
 
     param = lastNode.createSeparatorParam("sep1", "")
@@ -371,7 +371,7 @@ def createInstance(app,group):
     lastNode.sep5 = param
     del param
 
-    param = lastNode.createColorParam("flare_color", "Flare Color", False)
+    param = lastNode.createColorParam("color", "Flare Color", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
     param.setDisplayMinimum(0, 0)
@@ -395,7 +395,7 @@ def createInstance(app,group):
     param.setValue(1, 0)
     param.setValue(1, 1)
     param.setValue(1, 2)
-    lastNode.flare_color = param
+    lastNode.color = param
     del param
 
     param = lastNode.createDoubleParam("blur", "Blur")
@@ -530,6 +530,11 @@ def createInstance(app,group):
         param.setValueAtTime(0, 130, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "flare_merge"
 
@@ -660,10 +665,10 @@ def createInstance(app,group):
     groupReformat2.connectInput(0, groupFlare)
 
     param = groupGrade1.getParam("white")
-    param.setExpression("thisGroup.flare_color.get()[dimension]", False, 0)
-    param.setExpression("thisGroup.flare_color.get()[dimension]", False, 1)
-    param.setExpression("thisGroup.flare_color.get()[dimension]", False, 2)
-    param.setExpression("thisGroup.flare_color.get()[dimension]", False, 3)
+    param.setExpression("thisGroup.color.get()[dimension]", False, 0)
+    param.setExpression("thisGroup.color.get()[dimension]", False, 1)
+    param.setExpression("thisGroup.color.get()[dimension]", False, 2)
+    param.setExpression("thisGroup.color.get()[dimension]", False, 3)
     del param
     param = groupflares_time_offset.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)
@@ -673,15 +678,15 @@ def createInstance(app,group):
     param.setExpression("thisGroup.current_format.get()[dimension]", False, 1)
     del param
 
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     param = group.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
     del param
+    param = group.getParam("rscale")
+    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
+    del param
     param = group.getParam("current_speed")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.speeds.get()[index]", True, 0)
+    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
     del param
     try:
         extModule = sys.modules["FlareTransitionExt"]
