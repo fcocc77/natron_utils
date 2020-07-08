@@ -144,32 +144,6 @@ def copy(node, group=None):
     return new_node
 
 
-def children_refresh(thisParam, thisNode):
-    # actualiza todos los nodos hijos, si presionamos el boton refresh,
-    # y si es que el nodo hijo tiene el parametro de 'refresh'
-    if thisParam.getScriptName() == 'refresh':
-        for node in thisNode.getChildren():
-            refresh = node.getParam('refresh')
-            if refresh:
-                refresh_expressions(thisNode)
-                refresh.trigger()
-
-
-def refresh_expressions(node):
-    # A veces queda las expression con error, cuando cambiamos nombre u otra razon,
-    # con esta funcion actualiazamos las expressiones
-
-    for param in node.getParams():
-        if hasattr(param, "getExpression"):
-            for dimension in range(param.getNumDimensions()):
-                exp, hasRetVariable = param.getExpression(dimension)
-                if exp:
-                    param.setExpression(exp, hasRetVariable)
-
-    for child in node.getChildren():
-        refresh_expressions(child)
-
-
 def saveProject():
     app = NatronGui.natron.getGuiInstance(0)
 
