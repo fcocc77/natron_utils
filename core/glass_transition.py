@@ -1,6 +1,6 @@
 import os
 import NatronEngine
-from natron_extent import getNode, alert, value_by_durations, switch, get_connected_nodes, question, delete, refresh_expressions, warning, input_connected, dots_delete
+from natron_extent import getNode, alert, value_by_durations, switch, get_connected_nodes, question, delete, children_refresh, warning, input_connected, dots_delete
 from general import formats
 from twelve_render import send_vinarender_state
 
@@ -9,6 +9,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
 
+    children_refresh(thisParam, thisNode)
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'refresh':
@@ -51,17 +52,11 @@ def read_file(thisNode, thisParam):
 
 
 def refresh(thisNode):
-    refresh_expressions(thisNode)
-
     current_speed = thisNode.getParam('speed').get()
     current_format = thisNode.getParam('format').get()
     durations = thisNode.getParam('durations').get()
     duration = thisNode.getParam('duration').get()
     duration = value_by_durations(duration, durations)[current_speed]
-
-    # recargar nine read
-    twelve_read = getNode(thisNode, 'TwelveRead')
-    twelve_read.getParam('reload').trigger()
 
     switch_from_duration(thisNode, duration)
 

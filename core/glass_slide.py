@@ -1,4 +1,4 @@
-from natron_extent import getNode, createNode, warning
+from natron_extent import getNode, createNode, warning, children_refresh
 from slide_base import generate_inputs
 
 
@@ -6,6 +6,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
 
+    children_refresh(thisParam, thisNode)
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'generate_inputs':
@@ -15,5 +16,4 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def refresh(thisNode):
-    subtle_move = getNode(thisNode, 'SubtleMove')
-    subtle_move.getParam('refresh').trigger()
+    None
