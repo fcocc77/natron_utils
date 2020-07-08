@@ -97,7 +97,7 @@ def createInstance(app,group):
     lastNode.prefix = param
     del param
 
-    param = lastNode.createButtonParam("reload", "Reload")
+    param = lastNode.createButtonParam("refresh", "Refresh")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -106,7 +106,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
-    lastNode.reload = param
+    lastNode.refresh = param
     del param
 
     # Refresh the GUI with the newly created parameters

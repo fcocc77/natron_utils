@@ -1098,7 +1098,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
+    param.setValue(20, 0)
     lastNode.break_point_duration = param
     del param
 

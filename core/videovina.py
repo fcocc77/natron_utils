@@ -197,6 +197,9 @@ def refresh(thisNode, app, workarea):
         speed_slide.set(speed)
         format_slide.set(_format)
 
+        slide.getParam('prefix').set('slide_' + str(i))
+        slide.getParam('refresh').trigger()
+
         if i == 0:
             # si es el primer frame, le suma la mitad de transicion a cada dimension
             durations_slide.set(
@@ -220,11 +223,16 @@ def refresh(thisNode, app, workarea):
             start_frame = 1
         else:
             start_frame = (last_frame - (transition_frames / 2)) - slide_frames
+
+        transition_prefix = transition.getParam('prefix')
+        if transition_prefix:
+            transition_prefix.set('transition_' + str(i))
         transition.getParam('start_frame').set(start_frame)
         transition.getParam('duration').set(transition_frames)
         transition.getParam('format').set(_format)
         transition.getParam('speed').set(speed)
         transition.getParam('durations').set(durations[0], durations[1], durations[2])
+        transition.getParam('color').set(color[0], color[1], color[2], color[3])
         transition.getParam('refresh').trigger()
         # --------------------
 

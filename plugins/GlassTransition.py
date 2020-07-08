@@ -361,7 +361,7 @@ def createInstance(app,group):
     lastNode.direction = param
     del param
 
-    param = lastNode.createStringParam("prefix_render", "Render Prefix")
+    param = lastNode.createStringParam("prefix", "Render Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
     # Add the param to the page
@@ -372,7 +372,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue("transition_01")
-    lastNode.prefix_render = param
+    lastNode.prefix = param
     del param
 
     param = lastNode.createBooleanParam("current_state", "Current State")
@@ -3101,7 +3101,7 @@ def createInstance(app,group):
     param.setExpression("thisGroup.speed.get()", False, 0)
     del param
     param = groupTwelveRead2.getParam("prefix")
-    param.setExpression("thisGroup.prefix_render.get()", False, 0)
+    param.setExpression("thisGroup.prefix.get()", False, 0)
     del param
 
     try:

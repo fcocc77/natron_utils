@@ -8,11 +8,11 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     knob_name = thisParam.getScriptName()
 
-    if knob_name == 'reload' or knob_name == 'speed' or knob_name == 'format':
-        reload_file(thisNode)
+    if knob_name == 'refresh':
+        refresh(thisNode)
 
 
-def reload_file(thisNode):
+def refresh(thisNode):
     read = getNode(thisNode, 'read')
 
     formats_name = ['quarter', 'half', 'hd', '4k']

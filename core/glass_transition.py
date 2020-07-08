@@ -36,7 +36,7 @@ def clean(thisNode, app):
     if question("Esta seguro que desea borrar los nodos sobrantes ?", 'Limpiar Nodos'):
         nodes = get_connected_nodes(vinarender)
         delete(nodes)
-        dots_delete(thisNode)
+        # dots_delete(thisNode)
 
 
 def read_file(thisNode, thisParam):
@@ -131,7 +131,7 @@ def render(thisNode):
     vinarender = getNode(thisNode, 'VinaRender')
     duration = thisNode.getParam('duration').get()
     durations = thisNode.getParam('durations').get()
-    prefix = thisNode.getParam('prefix_render').get()
+    prefix = thisNode.getParam('prefix').get()
     current_state = thisNode.getParam('current_state').get()
 
     if not input_connected(thisNode, 2):
