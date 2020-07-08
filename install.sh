@@ -1,4 +1,5 @@
 #! /usr/bin/sh
+cd $(dirname "$0") # Directorio Raiz
 
 natron_plugins='/usr/share/Natron/Plugins'
 mkdir -p $natron_plugins
