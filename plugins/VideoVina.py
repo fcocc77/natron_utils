@@ -774,6 +774,18 @@ def createInstance(app,group):
     lastNode.transfer_to_static = param
     del param
 
+    param = lastNode.createButtonParam("prerender", "prerender")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    lastNode.prerender = param
+    del param
+
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()

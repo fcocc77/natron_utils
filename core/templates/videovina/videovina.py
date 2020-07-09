@@ -7,6 +7,7 @@ from api import *
 from song import *
 from develop import *
 from vv_misc import *
+from prerender import *
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -24,6 +25,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     elif knob_name == 'save_production':
         save_production_projects(thisNode)
+
+    elif knob_name == 'prerender':
+        prerender(thisNode, workarea)
 
     elif knob_name == 'refresh':
         refresh(thisNode, app, workarea)
