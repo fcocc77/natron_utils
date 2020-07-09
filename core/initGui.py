@@ -1,5 +1,6 @@
 import shutil
 import os
+import sys
 import filecmp
 import NatronGui
 
@@ -17,22 +18,16 @@ def reload_nodes():
 
     os.system('sh ' + repo + '/install.sh')
 
-    def reload_module(module):
-        module_name = module.split('.')[0]
-        try:
-            reload(eval(module_name))
-        except:
-            None
+    ignore = ['init', 'initGui']
+    # recarga todos los modulos
+    for root, dirs, files in os.walk(natron_plugins):
+        for f in files:
+            name = f.split('.')[0]
+            ext = f.split('.')[-1]
 
-    # recarga los modulos de core
-    for root, dirs, files in os.walk(repo + '/core'):
-        for module in files:
-            reload_module(module)
-
-    # recarga los modulos de plugins
-    for root, dirs, files in os.walk(repo + '/plugins'):
-        for module in files:
-            reload_module(module)
+            if not name in ignore:
+                if ext == 'py':
+                    reload(eval(name))
 
     print 'Reloaded Plugins.'
 
