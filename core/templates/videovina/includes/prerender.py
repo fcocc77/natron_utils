@@ -1,4 +1,5 @@
 from slides import get_slides, delete_slide
+from develop import update_post_fx
 
 
 def prerender(thisNode, workarea):
@@ -10,3 +11,5 @@ def prerender(thisNode, workarea):
 
         if not i in keep_slides:
             delete_slide(workarea, i)
+
+    update_post_fx(thisNode, workarea)

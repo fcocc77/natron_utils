@@ -1,5 +1,5 @@
-from natron_extent import getNode, createNode, alert, copy, warning
-from slides import get_slides, get_slide
+from natron_extent import getNode, createNode, alert, copy, warning, question
+from slides import get_slides, get_slide, delete_slide
 from vv_misc import get_resolution, connect_slide_inputs
 from transition import directional_transition
 import os
@@ -224,7 +224,7 @@ def generate_base_slides(thisNode, app, workarea):
 
     generate_random_pictures(thisNode, app, workarea,
                              current_slides + slides_count)
-    update_post_fx(thisNode, app, workarea)
+    update_post_fx(thisNode, workarea)
     refresh(thisNode, app, workarea)
 
     if current_slides:
@@ -239,7 +239,7 @@ def duplicate_slides(thisNode, app, workarea):
     if not generated:
         return
 
-    update_post_fx(thisNode, app, workarea)
+    update_post_fx(thisNode, workarea)
     generate_random_pictures(thisNode, app, workarea, amount)
     refresh(thisNode, app, workarea)
 
@@ -351,7 +351,7 @@ def generate_production_slides(thisNode, app, workarea, amount, force=False, ref
     return True
 
 
-def update_post_fx(thisNode, app, workarea):
+def update_post_fx(thisNode, workarea):
     slides = get_slides(workarea)
     if not len(slides):
         return
@@ -435,6 +435,20 @@ def update_post_fx(thisNode, app, workarea):
     # VideoVina nodo como ultimo
     thisNode.setPosition(last_posx + 200, 1100)
     thisNode.connectInput(0, post_fx_dot)
+
+    # nodo de vinarender
+    vinarender = getNode(workarea, 'vinarender')
+    if not vinarender:
+        vinarender = createNode(
+            node='vinarender',
+            label='vinarender',
+            group=workarea
+        )
+    vinarender.setPosition(last_posx + 200, 1200)
+    vinarender.connectInput(0, thisNode)
+    vinarender.setLabel('vinarender')
+    vinarender.getParam('rgbonly').set(True)
+    vinarender.getParam('project_frame_range').trigger()
 
     # si es que existe un viewer lo posiciona correctamente
     viewer = None
