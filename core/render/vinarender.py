@@ -5,20 +5,24 @@ from natron_extent import get_connected_nodes, saveProject, absolute, warning, a
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
-    if not userEdited:
-        # script name unico para identificar el nodo cuando renderizamos
-        thisNode.setScriptName('vinarender_' + str(hash_generator(3)))
-        return
 
-    thisNode.setLabel('VinaRender')
+    if not userEdited:
+        if not '_vinarender' in thisNode.getScriptName():
+            # script name unico para identificar el nodo cuando renderizamos
+            thisNode.setScriptName('_vinarender_' + str(hash_generator(3)))
+            thisNode.setLabel('VinaRender')
+
+        return
 
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'render':
         render(thisNode, app)
-    if knob_name == 'range' or knob_name == 'readfile':
+
+    elif knob_name == 'range' or knob_name == 'readfile':
         change_paramaters(thisNode)
-    if knob_name == 'project_frame_range':
+
+    elif knob_name == 'project_frame_range':
         frame_range = app.frameRange.get()
         thisNode.range.set(frame_range[0], frame_range[1])
 
