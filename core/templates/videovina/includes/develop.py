@@ -1,5 +1,5 @@
-from natron_extent import getNode, createNode, alert
-from slides import get_slides
+from natron_extent import getNode, createNode, alert, copy, warning
+from slides import get_slides, get_slide
 from vv_misc import get_resolution, connect_slide_inputs
 from transition import directional_transition
 import os
