@@ -19,15 +19,20 @@ def reload_nodes():
     os.system('sh ' + repo + '/install.sh')
 
     ignore = ['init', 'initGui']
-    # recarga todos los modulos
-    for root, dirs, files in os.walk(natron_plugins):
-        for f in files:
-            name = f.split('.')[0]
-            ext = f.split('.')[-1]
 
-            if not name in ignore:
-                if ext == 'py':
-                    reload(eval(name))
+    def reload_modules():
+        # recarga todos los modulos
+        for root, dirs, files in os.walk(natron_plugins):
+            for f in files:
+                name = f.split('.')[0]
+                ext = f.split('.')[-1]
+
+                if not name in ignore:
+                    if ext == 'py':
+                        reload(eval(name))
+
+    reload_modules()
+    reload_modules()
 
     print 'Reloaded Plugins.'
 
