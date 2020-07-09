@@ -416,6 +416,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("SlideBase")
     lastNode.slide = param
     del param
 
@@ -432,7 +433,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("GlassTransition")
     lastNode.transition = param
     del param
 
@@ -451,7 +451,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(4, 0)
     lastNode.amount_slide = param
     del param
 
@@ -467,24 +467,29 @@ def createInstance(app,group):
     lastNode.generate_slides = param
     del param
 
-    param = lastNode.createIntParam("production_slides", "Production Slide")
+    param = lastNode.createInt2DParam("production_slides", "Production Slides Range")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("A partir de las slides base, genera nuevas slide duplicando las que hay")
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(3, 0)
+    param.setValue(2, 0)
+    param.setValue(4, 1)
     lastNode.production_slides = param
     del param
 
-    param = lastNode.createButtonParam("duplicate_slides", "Generate Production")
+    param = lastNode.createButtonParam("generate_production_slides", "Generate Production")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -493,7 +498,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
-    lastNode.duplicate_slides = param
+    lastNode.generate_production_slides = param
     del param
 
     param = lastNode.createSeparatorParam("sep5", "")

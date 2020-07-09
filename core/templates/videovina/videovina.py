@@ -7,7 +7,7 @@ from api import *
 from song import *
 from develop import *
 from vv_misc import *
-from prerender import *
+from production import *
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -27,13 +27,13 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         save_production_projects(thisNode)
 
     elif knob_name == 'prerender':
-        prerender(thisNode, workarea)
+        divide_project(thisNode, workarea)
 
     elif knob_name == 'refresh':
         refresh(thisNode, app, workarea)
 
-    elif knob_name == 'duplicate_slides':
-        duplicate_slides(thisNode, app, workarea)
+    elif knob_name == 'generate_production_slides':
+        production_slides(thisNode, app, workarea)
 
     elif knob_name == 'videovina_info':
         export_videovina_info(thisNode, app, workarea, project_path)
