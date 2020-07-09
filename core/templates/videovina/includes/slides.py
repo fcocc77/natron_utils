@@ -23,13 +23,17 @@ def get_slide(workarea, index):
         production = True
     # --------------------
 
+    if not slide:
+        return None
+
     return {
         'production': production,
         'slide': slide,
         'reformat': reformat,
         'image': image,
         'transition': transition,
-        'dot': dot
+        'dot': dot,
+        'index': index
     }
 
 
@@ -41,7 +45,7 @@ def get_slides(workarea, production=True, base=True, separate=False):
 
     for i in range(100):
         obj = get_slide(workarea, i)
-        if obj['slide']:
+        if obj:
             all_list.append(obj)
             if obj['production']:
                 production_list.append(obj)
@@ -58,15 +62,24 @@ def get_slides(workarea, production=True, base=True, separate=False):
         return base_list
 
 
+def get_last_slide(workarea):
+    return get_slides(workarea)[-1]
+
+
+def get_first_slide(workarea):
+    return get_slides(workarea)[0]
+
+
 def delete_slide(workarea, slide_number):
     # se usa .destroy() 2 veces ya que a veces
     # natron no borra el nodo
     def remove(index):
         obj = get_slide(workarea, index)
-        for key, node in obj.iteritems():
-            if node:
-                if not type(node) == bool:
-                    node.destroy()
+        if obj:
+            for key, node in obj.iteritems():
+                if node:
+                    if not type(node) == bool and not type(node) == int:
+                        node.destroy()
 
     if type(slide_number) is list:
         for i in slide_number:

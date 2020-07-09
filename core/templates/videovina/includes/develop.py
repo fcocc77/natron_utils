@@ -1,5 +1,5 @@
 from natron_extent import getNode, createNode, alert, copy, warning, question
-from slides import get_slides, get_slide, delete_slide
+from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution, connect_slide_inputs
 from transition import directional_transition
 import os
@@ -342,6 +342,13 @@ def update_post_fx(thisNode, workarea):
             break
     # ---------------------
 
+    # conecta el primer slide al primer dot y negro
+    first_slide = get_first_slide(workarea)
+    filter_dot = getNode(workarea, 'filter_dot')
+    first_black = getNode(workarea, 'FirstBlack')
+    first_slide['dot'].connectInput(0, filter_dot)
+    first_slide['transition'].connectInput(0, first_black)
+
 
 def generate_random_pictures(thisNode, app, workarea, amount):
 
@@ -364,11 +371,12 @@ def generate_random_pictures(thisNode, app, workarea, amount):
 
 
 def generate_pictures(workarea, app, pictures):
-    for i, obj in enumerate(get_slides(workarea)):
+    for obj in get_slides(workarea):
         slide = obj['slide']
         reformat = obj['reformat']
         reader = obj['image']
         production = obj['production']
+        index = obj['index']
 
         # cuando se crea los slides en produccion, no se genera
         # el reformat, y se usa el slide para conectar
@@ -381,7 +389,7 @@ def generate_pictures(workarea, app, pictures):
         posx = node_to_connect.getPosition()[0] - 11
         posy = node_to_connect.getPosition()[1] - 200
 
-        picture = pictures[i]
+        picture = pictures[index]
 
         # si la imagen ya fue generada, solo cambia el la imagen 'filename'
         if reader:
@@ -389,9 +397,9 @@ def generate_pictures(workarea, app, pictures):
         else:
             reader = app.createReader(picture, workarea)
             if production:
-                reader_name = 'slide_' + str(i) + 'p_image'
+                reader_name = 'slide_' + str(index) + 'p_image'
             else:
-                reader_name = 'slide_' + str(i) + '_image'
+                reader_name = 'slide_' + str(index) + '_image'
             reader.setLabel(reader_name)
             # deja la imagen con rgba para que no de conflicto, porque
             # a veces da conflicto al mezclar imagenes usando el shufle.

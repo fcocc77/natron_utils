@@ -1,5 +1,5 @@
-from natron_extent import copy, warning, alert
-from slides import get_slides, delete_slide, get_slide
+from natron_extent import copy, warning, alert, question
+from slides import get_slides, delete_slide, get_slide, get_last_slide
 from develop import update_post_fx, xdistance, generate_random_pictures, refresh
 
 
@@ -20,9 +20,10 @@ def divide_project(thisNode, workarea):
 
 
 def production_slides(thisNode, app, workarea):
-    amount = thisNode.production_slides.get()
+    slides_range = thisNode.production_slides.get()
+    amount = slides_range[1] + 1
 
-    generated = generate_production_slides(thisNode, app, workarea, amount)
+    generated = generate_production_slides(thisNode, app, workarea, slides_range)
     if not generated:
         return
 
@@ -34,105 +35,104 @@ def production_slides(thisNode, app, workarea):
           'Duplicate from base slides.')
 
 
-def generate_production_slides(thisNode, app, workarea, amount, force=False, reformat=True):
-    # duplica los slides base, dependiendo de la
-    # cantidad de fotos que importemos.
-    base_amount = thisNode.amount_slide.get()
+def production_slide(app, workarea, index, base_slides, base_slide_index, last_transition, last_dot, last_slide, posx, reformat=True):
+
+    slide = base_slides[base_slide_index]['slide']
+    transition = base_slides[base_slide_index]['transition']
+
+    if reformat:
+        _reformat = base_slides[base_slide_index]['reformat']
+
+        new_reformat = copy(_reformat, workarea)
+        new_reformat.setColor(.4, .5, .7)
+        new_reformat.setPosition(posx, -200)
+        new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
+
+    new_slide = copy(slide, workarea)
+    new_slide.setPosition(posx, 0)
+    new_slide.setLabel('slide_' + str(index) + 'p')
+    if reformat:
+        new_slide.connectInput(0, new_reformat)
+
+    new_transition = copy(transition, workarea)
+    new_transition.setColor(.7, .7, .4)
+    new_transition.setPosition(posx, 200)
+    new_transition.setLabel('slide_' + str(index) + 'p_transition')
+    if last_transition:
+        new_transition.connectInput(0, last_transition)
+    else:
+        new_transition.connectInput(0, last_slide['transition'])
+
+    new_transition.connectInput(1, new_slide)
+
+    dot = app.createNode('fr.inria.built-in.Dot', 2, workarea)
+    dot_name = 'slide_' + str(index) + 'p_dot'
+    dot.setLabel(dot_name)
+    dot.setPosition(posx - 50, 100)
+    new_transition.connectInput(2, dot)
+
+    if last_dot:
+        dot.connectInput(0, last_dot)
+    else:
+        dot.connectInput(0, last_slide['dot'])
+
+    return [new_transition, dot]
+
+
+def generate_production_slides(thisNode, app, workarea, slides_range, force=False, reformat=True):
 
     base_slides, production_slides = get_slides(workarea, separate=True)
     base_count = len(base_slides)
     slides_count = base_count + len(production_slides)
 
-    if not force:
-        if not slides_count:
-            warning(
-                'Production Slides', 'No hay ninguna slide base creada.')
-            return False
+    if not base_count:
+        warning('Produccion Slides', 'Tiene que haber slides base')
+        return
 
-        if amount <= base_amount:
-            warning(
-                'Production Slides', 'La Cantidad de slides tiene que ser mayor que los slides base.')
-            return False
+    if not question('Al crear las slide de produccion se borraran las slide base, desea continuar?', 'Produccion Slides'):
+        return
 
-        if amount == slides_count:
-            warning(
-                'Production Slides', 'Ya existen ' + str(amount) + ' slides.')
-            return False
+    amount = slides_range[1] + 1
+    _slides_range = range(slides_range[0], amount)
 
-    count_delete_slide = None
-    if amount <= slides_count:
-        count_delete_slide = slides_count - amount
-        if not force:
-            message = 'La cantidad de slides es menor a la existente, se eliminaran ' + \
-                str(count_delete_slide) + ' slides.'
-            ok = question('Estas seguro de que quieres continuar ?', message)
-            if not ok:
-                return False
+    last_transition = None
+    last_dot = None
 
-    if count_delete_slide:
-        # borra las slides que sobran
-        _range = range(slides_count - count_delete_slide, slides_count)
-        delete_slide(workarea, _range)
-    else:
-        last_transition = None
-        last_dot = None
+    last_slide = get_last_slide(workarea)
 
-        slide_obj = get_slide(workarea, slides_count - 1)
-        last_base_transition = slide_obj['transition']
-        last_base_dot = slide_obj['dot']
-
-        current = 0
-        posx = (xdistance * slides_count) + xdistance
-        for i in range(amount - slides_count):
-            index = i + slides_count
-
-            slide = base_slides[current]['slide']
-            transition = base_slides[current]['transition']
-
-            if reformat:
-                _reformat = base_slides[current]['reformat']
-
-                new_reformat = copy(_reformat, workarea)
-                new_reformat.setColor(.4, .5, .7)
-                new_reformat.setPosition(posx, -200)
-                new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
-
-            new_slide = copy(slide, workarea)
-            new_slide.setPosition(posx, 0)
-            new_slide.setLabel('slide_' + str(index) + 'p')
-            if reformat:
-                new_slide.connectInput(0, new_reformat)
-
-            new_transition = copy(transition, workarea)
-            new_transition.setColor(.7, .7, .4)
-            new_transition.setPosition(posx, 200)
-            new_transition.setLabel('slide_' + str(index) + 'p_transition')
-            if last_transition:
-                new_transition.connectInput(0, last_transition)
+    base_slide_index = 0
+    posx = (xdistance * slides_count) + xdistance
+    for i in range(amount - slides_count):
+        index = i + slides_count
+        if index in _slides_range:
+            slide = get_slide(workarea, index)
+            if slide:
+                last_transition = slide['transition']
+                last_dot = slide['dot']
             else:
-                new_transition.connectInput(0, last_base_transition)
+                # crea la slide si no esta
+                last_transition, last_dot = production_slide(
+                    app,
+                    workarea,
+                    index,
+                    base_slides,
+                    base_slide_index,
+                    last_transition,
+                    last_dot,
+                    last_slide,
+                    posx,
+                    reformat,
+                )
 
-            new_transition.connectInput(1, new_slide)
+        base_slide_index += 1
+        if base_slide_index >= base_count:
+            base_slide_index = 0
 
-            dot = app.createNode('fr.inria.built-in.Dot', 2, workarea)
-            dot_name = 'slide_' + str(index) + 'p_dot'
-            dot.setLabel(dot_name)
-            dot.setPosition(posx - 50, 100)
+        posx += xdistance
 
-            if last_dot:
-                dot.connectInput(0, last_dot)
-            else:
-                dot.connectInput(0, last_base_dot)
-
-            new_transition.connectInput(2, dot)
-
-            last_transition = new_transition
-            last_dot = dot
-
-            current += 1
-            if current >= base_count:
-                current = 0
-
-            posx += xdistance
+    # borra las slide que estan fuera del rango
+    for i in range(amount):
+        if not i in _slides_range:
+            delete_slide(workarea, i)
 
     return True
