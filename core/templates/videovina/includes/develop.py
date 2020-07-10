@@ -1,5 +1,5 @@
 from natron_extent import getNode, createNode, alert, copy, warning, question
-from slides import get_slides, get_slide, delete_slide, get_first_slide
+from slides import get_slides, get_slide, delete_slide, get_first_slide, get_slide_position
 from vv_misc import get_resolution, connect_slide_inputs
 from transition import directional_transition
 import os
@@ -132,7 +132,7 @@ def refresh(thisNode, app, workarea):
         transition.getParam('refresh').trigger()
         # --------------------
 
-        connect_slide_inputs(slides, index)
+        # connect_slide_inputs(slides, index)
 
 
 def generate_base_slides(thisNode, app, workarea):
@@ -232,8 +232,7 @@ def generate_base_slides(thisNode, app, workarea):
             last_transition = transition
             last_dot = dot
 
-    generate_random_pictures(thisNode, app, workarea,
-                             current_slides + slides_count)
+    generate_random_pictures(thisNode, app, workarea)
     update_post_fx(thisNode, workarea)
     refresh(thisNode, app, workarea)
 
@@ -361,7 +360,8 @@ def update_post_fx(thisNode, workarea):
     first_slide['transition'].connectInput(0, first_black)
 
 
-def generate_random_pictures(thisNode, app, workarea, amount):
+def generate_random_pictures(thisNode, app, workarea):
+    amount = thisNode.getParam('slides_amount').get()
 
     references_dir = thisNode.reference_pictures.get()
     references_pictures = os.listdir(references_dir)
@@ -378,27 +378,36 @@ def generate_random_pictures(thisNode, app, workarea, amount):
         if index >= references_count:
             index = 0
 
-    generate_pictures(workarea, app, random_pictures)
+    generate_pictures(workarea, app, random_pictures, amount)
 
 
-def generate_pictures(workarea, app, pictures):
-    for obj in get_slides(workarea):
-        slide = obj['slide']
-        reformat = obj['reformat']
-        reader = obj['image']
-        production = obj['production']
-        index = obj['index']
+def generate_pictures(workarea, app, pictures, amount):
+    slides = get_slides(workarea)
 
-        # cuando se crea los slides en produccion, no se genera
-        # el reformat, y se usa el slide para conectar
-        if reformat:
-            node_to_connect = reformat
-        else:
-            node_to_connect = slide
-        # --------------------
+    for index in range(amount):
+        obj = get_slide(workarea, index)
 
-        posx = node_to_connect.getPosition()[0] - 11
-        posy = node_to_connect.getPosition()[1] - 200
+        reformat = None
+        reader = None
+        production = True
+        node_to_connect = None
+
+        if obj:
+            slide = obj['slide']
+            reformat = obj['reformat']
+            reader = obj['image']
+            production = obj['production']
+
+            # cuando se crea los slides en produccion, no se genera
+            # el reformat, y se usa el slide para conectar
+            if reformat:
+                node_to_connect = reformat
+            else:
+                node_to_connect = slide
+            # --------------------
+
+        posx = get_slide_position(index)[0] - 11
+        posy = get_slide_position(index)[1] - 400
 
         picture = pictures[index]
 
@@ -416,8 +425,9 @@ def generate_pictures(workarea, app, pictures):
             # a veces da conflicto al mezclar imagenes usando el shufle.
             reader.getParam('outputComponents').set(0)
             # ---------------------
-            node_to_connect.connectInput(0, reader)
-            if reformat:
-                reformat.getParam('refresh').trigger()
+            if node_to_connect:
+                node_to_connect.connectInput(0, reader)
+                if reformat:
+                    reformat.getParam('refresh').trigger()
         # -------------------------------
         reader.setPosition(posx, posy)

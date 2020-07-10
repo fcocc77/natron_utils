@@ -21,14 +21,13 @@ def divide_project(thisNode, workarea):
 
 def production_slides(thisNode, app, workarea):
     slides_range = thisNode.production_slides.get()
-    amount = slides_range[1] + 1
 
     generated = generate_production_slides(thisNode, app, workarea, slides_range)
     if not generated:
         return
 
     update_post_fx(thisNode, workarea)
-    generate_random_pictures(thisNode, app, workarea, amount)
+    generate_random_pictures(thisNode, app, workarea)
     refresh(thisNode, app, workarea)
 
     alert('Ya se duplicaron las slide de Produccion.',
@@ -101,7 +100,7 @@ def generate_production_slides(thisNode, app, workarea, slides_range, force=Fals
     last_slide = get_last_slide(workarea)
 
     base_slide_index = 0
-    posx = (xdistance * slides_count) + xdistance
+    posx = xdistance * slides_count
     for i in range(amount - slides_count):
         index = i + slides_count
         if index in _slides_range:
