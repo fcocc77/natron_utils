@@ -144,6 +144,11 @@ def copy(node, group=None):
     return new_node
 
 
+def get_project_name():
+    app = NatronGui.natron.getGuiInstance(0)
+    return app.getProjectParam('projectName').get()[:-4]
+
+
 def saveProject():
     app = NatronGui.natron.getGuiInstance(0)
 
