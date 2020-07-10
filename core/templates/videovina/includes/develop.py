@@ -361,7 +361,7 @@ def update_post_fx(thisNode, workarea):
 
 
 def generate_random_pictures(thisNode, app, workarea):
-    amount = thisNode.getParam('slides_amount').get()
+    amount = thisNode.getParam('pictures_amount').get()
 
     references_dir = thisNode.reference_pictures.get()
     references_pictures = os.listdir(references_dir)

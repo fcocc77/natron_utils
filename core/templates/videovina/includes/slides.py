@@ -1,5 +1,4 @@
 from natron_extent import getNode
-from develop import xdistance
 
 
 def get_slide(workarea, index):
@@ -93,4 +92,4 @@ def delete_slide(workarea, slide_number):
 
 
 def get_slide_position(index):
-    return [xdistance * index, 0]
+    return [200 * index, 0]
