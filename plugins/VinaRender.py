@@ -237,9 +237,7 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createIntParam("task_size", "Task Size")
-    param.setMinimum(1, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(1, 0)
+    param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)

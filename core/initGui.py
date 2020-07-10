@@ -29,7 +29,10 @@ def reload_nodes():
 
                 if not name in ignore:
                     if ext == 'py':
-                        reload(eval(name))
+                        try:
+                            reload(eval(name))
+                        except:
+                            print 'Modulo ' + name + ': No Cargado.'
 
     reload_modules()
     reload_modules()

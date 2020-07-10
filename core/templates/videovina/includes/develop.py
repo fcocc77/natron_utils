@@ -315,6 +315,7 @@ def update_post_fx(thisNode, workarea):
 
     # VideoVina nodo como ultimo
     thisNode.setPosition(last_posx + 200, 1100)
+    thisNode.disconnectInput(0)
     thisNode.connectInput(0, post_fx_dot)
 
     # nodo de vinarender
