@@ -391,35 +391,6 @@ def createInstance(app,group):
     lastNode.develop_slide = param
     del param
 
-    param = lastNode.createPathParam("reference_pictures", "Reference Pictures Folder")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
-    param.setAddNewLine(True)
-    param.setValue("/mnt/server_01/jssa/footage/fotos")
-    lastNode.reference_pictures = param
-    del param
-
-    param = lastNode.createIntParam("pictures_amount", "Pictures Amount")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(20, 0)
-    lastNode.pictures_amount = param
-    del param
-
     param = lastNode.createChoiceParam("slide", "Slide")
     entries = [ ("GlassSlide", ""),
     ("SlideBase", "")]
@@ -453,6 +424,47 @@ def createInstance(app,group):
     lastNode.transition = param
     del param
 
+    param = lastNode.createPathParam("reference_pictures", "Reference Pictures Folder")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
+    param.setAddNewLine(True)
+    param.setValue("/mnt/server_01/jssa/footage/fotos")
+    lastNode.reference_pictures = param
+    del param
+
+    param = lastNode.createIntParam("pictures_amount", "Pictures Amount")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.pictures_amount = param
+    del param
+
+    param = lastNode.createButtonParam("generate_pictures", "Generate Pictures")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.generate_pictures = param
+    del param
+
     param = lastNode.createIntParam("amount_slide", "Base Slide")
     param.setMinimum(0, 0)
     param.setMaximum(20, 0)
@@ -468,7 +480,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(4, 0)
+    param.setValue(2, 0)
     lastNode.amount_slide = param
     del param
 

@@ -8,6 +8,7 @@ from song import *
 from develop import *
 from vv_misc import *
 from production import *
+from pictures import *
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -64,3 +65,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     elif knob_name == 'clean':
         clean(thisNode, workarea)
+
+    elif knob_name == 'generate_pictures':
+        generate_random_pictures(thisNode, app, workarea)

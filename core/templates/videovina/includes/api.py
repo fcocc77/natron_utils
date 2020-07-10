@@ -2,6 +2,7 @@ import os
 import shutil
 from util import jread
 from develop import refresh
+from pictures import generate_pictures
 
 
 def update_private_content(thisNode, thisParam):

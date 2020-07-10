@@ -5,8 +5,6 @@ def get_slide(workarea, index):
     _index = str(index)
 
     slide = getNode(workarea, 'slide_' + _index)
-    reformat = getNode(workarea, 'slide_' + _index + '_reformat')
-    image = getNode(workarea, 'slide_' + _index + '_image')
     transition = getNode(workarea, 'slide_' + _index + '_transition')
     dot = getNode(workarea, 'slide_' + _index + '_dot')
 
@@ -15,8 +13,6 @@ def get_slide(workarea, index):
     # es que all=True
     if not slide:
         slide = getNode(workarea, 'slide_' + _index + 'p')
-        reformat = getNode(workarea, 'slide_' + _index + 'p_reformat')
-        image = getNode(workarea, 'slide_' + _index + 'p_image')
         transition = getNode(workarea, 'slide_' + _index + 'p_transition')
         dot = getNode(workarea, 'slide_' + _index + 'p_dot')
 
@@ -29,8 +25,6 @@ def get_slide(workarea, index):
     return {
         'production': production,
         'slide': slide,
-        'reformat': reformat,
-        'image': image,
         'transition': transition,
         'dot': dot,
         'index': index

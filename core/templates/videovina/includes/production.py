@@ -1,6 +1,6 @@
 from natron_extent import copy, warning, alert, question
 from slides import get_slides, delete_slide, get_slide, get_last_slide
-from develop import update_post_fx, xdistance, generate_random_pictures, refresh
+from develop import update_post_fx, xdistance, refresh
 
 
 def divide_project(thisNode, workarea):
@@ -27,31 +27,20 @@ def production_slides(thisNode, app, workarea):
         return
 
     update_post_fx(thisNode, workarea)
-    generate_random_pictures(thisNode, app, workarea)
     refresh(thisNode, app, workarea)
 
     alert('Ya se duplicaron las slide de Produccion.',
           'Duplicate from base slides.')
 
 
-def production_slide(app, workarea, index, base_slides, base_slide_index, last_transition, last_dot, last_slide, posx, reformat=True):
+def production_slide(app, workarea, index, base_slides, base_slide_index, last_transition, last_dot, last_slide, posx):
 
     slide = base_slides[base_slide_index]['slide']
     transition = base_slides[base_slide_index]['transition']
 
-    if reformat:
-        _reformat = base_slides[base_slide_index]['reformat']
-
-        new_reformat = copy(_reformat, workarea)
-        new_reformat.setColor(.4, .5, .7)
-        new_reformat.setPosition(posx, -200)
-        new_reformat.setLabel('slide_' + str(index) + 'p_reformat')
-
     new_slide = copy(slide, workarea)
     new_slide.setPosition(posx, 0)
     new_slide.setLabel('slide_' + str(index) + 'p')
-    if reformat:
-        new_slide.connectInput(0, new_reformat)
 
     new_transition = copy(transition, workarea)
     new_transition.setColor(.7, .7, .4)
@@ -78,7 +67,7 @@ def production_slide(app, workarea, index, base_slides, base_slide_index, last_t
     return [new_transition, dot]
 
 
-def generate_production_slides(thisNode, app, workarea, slides_range, force=False, reformat=True):
+def generate_production_slides(thisNode, app, workarea, slides_range, force=False):
 
     base_slides, production_slides = get_slides(workarea, separate=True)
     base_count = len(base_slides)
@@ -119,8 +108,7 @@ def generate_production_slides(thisNode, app, workarea, slides_range, force=Fals
                     last_transition,
                     last_dot,
                     last_slide,
-                    posx,
-                    reformat,
+                    posx
                 )
 
         base_slide_index += 1

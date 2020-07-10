@@ -1,7 +1,8 @@
 from natron_extent import getNode, createNode, alert, copy, warning, question
-from slides import get_slides, get_slide, delete_slide, get_first_slide, get_slide_position
+from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution, connect_slide_inputs
 from transition import directional_transition
+from pictures import get_picture
 import os
 import random
 
@@ -107,7 +108,7 @@ def refresh(thisNode, app, workarea):
 
         start_frame_slide.set(first_frame)
 
-        reformat = obj['reformat']
+        reformat = get_picture(workarea, index)['reformat']
         if reformat:
             reformat.getParam('boxSize').set(width, hight)
             reformat.getParam('refresh').trigger()
@@ -194,15 +195,6 @@ def generate_base_slides(thisNode, app, workarea):
             slide.setLabel(slide_name)
             slide.setPosition(posx, 0)
 
-            reformat = app.createNode('vv.ResolutionExpand', 2, workarea)
-            reformat_name = 'slide_' + str(i) + '_reformat'
-            reformat.setLabel(reformat_name)
-            reformat.getParam('boxSize').set(width, hight)
-            reformat.setPosition(posx, -200)
-            reformat.setColor(.5, .4, .4)
-
-            slide.connectInput(0, reformat)
-
             transition_param = thisNode.getParam('transition')
             transition_id = 'vv.' + transition_param.getOption(transition_param.get())
             transition = app.createNode(transition_id, 2, workarea)
@@ -232,7 +224,6 @@ def generate_base_slides(thisNode, app, workarea):
             last_transition = transition
             last_dot = dot
 
-    generate_random_pictures(thisNode, app, workarea)
     update_post_fx(thisNode, workarea)
     refresh(thisNode, app, workarea)
 
@@ -358,76 +349,3 @@ def update_post_fx(thisNode, workarea):
     first_black = getNode(workarea, 'FirstBlack')
     first_slide['dot'].connectInput(0, filter_dot)
     first_slide['transition'].connectInput(0, first_black)
-
-
-def generate_random_pictures(thisNode, app, workarea):
-    amount = thisNode.getParam('pictures_amount').get()
-
-    references_dir = thisNode.reference_pictures.get()
-    references_pictures = os.listdir(references_dir)
-    references_count = len(references_pictures)
-
-    index = random.randint(0, references_count - 1)
-
-    random_pictures = []
-    for i in range(amount):
-        picture = references_dir + '/' + references_pictures[index]
-        random_pictures.append(picture)
-
-        index += 1
-        if index >= references_count:
-            index = 0
-
-    generate_pictures(workarea, app, random_pictures, amount)
-
-
-def generate_pictures(workarea, app, pictures, amount):
-    slides = get_slides(workarea)
-
-    for index in range(amount):
-        obj = get_slide(workarea, index)
-
-        reformat = None
-        reader = None
-        production = True
-        node_to_connect = None
-
-        if obj:
-            slide = obj['slide']
-            reformat = obj['reformat']
-            reader = obj['image']
-            production = obj['production']
-
-            # cuando se crea los slides en produccion, no se genera
-            # el reformat, y se usa el slide para conectar
-            if reformat:
-                node_to_connect = reformat
-            else:
-                node_to_connect = slide
-            # --------------------
-
-        posx = get_slide_position(index)[0] - 11
-        posy = get_slide_position(index)[1] - 400
-
-        picture = pictures[index]
-
-        # si la imagen ya fue generada, solo cambia el la imagen 'filename'
-        if reader:
-            reader.getParam('filename').set(picture)
-        else:
-            reader = app.createReader(picture, workarea)
-            if production:
-                reader_name = 'slide_' + str(index) + 'p_image'
-            else:
-                reader_name = 'slide_' + str(index) + '_image'
-            reader.setLabel(reader_name)
-            # deja la imagen con rgba para que no de conflicto, porque
-            # a veces da conflicto al mezclar imagenes usando el shufle.
-            reader.getParam('outputComponents').set(0)
-            # ---------------------
-            if node_to_connect:
-                node_to_connect.connectInput(0, reader)
-                if reformat:
-                    reformat.getParam('refresh').trigger()
-        # -------------------------------
-        reader.setPosition(posx, posy)
