@@ -1,6 +1,7 @@
 from general import formats
 from natron_extent import question, run
-from slides import get_slides
+from slides import get_slides, get_slide
+from pictures import get_picture
 
 
 def clean(thisNode, workarea):
@@ -26,17 +27,30 @@ def set_default_color(thisNode, thisParam):
             thisNode.color.set(color[0], color[1], color[2], 1)
 
 
-def connect_slide_inputs(slides, current_slide):
+def connect_slide_inputs(workarea, current_slide, max_pictures):
     # conecta todas las entradas de cada slide, asi
     # poder usarlas dentro del grupo de la slide
-    slide = slides[current_slide]['slide']
+    obj = get_slide(workarea, current_slide)
+    if not obj:
+        return
+    slide = obj['slide']
+
     extra_count = slide.getMaxInputCount() - 1
 
     if not extra_count:
         return
 
-    slide_count = len(slides)
-    connect_nodes_count = slide_count - 1
+    connect_nodes_count = max_pictures - 1
+
+    def connect_input(_input, connect_node):
+        slide.disconnectInput(_input)
+        picture = get_picture(workarea, connect_node)
+        reformat = picture['reformat']
+        image = picture['image']
+        if reformat:
+            slide.connectInput(_input, reformat)
+        else:
+            slide.connectInput(_input, image)
 
     if connect_nodes_count >= extra_count:
         # encuentra el nodo de inicio, para las conecciones
@@ -60,10 +74,7 @@ def connect_slide_inputs(slides, current_slide):
             if connect_node == current_slide:
                 connect_node += 1
 
-            reformat = slides[connect_node]['reformat']
-            slide.disconnectInput(i)
-            slide.connectInput(i, reformat)
-
+            connect_input(i, connect_node)
             connect_node += 1
     else:
         # va conectando a todas los nodos posible, cuando se
@@ -83,10 +94,7 @@ def connect_slide_inputs(slides, current_slide):
                 connect_node = 1
             # ------------------
 
-            reformat = slides[connect_node]['reformat']
-            slide.disconnectInput(i)
-            slide.connectInput(i, reformat)
-
+            connect_input(i, connect_node)
             connect_node += 1
 
 

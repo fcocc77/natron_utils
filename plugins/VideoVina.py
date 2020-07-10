@@ -432,7 +432,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
     param.setAddNewLine(True)
-    param.setValue("/mnt/server_01/jssa/footage/fotos")
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/travel")
     lastNode.reference_pictures = param
     del param
 
@@ -451,6 +451,19 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(5, 0)
     lastNode.pictures_amount = param
+    del param
+
+    param = lastNode.createBooleanParam("reformat", "Reformat")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.reformat = param
     del param
 
     param = lastNode.createButtonParam("generate_pictures", "Generate Pictures")

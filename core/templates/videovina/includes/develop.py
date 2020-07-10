@@ -17,6 +17,7 @@ def refresh(thisNode, app, workarea):
     _format = thisNode.format.get()
     color = thisNode.color.get()
     durations = thisNode.durations.get()
+    pictures_amount = thisNode.getParam('pictures_amount').get()
 
     normal_speed = durations[1]
 
@@ -108,8 +109,9 @@ def refresh(thisNode, app, workarea):
 
         start_frame_slide.set(first_frame)
 
-        reformat = get_picture(workarea, index)['reformat']
-        if reformat:
+        picture = get_picture(workarea, index)
+        if picture:
+            reformat = picture['reformat']
             reformat.getParam('boxSize').set(width, hight)
             reformat.getParam('refresh').trigger()
 
@@ -133,7 +135,7 @@ def refresh(thisNode, app, workarea):
         transition.getParam('refresh').trigger()
         # --------------------
 
-        # connect_slide_inputs(slides, index)
+        connect_slide_inputs(workarea, index, pictures_amount)
 
 
 def generate_base_slides(thisNode, app, workarea):

@@ -1,12 +1,13 @@
 import os
 import random
 from slides import get_slides, get_slide, get_slide_position
-from natron_extent import getNode
+from natron_extent import getNode, delete
 from vv_misc import get_resolution
 
 
 def generate_random_pictures(thisNode, app, workarea):
     amount = thisNode.getParam('pictures_amount').get()
+    reformat = thisNode.getParam('reformat').get()
 
     references_dir = thisNode.reference_pictures.get()
     references_pictures = os.listdir(references_dir)
@@ -25,10 +26,10 @@ def generate_random_pictures(thisNode, app, workarea):
         if index >= references_count:
             index = 0
 
-    generate_pictures(thisNode, workarea, app, random_pictures, amount)
+    generate_pictures(thisNode, workarea, app, random_pictures, amount, reformat)
 
 
-def generate_pictures(thisNode, workarea, app, pictures, amount, reformat=True):
+def generate_pictures(thisNode, workarea, app, pictures, amount, reformat_node=True):
     slides = get_slides(workarea)
 
     for index in range(amount):
@@ -44,9 +45,9 @@ def generate_pictures(thisNode, workarea, app, pictures, amount, reformat=True):
 
         picture = pictures[index]
 
-        if reformat:
-            reformat_name = 'slide_' + str(index) + '_reformat'
-            reformat = getNode(workarea, reformat_name)
+        reformat_name = 'slide_' + str(index) + '_reformat'
+        reformat = getNode(workarea, reformat_name)
+        if reformat_node:
             width, hight = get_resolution(thisNode)
             if not reformat:
                 reformat = app.createNode('vv.ResolutionExpand', 2, workarea)
@@ -57,6 +58,9 @@ def generate_pictures(thisNode, workarea, app, pictures, amount, reformat=True):
             reformat.setPosition(posx, - 200)
             if node_to_connect:
                 node_to_connect.connectInput(0, reformat)
+        else:
+            if reformat:
+                delete(reformat)
 
         # si la imagen ya fue generada, solo cambia el la imagen 'filename'
         reader_name = 'slide_' + str(index) + '_image'
@@ -72,7 +76,7 @@ def generate_pictures(thisNode, workarea, app, pictures, amount, reformat=True):
             reader.getParam('outputComponents').set(0)
             # ---------------------
 
-        if reformat:
+        if reformat_node:
             reformat.connectInput(0, reader)
             reformat.getParam('refresh').trigger()
         else:
