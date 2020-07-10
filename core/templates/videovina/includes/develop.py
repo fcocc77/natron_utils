@@ -19,17 +19,18 @@ def refresh(thisNode, app, workarea):
 
     normal_speed = durations[1]
 
-    slide_frames = durations[speed]
+    slide_duration = durations[speed]
 
     # esta velocidad de frames corresponde a la velocidad normal,
     # y calculta la velocidad final dependiendo de la velocidad de la slide
     transition_frames = thisNode.transition_duration.get()
-    transition_frames = (slide_frames * transition_frames) / normal_speed
+    transition_frames = (slide_duration * transition_frames) / normal_speed
     # -------------------------
 
     width, hight = get_resolution(thisNode)
 
     slides = get_slides(workarea)
+    slide_count = slides[-1]['index']  # index del ultimo slide
 
     # cambia la resolucion al primer y ultimo fondo negro
     first_black = getNode(workarea, 'FirstBlack')
@@ -42,7 +43,7 @@ def refresh(thisNode, app, workarea):
     # ---------------------
 
     mid_transition_frames = transition_frames / 2
-    _last_frame = len(slides) * slide_frames
+    _last_frame = slide_count * slide_duration
     # dissolve a negro en la ultima slide
     dissolve = getNode(workarea, 'last_transition').getParam('which')
 
@@ -61,10 +62,25 @@ def refresh(thisNode, app, workarea):
     # --------------------
 
     first_frame = 1
-    last_frame = slide_frames + mid_transition_frames
+    last_frame = slide_duration + mid_transition_frames
 
-    for i, obj in enumerate(slides):
+    # genera una lista con cada rango, dependiendo de la duracion
+    frame_range_list = []
+    for index in range(slide_count + 1):
+        frame_range_list.append((first_frame, last_frame))
+
+        # si es el primer slide, le sumamos la mitad de la duracion de la transicion,
+        # ya que la primera transicion va a negro.
+        if index == 0:
+            first_frame += slide_duration + mid_transition_frames
+        else:
+            first_frame += slide_duration
+        last_frame += slide_duration
+    # -------------------------------
+
+    for obj in slides:
         slide = obj['slide']
+        index = obj['index']
         start_frame_slide = slide.getParam('start_frame')
         color_slide = slide.getParam('color')
         format_slide = slide.getParam('format')
@@ -75,17 +91,19 @@ def refresh(thisNode, app, workarea):
         speed_slide.set(speed)
         format_slide.set(_format)
 
-        slide.getParam('prefix').set('slide_' + str(i))
+        slide.getParam('prefix').set('slide_' + str(index))
         slide.getParam('refresh').trigger()
 
-        if i == 0:
-            # si es el primer frame, le suma la mitad de transicion a cada dimension
+        if index == 0:
+            # si es el primer slide, le suma la mitad de transicion a cada dimension
             durations_slide.set(
                 durations[0] + mid_transition_frames,
                 durations[1] + mid_transition_frames,
                 durations[2] + mid_transition_frames)
         else:
             durations_slide.set(durations[0], durations[1], durations[2])
+
+        first_frame, last_frame = frame_range_list[index]
 
         start_frame_slide.set(first_frame)
 
@@ -96,15 +114,15 @@ def refresh(thisNode, app, workarea):
 
         # Transition
         transition = obj['transition']
-        if i == 0:
+        if index == 0:
             # si es la primera transicion deja la transicion en el frame 1
             start_frame = 1
         else:
-            start_frame = (last_frame - (transition_frames / 2)) - slide_frames
+            start_frame = (last_frame - (transition_frames / 2)) - slide_duration
 
         transition_prefix = transition.getParam('prefix')
         if transition_prefix:
-            transition_prefix.set('transition_' + str(i))
+            transition_prefix.set('transition_' + str(index))
         transition.getParam('start_frame').set(start_frame)
         transition.getParam('duration').set(transition_frames)
         transition.getParam('format').set(_format)
@@ -114,15 +132,7 @@ def refresh(thisNode, app, workarea):
         transition.getParam('refresh').trigger()
         # --------------------
 
-        # si es el primer slide, le sumamos la mitad de la duracion de la transicion,
-        # ya que la primera transicion va a negro.
-        if i == 0:
-            first_frame += slide_frames + mid_transition_frames
-        else:
-            first_frame += slide_frames
-        last_frame += slide_frames
-
-        connect_slide_inputs(slides, i)
+        connect_slide_inputs(slides, index)
 
 
 def generate_base_slides(thisNode, app, workarea):
