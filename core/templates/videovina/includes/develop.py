@@ -1,6 +1,6 @@
 from natron_extent import getNode, createNode, alert, copy, warning, question
 from slides import get_slides, get_slide, delete_slide, get_first_slide
-from vv_misc import get_resolution, connect_slide_inputs
+from vv_misc import get_resolution
 from transition import directional_transition
 from pictures import get_picture
 import os
@@ -351,3 +351,74 @@ def update_post_fx(thisNode, workarea):
     first_black = getNode(workarea, 'FirstBlack')
     first_slide['dot'].connectInput(0, filter_dot)
     first_slide['transition'].connectInput(0, first_black)
+
+
+def connect_slide_inputs(workarea, current_slide, max_pictures):
+    # conecta todas las entradas de cada slide, asi
+    # poder usarlas dentro del grupo de la slide
+    obj = get_slide(workarea, current_slide)
+    if not obj:
+        return
+    slide = obj['slide']
+
+    extra_count = slide.getMaxInputCount() - 1
+
+    if not extra_count:
+        return
+
+    connect_nodes_count = max_pictures - 1
+
+    def connect_input(_input, connect_node):
+        slide.disconnectInput(_input)
+        picture = get_picture(workarea, connect_node)
+        reformat = picture['reformat']
+        image = picture['image']
+        if reformat:
+            slide.connectInput(_input, reformat)
+        else:
+            slide.connectInput(_input, image)
+
+    if connect_nodes_count >= extra_count:
+        # encuentra el nodo de inicio, para las conecciones
+        connect_node = current_slide - (extra_count / 2)
+
+        # el index maximo al que se puede conectar una entrada
+        max_connection = connect_node + extra_count
+        # -------------------
+
+        # si los nodos para poder conectarse, superan a las necesarias, encuentra
+        # un nodo posible
+        if max_connection >= connect_nodes_count:
+            connect_node = connect_nodes_count - extra_count
+        # -------------------
+
+        if connect_node < 0:
+            connect_node = 0
+
+        # la entrada 0 pertenece a la imagen principal, por eso inicia del 1
+        for i in range(1, extra_count + 1):
+            if connect_node == current_slide:
+                connect_node += 1
+
+            connect_input(i, connect_node)
+            connect_node += 1
+    else:
+        # va conectando a todas los nodos posible, cuando se
+        # terminan vuelve a 0 y comienza a conectar otra vez
+        connect_node = 0
+        for i in range(1, extra_count + 1):
+            if connect_node == current_slide:
+                connect_node += 1
+
+            if connect_node > connect_nodes_count:
+                connect_node = 0
+
+            # cuando es la primera slide se conecta a si mismo,
+            # asi que cuando la acutal slide sea 0 y el nodo a conectar 0
+            # cambia el nodo a conectar a 1.
+            if current_slide == 0 and connect_node == 0:
+                connect_node = 1
+            # ------------------
+
+            connect_input(i, connect_node)
+            connect_node += 1
