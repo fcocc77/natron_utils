@@ -7,14 +7,18 @@ except:
     None
 
 
+def app():
+    return NatronGui.natron.getGuiInstance(0)
+
+
 def copy(node, group=None):
-    app = NatronGui.natron.getGuiInstance(0)
+    _app = app()
     _id = node.getPluginID()
 
     # si el nodo es un grupo, busca cada parametro en el nodo de origen
     # y lo crea en el nuevo nodo grupo, y luega copia cada nodo hijo con sus atributos
     if _id == 'fr.inria.built-in.Group':
-        new_node = app.createNode('vv.group', 1, group)
+        new_node = _app.createNode('vv.group', 1, group)
 
         new_node.control = new_node.createPageParam("control", "Control")
         new_node.setPagesOrder(['control', 'Node', 'Settings'])
@@ -131,7 +135,7 @@ def copy(node, group=None):
                     iname = inode.getScriptName()
                     _node.connectInput(i, created_nodes[iname])
     else:
-        new_node = app.createNode(_id, -1, group)
+        new_node = _app.createNode(_id, -1, group)
         for p in node.getParams():
             name = p.getScriptName()
             param = new_node.getParam(name)
@@ -145,16 +149,12 @@ def copy(node, group=None):
 
 
 def get_project_name():
-    app = NatronGui.natron.getGuiInstance(0)
-    return app.getProjectParam('projectName').get()[:-4]
+    return app().getProjectParam('projectName').get()[:-4]
 
 
 def saveProject():
-    app = NatronGui.natron.getGuiInstance(0)
-
-    project_path = app.getProjectParam('projectPath').get(
-    ) + app.getProjectParam('projectName').get()
-    app.saveProject(project_path)
+    project_path = app().getProjectParam('projectPath').get() + app().getProjectParam('projectName').get()
+    app().saveProject(project_path)
 
     return project_path
 
@@ -177,8 +177,7 @@ def run(node, func_name, args=[]):
 
 
 def absolute(path):
-    app = NatronGui.natron.getGuiInstance(0)
-    base_project = app.getProjectParam('projectPath').get()
+    base_project = app().getProjectParam('projectPath').get()
 
     return path.replace('[Project]/', base_project)
 
@@ -217,7 +216,6 @@ def getNode(group, label=None):
 
 
 def createNode(node=None, label=None, group=None, position=None, color=None, output=None):
-    app = NatronGui.natron.getGuiInstance(0)
     nodes = {
         'blur': 'net.sf.cimg.CImgBlur',
         'text': 'net.fxarena.openfx.Text',
@@ -236,7 +234,7 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
         'switch': 'net.sf.openfx.switchPlugin'
     }
 
-    _node = app.createNode(nodes[node], -1, group)
+    _node = app().createNode(nodes[node], -1, group)
     _node.setLabel(label)
     if position:
         _node.setPosition(position[0], position[1])
@@ -290,8 +288,7 @@ def get_all_nodes(group=None):
 
 
 def get_select_node(_type=None):
-    app = NatronGui.natron.getGuiInstance(0)
-    for node in app.getSelectedNodes():
+    for node in app().getSelectedNodes():
         if _type:
             if node.getPluginID() == _type:
                 return node
@@ -376,13 +373,11 @@ def dots_delete(parent_node):
 def get_node_path(node):
     # encuentra la ruta completa del nodo, si es que
     # el nodo a buscar esta dentro de un grupo.
-    app = NatronGui.natron.getGuiInstance(0)
-
     node_name = node.getScriptName()
     node_position = node.getPosition()[0]
 
     found = None
-    for a in app.getChildren():
+    for a in app().getChildren():
         a_name = a.getScriptName()
         a_pos = a.getPosition()[0]
         if a_name == node_name:
@@ -410,13 +405,13 @@ def get_node_path(node):
 
 def get_parent(node):
     # obtiene el nodo padre
-    app = NatronGui.natron.getGuiInstance(0)
+    _app = app()
     node_path = get_node_path(node)
 
     if node_path:
-        return eval('app.getNode("' + node_path + '")')
+        return eval('_app.getNode("' + node_path + '")')
     else:
-        return app
+        return _app
 
 
 def get_output_nodes(node):
