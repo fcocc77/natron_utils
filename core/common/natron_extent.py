@@ -429,15 +429,6 @@ def get_output_nodes(node):
     return nodes
 
 
-def get_videovina():
-    # obtiene el nodo principal de videovina
-    for node in app().getChildren():
-        if node.getPluginID() == 'vv.VideoVina':
-            return node
-
-    return None
-
-
 def input_connected(node, _input=0):
     # si el bounding box es 0, significa que no hay imagen conectada
     input_node = node.getInput(_input)

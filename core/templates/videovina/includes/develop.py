@@ -1,4 +1,5 @@
-from natron_extent import getNode, createNode, alert, copy, warning, question, get_videovina, app
+from natron_extent import getNode, createNode, alert, copy, warning, question, app
+from vina import get_videovina, get_ranges, videovina_data, get_transition_duration
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution
 from transition import directional_transition
@@ -12,22 +13,14 @@ xdistance = 200
 
 
 def refresh(thisNode, app, workarea):
+    vina = videovina_data()
 
-    speed = thisNode.speed.get()
-    _format = thisNode.format.get()
-    color = thisNode.color.get()
-    durations = thisNode.durations.get()
-    pictures_amount = thisNode.getParam('pictures_amount').get()
-
-    normal_speed = durations[1]
+    speed = vina.speed
+    _format = vina.format
+    color = vina.color
+    durations = vina.durations
 
     slide_duration = durations[speed]
-
-    # esta velocidad de frames corresponde a la velocidad normal,
-    # y calculta la velocidad final dependiendo de la velocidad de la slide
-    transition_frames = thisNode.transition_duration.get()
-    transition_frames = (slide_duration * transition_frames) / normal_speed
-    # -------------------------
 
     width, hight = get_resolution(thisNode)
 
@@ -44,6 +37,7 @@ def refresh(thisNode, app, workarea):
     last_black.getParam('size').set(width, hight)
     # ---------------------
 
+    transition_frames = get_transition_duration()
     mid_transition_frames = transition_frames / 2
     _last_frame = slide_count * slide_duration
     # dissolve a negro en la ultima slide
@@ -63,22 +57,7 @@ def refresh(thisNode, app, workarea):
     app.frameRange.set(1, _last_frame + transition_frames + 2)
     # --------------------
 
-    first_frame = 1
-    last_frame = slide_duration + mid_transition_frames
-
-    # genera una lista con cada rango, dependiendo de la duracion
-    frame_range_list = []
-    for index in range(slide_count + 1):
-        frame_range_list.append((first_frame, last_frame))
-
-        # si es el primer slide, le sumamos la mitad de la duracion de la transicion,
-        # ya que la primera transicion va a negro.
-        if index == 0:
-            first_frame += slide_duration + mid_transition_frames
-        else:
-            first_frame += slide_duration
-        last_frame += slide_duration
-    # -------------------------------
+    frame_range_list = get_ranges(slide_count, speed)
 
     for obj in slides:
         slide = obj['slide']
@@ -135,7 +114,7 @@ def refresh(thisNode, app, workarea):
         transition.getParam('refresh').trigger()
         # --------------------
 
-        connect_slide_inputs(workarea, index, pictures_amount)
+        connect_slide_inputs(workarea, index, vina.pictures_amount)
 
 
 def generate_base_slides(thisNode, app, workarea):
