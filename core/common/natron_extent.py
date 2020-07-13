@@ -8,7 +8,7 @@ except:
 
 
 def app():
-    return NatronGui.natron.getGuiInstance(0)
+    return NatronEngine.natron.getActiveInstance()
 
 
 def copy(node, group=None):
