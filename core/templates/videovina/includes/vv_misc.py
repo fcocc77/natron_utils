@@ -29,7 +29,7 @@ def set_default_color(thisNode, thisParam):
 def get_resolution(thisNode):
     # obtiene la correcta resolucion a partir de una escala
     # tomando como referencia el 1920x1080
-    format_index = thisNode.format.get()
+    format_index = thisNode.getParam('format').get()
     pixels = formats[format_index]
 
     return pixels

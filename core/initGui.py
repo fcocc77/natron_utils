@@ -10,6 +10,7 @@ import collect_files
 import export_pyplugs
 import backup
 import update_node
+import sort
 
 
 def reload_nodes():

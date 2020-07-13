@@ -206,7 +206,10 @@ def question(_question, message):
         return False
 
 
-def getNode(group, label=None):
+def getNode(group=None, label=None):
+    if not group:
+        group = app()
+
     # Encuentra un nodo a partir del Label
     for child in group.getChildren():
         if child.getLabel() == label:
@@ -265,7 +268,7 @@ def value_by_durations(value, durations=[0, 0, 0]):
 
 def get_all_nodes(group=None):
     if not group:
-        group = NatronGui.natron.getGuiInstance(0)
+        group = app()
     nodes = []
     for a in group.getChildren():
         a_path = a.getScriptName()
@@ -424,6 +427,15 @@ def get_output_nodes(node):
                     nodes.append([n, i])
 
     return nodes
+
+
+def get_videovina():
+    # obtiene el nodo principal de videovina
+    for node in app().getChildren():
+        if node.getPluginID() == 'vv.VideoVina':
+            return node
+
+    return None
 
 
 def input_connected(node, _input=0):

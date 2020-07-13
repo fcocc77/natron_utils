@@ -1,4 +1,4 @@
-from natron_extent import getNode
+from natron_extent import getNode, app
 
 
 def get_slide(workarea, index):
@@ -31,7 +31,10 @@ def get_slide(workarea, index):
     }
 
 
-def get_slides(workarea, production=True, base=True, separate=False):
+def get_slides(workarea=None, production=True, base=True, separate=False):
+    if not workarea:
+        workarea = app()
+
     # si 'all' es False obtiene solo las slide de base
     production_list = []
     base_list = []
@@ -86,4 +89,4 @@ def delete_slide(workarea, slide_number):
 
 
 def get_slide_position(index):
-    return [200 * index, 0]
+    return [200 * int(index), 0]

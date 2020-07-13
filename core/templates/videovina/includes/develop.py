@@ -1,4 +1,4 @@
-from natron_extent import getNode, createNode, alert, copy, warning, question
+from natron_extent import getNode, createNode, alert, copy, warning, question, get_videovina, app
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution
 from transition import directional_transition
@@ -234,7 +234,12 @@ def generate_base_slides(thisNode, app, workarea):
               ' Slides base.', 'VideoVina')
 
 
-def update_post_fx(thisNode, workarea):
+def update_post_fx(thisNode=None, workarea=None):
+    if not thisNode:
+        thisNode = get_videovina()
+    if not workarea:
+        workarea = app()
+
     slides = get_slides(workarea)
     if not len(slides):
         return

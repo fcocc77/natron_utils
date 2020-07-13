@@ -73,12 +73,13 @@ def generate_production_slides(thisNode, app, workarea, slides_range, force=Fals
     base_count = len(base_slides)
     slides_count = base_count + len(production_slides)
 
-    if not base_count:
-        warning('Produccion Slides', 'Tiene que haber slides base')
-        return
+    if not force:
+        if not base_count:
+            warning('Produccion Slides', 'Tiene que haber slides base')
+            return
 
-    if not question('Al crear las slide de produccion se borraran las slide base, desea continuar?', 'Produccion Slides'):
-        return
+        if not question('Al crear las slide de produccion se borraran las slide base, desea continuar?', 'Produccion Slides'):
+            return
 
     amount = slides_range[1] + 1
     _slides_range = range(slides_range[0], amount)

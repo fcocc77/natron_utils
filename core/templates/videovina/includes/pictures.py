@@ -1,7 +1,7 @@
 import os
 import random
 from slides import get_slides, get_slide, get_slide_position
-from natron_extent import getNode, delete
+from natron_extent import getNode, delete, app
 from vv_misc import get_resolution
 
 
@@ -98,13 +98,15 @@ def get_picture(workarea, index):
     return {
         'image': image,
         'reformat': reformat,
-        'index': _index
+        'index': index
     }
 
 
-def get_pictures(workarea):
-    pictures = []
+def get_pictures(workarea=None):
+    if not workarea:
+        workarea = app()
 
+    pictures = []
     for i in range(100):
         obj = get_picture(workarea, i)
         if obj:
