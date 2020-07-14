@@ -152,8 +152,12 @@ def get_project_name():
     return app().getProjectParam('projectName').get()[:-4]
 
 
+def get_project_path():
+    return app().getProjectParam('projectPath').get() + app().getProjectParam('projectName').get()
+
+
 def saveProject():
-    project_path = app().getProjectParam('projectPath').get() + app().getProjectParam('projectName').get()
+    project_path = get_project_path()
     app().saveProject(project_path)
 
     return project_path
