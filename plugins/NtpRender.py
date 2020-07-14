@@ -66,7 +66,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/comp/ntp")
+    param.setValue("[Project]/ntp")
     lastNode.output_folder = param
     del param
 
@@ -108,7 +108,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
+    param.setValue(10, 0)
     lastNode.slides_count = param
     del param
 
@@ -125,7 +125,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(7, 0)
+    param.setValue(3, 0)
     lastNode.slides_by_project = param
     del param
 
