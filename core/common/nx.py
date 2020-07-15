@@ -9,8 +9,13 @@ try:
 except:
     None
 
+_app = None
+
 
 def app():
+    if _app:
+        return _app
+
     try:
         return NatronGui.natron.getGuiInstance(0)
     except:
