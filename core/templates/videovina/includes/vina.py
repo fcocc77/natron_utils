@@ -1,5 +1,5 @@
 # datos del nodo de videovina
-from natron_extent import app
+from nx import app
 from argparse import Namespace
 
 

@@ -1,5 +1,5 @@
 import NatronEngine
-from natron_extent import getNode
+from nx import getNode
 from base import link_to_parent
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):

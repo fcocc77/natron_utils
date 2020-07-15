@@ -3,7 +3,7 @@ import os
 import shutil
 import NatronGui
 from PySide import QtCore
-from natron_extent import getNode, app
+from nx import getNode, app
 from slides import get_slides, get_slide_position
 from develop import update_post_fx
 from pictures import get_pictures

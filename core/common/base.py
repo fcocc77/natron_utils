@@ -1,4 +1,4 @@
-from natron_extent import warning
+from nx import warning
 
 
 def link_to_parent(thisNode, thisParam, thisGroup):

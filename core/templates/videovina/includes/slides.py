@@ -1,4 +1,4 @@
-from natron_extent import getNode, app
+from nx import getNode, app
 
 
 def get_slide(workarea, index):

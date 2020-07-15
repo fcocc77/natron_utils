@@ -1,5 +1,5 @@
 import os
-from natron_extent import getNode, createNode
+from nx import getNode, createNode
 
 
 def generate_texts(thisNode):

@@ -1,4 +1,4 @@
-from natron_extent import getNode, createNode, warning
+from nx import getNode, createNode, warning
 from base import *
 from slide_base import generate_inputs
 

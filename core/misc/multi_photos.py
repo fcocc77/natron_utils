@@ -1,4 +1,4 @@
-from natron_extent import createNode, getNode
+from nx import createNode, getNode
 from util import jread
 import os
 import random

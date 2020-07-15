@@ -1,5 +1,5 @@
 import os
-from natron_extent import get_parent
+from nx import get_parent
 
 # videovina modules
 from slides import *

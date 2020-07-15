@@ -1,4 +1,4 @@
-from natron_extent import copy, warning, alert, question
+from nx import copy, warning, alert, question
 from slides import get_slides, delete_slide, get_slide, get_last_slide
 from develop import update_post_fx, xdistance, refresh
 

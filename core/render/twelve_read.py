@@ -1,5 +1,5 @@
 import os
-from natron_extent import getNode
+from nx import getNode
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):

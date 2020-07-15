@@ -1,3 +1,6 @@
+# ----------------------------
+# extencion de tools de Natron
+# ----------------------------
 from util import *
 import NatronEngine
 from PySide.QtGui import QMessageBox

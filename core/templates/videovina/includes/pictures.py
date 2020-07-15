@@ -1,7 +1,7 @@
 import os
 import random
 from slides import get_slides, get_slide, get_slide_position
-from natron_extent import getNode, delete, app
+from nx import getNode, delete, app
 from vv_misc import get_resolution
 
 

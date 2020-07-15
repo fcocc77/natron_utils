@@ -1,4 +1,4 @@
-from natron_extent import getNode
+from nx import getNode
 import NatronEngine
 from math import cos, sin
 from base import link_to_parent

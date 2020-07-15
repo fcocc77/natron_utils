@@ -1,4 +1,4 @@
-from natron_extent import getNode, createNode, warning
+from nx import getNode, createNode, warning
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):

@@ -2,7 +2,7 @@ import os
 import shutil
 import NatronGui
 from PySide import QtCore
-from natron_extent import saveProject, alert
+from nx import saveProject, alert
 
 def backup():
     # guarda el proyecto antes de copiarlo

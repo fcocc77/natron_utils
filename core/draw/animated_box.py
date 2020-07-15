@@ -1,4 +1,4 @@
-from natron_extent import getNode, value_by_durations
+from nx import getNode, value_by_durations
 import NatronEngine
 from base import link_to_parent
 

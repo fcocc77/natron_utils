@@ -1,4 +1,4 @@
-from natron_extent import getNode
+from nx import getNode
 from text_base import generate_texts
 
 

@@ -2,7 +2,7 @@ import os
 import shutil
 import NatronGui
 from PySide import QtCore
-from natron_extent import getNode, alert, get_select_node
+from nx import getNode, alert, get_select_node
 
 
 def export_pyplugs():

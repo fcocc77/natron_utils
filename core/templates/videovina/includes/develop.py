@@ -1,4 +1,4 @@
-from natron_extent import getNode, createNode, alert, copy, warning, question, app
+from nx import getNode, createNode, alert, copy, warning, question, app
 from vina import get_videovina, get_ranges, videovina_data, get_transition_duration
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution

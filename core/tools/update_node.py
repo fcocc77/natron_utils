@@ -4,7 +4,7 @@
 # no fue borrado.
 import NatronGui
 from PySide import QtCore
-from natron_extent import get_parent, get_select_node, copy, get_output_nodes, warning
+from nx import get_parent, get_select_node, copy, get_output_nodes, warning
 
 
 def update_node():
