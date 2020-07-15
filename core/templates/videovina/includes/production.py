@@ -118,8 +118,8 @@ def generate_production_slides(thisNode, app, workarea, slides_range, force=Fals
 
         posx += xdistance
 
-    # borra las slide que estan fuera del rango
-    for i in range(amount):
+    # borra las slide que estan fuera del rango de la cantidad de slides
+    for i in range(last_slide['index'] + 1):
         if not i in _slides_range:
             delete_slide(workarea, i)
 
