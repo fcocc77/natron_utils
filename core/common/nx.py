@@ -225,6 +225,16 @@ def getNode(group=None, label=None):
     if not group:
         group = app()
 
+    # cuando creamos nodos con un nombre de script que ya se uso alguna vez,
+    # natron le pone otro nombre de script, por eso a veces no encontraremos el nodo
+    # con el nombre de script, y si no lo encuentra lo busca por el 'label'; buscarlo con el 'label'
+    # es mucho mas pesado por que tiene que iterar todo el grupo para encontrarlo, en cambio el scriptName
+    # lo encuentra directamente por eso va primero.
+    node = group.getNode(label)
+    if node:
+        return node
+    # -----------------------------
+
     # Encuentra un nodo a partir del Label
     for child in group.getChildren():
         if child.getLabel() == label:
@@ -233,7 +243,7 @@ def getNode(group=None, label=None):
     return None
 
 
-def createNode(node=None, label=None, group=None, position=None, color=None, output=None):
+def createNode(node, label=None, group=None, position=None, color=None, output=None):
     nodes = {
         'blur': 'net.sf.cimg.CImgBlur',
         'text': 'net.fxarena.openfx.Text',
@@ -252,8 +262,15 @@ def createNode(node=None, label=None, group=None, position=None, color=None, out
         'switch': 'net.sf.openfx.switchPlugin'
     }
 
-    _node = app().createNode(nodes[node], -1, group)
+    if node in nodes.keys():
+        _id = nodes[node]
+    else:
+        _id = node
+
+    _node = app().createNode(_id, -1, group)
+    _node.setScriptName(label)
     _node.setLabel(label)
+
     if position:
         _node.setPosition(position[0], position[1])
     if color:
