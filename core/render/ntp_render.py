@@ -1,7 +1,7 @@
 import NatronEngine
 import os
 from vina import get_ranges
-from natron_extent import get_project_name, get_project_path, absolute, alert
+from natron_extent import get_project_name, get_project_path, absolute, alert, saveProject
 import json
 
 
@@ -75,6 +75,8 @@ def render(thisNode, app):
 
     first_slide = 0
     last_slide = len(tasks) - 1
+
+    saveProject()
 
     cmd = (submit
            + ' -jobName "' + job_name + '"'
