@@ -54,7 +54,7 @@ def refresh(thisNode, app, workarea):
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
     # le sumamos 'transition_frames' que equivale a 2 mitades de transicion, la inicial y la final
-    app.frameRange.set(1, _last_frame + transition_frames + 2)
+    app.getProjectParam('frameRange').set(1, _last_frame + transition_frames + 2)
     # --------------------
 
     frame_range_list = get_ranges(slide_count, speed)
