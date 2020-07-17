@@ -1,13 +1,20 @@
 #! /usr/bin/sh
 cd $(dirname "$0") # Directorio Raiz
 
-natron_plugins='/usr/share/Natron/Plugins'
-mkdir -p $natron_plugins
+function install() {
+    mkdir -p $1
+    rm -rf $1/*
 
-rm -rf $natron_plugins/*
+    # copia el core a la carpeta plugins de natron
+    cp -rf ./core $1
+    cp -rf ./plugins $1
 
-# copia el core a la carpeta plugins de natron
-cp -rf ./core $natron_plugins
-cp -rf ./plugins $natron_plugins
+    # inserta la ruta de la instancia a init.py
+    init="$1/core/init.py"
+    sed -i "s|{path}|$1|g" $init
 
-chmod 777 -R $natron_plugins
+    chmod 777 -R $1
+}
+
+plugins="/usr/share/Natron/Plugins"
+install "$plugins"

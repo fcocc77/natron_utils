@@ -1,6 +1,6 @@
 import os
 
-path = '/usr/share/Natron/Plugins'
+path = '{path}'
 ignore = ['init', 'initGui']
 ignore_folders = ['tools']
 
