@@ -9,6 +9,7 @@ from slides import get_slides
 from production import generate_production_slides
 from vina import get_videovina
 from project import testing
+import nx
 
 # datos de vinarender
 data = json.loads(argv[3].replace("'", '"'))
@@ -17,8 +18,6 @@ frame_range = data['frames']
 slides_range = data['slides']
 output_folder = data['output_folder']
 # ----------------------
-
-app = app1
 
 base_project_name = os.path.basename(base_project)[:-4]
 
@@ -31,30 +30,16 @@ project_name = base_project_name + '_' + \
 
 project = output_folder + '/' + project_name + '.ntp'
 
-app.loadProject(base_project)
+_app = app1.loadProject(base_project)
 
-# al ejecutar simultaneamente este script, cuando se usa instancias,
-# da conflicto al usar la funcion 'generate_production_slides' por eso
-# se hace un mutex de archivo, cuando se esta usando el archivo tiene un '1'
-# si no se esta ejectutando es '0'
-mutex = '/tmp/mutex'
-timeout = 10  # segundos
-current = 0
-while(current < timeout):
-    if not fread(mutex) == '1':
-        break
+nx._app = _app
 
-    sleep(0.1)
-    current += 0.1
+generate_production_slides(None, _app, _app, slides_range, force=True)
 
-fwrite(mutex, '1')
-generate_production_slides(None, app, app, slides_range, force=True)
-fwrite(mutex, '0')
-
-app.saveProjectAs(project)
+_app.saveProjectAs(project)
 
 testing(
-    app=app,
+    app=_app,
     project=project,
     slide_range=slides_range,
     format=2,  # quarter, half, hd, 4k
