@@ -62,7 +62,7 @@ def test_format(format):
 
 
 def test_slide_range(slide_range):
-    _range = range(slide_range[0], slide_range[1])
+    _range = range(slide_range[0], slide_range[1] + 1)
 
     error = 0
 
