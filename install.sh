@@ -8,6 +8,8 @@ function install() {
     # copia el core a la carpeta plugins de natron
     cp -rf ./core $1
     cp -rf ./plugins $1
+    cp -rf ./vinarender $1
+    cp -rf ./testing $1
 
     # inserta la ruta de la instancia a init.py
     init="$1/core/init.py"
