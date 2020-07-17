@@ -13,9 +13,9 @@ rm -rf $vinarender/*
 # copia el core a la carpeta plugins de natron
 cp -rf ./core $plugins
 cp -rf ./plugins $plugins
+cp -rf ./testing $plugins
 
 cp -rf ./vinarender/* $vinarender
-cp -rf ./testing/* $vinarender
 
 # inserta la ruta de la instancia a init.py
 init="$plugins/core/init.py"
