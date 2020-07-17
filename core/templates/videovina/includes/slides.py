@@ -1,7 +1,10 @@
 from nx import getNode, app
 
 
-def get_slide(workarea, index):
+def get_slide(workarea=None, index=None):
+    if not workarea:
+        workarea = app()
+
     _index = str(index)
 
     slide = getNode(workarea, 'slide_' + _index)

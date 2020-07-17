@@ -1,7 +1,7 @@
 
-def testing_log(message, fact, hoped=None, error=None):
+def testing_log(message, fact, hoped=None, error_info=None):
     error = 0
-    if hoped:
+    if not hoped == None:
         if fact == hoped:
             print '- ' + message + ': OK'
         else:
@@ -11,7 +11,7 @@ def testing_log(message, fact, hoped=None, error=None):
         if fact:
             print '- ' + message + ': OK'
         else:
-            print '- ' + message + ': ERROR ( ' + error + ' )'
+            print '- ' + message + ': ERROR ( ' + error_info + ' )'
             error = 1
 
     return error
@@ -19,4 +19,4 @@ def testing_log(message, fact, hoped=None, error=None):
 
 def slide_testing_log(message, error):
     return testing_log(message, False if error else True,
-                       error='Nodos con error: ' + error)
+                       error_info='Nodos con error: ' + error)
