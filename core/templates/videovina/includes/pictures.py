@@ -1,7 +1,7 @@
 import os
 import random
 from slides import get_slides, get_slide, get_slide_position
-from nx import getNode, delete, app
+from nx import getNode, delete, app, alert
 from vv_misc import get_resolution
 
 
@@ -38,10 +38,10 @@ def generate_pictures(thisNode, workarea, app, pictures, amount=None, reformat_n
         first_picture, last_picture = get_max_pictures()
 
         count = len(pictures)
-        if last_picture > count:
-            last_picture = count
+        if last_picture >= count:
+            last_picture = count - 1
 
-        _range = range(first_picture, last_picture)
+        _range = range(first_picture, last_picture + 1)
 
     for index in _range:
         node_to_connect = None
@@ -139,7 +139,10 @@ def get_max_pictures():
         inputs = slide.getMaxInputCount()
         mid_inputs = inputs / 2
 
-        first = index - mid_inputs + 1
+        first = index - mid_inputs
+        if inputs > 1:
+            first += 1
+
         if first < first_picture:
             first_picture = first
 

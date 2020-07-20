@@ -200,6 +200,9 @@ def update_videovina_project(thisNode, app, workarea):
         slide = obj['slide']
         index = obj['index']
 
+        if index >= count:
+            continue
+
         item = timeline[index].texts
 
         if item.separate_font:
