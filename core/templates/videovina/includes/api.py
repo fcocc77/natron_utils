@@ -1,13 +1,14 @@
 import os
 import shutil
 from util import jread
-from develop import refresh
+from develop import refresh, update_post_fx
 from pictures import generate_pictures
 from slides import get_slides, get_slide
-from song import get_current_song
+from song import get_current_song, get_type_song
 from util import jwrite
 from nx import alert, getNode, createNode
 from general import formats
+from production import generate_production_slides
 
 
 def update_private_content(thisNode, thisParam):
@@ -176,13 +177,16 @@ def update_videovina_project(thisNode, app, workarea):
 
     photos = []
     count = len(timeline)
+    first_slide = 0
+    last_slide = count - 1
+
     for photo in timeline:
         basename = photo.name.split('.')[0]
         url = footage + '/' + basename + '.jpg'
         photos.append(url)
 
     generate_production_slides(
-        thisNode, app, workarea, count, force=True, reformat=False)
+        thisNode, app, workarea, [first_slide, last_slide], force=True)
 
     def font_path(font_name):
         font_path = private + '/fonts/' + font_name + '.'
@@ -198,7 +202,7 @@ def update_videovina_project(thisNode, app, workarea):
     for i, obj in enumerate(get_slides(workarea)):
         slide = obj['slide']
 
-        item = timeline[i]
+        item = timeline[i].texts
 
         if item.separate_font:
             slide.getParam('font').set(font_path(item.font))
@@ -206,9 +210,9 @@ def update_videovina_project(thisNode, app, workarea):
             slide.getParam('font').set(font_path(global_font))
 
         if item.text:
-            include_texts = slide.getParam('include_texts')
-            include_texts.set(0)
-            include_texts.set(item.text_enabled)
+            include_text = slide.getParam('include_text')
+            include_text.set(0)
+            include_text.set(item.text_enabled)
 
             if item.text_enabled:
                 slide.getParam('title').set(item.title)
@@ -224,8 +228,8 @@ def update_videovina_project(thisNode, app, workarea):
     thisNode.getParam('song').set(song_path)
     # -------------
 
-    generate_pictures(workarea, app, photos)
-    update_post_fx(thisNode, app, workarea)
+    generate_pictures(thisNode, workarea, app, photos, count)
+    update_post_fx()
     refresh(thisNode, app, workarea)
 
 
@@ -328,6 +332,7 @@ def transfer_to_static(thisNode, app, project_path):
 
     # copia la json de informacion de la plantilla
     info = resources + '/info.json'
+
     shutil.copy(info, static_templates)
     # -------------------------
 
