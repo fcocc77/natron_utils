@@ -19,7 +19,7 @@ def get_tasks(slides_count, slides_by_project):
     # calcula cuantas tareas tiene que tener vinarender dependiendo
     # de la cantidad de 'slides' y las 'slides por proyecto'.
 
-    frames_ranges = get_ranges(slides_count - 1)
+    frames_ranges = get_ranges(slides_count)
 
     # crea una lista de rangos, dandole 1 slide antes y despues del rango
     tasks = []

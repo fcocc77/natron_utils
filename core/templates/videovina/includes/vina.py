@@ -56,7 +56,7 @@ def get_ranges(slide_count=None, speed=None):
 
     # genera una lista con cada rango, dependiendo de la duracion
     frame_range_list = []
-    for index in range(slide_count + 1):
+    for index in range(slide_count):
         frame_range_list.append((first_frame, last_frame))
 
         # si es el primer slide, le sumamos la mitad de la duracion de la transicion,

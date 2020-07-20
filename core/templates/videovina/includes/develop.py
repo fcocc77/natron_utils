@@ -25,7 +25,7 @@ def refresh(thisNode, app, workarea):
     width, hight = get_resolution(thisNode)
 
     slides = get_slides(workarea)
-    slide_count = slides[-1]['index']  # index del ultimo slide
+    slide_count = slides[-1]['index'] + 1  # index del ultimo slide
 
     # cambia la resolucion al primer y ultimo fondo negro
     first_black = getNode(workarea, 'FirstBlack')
