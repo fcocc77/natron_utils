@@ -3,6 +3,11 @@ import shutil
 from util import jread
 from develop import refresh
 from pictures import generate_pictures
+from slides import get_slides, get_slide
+from song import get_current_song
+from util import jwrite
+from nx import alert, getNode, createNode
+from general import formats
 
 
 def update_private_content(thisNode, thisParam):
@@ -263,7 +268,7 @@ def export_default_project(thisNode, app, workarea, project_path):
             'y': transform.getParam('translate').get()[1]
         }
 
-        include_texts = slide.getParam('include_texts').get()
+        include_texts = slide.getParam('include_text').get()
 
         item = {
             'foreground': 'overlap/slide_' + str(i) + '.png',
