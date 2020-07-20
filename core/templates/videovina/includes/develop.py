@@ -309,9 +309,9 @@ def update_post_fx(thisNode=None, workarea=None):
     if not vinarender:
         vinarender = createNode(
             node='vinarender',
-            label='vinarender',
             group=workarea
         )
+        vinarender.setLabel('vinarender')
     vinarender.setPosition(last_posx + 200, 1200)
     vinarender.connectInput(0, thisNode)
     vinarender.setLabel('vinarender')

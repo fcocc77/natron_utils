@@ -268,8 +268,9 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
         _id = node
 
     _node = app().createNode(_id, -1, group)
-    _node.setScriptName(label)
-    _node.setLabel(label)
+    if label:
+        _node.setScriptName(label)
+        _node.setLabel(label)
 
     if position:
         _node.setPosition(position[0], position[1])
