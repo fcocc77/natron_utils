@@ -2,7 +2,7 @@ import os
 import shutil
 from util import jread
 from develop import refresh, update_post_fx
-from pictures import generate_pictures
+from pictures import generate_pictures, get_max_pictures
 from slides import get_slides, get_slide
 from song import get_current_song, get_type_song
 from util import jwrite
@@ -185,9 +185,6 @@ def update_videovina_project(thisNode, app, workarea):
         url = footage + '/' + basename + '.jpg'
         photos.append(url)
 
-    generate_production_slides(
-        thisNode, app, workarea, [first_slide, last_slide], force=True)
-
     def font_path(font_name):
         font_path = private + '/fonts/' + font_name + '.'
         _font = font_path + 'otf'
@@ -199,10 +196,11 @@ def update_videovina_project(thisNode, app, workarea):
     thisNode.getParam('font').set(font_path(global_font))
 
     # cambia los titulos de todas las slides
-    for i, obj in enumerate(get_slides(workarea)):
+    for obj in get_slides(workarea):
         slide = obj['slide']
+        index = obj['index']
 
-        item = timeline[i].texts
+        item = timeline[index].texts
 
         if item.separate_font:
             slide.getParam('font').set(font_path(item.font))
@@ -228,7 +226,7 @@ def update_videovina_project(thisNode, app, workarea):
     thisNode.getParam('song').set(song_path)
     # -------------
 
-    generate_pictures(thisNode, workarea, app, photos, count)
+    generate_pictures(thisNode, workarea, app, photos)
     update_post_fx()
     refresh(thisNode, app, workarea)
 

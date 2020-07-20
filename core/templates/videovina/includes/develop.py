@@ -355,12 +355,14 @@ def connect_slide_inputs(workarea, current_slide, max_pictures):
     def connect_input(_input, connect_node):
         slide.disconnectInput(_input)
         picture = get_picture(workarea, connect_node)
-        reformat = picture['reformat']
-        image = picture['image']
-        if reformat:
-            slide.connectInput(_input, reformat)
-        else:
-            slide.connectInput(_input, image)
+
+        if picture:
+            reformat = picture['reformat']
+            image = picture['image']
+            if reformat:
+                slide.connectInput(_input, reformat)
+            else:
+                slide.connectInput(_input, image)
 
     if connect_nodes_count >= extra_count:
         # encuentra el nodo de inicio, para las conecciones

@@ -29,10 +29,21 @@ def generate_random_pictures(thisNode, app, workarea):
     generate_pictures(thisNode, workarea, app, random_pictures, amount, reformat)
 
 
-def generate_pictures(thisNode, workarea, app, pictures, amount, reformat_node=True):
+def generate_pictures(thisNode, workarea, app, pictures, amount=None, reformat_node=True):
     slides = get_slides(workarea)
 
-    for index in range(amount):
+    if amount:
+        _range = range(amount)
+    else:
+        first_picture, last_picture = get_max_pictures()
+
+        count = len(pictures)
+        if last_picture > count:
+            last_picture = count
+
+        _range = range(first_picture, last_picture)
+
+    for index in _range:
         node_to_connect = None
 
         obj = get_slide(workarea, index)
@@ -113,3 +124,27 @@ def get_pictures(workarea=None):
             pictures.append(obj)
 
     return pictures
+
+
+def get_max_pictures():
+    # obtiene el rango maximo de imagenes que necesita para la cantidad de entradas de las slides.
+
+    first_picture = 100000
+    last_picture = -1
+
+    for obj in get_slides():
+        slide = obj['slide']
+        index = obj['index']
+
+        inputs = slide.getMaxInputCount()
+        mid_inputs = inputs / 2
+
+        first = index - mid_inputs + 1
+        if first < first_picture:
+            first_picture = first
+
+        last = index + mid_inputs
+        if last > last_picture:
+            last_picture = last
+
+    return [first_picture, last_picture]
