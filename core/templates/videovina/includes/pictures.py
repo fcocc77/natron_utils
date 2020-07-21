@@ -3,11 +3,12 @@ import random
 from slides import get_slides, get_slide, get_slide_position
 from nx import getNode, delete, app, alert
 from vv_misc import get_resolution
+from vina import get_videovina
 
 
 def generate_random_pictures(thisNode, app, workarea):
-    amount = thisNode.getParam('pictures_amount').get()
     reformat = thisNode.getParam('reformat').get()
+    first_picture, last_picture = get_max_pictures()
 
     references_dir = thisNode.reference_pictures.get()
     references_pictures = os.listdir(references_dir)
@@ -17,7 +18,7 @@ def generate_random_pictures(thisNode, app, workarea):
     random_pictures = []
 
     index = 0
-    for i in range(amount):
+    for i in range(last_picture + 1):
         picture_index = indexs_without_repeat[index]
         picture = references_dir + '/' + references_pictures[picture_index]
         random_pictures.append(picture)
@@ -26,22 +27,23 @@ def generate_random_pictures(thisNode, app, workarea):
         if index >= references_count:
             index = 0
 
-    generate_pictures(thisNode, workarea, app, random_pictures, amount, reformat)
+    generate_pictures(random_pictures, reformat)
 
 
-def generate_pictures(thisNode, workarea, app, pictures, amount=None, reformat_node=True):
+def generate_pictures(pictures, pictures_amount=False, reformat_node=True):
+    _app = app()
+    workarea = _app
+    vina_node = get_videovina()
+
     slides = get_slides(workarea)
+    first_picture, last_picture = get_max_pictures()
 
-    if amount:
-        _range = range(amount)
-    else:
-        first_picture, last_picture = get_max_pictures()
-
+    if pictures_amount:
         count = len(pictures)
         if last_picture >= count:
             last_picture = count - 1
 
-        _range = range(first_picture, last_picture + 1)
+    _range = range(first_picture, last_picture + 1)
 
     for index in _range:
         node_to_connect = None
@@ -59,9 +61,9 @@ def generate_pictures(thisNode, workarea, app, pictures, amount=None, reformat_n
         reformat_name = 'slide_' + str(index) + '_reformat'
         reformat = getNode(workarea, reformat_name)
         if reformat_node:
-            width, hight = get_resolution(thisNode)
+            width, hight = get_resolution(vina_node)
             if not reformat:
-                reformat = app.createNode('vv.ResolutionExpand', 2, workarea)
+                reformat = _app.createNode('vv.ResolutionExpand', 2, workarea)
                 reformat.setLabel(reformat_name)
                 reformat.getParam('boxSize').set(width, hight)
                 reformat.setColor(.5, .4, .4)
@@ -80,7 +82,7 @@ def generate_pictures(thisNode, workarea, app, pictures, amount=None, reformat_n
         if reader:
             reader.getParam('filename').set(picture)
         else:
-            reader = app.createReader(picture, workarea)
+            reader = _app.createReader(picture, workarea)
             reader.setLabel(reader_name)
             # deja la imagen con rgba para que no de conflicto, porque
             # a veces da conflicto al mezclar imagenes usando el shufle.
@@ -124,6 +126,10 @@ def get_pictures(workarea=None):
             pictures.append(obj)
 
     return pictures
+
+
+def get_last_picture():
+    return get_pictures()[-1]
 
 
 def get_max_pictures():

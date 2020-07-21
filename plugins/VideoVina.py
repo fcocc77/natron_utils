@@ -171,7 +171,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Fast")
     lastNode.speed = param
     del param
 
@@ -226,7 +225,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("/mnt/server_01/videovina/as3/private/admin/projects/test/project.json")
+    param.setValue("/home/pancho/Documents/GitHub/videovina/tmp/as3/private/admin/projects/testing/project.json")
     lastNode.videovina_project = param
     del param
 
@@ -328,9 +327,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
     param.setValue(1, 1)
-    param.setValue(1, 2)
+    param.setValue(0.5725490196078431, 2)
     lastNode.color = param
     del param
 
@@ -344,7 +342,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/music/others/Heading West.mp3")
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/music/love/Redwood Trail.mp3")
     lastNode.song = param
     del param
 
@@ -358,7 +356,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Major Shift.ttf")
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Delius Swash Caps.ttf")
     lastNode.font = param
     del param
 
@@ -436,23 +434,6 @@ def createInstance(app,group):
     lastNode.reference_pictures = param
     del param
 
-    param = lastNode.createIntParam("pictures_amount", "Pictures Amount")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.pictures_amount = param
-    del param
-
     param = lastNode.createBooleanParam("reformat", "Reformat")
 
     # Add the param to the page
@@ -460,7 +441,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(True)
     lastNode.reformat = param
@@ -493,7 +474,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(2, 0)
+    param.setValue(3, 0)
     lastNode.amount_slide = param
     del param
 
@@ -527,7 +508,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(2, 0)
-    param.setValue(4, 1)
+    param.setValue(7, 1)
     lastNode.production_slides = param
     del param
 
@@ -831,7 +812,7 @@ def createInstance(app,group):
     lastNode.setScriptName("LastNode")
     lastNode.setLabel("LastNode")
     lastNode.setPosition(1920, -662)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupLastNode = lastNode
 
@@ -842,7 +823,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output2")
     lastNode.setPosition(1920, -563)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 

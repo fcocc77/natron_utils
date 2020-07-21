@@ -19,7 +19,6 @@ def videovina_data():
         durations=videovina_node.getParam('durations').get(),
         transition_duration=videovina_node.getParam('transition_duration').get(),
         speed=videovina_node.getParam('speed').get(),
-        pictures_amount=videovina_node.getParam('pictures_amount').get(),
         format=videovina_node.getParam('format').get(),
         color=videovina_node.getParam('color').get()
     )
@@ -39,13 +38,11 @@ def get_transition_duration():
     return transition_frames
 
 
-def get_ranges(slide_count=None, speed=None):
+def get_ranges(slide_count, speed=None):
     vina = videovina_data()
 
     if not speed:
         speed = vina.speed
-    if not slide_count:
-        slide_count = vina.pictures_amount
 
     slide_duration = vina.durations[speed]
 

@@ -229,7 +229,7 @@ def update_videovina_project(thisNode, app, workarea):
     thisNode.getParam('song').set(song_path)
     # -------------
 
-    generate_pictures(thisNode, workarea, app, photos)
+    generate_pictures(photos, pictures_amount=True)
     update_post_fx()
     refresh(thisNode, app, workarea)
 
