@@ -3,7 +3,7 @@ from vina import get_videovina, get_ranges, videovina_data, get_transition_durat
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution
 from transition import directional_transition
-from pictures import get_picture, get_last_picture
+from pictures import get_picture, get_index_last_picture
 import os
 import random
 
@@ -88,10 +88,12 @@ def refresh(thisNode, app, workarea):
 
         start_frame_slide.set(first_frame)
 
-        reformat = get_picture(workarea, index)['reformat']
-        if reformat:
-            reformat.getParam('boxSize').set(width, hight)
-            reformat.getParam('refresh').trigger()
+        picture = get_picture(workarea, index)
+        if picture:
+            reformat = picture['reformat']
+            if reformat:
+                reformat.getParam('boxSize').set(width, hight)
+                reformat.getParam('refresh').trigger()
 
         # Transition
         transition = obj['transition']
@@ -340,7 +342,7 @@ def connect_slide_inputs(workarea, current_slide):
     # conecta todas las entradas de cada slide, asi
     # poder usarlas dentro del grupo de la slide
 
-    max_pictures = get_last_picture()['index'] + 1
+    max_pictures = get_index_last_picture() + 1
 
     obj = get_slide(workarea, current_slide)
     if not obj:

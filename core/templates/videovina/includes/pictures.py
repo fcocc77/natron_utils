@@ -128,8 +128,12 @@ def get_pictures(workarea=None):
     return pictures
 
 
-def get_last_picture():
-    return get_pictures()[-1]
+def get_index_last_picture():
+    pictures = get_pictures()
+    if len(pictures):
+        return pictures[-1]['index']
+    else:
+        return 0
 
 
 def get_max_pictures():
