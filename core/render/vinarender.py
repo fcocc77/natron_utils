@@ -1,5 +1,6 @@
 import os
 import shutil
+import json
 from util import jread, hash_generator
 from nx import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
 
@@ -150,6 +151,30 @@ def render(thisNode, app):
         shutil.copy(project, new_project)
         project = new_project
 
+    # lista de proyectos divididos
+    divided_project = thisNode.getParam('divided_project').get()
+    divided_projects = []
+    if divided_project:
+        divided_project_folder = absolute(thisNode.getParam('project_folder').get())
+        prefix = thisNode.getParam('prefix').get()
+
+        for proj in os.listdir(divided_project_folder):
+            project_path = divided_project_folder + '/' + proj
+
+            frame_range = proj.split('_')[-1][:-4]
+            divided_projects.append({
+                'project': project_path,
+                'first_frame': int(frame_range.split('-')[0]),
+                'last_frame': int(frame_range.split('-')[1])
+            })
+    # --------------------------
+
+    extra = {
+        'output': output,
+        'divided_project': divided_project,
+        'divided_projects': divided_projects
+    }
+
     cmd = (submit
            + ' -jobName "' + job_name + '"'
            + ' -serverGroup ' + server_group
@@ -159,7 +184,7 @@ def render(thisNode, app):
            + ' -project "' + project + '"'
            + ' -software ' + software
            + ' -render ' + render
-           + ' -extra ' + output
+           + ' -extra \'' + json.dumps(extra) + "'"
            + ' -instances ' + str(instances)
            )
 

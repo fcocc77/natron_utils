@@ -12,6 +12,17 @@ def get_videovina():
     return None
 
 
+def get_videovina_render():
+    for node in app().getChildren():
+        if node.getPluginID() == 'vv.vinarender':
+            input_node = node.getInput(0)
+            if input_node:
+                if input_node.getPluginID() == 'vv.VideoVina':
+                    return node
+
+    return None
+
+
 def videovina_data():
     videovina_node = get_videovina()
 

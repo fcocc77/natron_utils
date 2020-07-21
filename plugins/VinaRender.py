@@ -66,6 +66,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.rgbonly = param
     del param
 
@@ -92,6 +93,18 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(True)
     lastNode.duplicate_project = param
+    del param
+
+    param = lastNode.createBooleanParam("divided_project", "Divided Project")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.divided_project = param
     del param
 
     param = lastNode.createSeparatorParam("sep4", "")
@@ -162,6 +175,45 @@ def createInstance(app,group):
     lastNode.render = param
     del param
 
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createPathParam("project_folder", "Project Folder")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setValue("[Project]/ntp")
+    lastNode.project_folder = param
+    del param
+
+    param = lastNode.createStringParam("prefix", "NTP Prefix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue("testing")
+    lastNode.prefix = param
+    del param
+
     param = lastNode.createSeparatorParam("sep3", "")
 
     # Add the param to the page
@@ -188,7 +240,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(100, 1)
+    param.setValue(532, 1)
     lastNode.range = param
     del param
 
@@ -261,7 +313,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(704, 453)
+    lastNode.setPosition(0, 0)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -273,7 +325,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
-    lastNode.setPosition(919, 266)
+    lastNode.setPosition(0, 0)
     lastNode.setSize(128, 78)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
@@ -293,11 +345,6 @@ def createInstance(app,group):
         param.setValue("[Project]/../renders/video.mov")
         del param
 
-    param = lastNode.getParam("ParamExistingInstance")
-    if param is not None:
-        param.setValue(True)
-        del param
-
     del lastNode
     # End of node "reading"
 
@@ -305,19 +352,20 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.FrameRange", 1, group)
     lastNode.setScriptName("frame_range")
     lastNode.setLabel("frame_range")
-    lastNode.setPosition(1210, 472)
+    lastNode.setPosition(0, 0)
     lastNode.setSize(104, 45)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupframe_range = lastNode
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(100, 1)
+        param.setValue(1, 0)
+        param.setValue(532, 1)
         del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(1 - 552)</Natron>")
+        param.setValue("<Natron>(1 - 532)</Natron>")
         del param
 
     del lastNode
@@ -327,8 +375,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
-    lastNode.setPosition(704, 288)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(0, 0)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
 
@@ -344,8 +392,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("to_rgb")
     lastNode.setLabel("to_rgb")
-    lastNode.setPosition(379, 187)
-    lastNode.setSize(100, 32)
+    lastNode.setPosition(0, 0)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupto_rgb = lastNode
 
@@ -361,7 +409,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
-    lastNode.setPosition(749, 196)
+    lastNode.setPosition(0, 0)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
@@ -373,8 +421,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Source")
     lastNode.setLabel("Source")
-    lastNode.setPosition(704, 104)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(0, 0)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupSource = lastNode
 

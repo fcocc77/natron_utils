@@ -1,5 +1,6 @@
 from sys import argv
 import NatronEngine
+from vina import get_videovina_render
 
 app = app1
 
@@ -10,7 +11,9 @@ ext = output.split('.')[-1]
 
 app.loadProject(project)
 
-node = eval('app.' + node)
+node = eval('app.getNode("' + node + '")')
+if not node:
+    node = get_videovina_render()
 
 writer = app.createWriter(output)
 
