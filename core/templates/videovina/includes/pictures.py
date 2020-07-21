@@ -27,7 +27,7 @@ def generate_random_pictures(thisNode, app, workarea):
         if index >= references_count:
             index = 0
 
-    generate_pictures(random_pictures, reformat)
+    generate_pictures(random_pictures, reformat_node=reformat)
 
 
 def generate_pictures(pictures, pictures_amount=False, reformat_node=True):

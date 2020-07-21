@@ -88,9 +88,8 @@ def refresh(thisNode, app, workarea):
 
         start_frame_slide.set(first_frame)
 
-        picture = get_picture(workarea, index)
-        if picture:
-            reformat = picture['reformat']
+        reformat = get_picture(workarea, index)['reformat']
+        if reformat:
             reformat.getParam('boxSize').set(width, hight)
             reformat.getParam('refresh').trigger()
 
