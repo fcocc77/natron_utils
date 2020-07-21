@@ -82,18 +82,6 @@ def createInstance(app,group):
     lastNode.save_production = param
     del param
 
-    param = lastNode.createButtonParam("videovina_info", "Export VIdeoVina Info")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos, lo copia a la carpeta estatica de videovina \'static/templates/<template_name>\'/resources/overlap\'")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.videovina_info = param
-    del param
-
     param = lastNode.createButtonParam("clean", "Clean")
 
     # Add the param to the page
@@ -171,6 +159,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.set("Slow")
     lastNode.speed = param
     del param
 
@@ -422,43 +411,6 @@ def createInstance(app,group):
     lastNode.transition = param
     del param
 
-    param = lastNode.createPathParam("reference_pictures", "Reference Pictures Folder")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
-    param.setAddNewLine(True)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/travel")
-    lastNode.reference_pictures = param
-    del param
-
-    param = lastNode.createBooleanParam("reformat", "Reformat")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.reformat = param
-    del param
-
-    param = lastNode.createButtonParam("generate_pictures", "Generate Pictures")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.generate_pictures = param
-    del param
-
     param = lastNode.createIntParam("amount_slide", "Base Slide")
     param.setMinimum(0, 0)
     param.setMaximum(20, 0)
@@ -474,7 +426,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(3, 0)
+    param.setValue(5, 0)
     lastNode.amount_slide = param
     del param
 
@@ -490,40 +442,6 @@ def createInstance(app,group):
     lastNode.generate_slides = param
     del param
 
-    param = lastNode.createInt2DParam("production_slides", "Production Slides Range")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(2, 0)
-    param.setValue(7, 1)
-    lastNode.production_slides = param
-    del param
-
-    param = lastNode.createButtonParam("generate_production_slides", "Generate Production")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.generate_production_slides = param
-    del param
-
     param = lastNode.createSeparatorParam("sep5", "")
 
     # Add the param to the page
@@ -537,22 +455,92 @@ def createInstance(app,group):
     lastNode.sep5 = param
     del param
 
-    param = lastNode.createStringParam("default_project", "Default Project")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    DEFAULT PROJECT :")
-    param.restoreDefaultValue()
+    lastNode.sim_tab = lastNode.createPageParam("sim_tab", "Production Simulation")
+    param = lastNode.createPathParam("reference_pictures", "Reference Pictures Folder")
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.sim_tab.addParam(param)
 
     # Set param properties
-    param.setHelp("Datos por defecto que va a tener la plantilla.")
+    param.setHelp("Carpeta donde estan las fotos, estas solo se usaran como referencia para hacer la plantilla base.")
     param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.default_project = param
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private/photos/travel")
+    lastNode.reference_pictures = param
     del param
 
+    param = lastNode.createBooleanParam("reformat", "Reformat")
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.reformat = param
+    del param
+
+    param = lastNode.createButtonParam("generate_pictures", "Generate Pictures")
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.generate_pictures = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep9", "")
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep9 = param
+    del param
+
+    param = lastNode.createInt2DParam("production_slides", "Production Slides Range")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(3, 0)
+    param.setValue(7, 1)
+    lastNode.production_slides = param
+    del param
+
+    param = lastNode.createButtonParam("generate_production_slides", "Generate Production")
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.generate_production_slides = param
+    del param
+
+    lastNode.project_rab = lastNode.createPageParam("project_rab", "Output Project")
     param = lastNode.createColorParam("color_1", "Color 1", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
@@ -568,7 +556,7 @@ def createInstance(app,group):
     param.setDisplayMaximum(1, 2)
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -595,7 +583,7 @@ def createInstance(app,group):
     param.setDisplayMaximum(1, 2)
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -622,7 +610,7 @@ def createInstance(app,group):
     param.setDisplayMaximum(1, 2)
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -637,7 +625,7 @@ def createInstance(app,group):
     param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -689,7 +677,7 @@ def createInstance(app,group):
     del entries
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -702,7 +690,7 @@ def createInstance(app,group):
     param = lastNode.createButtonParam("play", "Play")
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -714,7 +702,7 @@ def createInstance(app,group):
     param = lastNode.createButtonParam("stop", "Stop")
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -739,7 +727,7 @@ def createInstance(app,group):
     del entries
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -752,7 +740,7 @@ def createInstance(app,group):
     param = lastNode.createSeparatorParam("sep8", "")
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("")
@@ -768,7 +756,7 @@ def createInstance(app,group):
     param.restoreDefaultValue()
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("Proyecto guardado en el directorio static de la carpeta base de videovina")
@@ -781,11 +769,11 @@ def createInstance(app,group):
     param = lastNode.createButtonParam("export_default_project", "Export Project to Static")
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("Exporta todos los datos por defecto a un archivo \'project.json\' y copia  el contenido de resources a la carpeta static de videovina.")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     lastNode.export_default_project = param
     del param
@@ -793,7 +781,7 @@ def createInstance(app,group):
     param = lastNode.createButtonParam("transfer_to_static", "Transfer To Static")
 
     # Add the param to the page
-    lastNode.control.addParam(param)
+    lastNode.project_rab.addParam(param)
 
     # Set param properties
     param.setHelp("Transfiere todos los recursos generados, a la carpeta estatica de videovina, con las imagenes y videos comprimidos para mayor rapides de la pagina.")
@@ -802,8 +790,20 @@ def createInstance(app,group):
     lastNode.transfer_to_static = param
     del param
 
+    param = lastNode.createButtonParam("videovina_info", "Export VIdeoVina Info")
+
+    # Add the param to the page
+    lastNode.project_rab.addParam(param)
+
+    # Set param properties
+    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos, lo copia a la carpeta estatica de videovina \'static/templates/<template_name>\'/resources/overlap\'")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.videovina_info = param
+    del param
+
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'sim_tab', 'project_rab', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -811,7 +811,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("LastNode")
     lastNode.setLabel("LastNode")
-    lastNode.setPosition(1920, -662)
+    lastNode.setPosition(0, 0)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupLastNode = lastNode
@@ -822,7 +822,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output2")
-    lastNode.setPosition(1920, -563)
+    lastNode.setPosition(0, 0)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
