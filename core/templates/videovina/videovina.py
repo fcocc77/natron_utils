@@ -31,7 +31,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         divide_project(thisNode, workarea)
 
     elif knob_name == 'refresh':
-        refresh(thisNode, app, workarea)
+        refresh()
 
     elif knob_name == 'generate_production_slides':
         production_slides(thisNode, app, workarea)

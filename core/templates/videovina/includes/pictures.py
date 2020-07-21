@@ -160,4 +160,7 @@ def get_max_pictures():
         if last > last_picture:
             last_picture = last
 
+    if first_picture < 0:
+        first_picture = 0
+
     return [first_picture, last_picture]

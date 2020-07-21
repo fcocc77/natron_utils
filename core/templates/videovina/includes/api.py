@@ -137,7 +137,7 @@ def export_videovina_info(thisNode, app, workarea, project_path):
 
     # deja el proyecto en hd medio para que sea mas rapido cada render
     thisNode.getParam('format').set(1)
-    refresh(thisNode, app, workarea)
+    refresh()
 
     # el frame central de la slide
     central_frame = slide_frames / 2
@@ -231,7 +231,7 @@ def update_videovina_project(thisNode, app, workarea):
 
     generate_pictures(photos, pictures_amount=True)
     update_post_fx()
-    refresh(thisNode, app, workarea)
+    refresh()
 
 
 def export_default_project(thisNode, app, workarea, project_path):

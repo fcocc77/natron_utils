@@ -12,7 +12,11 @@ xdistance = 200
 # ----------------
 
 
-def refresh(thisNode, app, workarea):
+def refresh():
+    _app = app()
+    workarea = _app
+    vina_node = get_videovina()
+
     vina = videovina_data()
 
     speed = vina.speed
@@ -22,7 +26,7 @@ def refresh(thisNode, app, workarea):
 
     slide_duration = durations[speed]
 
-    width, hight = get_resolution(thisNode)
+    width, hight = get_resolution(vina_node)
 
     slides = get_slides(workarea)
     slide_count = slides[-1]['index'] + 1  # index del ultimo slide
@@ -54,7 +58,7 @@ def refresh(thisNode, app, workarea):
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
     # le sumamos 'transition_frames' que equivale a 2 mitades de transicion, la inicial y la final
-    app.getProjectParam('frameRange').set(1, _last_frame + transition_frames + 2)
+    _app.getProjectParam('frameRange').set(1, _last_frame + transition_frames + 2)
     # --------------------
 
     frame_range_list = get_ranges(slide_count, speed)
