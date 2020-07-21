@@ -26,6 +26,7 @@ def testing(
     errors += test_format(format)
     errors += test_speed(speed)
     errors += test_slide_range(slide_range)
+    errors += test_connection()
 
     print 'Testing Error: ' + str(errors)
 
@@ -82,5 +83,20 @@ def test_slide_range(slide_range):
     testing_log('Rango de slides', error, 0)
 
     error += testing_log('Cantidad de slides', len(slides), len(_range))
+
+    return error
+
+
+def test_connection():
+    error = 0
+
+    for obj in slides:
+        slide = obj['slide']
+
+        for i in range(slide.getMaxInputCount()):
+            if not slide.getInput(i):
+                error += 1
+
+    testing_log('Entradas Conectadas', error, 0)
 
     return error
