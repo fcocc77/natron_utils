@@ -154,7 +154,7 @@ def generate_base_slides(thisNode, app, workarea):
     if count_delete_slide:
         # borra las slides que sobran
         _range = range(slides_count - count_delete_slide, slides_count)
-        delete_slide(workarea, _range)
+        delete_slide(_range)
         # -----------------------
 
         current_slides = slides_count - count_delete_slide

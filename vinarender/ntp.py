@@ -11,7 +11,6 @@ from vina import get_videovina
 from project import testing
 import nx
 from pictures import generate_pictures
-from develop import refresh, update_post_fx
 
 # datos de vinarender
 data = json.loads(argv[3].replace("'", '"'))
@@ -38,7 +37,6 @@ nx._app = _app
 
 generate_production_slides(None, _app, _app, slides_range, force=True)
 get_videovina().getParam('generate_pictures').trigger()
-update_post_fx()
 
 _app.saveProjectAs(project)
 

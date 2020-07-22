@@ -68,4 +68,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     elif knob_name == 'generate_pictures':
         generate_random_pictures(thisNode, app, workarea)
+        update_post_fx()
         refresh()
+
+    elif knob_name == 'last_slide_delete':
+        clamp_slides(0, thisNode.getParam('last_slide').get())
+        update_post_fx()

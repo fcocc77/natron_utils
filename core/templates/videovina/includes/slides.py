@@ -62,7 +62,8 @@ def get_slides(workarea=None, production=True, base=True, separate=False):
         return base_list
 
 
-def get_last_slide(workarea):
+def get_last_slide():
+    workarea = app()
     return get_slides(workarea)[-1]
 
 
@@ -70,7 +71,9 @@ def get_first_slide(workarea):
     return get_slides(workarea)[0]
 
 
-def delete_slide(workarea, slide_number):
+def delete_slide(slide_number):
+    workarea = app()
+
     # se usa .destroy() 2 veces ya que a veces
     # natron no borra el nodo
     def remove(index):
@@ -93,3 +96,14 @@ def delete_slide(workarea, slide_number):
 
 def get_slide_position(index):
     return [200 * int(index), 0]
+
+
+def clamp_slides(first_slide, last_slide):
+    # elimina las slides que no estan en el rango entrante
+
+    current_last_slide = get_last_slide()['index']
+    for i in range(last_slide + 1, current_last_slide + 1):
+        delete_slide(i)
+
+    for i in range(0, first_slide):
+        delete_slide(i)

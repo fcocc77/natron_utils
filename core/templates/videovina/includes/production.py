@@ -14,7 +14,7 @@ def divide_project(thisNode, workarea):
     for i, slide in enumerate(get_slides(workarea)):
 
         if not i in keep_slides:
-            delete_slide(workarea, i)
+            delete_slide(i)
 
     update_post_fx(thisNode, workarea)
 
@@ -87,7 +87,7 @@ def generate_production_slides(thisNode, app, workarea, slides_range, force=Fals
     last_transition = None
     last_dot = None
 
-    last_slide = get_last_slide(workarea)
+    last_slide = get_last_slide()
 
     base_slide_index = 0
     posx = xdistance * slides_count
@@ -121,6 +121,6 @@ def generate_production_slides(thisNode, app, workarea, slides_range, force=Fals
     # borra las slide que estan fuera del rango de la cantidad de slides
     for i in range(last_slide['index'] + 1):
         if not i in _slides_range:
-            delete_slide(workarea, i)
+            delete_slide(i)
 
     return True

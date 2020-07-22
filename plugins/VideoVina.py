@@ -552,6 +552,35 @@ def createInstance(app,group):
     lastNode.generate_production_slides = param
     del param
 
+    param = lastNode.createIntParam("last_slide", "Last Slide")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.last_slide = param
+    del param
+
+    param = lastNode.createButtonParam("last_slide_delete", "Delete")
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.last_slide_delete = param
+    del param
+
     lastNode.project_rab = lastNode.createPageParam("project_rab", "Output Project")
     param = lastNode.createColorParam("color_1", "Color 1", False)
     param.setMinimum(-2147483648, 0)
