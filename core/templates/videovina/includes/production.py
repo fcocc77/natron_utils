@@ -27,7 +27,7 @@ def production_slides(thisNode, app, workarea):
         return
 
     update_post_fx(thisNode, workarea)
-    refresh(thisNode, app, workarea)
+    refresh()
 
     alert('Ya se duplicaron las slide de Produccion.',
           'Duplicate from base slides.')

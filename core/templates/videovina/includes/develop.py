@@ -211,7 +211,7 @@ def generate_base_slides(thisNode, app, workarea):
             last_dot = dot
 
     update_post_fx(thisNode, workarea)
-    refresh(thisNode, app, workarea)
+    refresh()
 
     if current_slides:
         alert('Se han creado ' + str(current_slides) +
