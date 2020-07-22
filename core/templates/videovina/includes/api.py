@@ -230,7 +230,6 @@ def update_videovina_project(thisNode, app, workarea):
     # -------------
 
     generate_pictures(photos, pictures_amount=True)
-    update_post_fx()
     refresh()
 
 

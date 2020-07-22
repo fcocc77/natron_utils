@@ -1,5 +1,6 @@
 import NatronEngine
 import os
+import shutil
 from nx import get_project_name, get_project_path, absolute, alert, saveProject
 import json
 
@@ -11,10 +12,47 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     name = thisParam.getScriptName()
 
     if name == 'send':
-        render(thisNode, app)
+        generate_base_projects(thisNode, app)
+
+    if name == 'send_as_production':
+        generate_render_projects(thisNode, app)
 
 
-def get_tasks(slides_count, slides_by_project):
+def generate_render_projects(thisNode, app):
+    slide_amount = thisNode.getParam('slide_amount').get()
+    output = thisNode.getParam('output_production_folder').get()
+    source_folder = thisNode.getParam('output_folder').get()
+
+    send_as_production(thisNode, slide_amount, absolute(source_folder), absolute(output))
+
+
+def send_as_production(thisNode, slide_amount, source, output):
+    if not os.path.isdir(output):
+        os.makedirs(output)
+
+    # crea lista con los proyectos necesarios para la cantidad de slides a renderizar
+    required_slides = []
+    for ntp in os.listdir(source):
+        slide_range = ntp.split('_')[-1][:-4]
+        last_frame = int(slide_range.split('-')[-1])
+        if last_frame <= slide_amount + 1:
+            required_slides.append(ntp)
+    # -----------------------------
+
+    tasks = []
+    for project in required_slides:
+        shutil.copy(source + '/' + project, output)
+
+        tasks.append({
+            'module': 'production_ntp',
+            'project': output + '/' + project,
+            'output_folder': output
+        })
+
+    render(thisNode, tasks)
+
+
+def get_tasks(slides_count, slides_by_project, output_folder, project):
     # calcula cuantas tareas tiene que tener vinarender dependiendo
     # de la cantidad de 'slides' y las 'slides por proyecto'.
 
@@ -42,8 +80,11 @@ def get_tasks(slides_count, slides_by_project):
             # ----------------
 
             tasks.append({
+                'module': 'ntp',
                 'slides': (first_slide, last_slide),
                 'range': (first_slide_orginal, last_slide_original),
+                'project': project,
+                'output_folder': output_folder
             })
             start_slide = i + 1
             count = 0
@@ -53,13 +94,24 @@ def get_tasks(slides_count, slides_by_project):
     return tasks
 
 
-def render(thisNode, app):
+def generate_base_projects(thisNode, app):
     output_folder = thisNode.getParam('output_folder').get()
     output_folder = absolute(output_folder)
 
-    instances = thisNode.getParam('instances').get()
     slides_count = thisNode.getParam('slides_count').get()
     slides_by_project = thisNode.getParam('slides_by_project').get()
+    tasks = get_tasks(
+        slides_count,
+        slides_by_project,
+        output_folder,
+        get_project_path()
+    )
+
+    render(thisNode, tasks)
+
+
+def render(thisNode, extra):
+    instances = thisNode.getParam('instances').get()
 
     job_name = thisNode.job_name.get()
     if not job_name:
@@ -69,10 +121,8 @@ def render(thisNode, app):
     software = 'Ntp'
     submit = '/opt/vinarender/bin/submit'
 
-    tasks = get_tasks(slides_count, slides_by_project)
-
     first_slide = 0
-    last_slide = len(tasks) - 1
+    last_slide = len(extra) - 1
 
     saveProject()
 
@@ -84,10 +134,8 @@ def render(thisNode, app):
            + ' -lastFrame ' + str(last_slide)
            #    ------------------------
            + ' -taskSize ' + str(1)
-           + ' -project "' + get_project_path() + '"'
            + ' -software ' + software
-           + ' -render "' + output_folder + '"'
-           + ' -extra \'' + json.dumps(tasks) + "'"
+           + ' -extra \'' + json.dumps(extra) + "'"
            + ' -instances ' + str(instances)
            )
     os.system(cmd)
