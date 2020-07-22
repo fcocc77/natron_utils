@@ -214,23 +214,6 @@ def createInstance(app,group):
     lastNode.prefix = param
     del param
 
-    param = lastNode.createIntParam("slides_amount", "Slides Amount")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(7, 0)
-    lastNode.slides_amount = param
-    del param
-
     param = lastNode.createSeparatorParam("sep3", "")
 
     # Add the param to the page

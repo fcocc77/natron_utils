@@ -3,6 +3,7 @@ import shutil
 import json
 from util import jread, hash_generator
 from nx import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
+from vina import get_ranges
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -98,6 +99,45 @@ def check_project(thisNode):
         return False
 
 
+def divide_projects(thisNode):
+    divided_project = thisNode.getParam('divided_project').get()
+
+    # lista de proyectos divididos
+    divided_projects = []
+    if divided_project:
+        divided_project_folder = absolute(thisNode.getParam('project_folder').get())
+        prefix = thisNode.getParam('prefix').get()
+
+        # obtiene el index de la ultima slide, extrayendola del nombre del ntp
+        last_slide = 0
+        for proj in os.listdir(divided_project_folder):
+            _last_slide = int(proj.split('-')[-1][:-4])
+
+            if _last_slide > last_slide:
+                last_slide = _last_slide
+        # ----------------------
+
+        ranges = get_ranges(last_slide + 1)
+
+        for proj in os.listdir(divided_project_folder):
+            project_path = divided_project_folder + '/' + proj
+
+            slides_range = proj.split('_')[-1][:-4]
+            first_slide = int(slides_range.split('-')[0])
+            last_slide = int(slides_range.split('-')[-1])
+
+            first_frame = ranges[first_slide][0]
+            last_frame = ranges[last_slide][-1]
+
+            divided_projects.append({
+                'project': project_path,
+                'first_frame': first_frame,
+                'last_frame': last_frame
+            })
+
+    return [divided_project, divided_projects]
+
+
 def render(thisNode, app):
     node_input = thisNode.getInput(0)
     if not node_input:
@@ -151,24 +191,7 @@ def render(thisNode, app):
         shutil.copy(project, new_project)
         project = new_project
 
-    # lista de proyectos divididos
-    divided_project = thisNode.getParam('divided_project').get()
-    divided_projects = []
-    if divided_project:
-        divided_project_folder = absolute(thisNode.getParam('project_folder').get())
-        prefix = thisNode.getParam('prefix').get()
-
-        for proj in os.listdir(divided_project_folder):
-            project_path = divided_project_folder + '/' + proj
-
-            frame_range = proj.split('_')[-1][:-4]
-            divided_projects.append({
-                'project': project_path,
-                'first_frame': int(frame_range.split('-')[0]),
-                'last_frame': int(frame_range.split('-')[1])
-            })
-    # --------------------------
-
+    divided_project, divided_projects = divide_projects(thisNode)
     extra = {
         'output': output,
         'divided_project': divided_project,
