@@ -58,7 +58,11 @@ def createInstance(app,group):
     lastNode.job_name = param
     del param
 
-    param = lastNode.createPathParam("output_folder", "Output Folder")
+    param = lastNode.createIntParam("instances", "Servers Instances")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -66,20 +70,9 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/ntp")
-    lastNode.output_folder = param
-    del param
-
-    param = lastNode.createButtonParam("send", "Send To VinaRender")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.send = param
+    param.setAnimationEnabled(True)
+    param.setValue(2, 0)
+    lastNode.instances = param
     del param
 
     param = lastNode.createSeparatorParam("sep1", "")
@@ -93,6 +86,22 @@ def createInstance(app,group):
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep1 = param
+    del param
+
+    param = lastNode.createStringParam("base_slide", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    BASE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.base_slide = param
     del param
 
     param = lastNode.createIntParam("slides_count", "Slides Count")
@@ -129,6 +138,30 @@ def createInstance(app,group):
     lastNode.slides_by_project = param
     del param
 
+    param = lastNode.createPathParam("output_folder", "Output Folder")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setValue("[Project]/ntp")
+    lastNode.output_folder = param
+    del param
+
+    param = lastNode.createButtonParam("send", "Send To VinaRender")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.send = param
+    del param
+
     param = lastNode.createSeparatorParam("sep2", "")
 
     # Add the param to the page
@@ -142,7 +175,36 @@ def createInstance(app,group):
     lastNode.sep2 = param
     del param
 
-    param = lastNode.createIntParam("instances", "Servers Instances")
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
+    param = lastNode.createStringParam("production_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    PRODUCTION :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.production_label = param
+    del param
+
+    param = lastNode.createIntParam("slide_amount", "Slides Amount")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -155,8 +217,32 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(4, 0)
-    lastNode.instances = param
+    param.setValue(100, 0)
+    lastNode.slide_amount = param
+    del param
+
+    param = lastNode.createPathParam("output_production_folder", "Output Folder")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setValue("[Project]")
+    lastNode.output_production_folder = param
+    del param
+
+    param = lastNode.createButtonParam("send_as_production", "Send To VinaRender")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.send_as_production = param
     del param
 
     # Refresh the GUI with the newly created parameters

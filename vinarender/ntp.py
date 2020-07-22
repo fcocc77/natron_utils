@@ -15,7 +15,7 @@ from pictures import generate_pictures
 # datos de vinarender
 data = json.loads(argv[3].replace("'", '"'))
 base_project = data['project']
-frame_range = data['frames']
+original_slides_range = data['range']
 slides_range = data['slides']
 output_folder = data['output_folder']
 # ----------------------
@@ -27,7 +27,7 @@ if not os.path.isdir(output_folder):
     os.system('chmod 777 -R ' + output_folder)
 
 project_name = base_project_name + '_' + \
-    str(frame_range[0]) + '-' + str(frame_range[1])
+    str(original_slides_range[0]) + '-' + str(original_slides_range[1])
 
 project = output_folder + '/' + project_name + '.ntp'
 

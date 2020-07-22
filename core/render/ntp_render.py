@@ -1,6 +1,5 @@
 import NatronEngine
 import os
-from vina import get_ranges
 from nx import get_project_name, get_project_path, absolute, alert, saveProject
 import json
 
@@ -19,8 +18,6 @@ def get_tasks(slides_count, slides_by_project):
     # calcula cuantas tareas tiene que tener vinarender dependiendo
     # de la cantidad de 'slides' y las 'slides por proyecto'.
 
-    frames_ranges = get_ranges(slides_count)
-
     # crea una lista de rangos, dandole 1 slide antes y despues del rango
     tasks = []
     count = 0
@@ -28,15 +25,16 @@ def get_tasks(slides_count, slides_by_project):
     for i in range(slides_count + 1):
         if (count > slides_by_project - 1) or (slides_count == i):
             first_slide = start_slide - 1
-            last_slide = i - 1
+            first_slide_orginal = first_slide
 
-            first_frame = frames_ranges[first_slide][0]
-            last_frame = frames_ranges[last_slide][1]
+            last_slide = i - 1
+            last_slide_original = last_slide
 
             # le agrega 1 slide al principio y al final, solo si no es el primer o el ultimo slide
             first_slide -= 1
             if first_slide < 0:
                 first_slide = 0
+                first_slide_orginal = 0
 
             last_slide += 1
             if last_slide == slides_count:
@@ -45,7 +43,7 @@ def get_tasks(slides_count, slides_by_project):
 
             tasks.append({
                 'slides': (first_slide, last_slide),
-                'frames': (first_frame, last_frame)
+                'range': (first_slide_orginal, last_slide_original),
             })
             start_slide = i + 1
             count = 0
