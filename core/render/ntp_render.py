@@ -31,22 +31,31 @@ def send_as_production(thisNode, slide_amount, source, output):
         os.makedirs(output)
 
     # crea lista con los proyectos necesarios para la cantidad de slides a renderizar
+    last_slide = slide_amount - 1
+
     required_slides = []
     for ntp in os.listdir(source):
         slide_range = ntp.split('_')[-1][:-4]
+        first_frame = int(slide_range.split('-')[0])
         last_frame = int(slide_range.split('-')[-1])
+
         if last_frame <= slide_amount + 1:
-            required_slides.append(ntp)
+            last_project = False
+            if last_slide >= first_frame and last_slide <= last_frame:
+                last_project = True
+
+            required_slides.append([ntp, last_project])
     # -----------------------------
 
     tasks = []
-    for project in required_slides:
+    for project, last_project in required_slides:
         shutil.copy(source + '/' + project, output)
 
         tasks.append({
             'module': 'production_ntp',
             'project': output + '/' + project,
-            'output_folder': output
+            'last_project': last_project,
+            'last_slide': last_slide
         })
 
     render(thisNode, tasks)
