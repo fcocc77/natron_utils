@@ -8,6 +8,7 @@ from vina import get_videovina
 
 def generate_random_pictures(thisNode, app, workarea):
     reformat = thisNode.getParam('reformat').get()
+    random_pictures = thisNode.getParam('random_pictures').get()
     first_picture, last_picture = get_max_pictures()
 
     references_dir = thisNode.reference_pictures.get()
@@ -15,19 +16,23 @@ def generate_random_pictures(thisNode, app, workarea):
     references_count = len(references_pictures)
 
     indexs_without_repeat = random.sample(range(references_count), references_count)
-    random_pictures = []
+    pictures = []
 
     index = 0
     for i in range(last_picture + 1):
-        picture_index = indexs_without_repeat[index]
+        if random_pictures:
+            picture_index = indexs_without_repeat[index]
+        else:
+            picture_index = i
+
         picture = references_dir + '/' + references_pictures[picture_index]
-        random_pictures.append(picture)
+        pictures.append(picture)
 
         index += 1
         if index >= references_count:
             index = 0
 
-    generate_pictures(random_pictures, reformat_node=reformat)
+    generate_pictures(pictures, reformat_node=reformat)
 
 
 def generate_pictures(pictures, pictures_amount=False, reformat_node=True):
