@@ -481,6 +481,18 @@ def createInstance(app,group):
     lastNode.reformat = param
     del param
 
+    param = lastNode.createBooleanParam("random_pictures", "Random")
+
+    # Add the param to the page
+    lastNode.sim_tab.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.random_pictures = param
+    del param
+
     param = lastNode.createButtonParam("generate_pictures", "Generate Pictures")
 
     # Add the param to the page

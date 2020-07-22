@@ -39,7 +39,6 @@ nx._app = _app
 generate_production_slides(None, _app, _app, slides_range, force=True)
 get_videovina().getParam('generate_pictures').trigger()
 update_post_fx()
-refresh()
 
 _app.saveProjectAs(project)
 

@@ -154,7 +154,7 @@ def get_max_pictures():
         inputs = slide.getMaxInputCount()
 
         first = index - int(round(inputs / 2.0))
-        if inputs > 1:
+        if inputs > 0:
             first += 1
 
         if first < first_picture:

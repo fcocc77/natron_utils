@@ -68,3 +68,4 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     elif knob_name == 'generate_pictures':
         generate_random_pictures(thisNode, app, workarea)
+        refresh()
