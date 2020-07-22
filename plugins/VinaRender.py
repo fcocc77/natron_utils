@@ -240,7 +240,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(532, 1)
+    param.setValue(100, 1)
     lastNode.range = param
     del param
 
@@ -313,7 +313,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(0, 0)
+    lastNode.setPosition(309, 156)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -325,7 +325,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
     lastNode.setScriptName("reading")
     lastNode.setLabel("reading")
-    lastNode.setPosition(0, 0)
+    lastNode.setPosition(297, -197)
     lastNode.setSize(128, 78)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupreading = lastNode
@@ -345,37 +345,44 @@ def createInstance(app,group):
         param.setValue("[Project]/../renders/video.mov")
         del param
 
+    param = lastNode.getParam("firstFrame")
+    if param is not None:
+        param.setValue(30, 0)
+        del param
+
+    param = lastNode.getParam("before")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("lastFrame")
+    if param is not None:
+        param.setValue(100, 0)
+        del param
+
+    param = lastNode.getParam("after")
+    if param is not None:
+        param.set("black")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
     # End of node "reading"
-
-    # Start of node "frame_range"
-    lastNode = app.createNode("net.sf.openfx.FrameRange", 1, group)
-    lastNode.setScriptName("frame_range")
-    lastNode.setLabel("frame_range")
-    lastNode.setPosition(0, 0)
-    lastNode.setSize(104, 45)
-    lastNode.setColor(0.7, 0.65, 0.35)
-    groupframe_range = lastNode
-
-    param = lastNode.getParam("frameRange")
-    if param is not None:
-        param.setValue(1, 0)
-        param.setValue(532, 1)
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(1 - 532)</Natron>")
-        del param
-
-    del lastNode
-    # End of node "frame_range"
 
     # Start of node "Switch1"
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
-    lastNode.setPosition(0, 0)
+    lastNode.setPosition(309, -34)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
@@ -392,7 +399,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("to_rgb")
     lastNode.setLabel("to_rgb")
-    lastNode.setPosition(0, 0)
+    lastNode.setPosition(-225, -34)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupto_rgb = lastNode
@@ -409,7 +416,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
-    lastNode.setPosition(0, 0)
+    lastNode.setPosition(-18, -26)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
@@ -421,7 +428,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Source")
     lastNode.setLabel("Source")
-    lastNode.setPosition(0, 0)
+    lastNode.setPosition(-63, -176)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupSource = lastNode
@@ -438,9 +445,6 @@ def createInstance(app,group):
 
     param = groupreading.getParam("filename")
     param.setExpression("thisGroup.filename.get()", False, 0)
-    del param
-    param = groupframe_range.getParam("frameRange")
-    group.getParam("range").setAsAlias(param)
     del param
     param = groupSwitch1.getParam("which")
     param.setExpression("thisGroup.readfile.get()", False, 0)

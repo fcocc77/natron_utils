@@ -115,8 +115,8 @@ def render(thisNode, app):
 
     filename = thisNode.filename.get()
 
-    first_frame = thisNode.frame_range.frameRange.getValue(0)
-    last_frame = thisNode.frame_range.frameRange.getValue(1)
+    first_frame = thisNode.getParam('range').getValue(0)
+    last_frame = thisNode.getParam('range').getValue(1)
 
     submit = '/opt/vinarender/bin/submit'
 
