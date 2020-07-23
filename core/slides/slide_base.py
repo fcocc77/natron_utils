@@ -1,10 +1,12 @@
 from nx import getNode, createNode, warning
+from base import children_refresh
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
 
+    children_refresh(thisParam, thisNode)
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'generate_inputs':
