@@ -180,7 +180,7 @@ def render(thisNode, app, divided_project=False):
     instances = thisNode.instances.getValue()
     project = saveProject()
 
-    if divided_project:
+    if not divided_project:
         # guarda el proyecto antes de enviar, y crea uno nuevo
         for i in range(1000):
             # encuentra version disponible
@@ -193,14 +193,18 @@ def render(thisNode, app, divided_project=False):
         shutil.copy(project, new_project)
         project = new_project
 
+        extra = {
+            'output': output,
+            'divided_project': False,
+            'divided_projects': []
+        }
+    else:
         divided_projects = divide_projects(thisNode)
         extra = {
             'output': output,
             'divided_project': divided_project,
             'divided_projects': divided_projects
         }
-    else:
-        extra = {}
 
     cmd = (submit
            + ' -jobName "' + job_name + '"'
