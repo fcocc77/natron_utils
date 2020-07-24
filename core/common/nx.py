@@ -259,7 +259,8 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
         'vinarender': 'vv.vinarender',
         'input': 'fr.inria.built-in.Input',
         'reformat': 'net.sf.openfx.Reformat',
-        'switch': 'net.sf.openfx.switchPlugin'
+        'switch': 'net.sf.openfx.switchPlugin',
+        'ntprender': 'vv.NtpRender'
     }
 
     if node in nodes.keys():

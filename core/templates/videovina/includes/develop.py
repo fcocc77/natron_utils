@@ -323,6 +323,17 @@ def update_post_fx(thisNode=None, workarea=None):
     vinarender.getParam('rgbonly').set(True)
     vinarender.getParam('project_frame_range').trigger()
 
+    # nodo ntp render
+    ntprender = getNode(workarea, 'ntprender')
+    if not ntprender:
+        ntprender = createNode(
+            node='ntprender',
+            group=workarea
+        )
+        ntprender.setLabel('ntprender')
+    ntprender.setPosition(last_posx + 450, 1100)
+    ntprender.connectInput(0, thisNode)
+
     # si es que existe un viewer lo posiciona correctamente
     viewer = None
     for i in range(10):
