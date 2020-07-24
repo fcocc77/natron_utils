@@ -23,7 +23,7 @@ def generate_random_pictures(thisNode, app, workarea):
         if random_pictures:
             picture_index = indexs_without_repeat[index]
         else:
-            picture_index = i
+            picture_index = index
 
         picture = references_dir + '/' + references_pictures[picture_index]
         pictures.append(picture)
