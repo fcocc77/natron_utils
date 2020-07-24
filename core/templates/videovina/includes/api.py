@@ -1,5 +1,6 @@
 import os
 import shutil
+from argparse import Namespace
 from util import jread
 from develop import refresh, update_post_fx
 from pictures import generate_pictures, get_max_pictures
@@ -153,36 +154,42 @@ def export_videovina_info(thisNode, app, workarea, project_path):
     alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.', 'VideoVina Info.')
 
 
-def update_videovina_project(thisNode, app, workarea):
-
-    private = thisNode.getParam('videovina_root').get() + '/private'
-    project_file = thisNode.getParam('videovina_project').get()
+def get_project_info(videovina_node):
+    project_file = videovina_node.getParam('videovina_project').get()
     project = jread(project_file)
 
     footage = os.path.dirname(project_file) + '/footage'
 
     # leer datos del proyecto json de videovina
-    color = project.states.app.color
-    timeline = project.states.app.timeline
-    speed = project.states.preview.speed
-    song = project.states.app.song
-    global_font = project.states.app.font
-    # ----------------
+    return Namespace(
+        color=project.states.app.color,
+        timeline=project.states.app.timeline,
+        photos_amount=len(project.states.app.timeline),
+        speed=project.states.preview.speed,
+        song=project.states.app.song,
+        global_font=project.states.app.font,
+        footage=footage
+    )
+
+
+def update_videovina_project(videovina_node, app, workarea):
+    private = videovina_node.getParam('videovina_root').get() + '/private'
+    pj = get_project_info(videovina_node)
 
     # modifica los datos del proyecto natron
-    thisNode.getParam('color').set(
-        color[0] / 255.0, color[1] / 255.0, color[2] / 255.0, 1)
-    thisNode.getParam('speed').set(speed)
+    videovina_node.getParam('color').set(
+        pj.color[0] / 255.0, pj.color[1] / 255.0, pj.color[2] / 255.0, 1)
+    videovina_node.getParam('speed').set(pj.speed)
     # ------------------
 
     photos = []
-    count = len(timeline)
+    count = pj.photos_amount
     first_slide = 0
     last_slide = count - 1
 
-    for photo in timeline:
+    for photo in pj.timeline:
         basename = photo.name.split('.')[0]
-        url = footage + '/' + basename + '.jpg'
+        url = pj.footage + '/' + basename + '.jpg'
         photos.append(url)
 
     def font_path(font_name):
@@ -193,7 +200,7 @@ def update_videovina_project(thisNode, app, workarea):
 
         return _font
 
-    thisNode.getParam('font').set(font_path(global_font))
+    videovina_node.getParam('font').set(font_path(pj.global_font))
 
     # cambia los titulos de todas las slides
     for obj in get_slides(workarea):
@@ -203,12 +210,12 @@ def update_videovina_project(thisNode, app, workarea):
         if index >= count:
             continue
 
-        item = timeline[index].texts
+        item = pj.timeline[index].texts
 
         if item.separate_font:
             slide.getParam('font').set(font_path(item.font))
         else:
-            slide.getParam('font').set(font_path(global_font))
+            slide.getParam('font').set(font_path(pj.global_font))
 
         if item.text:
             include_text = slide.getParam('include_text')
@@ -224,9 +231,9 @@ def update_videovina_project(thisNode, app, workarea):
     # -----------------------------
 
     # song
-    song_type = get_type_song(thisNode, song)
-    song_path = private + '/music/' + song_type + '/' + song + '.mp3'
-    thisNode.getParam('song').set(song_path)
+    song_type = get_type_song(videovina_node, pj.song)
+    song_path = private + '/music/' + song_type + '/' + pj.song + '.mp3'
+    videovina_node.getParam('song').set(song_path)
     # -------------
 
     generate_pictures(photos, pictures_amount=True)
