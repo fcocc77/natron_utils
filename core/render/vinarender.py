@@ -4,6 +4,7 @@ import json
 from util import jread, hash_generator
 from nx import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
 from vina import get_ranges
+from api import get_last_frame
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -22,7 +23,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         render(thisNode, app)
 
     elif knob_name == 'multi_project_render':
-        render(thisNode, app, divided_project=True)
+        multi_project_render(thisNode, app)
 
     elif knob_name == 'range' or knob_name == 'readfile':
         change_paramaters(thisNode)
@@ -140,6 +141,15 @@ def divide_projects(thisNode):
     return divided_projects
 
 
+def multi_project_render(thisNode, app):
+    node_input = thisNode.getInput(0)
+    if not node_input:
+        warning('VinaRender', '!You must connect the VideoVina Node.')
+        return
+
+    render(thisNode, app, divided_project=True)
+
+
 def render(thisNode, app, divided_project=False):
     node_input = thisNode.getInput(0)
     if not node_input:
@@ -156,9 +166,6 @@ def render(thisNode, app, divided_project=False):
         output_node = 'Source'
 
     filename = thisNode.filename.get()
-
-    first_frame = thisNode.getParam('range').getValue(0)
-    last_frame = thisNode.getParam('range').getValue(1)
 
     submit = '/opt/vinarender/bin/submit'
 
@@ -181,6 +188,9 @@ def render(thisNode, app, divided_project=False):
     project = saveProject()
 
     if not divided_project:
+        first_frame = thisNode.getParam('range').getValue(0)
+        last_frame = thisNode.getParam('range').getValue(1)
+
         # guarda el proyecto antes de enviar, y crea uno nuevo
         for i in range(1000):
             # encuentra version disponible
@@ -200,6 +210,9 @@ def render(thisNode, app, divided_project=False):
         }
     else:
         divided_projects = divide_projects(thisNode)
+        first_frame = 0
+        last_frame = get_last_frame()
+
         extra = {
             'output': output,
             'divided_project': divided_project,

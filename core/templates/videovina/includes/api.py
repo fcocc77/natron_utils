@@ -10,6 +10,7 @@ from util import jwrite
 from nx import alert, getNode, createNode
 from general import formats
 from production import generate_production_slides
+from vina import get_ranges, get_videovina
 
 
 def update_private_content(thisNode, thisParam):
@@ -173,6 +174,13 @@ def get_videovina_project(videovina_node):
         global_font=project.states.app.font,
         footage=footage
     )
+
+
+def get_last_frame():
+    project = get_videovina_project(get_videovina())
+    amount = project.photos_amount
+
+    return get_ranges(amount)[-1][-1]
 
 
 def update_videovina_project(videovina_node, app, workarea):
