@@ -22,9 +22,11 @@ def testing(
     # -----------------
 
     errors = 0
-
-    errors += test_format(format)
-    errors += test_speed(speed)
+    if format:
+        errors += test_format(format)
+    if speed:
+        errors += test_speed(speed)
+        
     errors += test_slide_range(slide_range)
     errors += test_connection()
 
