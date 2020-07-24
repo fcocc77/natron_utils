@@ -21,6 +21,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'render':
         render(thisNode, app)
 
+    elif knob_name == 'multi_project_render':
+        render(thisNode, app, divided_project=True)
+
     elif knob_name == 'range' or knob_name == 'readfile':
         change_paramaters(thisNode)
 
@@ -100,45 +103,44 @@ def check_project(thisNode):
 
 
 def divide_projects(thisNode):
-    divided_project = thisNode.getParam('divided_project').get()
 
     # lista de proyectos divididos
     divided_projects = []
-    if divided_project:
-        divided_project_folder = absolute(thisNode.getParam('project_folder').get())
-        prefix = thisNode.getParam('prefix').get()
 
-        # obtiene el index de la ultima slide, extrayendola del nombre del ntp
-        last_slide = 0
-        for proj in os.listdir(divided_project_folder):
-            _last_slide = int(proj.split('-')[-1][:-4])
+    divided_project_folder = absolute(thisNode.getParam('project_folder').get())
+    prefix = thisNode.getParam('prefix').get()
 
-            if _last_slide > last_slide:
-                last_slide = _last_slide
-        # ----------------------
+    # obtiene el index de la ultima slide, extrayendola del nombre del ntp
+    last_slide = 0
+    for proj in os.listdir(divided_project_folder):
+        _last_slide = int(proj.split('-')[-1][:-4])
 
-        ranges = get_ranges(last_slide + 1)
+        if _last_slide > last_slide:
+            last_slide = _last_slide
+    # ----------------------
 
-        for proj in os.listdir(divided_project_folder):
-            project_path = divided_project_folder + '/' + proj
+    ranges = get_ranges(last_slide + 1)
 
-            slides_range = proj.split('_')[-1][:-4]
-            first_slide = int(slides_range.split('-')[0])
-            last_slide = int(slides_range.split('-')[-1])
+    for proj in os.listdir(divided_project_folder):
+        project_path = divided_project_folder + '/' + proj
 
-            first_frame = ranges[first_slide][0]
-            last_frame = ranges[last_slide][-1]
+        slides_range = proj.split('_')[-1][:-4]
+        first_slide = int(slides_range.split('-')[0])
+        last_slide = int(slides_range.split('-')[-1])
 
-            divided_projects.append({
-                'project': project_path,
-                'first_frame': first_frame,
-                'last_frame': last_frame
-            })
+        first_frame = ranges[first_slide][0]
+        last_frame = ranges[last_slide][-1]
 
-    return [divided_project, divided_projects]
+        divided_projects.append({
+            'project': project_path,
+            'first_frame': first_frame,
+            'last_frame': last_frame
+        })
+
+    return divided_projects
 
 
-def render(thisNode, app):
+def render(thisNode, app, divided_project=False):
     node_input = thisNode.getInput(0)
     if not node_input:
         warning('VinaRender', '!You must connect the image.')
@@ -178,7 +180,7 @@ def render(thisNode, app):
     instances = thisNode.instances.getValue()
     project = saveProject()
 
-    if thisNode.getParam('duplicate_project').get():
+    if divided_project:
         # guarda el proyecto antes de enviar, y crea uno nuevo
         for i in range(1000):
             # encuentra version disponible
@@ -191,12 +193,14 @@ def render(thisNode, app):
         shutil.copy(project, new_project)
         project = new_project
 
-    divided_project, divided_projects = divide_projects(thisNode)
-    extra = {
-        'output': output,
-        'divided_project': divided_project,
-        'divided_projects': divided_projects
-    }
+        divided_projects = divide_projects(thisNode)
+        extra = {
+            'output': output,
+            'divided_project': divided_project,
+            'divided_projects': divided_projects
+        }
+    else:
+        extra = {}
 
     cmd = (submit
            + ' -jobName "' + job_name + '"'
