@@ -43,7 +43,5 @@ _app.saveProjectAs(project)
 testing(
     app=_app,
     project=project,
-    slide_range=slides_range,
-    format=2,  # quarter, half, hd, 4k
-    speed=2  # Slow, Normal, Fast
+    slide_range=slides_range
 )
