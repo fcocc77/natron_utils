@@ -1,5 +1,5 @@
 # ----------------------------
-# extencion de tools de Natron
+# extencion de herramientas para Natron
 # ----------------------------
 from util import *
 import NatronEngine
