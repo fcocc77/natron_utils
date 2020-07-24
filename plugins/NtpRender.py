@@ -117,7 +117,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
+    param.setValue(50, 0)
     lastNode.slides_count = param
     del param
 
@@ -204,23 +204,6 @@ def createInstance(app,group):
     lastNode.production_label = param
     del param
 
-    param = lastNode.createIntParam("slide_amount", "Slides Amount")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.slide_amount = param
-    del param
-
     param = lastNode.createPathParam("output_production_folder", "Output Folder")
 
     # Add the param to the page
@@ -229,7 +212,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]")
+    param.setValue("[Project]/to_render")
     lastNode.output_production_folder = param
     del param
 
@@ -261,20 +244,20 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Source"
+    # Start of node "VideoVina"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Source")
-    lastNode.setLabel("Source")
+    lastNode.setScriptName("VideoVina")
+    lastNode.setLabel("VideoVina")
     lastNode.setPosition(764, 194)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupSource = lastNode
+    groupVideoVina = lastNode
 
     del lastNode
-    # End of node "Source"
+    # End of node "VideoVina"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupSource)
+    groupOutput1.connectInput(0, groupVideoVina)
 
     try:
         extModule = sys.modules["NtpRenderExt"]

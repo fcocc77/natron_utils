@@ -1,8 +1,9 @@
 import NatronEngine
 import os
 import shutil
-from nx import get_project_name, get_project_path, absolute, alert, saveProject
+from nx import get_project_name, get_project_path, absolute, alert, saveProject, warning
 import json
+from api import get_videovina_project
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -19,11 +20,20 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def generate_render_projects(thisNode, app):
-    slide_amount = thisNode.getParam('slide_amount').get()
     output = thisNode.getParam('output_production_folder').get()
     source_folder = thisNode.getParam('output_folder').get()
 
-    send_as_production(thisNode, slide_amount, absolute(source_folder), absolute(output))
+    node_input = thisNode.getInput(0)
+    if not node_input:
+        warning('NtpRender', '!You must connect the VideoVina Node.')
+        return
+
+    project = get_videovina_project(node_input)
+    if not project:
+        warning('NtpRender', '!You must connect the VideoVina Node.')
+        return
+
+    send_as_production(thisNode, project.photos_amount, absolute(source_folder), absolute(output))
 
 
 def send_as_production(thisNode, slide_amount, source, output):

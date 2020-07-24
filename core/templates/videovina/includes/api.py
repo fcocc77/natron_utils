@@ -154,7 +154,10 @@ def export_videovina_info(thisNode, app, workarea, project_path):
     alert('Ya se enviaron los renders a vinarender para que genere los datos para VideoVina.', 'VideoVina Info.')
 
 
-def get_project_info(videovina_node):
+def get_videovina_project(videovina_node):
+    if not videovina_node.getPluginID() == 'vv.VideoVina':
+        return None
+
     project_file = videovina_node.getParam('videovina_project').get()
     project = jread(project_file)
 
@@ -174,7 +177,7 @@ def get_project_info(videovina_node):
 
 def update_videovina_project(videovina_node, app, workarea):
     private = videovina_node.getParam('videovina_root').get() + '/private'
-    pj = get_project_info(videovina_node)
+    pj = get_videovina_project(videovina_node)
 
     # modifica los datos del proyecto natron
     videovina_node.getParam('color').set(
