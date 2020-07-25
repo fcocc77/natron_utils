@@ -1,6 +1,6 @@
 modules:
     vina:
-        ☐ el get_ranges(), en el ultimo frame no termina en negro completamente @today 
+        ✔ el get_ranges(), en el ultimo frame no termina en negro completamente @today @done (7/25/2020, 2:06:33 PM)
     nx:
         ✔ que el createNode dejar el label en el nombre del script, y eliminar el script antes de crearlo si ya existe para que no tenga conflicto @done (7/20/2020, 10:21:55 AM)
         ✔ modificar el getNode para que obtenga el nodo con el scriptName, ya que es muy lento recorrer todo el grupo para encontrar el nodo @done (7/20/2020, 10:21:59 AM)

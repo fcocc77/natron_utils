@@ -159,7 +159,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Slow")
+    param.set("Fast")
     lastNode.speed = param
     del param
 
@@ -228,6 +228,22 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.update_videovina_project = param
+    del param
+
+    param = lastNode.createIntParam("total_slides", "Total Slides")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.total_slides = param
     del param
 
     param = lastNode.createInt3DParam("durations", "Durations")
@@ -426,7 +442,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(5, 0)
+    param.setValue(3, 0)
     lastNode.amount_slide = param
     del param
 

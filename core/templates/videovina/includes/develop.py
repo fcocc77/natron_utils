@@ -1,5 +1,5 @@
 from nx import getNode, createNode, alert, copy, warning, question, app
-from vina import get_videovina, get_ranges, videovina_data, get_transition_duration
+from vina import get_videovina, get_ranges, videovina_data, get_transition_duration, get_last_frame
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution
 from transition import directional_transition
@@ -58,7 +58,7 @@ def refresh():
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
     # le sumamos 'transition_frames' que equivale a 2 mitades de transicion, la inicial y la final
-    _app.getProjectParam('frameRange').set(1, _last_frame + transition_frames + 2)
+    _app.getProjectParam('frameRange').set(1, get_last_frame())
     # --------------------
 
     frame_range_list = get_ranges(slide_count, speed)
