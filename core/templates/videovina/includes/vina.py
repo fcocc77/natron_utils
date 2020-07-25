@@ -55,8 +55,13 @@ def get_last_frame():
     transition_frames = get_transition_duration()
     amount = vina.total_slides
 
+    ranges = get_ranges(amount)
+    if ranges:
+        last_frame = ranges[-1][-1]
+    else:
+        last_frame = 0
+
     last_padding = 5  # Frames
-    last_frame = get_ranges(amount)[-1][-1]
 
     return last_frame + (transition_frames / 2) + last_padding
 
