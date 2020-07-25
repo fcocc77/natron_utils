@@ -29,6 +29,7 @@ if last_project:
 
 get_videovina().getParam('update_videovina_project').trigger()
 nx.saveProject()
+os.system('chmod 777 "' + project + '"')
 
 testing(
     app=_app,

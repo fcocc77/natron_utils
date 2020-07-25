@@ -39,6 +39,7 @@ generate_production_slides(None, _app, _app, slides_range, force=True)
 get_videovina().getParam('generate_pictures').trigger()
 
 _app.saveProjectAs(project)
+os.system('chmod 777 "' + project + '"')
 
 testing(
     app=_app,
