@@ -43,16 +43,18 @@ def send_as_production(thisNode, source, output):
 
     required_slides = []
     for ntp in os.listdir(source):
-        slide_range = ntp.split('_')[-1][:-4]
-        first_frame = int(slide_range.split('-')[0])
-        last_frame = int(slide_range.split('-')[-1])
+        ext = ntp[-3:]
+        if ext == 'ntp':
+            slide_range = ntp.split('_')[-1].split('.ntp')[0]
+            first_frame = int(slide_range.split('-')[0])
+            last_frame = int(slide_range.split('-')[-1])
 
-        if last_frame <= vina.total_slides + 1:
-            last_project = False
-            if last_slide >= first_frame and last_slide <= last_frame:
-                last_project = True
+            if last_frame <= vina.total_slides + 1:
+                last_project = False
+                if last_slide >= first_frame and last_slide <= last_frame:
+                    last_project = True
 
-            required_slides.append([ntp, last_project])
+                required_slides.append([ntp, last_project])
     # -----------------------------
 
     tasks = []
