@@ -1,4 +1,6 @@
 modules:
+    videovina:
+        ☐ verificar que el rango de animacion es correcto, cuando se usa un 'subtle_move' el movimiento no comienza en el tiempo correcto @today 
     vina:
         ✔ el get_ranges(), en el ultimo frame no termina en negro completamente @today @done (7/25/2020, 2:06:33 PM)
     nx:
