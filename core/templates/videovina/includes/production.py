@@ -1,3 +1,6 @@
+# archivo que contiene las funciones para generar los proyectos
+# para render en produccion a partir de los datos del nodo videovina
+
 from nx import copy, warning, alert, question
 from slides import get_slides, delete_slide, get_slide, get_last_slide
 from develop import update_post_fx, xdistance, refresh

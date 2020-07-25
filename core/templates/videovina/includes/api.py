@@ -1,3 +1,6 @@
+# Este archivo contiene todas las funciones para conectar
+# el proyecto .json del editor de la pagina de videovina 
+# al nodo videovina de Natron, datos de entrada y salida.
 import os
 import shutil
 from argparse import Namespace

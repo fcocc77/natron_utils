@@ -1,4 +1,6 @@
-# datos del nodo de videovina
+# Datos solo del nodo de videovina,
+# no incluir otras funcionalidades que no corresponda 
+# al nodo de videovina.
 from nx import app
 from argparse import Namespace
 
