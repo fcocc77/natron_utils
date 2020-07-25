@@ -3,8 +3,7 @@ import shutil
 import json
 from util import jread, hash_generator
 from nx import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
-from vina import get_ranges
-from api import get_last_frame
+from vina import get_ranges, get_last_frame
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
