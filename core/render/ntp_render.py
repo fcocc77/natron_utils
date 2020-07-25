@@ -4,6 +4,7 @@ import shutil
 from nx import get_project_name, get_project_path, absolute, alert, saveProject, warning
 import json
 from api import get_videovina_project
+from vina import videovina_data
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -23,25 +24,22 @@ def generate_render_projects(thisNode, app):
     output = thisNode.getParam('output_production_folder').get()
     source_folder = thisNode.getParam('output_folder').get()
 
-    node_input = thisNode.getInput(0)
-    if not node_input:
+    videovina_node = thisNode.getInput(0)
+    if not videovina_node:
         warning('NtpRender', '!You must connect the VideoVina Node.')
         return
 
-    project = get_videovina_project(node_input)
-    if not project:
-        warning('NtpRender', '!You must connect the VideoVina Node.')
-        return
-
-    send_as_production(thisNode, project.photos_amount, absolute(source_folder), absolute(output))
+    send_as_production(thisNode, absolute(source_folder), absolute(output))
 
 
-def send_as_production(thisNode, slide_amount, source, output):
+def send_as_production(thisNode, source, output):
+    vina = videovina_data()
+
     if not os.path.isdir(output):
         os.makedirs(output)
 
     # crea lista con los proyectos necesarios para la cantidad de slides a renderizar
-    last_slide = slide_amount - 1
+    last_slide = vina.total_slides - 1
 
     required_slides = []
     for ntp in os.listdir(source):
@@ -49,7 +47,7 @@ def send_as_production(thisNode, slide_amount, source, output):
         first_frame = int(slide_range.split('-')[0])
         last_frame = int(slide_range.split('-')[-1])
 
-        if last_frame <= slide_amount + 1:
+        if last_frame <= vina.total_slides + 1:
             last_project = False
             if last_slide >= first_frame and last_slide <= last_frame:
                 last_project = True
@@ -65,7 +63,9 @@ def send_as_production(thisNode, slide_amount, source, output):
             'module': 'production_ntp',
             'project': output + '/' + project,
             'last_project': last_project,
-            'last_slide': last_slide
+            'last_slide': last_slide,
+            'speed': vina.speed,
+            'format': vina.format
         })
 
     render(thisNode, tasks)

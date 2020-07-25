@@ -26,8 +26,8 @@ def testing(
         errors += test_format(format)
     if speed:
         errors += test_speed(speed)
-        
-    errors += test_slide_range(slide_range)
+    if slide_range:
+        errors += test_slide_range(slide_range)
     errors += test_connection()
 
     print 'Testing Error: ' + str(errors)
