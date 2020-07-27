@@ -22,6 +22,16 @@ def app():
         return NatronEngine.natron.getActiveInstance()
 
 
+def is_gui():
+    try:
+        return NatronGui
+    except:
+        return False
+
+
+gui = is_gui()
+
+
 def copy(node, group=None):
     _app = app()
     _id = node.getPluginID()
@@ -260,7 +270,8 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
         'input': 'fr.inria.built-in.Input',
         'reformat': 'net.sf.openfx.Reformat',
         'switch': 'net.sf.openfx.switchPlugin',
-        'ntprender': 'vv.NtpRender'
+        'ntprender': 'vv.NtpRender',
+        'videovina': 'vv.VideoVina'
     }
 
     if node in nodes.keys():
@@ -284,11 +295,13 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
 
 
 def alert(message, title='Alert'):
-    NatronGui.natron.informationDialog(title, str(message))
+    if gui:
+        NatronGui.natron.informationDialog(title, str(message))
 
 
 def warning(title, message):
-    NatronGui.natron.warningDialog(title, message)
+    if gui:
+        NatronGui.natron.warningDialog(title, message)
 
 
 def value_by_durations(value, durations=[0, 0, 0]):

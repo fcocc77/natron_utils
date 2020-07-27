@@ -29,6 +29,8 @@ def refresh():
     width, hight = get_resolution(vina_node)
 
     slides = get_slides(workarea)
+    if not slides:
+        return
     slide_count = slides[-1]['index'] + 1  # index del ultimo slide
 
     # cambia la resolucion al primer y ultimo fondo negro
