@@ -67,7 +67,9 @@ def send_as_production(thisNode, source, output):
             'last_project': last_project,
             'last_slide': last_slide,
             'speed': vina.speed,
-            'format': vina.format
+            'format': vina.format,
+            'user': vina.user,
+            'project_name': vina.project_name,
         })
 
     render(thisNode, tasks)

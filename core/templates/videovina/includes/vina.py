@@ -1,5 +1,5 @@
 # Datos solo del nodo de videovina,
-# no incluir otras funcionalidades que no corresponda 
+# no incluir otras funcionalidades que no corresponda
 # al nodo de videovina.
 from nx import app
 from argparse import Namespace
@@ -34,7 +34,9 @@ def videovina_data():
         transition_duration=videovina_node.getParam('transition_duration').get(),
         speed=videovina_node.getParam('speed').get(),
         format=videovina_node.getParam('format').get(),
-        color=videovina_node.getParam('color').get()
+        color=videovina_node.getParam('color').get(),
+        user=videovina_node.getParam('user').get(),
+        project_name=videovina_node.getParam('project_name').get(),
     )
 
 

@@ -1,5 +1,5 @@
 # Este archivo contiene todas las funciones para conectar
-# el proyecto .json del editor de la pagina de videovina 
+# el proyecto .json del editor de la pagina de videovina
 # al nodo videovina de Natron, datos de entrada y salida.
 import os
 import shutil
@@ -169,6 +169,8 @@ def get_videovina_project(videovina_node):
 
     # leer datos del proyecto json de videovina
     return Namespace(
+        user=project.user,
+        name=project.name,
         color=project.states.app.color,
         timeline=project.states.app.timeline,
         photos_amount=len(project.states.app.timeline),
@@ -190,6 +192,8 @@ def update_videovina_project(videovina_node, app, workarea):
     # ------------------
 
     videovina_node.getParam('total_slides').set(pj.photos_amount)
+    videovina_node.getParam('user').set(pj.user)
+    videovina_node.getParam('project_name').set(pj.name)
 
     photos = []
     count = pj.photos_amount

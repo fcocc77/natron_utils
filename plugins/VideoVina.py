@@ -230,6 +230,32 @@ def createInstance(app,group):
     lastNode.update_videovina_project = param
     del param
 
+    param = lastNode.createStringParam("user", "User")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.user = param
+    del param
+
+    param = lastNode.createStringParam("project_name", "Project Name")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.project_name = param
+    del param
+
     param = lastNode.createIntParam("total_slides", "Total Slides")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
@@ -243,6 +269,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(5, 0)
     lastNode.total_slides = param
     del param
 
