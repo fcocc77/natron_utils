@@ -65,6 +65,9 @@ def check_project(thisNode):
     ok = True
 
     for node in get_connected_nodes(thisNode):
+        if node.getPluginID() == 'vv.vinarender':
+            continue
+
         filename_param = node.getParam("filename")
         if filename_param:
             filename = filename_param.get()

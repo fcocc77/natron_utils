@@ -77,6 +77,7 @@ def send_to_render():
     vinarender.getParam('prefix').set(project_name)
     vinarender.getParam('project_folder').set(multi_project_dir)
     vinarender.getParam('job_name').set('videovina: ' + user + ':' + project_name)
+    vinarender.getParam('filename').set(project_dir + '/renders/video.mov')
 
     vinarender.getParam('multi_project_render').trigger()
 
