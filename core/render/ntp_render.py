@@ -35,9 +35,8 @@ def generate_render_projects(thisNode, app):
 def send_as_production(thisNode, source, output):
     vina = videovina_data()
 
-    if os.path.isdir(output):
-        shutil.rmtree(output)
-    os.makedirs(output)
+    if not os.path.isdir(output):
+        os.makedirs(output)
 
     # crea lista con los proyectos necesarios para la cantidad de slides a renderizar
     last_slide = vina.total_slides - 1
