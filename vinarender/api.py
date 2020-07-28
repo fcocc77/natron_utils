@@ -1,6 +1,6 @@
 # api: este archivo permite subministrar un proyecto videovina,
 # que se envio desde el editor web de videovina.
-from nx import createNode
+from nx import createNode, saveProject
 from vina import get_videovina
 import json
 import os
@@ -58,6 +58,10 @@ def create_multi_project():
         if not os.path.isfile(dst):
             shutil.copy(src, dst)
 
+    # copia las canciones
+    song = project_data.states.app.song + '.mp3'
+    shutil.copy(videovina_project_dir + '/songs/' + song, project_dir + '/' + song)
+
     # creacion de nodo videovina y ntprender
     videovina_node = createNode('videovina')
     ntprender = createNode('ntprender')
@@ -81,7 +85,6 @@ def create_multi_project():
 
 
 def send_to_render():
-
     app_ = app1.loadProject(submit_ntp)
 
     videovina_node = get_videovina()
@@ -90,10 +93,13 @@ def send_to_render():
 
     vinarender.getParam('prefix').set(project_name)
     vinarender.getParam('project_folder').set(multi_project_dir)
+    vinarender.getParam('instances').set(4)
     vinarender.getParam('job_name').set('videovina: ' + user + ':' + project_name)
     vinarender.getParam('filename').set(project_dir + '/renders/video.mov')
 
     vinarender.getParam('multi_project_render').trigger()
+
+    app1.saveProject(submit_ntp)
 
 
 if action == 'create_multi_project':

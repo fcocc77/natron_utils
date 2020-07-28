@@ -14,8 +14,8 @@ from util import jread, fread
 
 # datos de vinarender
 data = json.loads(argv[3].replace("'", '"'))
-project = data['project']
-last_project = data['last_project']
+project = data['slide']['project']
+last_project = data['slide']['last_project']
 last_slide = data['last_slide']
 speed = data['speed']
 format = data['format']

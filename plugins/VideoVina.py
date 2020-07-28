@@ -57,6 +57,30 @@ def createInstance(app,group):
     lastNode.videovina_root = param
     del param
 
+    param = lastNode.createPathParam("local_renders_folder", "Local Renders Folder")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setValue("/home/pancho/Documents/GitHub/videovina/tmp/renders")
+    lastNode.local_renders_folder = param
+    del param
+
+    param = lastNode.createPathParam("assets", "Assets")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setValue("/home/pancho/Documents/GitHub/videovina/private")
+    lastNode.assets = param
+    del param
+
     param = lastNode.createSeparatorParam("sep6", "")
 
     # Add the param to the page
@@ -240,6 +264,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("admin")
     lastNode.user = param
     del param
 
@@ -253,6 +278,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue("testing")
     lastNode.project_name = param
     del param
 
@@ -269,7 +295,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(5, 0)
+    param.setValue(2, 0)
     lastNode.total_slides = param
     del param
 
@@ -374,7 +400,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("/home/pancho/Documents/GitHub/videovina/private/music/love/Redwood Trail.mp3")
     lastNode.song = param
     del param
 

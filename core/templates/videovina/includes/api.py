@@ -39,6 +39,12 @@ def update_private_content(thisNode, thisParam):
             fonts.append((base_name, base_name))
     thisNode.getParam('default_font').setOptions(fonts)
 
+    local_folder = videovina_root + '/tmp/renders'
+    assert_dir = videovina_root + '/private'
+
+    thisNode.getParam('local_renders_folder').set(local_folder)
+    thisNode.getParam('assets').set(assert_dir)
+
 
 def save_production_projects(thisNode):
     print 'save_production'
@@ -184,6 +190,7 @@ def get_videovina_project(videovina_node):
         photos_amount=len(project.states.app.timeline),
         speed=project.states.preview.speed,
         song=project.states.app.song,
+        user_songs=project.states.music.user_songs,
         global_font=project.states.app.font,
         footage=footage,
         format=_format
@@ -191,7 +198,8 @@ def get_videovina_project(videovina_node):
 
 
 def update_videovina_project(videovina_node, app, workarea):
-    private = videovina_node.getParam('videovina_root').get() + '/private'
+    private = videovina_node.getParam('assets').get()
+    local_renders = videovina_node.getParam('local_renders_folder').get()
     pj = get_videovina_project(videovina_node)
 
     # modifica los datos del proyecto natron
@@ -253,8 +261,18 @@ def update_videovina_project(videovina_node, app, workarea):
     # -----------------------------
 
     # song
-    song_type = get_type_song(videovina_node, pj.song)
-    song_path = private + '/music/' + song_type + '/' + pj.song + '.mp3'
+    user_song = False
+    for usong in pj.user_songs:
+        if usong.name == pj.song:
+            user_song = True
+            break
+
+    if user_song:
+        song_path = local_renders + '/' + pj.user + '/' + pj.name + '/' + pj.song + '.mp3'
+    else:
+        song_type = get_type_song(videovina_node, pj.song)
+        song_path = private + '/music/' + song_type + '/' + pj.song + '.mp3'
+
     videovina_node.getParam('song').set(song_path)
     # -------------
 

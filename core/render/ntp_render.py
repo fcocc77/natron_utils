@@ -62,17 +62,22 @@ def send_as_production(thisNode, source, output):
         shutil.copy(source + '/' + project, output)
 
         tasks.append({
-            'module': 'production_ntp',
             'project': output + '/' + project,
             'last_project': last_project,
-            'last_slide': last_slide,
-            'speed': vina.speed,
-            'format': vina.format,
-            'user': vina.user,
-            'project_name': vina.project_name,
         })
 
-    render(thisNode, tasks)
+    extra = {
+        'module': 'production_ntp',
+        'tasks': tasks,
+        'speed': vina.speed,
+        'song': vina.song,
+        'format': vina.format,
+        'user': vina.user,
+        'project_name': vina.project_name,
+        'last_slide': last_slide,
+    }
+
+    render(thisNode, extra)
 
 
 def get_tasks(slides_count, slides_by_project, output_folder, project):
@@ -103,18 +108,23 @@ def get_tasks(slides_count, slides_by_project, output_folder, project):
             # ----------------
 
             tasks.append({
-                'module': 'ntp',
                 'slides': (first_slide, last_slide),
                 'range': (first_slide_orginal, last_slide_original),
-                'project': project,
-                'output_folder': output_folder
             })
             start_slide = i + 1
             count = 0
 
         count += 1
     # -------------------------------
-    return tasks
+
+    extra = {
+        'module': 'ntp',
+        'output_folder': output_folder,
+        'project': project,
+        'tasks': tasks
+    }
+
+    return extra
 
 
 def generate_base_projects(thisNode, app):
@@ -145,7 +155,7 @@ def render(thisNode, extra):
     submit = '/opt/vinarender/bin/submit'
 
     first_slide = 0
-    last_slide = len(extra) - 1
+    last_slide = len(extra['tasks']) - 1
 
     saveProject()
 

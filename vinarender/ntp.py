@@ -15,8 +15,8 @@ from pictures import generate_pictures
 # datos de vinarender
 data = json.loads(argv[3].replace("'", '"'))
 base_project = data['project']
-original_slides_range = data['range']
-slides_range = data['slides']
+original_slides_range = data['slide']['range']
+slides_range = data['slide']['slides']
 output_folder = data['output_folder']
 # ----------------------
 
