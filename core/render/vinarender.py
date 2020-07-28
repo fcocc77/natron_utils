@@ -3,7 +3,7 @@ import shutil
 import json
 from util import jread, hash_generator
 from nx import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
-from vina import get_ranges, get_last_frame
+from vina import get_ranges, get_last_frame, videovina_data
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -144,8 +144,8 @@ def divide_projects(thisNode):
 
 
 def multi_project_render(thisNode, app):
-    node_input = thisNode.getInput(0)
-    if not node_input:
+    videovina_node = thisNode.getInput(0)
+    if not videovina_node:
         warning('VinaRender', '!You must connect the VideoVina Node.')
         return
 
@@ -153,8 +153,8 @@ def multi_project_render(thisNode, app):
 
 
 def render(thisNode, app, divided_project=False):
-    node_input = thisNode.getInput(0)
-    if not node_input:
+    videovina_node = thisNode.getInput(0)
+    if not videovina_node:
         warning('VinaRender', '!You must connect the image.')
         return
 
@@ -214,11 +214,12 @@ def render(thisNode, app, divided_project=False):
         divided_projects = divide_projects(thisNode)
         first_frame = 0
         last_frame = get_last_frame()
-
+        vina = videovina_data()
         extra = {
             'output': output,
             'divided_project': divided_project,
-            'divided_projects': divided_projects
+            'divided_projects': divided_projects,
+            'song': vina.song
         }
 
     cmd = (submit

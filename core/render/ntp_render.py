@@ -70,7 +70,6 @@ def send_as_production(thisNode, source, output):
         'module': 'production_ntp',
         'tasks': tasks,
         'speed': vina.speed,
-        'song': vina.song,
         'format': vina.format,
         'user': vina.user,
         'project_name': vina.project_name,
