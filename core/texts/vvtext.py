@@ -24,8 +24,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif button_name == 'refresh_param':
         refresh_expression(thisNode)
 
-    debug_show()
-
 
 def create_titles():
     word_gap = _thisNode.word_gap_first.get()

@@ -66,16 +66,6 @@ def hash_generator(keyLen):
     return ("".join(keylist))
 
 
-def debug(text):
-    # a veces el print de natron no funciona cunando creamos nodos
-    # asi que este debug, va agregando textos, y con el debug_show
-    # muestra todos los textos juntos al final
-    _file = '/tmp/natron.debug'
-    os.system('echo "' + str(text) + '" >> ' + _file)
-
-
-def debug_show():
-    _file = '/tmp/natron.debug'
-    if os.path.isfile(_file):
-        print(fread(_file))
-        os.remove(_file)
+def makedirs(_dir):
+    if not os.path.isdir(_dir):
+        os.makedirs(_dir)
