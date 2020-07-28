@@ -167,6 +167,14 @@ def get_videovina_project(videovina_node):
 
     footage = os.path.dirname(project_file) + '/footage'
 
+    # el formato en el proyecto, solo se inserta en el modulo api,
+    # asi que cuando se esta en desarrollo no aparece, y queda
+    # en '2' por defecto que es full hd.
+    if hasattr(project, 'format'):
+        _format = project.format
+    else:
+        _format = 2
+
     # leer datos del proyecto json de videovina
     return Namespace(
         user=project.user,
@@ -177,7 +185,8 @@ def get_videovina_project(videovina_node):
         speed=project.states.preview.speed,
         song=project.states.app.song,
         global_font=project.states.app.font,
-        footage=footage
+        footage=footage,
+        format=_format
     )
 
 
@@ -248,6 +257,9 @@ def update_videovina_project(videovina_node, app, workarea):
     song_path = private + '/music/' + song_type + '/' + pj.song + '.mp3'
     videovina_node.getParam('song').set(song_path)
     # -------------
+
+    # format
+    videovina_node.getParam('format').set(pj.format)
 
     generate_pictures(photos, pictures_amount=True)
     refresh()

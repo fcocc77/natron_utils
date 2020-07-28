@@ -6,7 +6,7 @@ import json
 import os
 import shutil
 from sys import argv
-from util import fread, jread, makedirs
+from util import fread, jread, jwrite, makedirs
 
 
 vinarender_path = fread('/etc/vinarender')
@@ -32,6 +32,7 @@ submit_ntp = project_dir + '/submit.ntp'
 
 def create_multi_project():
     project_type = data['project_type']
+    _format = data['format']
 
     videovina_project_dir = env.s3 + '/private/' + user + '/projects/' + project_name
     videovina_project = videovina_project_dir + '/project.json'
@@ -40,6 +41,11 @@ def create_multi_project():
     # Copia footage, project.json de amazon S3 y lo copia en el directorio compartido local
     project_json = project_dir + '/project.json'
     shutil.copy(videovina_project, project_json)
+
+    # se suman algunos datos adicionales al proyecto json copiado a local
+    project_data = jread(project_json)
+    project_data.format = _format
+    jwrite(project_json, project_data)
 
     s3_footage = videovina_project_dir + '/footage'
     loal_footage = project_dir + '/footage'
