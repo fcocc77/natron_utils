@@ -52,7 +52,6 @@ def send_vinarender_state(duration, durations, speed=1, prefix='render',
     vinarender.getParam('filename').set(
         render_dir + '/' + prefix_name + '_###.png')
     vinarender.getParam('job_name').set('glass_transition: ' + name)
-    vinarender.getParam('no_dialog').set(True)
     vinarender.getParam('rgbonly').set(False)
     vinarender.getParam('instances').set(10)
 

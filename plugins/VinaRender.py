@@ -70,18 +70,6 @@ def createInstance(app,group):
     lastNode.rgbonly = param
     del param
 
-    param = lastNode.createBooleanParam("no_dialog", "No Show Message")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.no_dialog = param
-    del param
-
     param = lastNode.createSeparatorParam("sep4", "")
 
     # Add the param to the page
@@ -170,6 +158,22 @@ def createInstance(app,group):
     lastNode.sep8 = param
     del param
 
+    param = lastNode.createStringParam("video_output_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    VIDEO OUTPUT :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.video_output_label = param
+    del param
+
     param = lastNode.createOutputFileParam("filename", "Filename")
     param.setSequenceEnabled(False)
 
@@ -198,6 +202,42 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(30, 0)
     lastNode.fps = param
+    del param
+
+    param = lastNode.createChoiceParam("video_format", "Format")
+    entries = [ ("MOV - Apple ProRess 422", ""),
+    ("MP4 - LibX264", ""),
+    ("Image Sequence", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.video_format = param
+    del param
+
+    param = lastNode.createChoiceParam("output_quality", "Output Quality")
+    entries = [ ("High Quality", ""),
+    ("Medium Quality", ""),
+    ("Low Quality", ""),
+    ("Very Low Quality", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.set("Medium Quality")
+    lastNode.output_quality = param
     del param
 
     param = lastNode.createSeparatorParam("sep2", "")
@@ -242,7 +282,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue(797, 1)
+    param.setValue(100, 1)
     lastNode.range = param
     del param
 

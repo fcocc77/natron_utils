@@ -113,7 +113,6 @@ def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 36
     vinarender_node.getParam('job_name').set(jobname)
     vinarender_node.getParam('instances').set(10)
 
-    vinarender_node.getParam('no_dialog').set(True)
     vinarender_node.getParam('render').trigger()
 
 

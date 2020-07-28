@@ -206,7 +206,6 @@ def render(thisNode, app, divided_project=False):
         project = new_project
 
         extra = {
-            'output': output,
             'divided_project': False,
             'divided_projects': []
         }
@@ -216,11 +215,17 @@ def render(thisNode, app, divided_project=False):
         last_frame = get_last_frame()
         vina = videovina_data()
         extra = {
-            'output': output,
             'divided_project': divided_project,
             'divided_projects': divided_projects,
             'song': vina.song
         }
+
+    # extras adicionales
+    extra = dict(extra, **{
+        'output': output,
+        'video_format': thisNode.getParam('video_format').get(),
+        'output_quality': thisNode.getParam('output_quality').get()
+    })
 
     cmd = (submit
            + ' -jobName "' + job_name + '"'
@@ -237,5 +242,4 @@ def render(thisNode, app, divided_project=False):
 
     os.system(cmd)
 
-    if (not thisNode.no_dialog.get()):
-        alert('Render Sended.', 'VinaRender')
+    alert('Render Sended.', 'VinaRender')

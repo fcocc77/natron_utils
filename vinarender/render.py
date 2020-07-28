@@ -1,12 +1,18 @@
 from sys import argv
 import NatronEngine
 from vina import get_videovina_render
+import json
 
 app = app1
 
+data = json.loads(argv[6].replace("'", '"'))
+
 project = argv[5] + '.ntp'
-node = argv[6]
-output = argv[7]
+node = data['render_node']
+output = data['output']
+video_format = data['video_format']
+output_quality = data['output_quality']
+
 ext = output.split('.')[-1]
 
 app.loadProject(project)
