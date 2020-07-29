@@ -191,6 +191,7 @@ def get_videovina_project(videovina_node):
         song=project.states.app.song,
         user_songs=project.states.music.user_songs,
         global_font=project.states.app.font,
+        user_fonts=project.states.timeline.custom_fonts,
         footage=footage,
         format=_format
     )
@@ -222,10 +223,22 @@ def update_videovina_project(videovina_node, app, workarea):
         photos.append(url)
 
     def font_path(font_name):
-        font_path = private + '/fonts/' + font_name + '.'
-        _font = font_path + 'otf'
+        # detecta si la fuente es del usuario o de los assets
+        user_font = False
+        for ufont in pj.user_fonts:
+            if ufont.basename == font_name:
+                user_font = True
+                break
+        # --------------------------
+
+        if user_font:
+            _font_path = local_renders + '/fonts/' + font_name + '.'
+        else:
+            _font_path = private + '/fonts/' + font_name + '.'
+
+        _font = _font_path + 'otf'
         if not os.path.isfile(_font):
-            _font = font_path + 'ttf'
+            _font = _font_path + 'ttf'
 
         return _font
 
