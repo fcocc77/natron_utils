@@ -7,7 +7,7 @@ modules:
         ✔ que el createNode dejar el label en el nombre del script, y eliminar el script antes de crearlo si ya existe para que no tenga conflicto @done (7/20/2020, 10:21:55 AM)
         ✔ modificar el getNode para que obtenga el nodo con el scriptName, ya que es muy lento recorrer todo el grupo para encontrar el nodo @done (7/20/2020, 10:21:59 AM)
     api:
-        ☐ filtrar si en cada slide se uso una fuente del usuario, y si se uso ponerla en videovina_node @today
+        ✔ filtrar si en cada slide se uso una fuente del usuario, y si se uso ponerla en videovina_node @today @done (7/29/2020, 3:34:54 PM)
         ☐ si la cancion es mas corta que el video, que se repita igual como se hizo en el editor de la web
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
