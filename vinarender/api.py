@@ -32,10 +32,12 @@ submit_ntp = project_dir + '/submit.ntp'
 
 def create_multi_project():
     project_type = data['project_type']
+    user_id = data['user_id']
     _format = data['format']
 
-    videovina_project_dir = env.s3 + '/private/' + user + '/projects/' + project_name
-    videovina_project = videovina_project_dir + '/project.json'
+    public_project_dir = env.s3 + '/public/' + user_id + '/projects/' + project_name
+    private_project_dir = env.s3 + '/private/' + user + '/projects/' + project_name
+    videovina_project = private_project_dir + '/project.json'
     base_projects_dir = env.assets + '/templates_base/' + project_type + '/comp/ntp'  # Remplazar 'templates_base' solo por 'templates'
 
     # Copia footage, project.json de amazon S3 y lo copia en el directorio compartido local
@@ -47,7 +49,7 @@ def create_multi_project():
     project_data.format = _format
     jwrite(project_json, project_data)
 
-    s3_footage = videovina_project_dir + '/footage'
+    s3_footage = private_project_dir + '/footage'
     loal_footage = project_dir + '/footage'
     makedirs(loal_footage)
     # copia las fotos de a una, por si ya estan en el directorio local
@@ -58,9 +60,16 @@ def create_multi_project():
         if not os.path.isfile(dst):
             shutil.copy(src, dst)
 
+    # copia las fuente al directorio local
+    fonts_dir = public_project_dir + '/fonts'
+    if os.path.isdir(fonts_dir):
+        shutil.copytree(fonts_dir, project_dir + '/fonts')
+
     # copia las canciones
     song = project_data.states.app.song + '.mp3'
-    shutil.copy(videovina_project_dir + '/songs/' + song, project_dir + '/' + song)
+    song_src = private_project_dir + '/songs/' + song
+    if os.path.isfile(song_src):
+        shutil.copy(song_src, project_dir + '/' + song)
 
     # creacion de nodo videovina y ntprender
     videovina_node = createNode('videovina')
