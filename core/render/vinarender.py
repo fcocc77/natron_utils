@@ -224,7 +224,8 @@ def render(thisNode, app, divided_project=False):
     extra = dict(extra, **{
         'output': output,
         'video_format': thisNode.getParam('video_format').get(),
-        'output_quality': thisNode.getParam('output_quality').get()
+        'output_quality': thisNode.getParam('output_quality').get(),
+        'fps': thisNode.getParam('fps').get()
     })
 
     cmd = (submit

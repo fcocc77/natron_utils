@@ -95,7 +95,9 @@ def send_to_render():
     vinarender.getParam('project_folder').set(multi_project_dir)
     vinarender.getParam('instances').set(4)
     vinarender.getParam('job_name').set('videovina: ' + user + ':' + project_name)
-    vinarender.getParam('filename').set(project_dir + '/renders/video.mov')
+    vinarender.getParam('filename').set(project_dir + '/renders/video.mp4')
+    vinarender.getParam('video_format').set(1)
+    vinarender.getParam('output_quality').set(0)
 
     vinarender.getParam('multi_project_render').trigger()
 
