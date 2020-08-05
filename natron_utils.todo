@@ -11,6 +11,7 @@ modules:
         ☐ si la cancion es mas corta que el video, que se repita igual como se hizo en el editor de la web
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
+    ☐ que los usuario privilegiados tengan baja prioridad en el renderizados, que renderizen solo si no hay ningun usuario pagado, renderizando
     ✔ crear opcion para enviar a vinarender, los 1200 proyectos '.ntp' para produccion, haciendole un testing a cada proyecto para verificar si esta ok @done (7/23/2020, 11:34:04 AM)
     ✔ crear alguna forma de dividir el proyecto con un maximo de 7 slide, para que abra mas rapido y que en vinarender detecte que proyecto dividido corresponde al rango de frames. @today @done (7/23/2020, 11:33:49 AM)
 Templates:

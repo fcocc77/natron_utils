@@ -37,6 +37,7 @@ def videovina_data():
         color=videovina_node.getParam('color').get(),
         user=videovina_node.getParam('user').get(),
         project_name=videovina_node.getParam('project_name').get(),
+        user_id=videovina_node.getParam('user_id').get(),
         song=videovina_node.getParam('song').get()
     )
 

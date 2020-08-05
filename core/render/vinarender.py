@@ -217,7 +217,9 @@ def render(thisNode, app, divided_project=False):
         extra = {
             'divided_project': divided_project,
             'divided_projects': divided_projects,
-            'song': vina.song
+            'song': vina.song,
+            'user': vina.user,
+            'user_id': vina.user_id
         }
 
     # extras adicionales

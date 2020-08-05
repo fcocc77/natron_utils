@@ -268,6 +268,19 @@ def createInstance(app,group):
     lastNode.user = param
     del param
 
+    param = lastNode.createStringParam("user_id", "User ID")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.user_id = param
+    del param
+
     param = lastNode.createStringParam("project_name", "Project Name")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 

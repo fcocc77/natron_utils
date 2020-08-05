@@ -47,6 +47,7 @@ def create_multi_project():
     # se suman algunos datos adicionales al proyecto json copiado a local
     project_data = jread(project_json)
     project_data.format = _format
+    project_data.user_id = user_id
     jwrite(project_json, project_data)
 
     s3_footage = private_project_dir + '/footage'

@@ -211,6 +211,8 @@ def update_videovina_project(videovina_node, app, workarea):
     videovina_node.getParam('total_slides').set(pj.photos_amount)
     videovina_node.getParam('user').set(pj.user)
     videovina_node.getParam('project_name').set(pj.name)
+    if hasattr(pj, 'user_id'):
+        videovina_node.getParam('user_id').set(pj.user_id)
 
     photos = []
     count = pj.photos_amount
