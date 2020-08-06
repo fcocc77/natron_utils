@@ -13,7 +13,6 @@ from util import jwrite
 from nx import alert, getNode, createNode
 from general import formats
 from production import generate_production_slides
-from vina import get_ranges
 
 
 def update_private_content(thisNode, thisParam):
@@ -180,10 +179,15 @@ def get_videovina_project(videovina_node):
     else:
         _format = 2
 
+    if hasattr(project, 'user_id'):
+        user_id = project.user_id
+    else:
+        user_id = ''
+
     # leer datos del proyecto json de videovina
     return Namespace(
         user=project.user,
-        user_id=project.user_id,
+        user_id=user_id,
         name=project.name,
         color=project.states.app.color,
         timeline=project.states.app.timeline,
@@ -212,9 +216,8 @@ def update_videovina_project(videovina_node, app, workarea):
     videovina_node.getParam('total_slides').set(pj.photos_amount)
     videovina_node.getParam('user').set(pj.user)
     videovina_node.getParam('project_name').set(pj.name)
-    if hasattr(pj, 'user_id'):
-        videovina_node.getParam('user_id').set(pj.user_id)
-
+    videovina_node.getParam('user_id').set(pj.user_id)
+    print()
     photos = []
     count = pj.photos_amount
     first_slide = 0

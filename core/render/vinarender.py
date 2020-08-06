@@ -220,7 +220,8 @@ def render(thisNode, app, divided_project=False):
             'song': vina.song,
             'user': vina.user,
             'user_id': vina.user_id,
-            'project_name': vina.project_name
+            'project_name': vina.project_name,
+            'ranges': get_ranges(7) # estos rangos son para las muestras
         }
 
     # extras adicionales
