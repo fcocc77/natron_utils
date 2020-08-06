@@ -183,6 +183,7 @@ def get_videovina_project(videovina_node):
     # leer datos del proyecto json de videovina
     return Namespace(
         user=project.user,
+        user_id=project.user_id,
         name=project.name,
         color=project.states.app.color,
         timeline=project.states.app.timeline,

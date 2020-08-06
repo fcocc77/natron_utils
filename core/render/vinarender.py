@@ -219,7 +219,8 @@ def render(thisNode, app, divided_project=False):
             'divided_projects': divided_projects,
             'song': vina.song,
             'user': vina.user,
-            'user_id': vina.user_id
+            'user_id': vina.user_id,
+            'project_name': vina.project_name
         }
 
     # extras adicionales
