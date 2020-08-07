@@ -27,7 +27,9 @@ writer = app.createWriter(output)
 # el tamanio del render es igual al del nodo
 writer.getParam('formatType').setValue(0)
 # ---------------------
-writer.getParam("fps").set(fps)
+fps_param = writer.getParam("fps")
+if fps_param:
+    fps_param.set(fps)
 
 # codecs name
 # prores_ksap4h - Apple ProRess 4444
