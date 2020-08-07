@@ -231,6 +231,18 @@ def question(_question, message):
         return False
 
 
+def get_node_by_label(label=None, group=None):
+    if not group:
+        group = app()
+
+    # Encuentra un nodo a partir del Label
+    for child in group.getChildren():
+        if child.getLabel() == label:
+            return child
+
+    return None
+
+
 def getNode(group=None, label=None):
     if not group:
         group = app()
@@ -245,12 +257,7 @@ def getNode(group=None, label=None):
         return node
     # -----------------------------
 
-    # Encuentra un nodo a partir del Label
-    for child in group.getChildren():
-        if child.getLabel() == label:
-            return child
-
-    return None
+    return get_node_by_label(label, group)
 
 
 def createNode(node, label=None, group=None, position=None, color=None, output=None):

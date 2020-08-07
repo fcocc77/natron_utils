@@ -10,7 +10,7 @@ from pictures import generate_pictures, get_max_pictures
 from slides import get_slides, get_slide
 from song import get_current_song, get_type_song
 from util import jwrite
-from nx import alert, getNode, createNode
+from nx import alert, getNode, createNode, get_node_by_label
 from general import formats
 from production import generate_production_slides
 
@@ -96,11 +96,12 @@ def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 36
     reformat.connectInput(0, node)
     # ----------------------
 
-    vinarender_node = getNode(parent_node, script_name)
+    vinarender_node = get_node_by_label(script_name, parent_node)
+    alert(vinarender_node)
     if not vinarender_node:
         vinarender_node = createNode(
             'vinarender', script_name, parent_node, position=[posx, posy + 50])
-        vinarender_node.setScriptName(script_name)
+        vinarender_node.setLabel(script_name)
         vinarender_node.connectInput(0, reformat)
 
     if type(frame) == int:

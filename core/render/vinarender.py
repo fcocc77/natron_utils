@@ -9,10 +9,16 @@ from vina import get_ranges, get_last_frame, videovina_data
 def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if not userEdited:
-        if not '_vinarender' in thisNode.getScriptName():
+        if not 'VRender' in thisNode.getScriptName():
             # script name unico para identificar el nodo cuando renderizamos
-            thisNode.setScriptName('_vinarender_' + str(hash_generator(3)))
-            thisNode.setLabel('VinaRender')
+            name = 'VRender_' + str(hash_generator(3))
+            thisNode.setScriptName(name)
+
+            # ya que el label por defecto es 'VinaRender1...', solo le cambiamos
+            # el label solo si es el por defecto, para que cuando cambiemos
+            # el label por fuera, no lo cambie a 'VinaRender'.
+            if 'VinaRender' in thisNode.getLabel():
+                thisNode.setLabel('VinaRender')
 
         return
 
@@ -221,7 +227,7 @@ def render(thisNode, app, divided_project=False):
             'user': vina.user,
             'user_id': vina.user_id,
             'project_name': vina.project_name,
-            'ranges': get_ranges(7) # estos rangos son para las muestras
+            'ranges': get_ranges(7)  # estos rangos son para las muestras
         }
 
     # extras adicionales
