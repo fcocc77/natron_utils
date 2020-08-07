@@ -49,7 +49,7 @@ def get_transition_duration():
     slide_duration = vina.durations[vina.speed]
 
     # esta velocidad de frames corresponde a la velocidad normal,
-    # y calculta la velocidad final dependiendo de la velocidad de la slide
+    # y calcula la velocidad final dependiendo de la velocidad de la slide
     transition_frames = (slide_duration * vina.transition_duration) / normal_speed
     # -------------------------
 
@@ -58,7 +58,6 @@ def get_transition_duration():
 
 def get_last_frame():
     vina = videovina_data()
-    transition_frames = get_transition_duration()
     amount = vina.total_slides
 
     ranges = get_ranges(amount)
@@ -69,7 +68,7 @@ def get_last_frame():
 
     last_padding = 5  # Frames
 
-    return last_frame + (transition_frames / 2) + last_padding
+    return last_frame + last_padding
 
 
 def get_ranges(slide_count, speed=None):
@@ -78,25 +77,29 @@ def get_ranges(slide_count, speed=None):
     if not speed:
         speed = vina.speed
 
-    slide_duration = vina.durations[speed]
+    transition_frames = get_transition_duration()
 
-    mid_transition_frames = get_transition_duration() / 2
+    # le suma la duracion de la transicion de entrada y salida, a la duracion de la slide
+    slide_duration = vina.durations[speed] + (transition_frames * 2)
 
     first_frame = 1
-    last_frame = slide_duration + mid_transition_frames
+    last_frame = slide_duration
+
+    transition_subtraction = 0
 
     # genera una lista con cada rango, dependiendo de la duracion
     frame_range_list = []
     for index in range(slide_count):
-        frame_range_list.append((first_frame, last_frame))
 
-        # si es el primer slide, le sumamos la mitad de la duracion de la transicion,
-        # ya que la primera transicion va a negro.
-        if index == 0:
-            first_frame += slide_duration + mid_transition_frames
-        else:
-            first_frame += slide_duration
+        # le resta la transicion, para que las 'slides' se superpongan
+        frame_range_list.append((
+            first_frame - transition_subtraction,
+            last_frame - transition_subtraction
+        ))
+
+        transition_subtraction += transition_frames
+
+        first_frame += slide_duration
         last_frame += slide_duration
-    # -------------------------------
 
     return frame_range_list

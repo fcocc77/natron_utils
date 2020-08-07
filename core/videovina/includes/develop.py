@@ -24,8 +24,6 @@ def refresh():
     color = vina.color
     durations = vina.durations
 
-    slide_duration = durations[speed]
-
     width, hight = get_resolution(vina_node)
 
     slides = get_slides(workarea)
@@ -43,24 +41,21 @@ def refresh():
     last_black.getParam('size').set(width, hight)
     # ---------------------
 
-    transition_frames = get_transition_duration()
-    mid_transition_frames = transition_frames / 2
-    _last_frame = slide_count * slide_duration
-    # dissolve a negro en la ultima slide
-    dissolve = getNode(workarea, 'last_transition').getParam('which')
+    transition_duration = get_transition_duration()
+    double_transition_duration = transition_duration * 2
 
-    directional_transition(
-        dissolve,
-        transition_frames,
-        0.5, 0.5,
-        _last_frame,
-        [0, 1]
-    )
+    slide_duration = durations[speed] + double_transition_duration
+    video_last_frame = get_last_frame()
+
+    # dissolve a negro en la ultima slide
+    dissolve_start_frame = video_last_frame - transition_duration - 5
+    dissolve = getNode(workarea, 'last_transition').getParam('which')
+    directional_transition(dissolve, transition_duration, 0.5, 0.5, dissolve_start_frame, [0, 1])
     # -------------------
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
-    # le sumamos 'transition_frames' que equivale a 2 mitades de transicion, la inicial y la final
-    _app.getProjectParam('frameRange').set(1, get_last_frame())
+    # le sumamos 'transition_duration' que equivale a 2 mitades de transicion, la inicial y la final
+    _app.getProjectParam('frameRange').set(1, video_last_frame)
     # --------------------
 
     frame_range_list = get_ranges(slide_count, speed)
@@ -81,14 +76,11 @@ def refresh():
         slide.getParam('prefix').set('slide_' + str(index))
         slide.getParam('refresh').trigger()
 
-        if index == 0:
-            # si es el primer slide, le suma la mitad de transicion a cada dimension
-            durations_slide.set(
-                durations[0] + mid_transition_frames,
-                durations[1] + mid_transition_frames,
-                durations[2] + mid_transition_frames)
-        else:
-            durations_slide.set(durations[0], durations[1], durations[2])
+        durations_slide.set(
+            durations[0] + double_transition_duration,
+            durations[1] + double_transition_duration,
+            durations[2] + double_transition_duration
+        )
 
         first_frame, last_frame = frame_range_list[index]
 
@@ -103,17 +95,13 @@ def refresh():
 
         # Transition
         transition = obj['transition']
-        if index == 0:
-            # si es la primera transicion deja la transicion en el frame 1
-            start_frame = 1
-        else:
-            start_frame = (last_frame - (transition_frames / 2)) - slide_duration
+        start_frame = last_frame - slide_duration + 1
 
         transition_prefix = transition.getParam('prefix')
         if transition_prefix:
             transition_prefix.set('transition_' + str(index))
         transition.getParam('start_frame').set(start_frame)
-        transition.getParam('duration').set(transition_frames)
+        transition.getParam('duration').set(transition_duration)
         transition.getParam('format').set(_format)
         transition.getParam('speed').set(speed)
         transition.getParam('durations').set(durations[0], durations[1], durations[2])
