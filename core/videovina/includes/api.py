@@ -362,15 +362,17 @@ def export_default_project(thisNode, app, workarea, project_path):
     frame_rate = 30.0
     durations = thisNode.getParam('durations').get()
     transition = thisNode.getParam('transition_duration').get() / frame_rate
-    project.states.preview.transition_duration = [
+    transition_duration = [
         (transition * durations[0]) / 100,
         (transition * durations[1]) / 100,
         (transition * durations[2]) / 100
     ]
+    project.states.preview.transition_duration = transition_duration
+
     project.states.preview.durations = [
-        durations[0] / frame_rate,
-        durations[1] / frame_rate,
-        durations[2] / frame_rate
+        (durations[0] / frame_rate) + (transition_duration[0] / 2),
+        (durations[1] / frame_rate) + (transition_duration[1] / 2),
+        (durations[2] / frame_rate) + (transition_duration[2] / 2)
     ]
 
     # song
