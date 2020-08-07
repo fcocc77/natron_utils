@@ -105,8 +105,7 @@ def check_project(thisNode):
         if disconnect_filename:
             line2 = "These files are disconnected:"
 
-        message = line1 + '\n\n' + local_filename + \
-            '\n\n' + line2 + '\n\n' + disconnect_filename
+        message = line1 + '\n\n' + local_filename + '\n\n' + line2 + '\n\n' + disconnect_filename
         warning('FileName Error', message)
         return False
 
@@ -252,4 +251,5 @@ def render(thisNode, app, divided_project=False):
 
     os.system(cmd)
 
-    alert('Render Sended.', 'VinaRender')
+    if not thisNode.no_show_message.get():
+        alert('Render Sended.', 'VinaRender')

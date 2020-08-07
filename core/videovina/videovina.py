@@ -42,9 +42,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'update_videovina_project':
         update_videovina_project(thisNode, app, workarea)
 
-    elif knob_name == 'export_default_project':
-        export_default_project(thisNode, app, workarea, project_path)
-
     elif knob_name == 'default_color':
         set_default_color(thisNode, thisParam)
 

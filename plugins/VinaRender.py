@@ -70,7 +70,7 @@ def createInstance(app,group):
     lastNode.rgbonly = param
     del param
 
-    param = lastNode.createSeparatorParam("sep4", "")
+    param = lastNode.createBooleanParam("no_show_message", "No Show Message")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -78,6 +78,18 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.no_show_message = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep4 = param

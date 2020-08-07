@@ -890,16 +890,16 @@ def createInstance(app,group):
     lastNode.default_json_project = param
     del param
 
-    param = lastNode.createButtonParam("export_default_project", "Export Project to Static")
+    param = lastNode.createButtonParam("videovina_info", "Export VIdeoVina Info")
 
     # Add the param to the page
     lastNode.project_rab.addParam(param)
 
     # Set param properties
-    param.setHelp("Exporta todos los datos por defecto a un archivo \'project.json\' y copia  el contenido de resources a la carpeta static de videovina.")
+    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos, lo copia a la carpeta estatica de videovina \'static/templates/<template_name>\'/resources/overlap\'")
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
-    lastNode.export_default_project = param
+    lastNode.videovina_info = param
     del param
 
     param = lastNode.createButtonParam("transfer_to_static", "Transfer To Static")
@@ -912,18 +912,6 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.transfer_to_static = param
-    del param
-
-    param = lastNode.createButtonParam("videovina_info", "Export VIdeoVina Info")
-
-    # Add the param to the page
-    lastNode.project_rab.addParam(param)
-
-    # Set param properties
-    param.setHelp("Genera 1 imagen por cada slide, renderizandola\njusto en el centro del tiempo de la slide, la imagen queda en alpha y sin textos, lo copia a la carpeta estatica de videovina \'static/templates/<template_name>\'/resources/overlap\'")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.videovina_info = param
     del param
 
     # Refresh the GUI with the newly created parameters

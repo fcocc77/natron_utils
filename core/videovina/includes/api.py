@@ -97,12 +97,12 @@ def render(script_name='', jobname='', filename='', frame=1, resolution=[640, 36
     # ----------------------
 
     vinarender_node = get_node_by_label(script_name, parent_node)
-    alert(vinarender_node)
     if not vinarender_node:
         vinarender_node = createNode(
             'vinarender', script_name, parent_node, position=[posx, posy + 50])
         vinarender_node.setLabel(script_name)
         vinarender_node.connectInput(0, reformat)
+        vinarender_node.getParam('no_show_message').set(True)
 
     if type(frame) == int:
         vinarender_node.getParam('range').set(frame, frame)
@@ -387,8 +387,6 @@ def export_default_project(thisNode, app, workarea, project_path):
     # -------------
 
     jwrite(out_project, project)
-
-    alert('Proyecto ya fue exportado.', 'Export default project')
 
 
 def transfer_to_static(thisNode, app, project_path):
