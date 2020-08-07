@@ -204,23 +204,6 @@ def createInstance(app,group):
     lastNode.fps = param
     del param
 
-    param = lastNode.createChoiceParam("video_format", "Format")
-    entries = [ ("MOV - Apple ProRess 422", ""),
-    ("MP4 - LibX264", ""),
-    ("Image Sequence", "")]
-    param.setOptions(entries)
-    del entries
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.video_format = param
-    del param
-
     param = lastNode.createChoiceParam("output_quality", "Output Quality")
     entries = [ ("High Quality", ""),
     ("Medium Quality", ""),
@@ -234,7 +217,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.set("Medium Quality")
     lastNode.output_quality = param

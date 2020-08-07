@@ -10,7 +10,6 @@ data = json.loads(argv[6].replace("'", '"'))
 project = argv[5] + '.ntp'
 node = data['render_node']
 output = data['output']
-video_format = data['video_format']
 output_quality = data['output_quality']
 fps = data['fps']
 
@@ -27,9 +26,6 @@ writer = app.createWriter(output)
 # el tamanio del render es igual al del nodo
 writer.getParam('formatType').setValue(0)
 # ---------------------
-fps_param = writer.getParam("fps")
-if fps_param:
-    fps_param.set(fps)
 
 # codecs name
 # prores_ksap4h - Apple ProRess 4444
@@ -37,17 +33,20 @@ if fps_param:
 # prores_ksapcn - Apple ProRess 422
 # libx264 - H264
 # --------------------
-if video_format == 0:  # mov
+if ext == 'mov':
     codec = 'prores_ksapcn'
     format = 'mov'
-elif video_format == 1:  # mp4
+elif ext == 'mp4':
     codec = 'libx264'
     format = 'mp4'
     crf = writer.getParam('crf')
     crf.set(output_quality + 3)
 
-# parametros de codec solo si no es una secuencia de imagenes
-if video_format < 2:
+# parametros de codec solo para los video mov y mp4
+if ext == 'mov' or ext == 'mp4':
+    fps_param = writer.getParam("fps")
+    fps_param.set(fps)
+
     format_param = writer.getParam('format')
     format_index = format_param.getOptions().index(format)
     format_param.set(format_index)
