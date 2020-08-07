@@ -1,6 +1,6 @@
 modules:
     videovina:
-        ☐ la animacion de cada slide queda corta, ya que se penso solo para la mitad del tiempo de la transicion, y dependiendo de la transicion la slide se ve a lo largo de toda la transicion. @today 
+        ✔ la animacion de cada slide queda corta, ya que se penso solo para la mitad del tiempo de la transicion, y dependiendo de la transicion la slide se ve a lo largo de toda la transicion. @today @done (8/7/2020, 11:55:39 AM)
     vina:
         ✔ el get_ranges(), en el ultimo frame no termina en negro completamente @today @done (7/25/2020, 2:06:33 PM)
     nx:
