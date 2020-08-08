@@ -40,6 +40,7 @@ def copy(node, group=None):
     # y lo crea en el nuevo nodo grupo, y luega copia cada nodo hijo con sus atributos
     if _id == 'fr.inria.built-in.Group':
         new_node = _app.createNode('vv.group', 1, group)
+        new_node.setScriptName(node.getScriptName())
 
         new_node.control = new_node.createPageParam("control", "Control")
         new_node.setPagesOrder(['control', 'Node', 'Settings'])
@@ -157,6 +158,7 @@ def copy(node, group=None):
                     _node.connectInput(i, created_nodes[iname])
     else:
         new_node = _app.createNode(_id, -1, group)
+        new_node.setScriptName(node.getScriptName())
         disable_node = None
 
         for p in node.getParams():
@@ -177,7 +179,6 @@ def copy(node, group=None):
         if not disable_node == None:
             disable_node_param.set(disable_node)
 
-    new_node.setScriptName(node.getScriptName())
     new_node.refreshUserParamsGUI()
 
     return new_node
