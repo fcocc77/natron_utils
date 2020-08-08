@@ -157,11 +157,25 @@ def copy(node, group=None):
                     _node.connectInput(i, created_nodes[iname])
     else:
         new_node = _app.createNode(_id, -1, group)
+        disable_node = None
+
         for p in node.getParams():
             name = p.getScriptName()
             param = new_node.getParam(name)
             if param:
+                # cuando se copia el parametro de 'OutputFile', Natron se pega cuando trata de recargar
+                # el archivo, asi que para evitarlo, se desabilita el nodo,
+                # y cuando ya copia todos los parametros, deja el nodo como estaba.
+                if p.getTypeName() == 'OutputFile':
+                    disable_node_param = new_node.getParam('disableNode')
+                    disable_node = disable_node_param.get()
+                    disable_node_param.set(True)
+                # ------------------------------
+
                 param.copy(p)
+
+        if not disable_node == None:
+            disable_node_param.set(disable_node)
 
     new_node.setScriptName(node.getScriptName())
     new_node.refreshUserParamsGUI()
