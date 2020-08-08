@@ -71,7 +71,39 @@ def get_last_frame():
     return last_frame + last_padding
 
 
-def get_ranges(slide_count, speed=None):
+def get_ranges_without_transition(slide_count):
+    # obtiene todos los rangos a partir del 'get_reange()',
+    # pero los rangos no se superponen, por causa de las transiciones.
+    ranges = get_ranges_with_transition(slide_count)
+
+    mid_transition_frames = get_transition_duration() / 2
+    new_ranges = []
+
+    last_last_frame = 0
+    for i, _range in enumerate(ranges):
+        first_frame = _range[0] + mid_transition_frames
+        last_frame = _range[1] - mid_transition_frames
+
+        # si es el primer y ultimo frames, los deja como estaban
+        if i == 0:
+            first_frame = _range[0]
+        if i == len(ranges) - 1:
+            last_frame = _range[1]
+
+        # 'get_transition_duration()' calcula en int, por eso a veces,
+        # el ultimo y primer frame pueden ser iguales, si son iguales le suma 1 al siguiente
+        if last_last_frame == first_frame:
+            first_frame += 1
+
+        new_ranges.append((first_frame, last_frame))
+        last_last_frame = last_frame
+
+        i += 1
+
+    return new_ranges
+
+
+def get_ranges_with_transition(slide_count, speed=None):
     vina = videovina_data()
 
     if not speed:
@@ -103,3 +135,10 @@ def get_ranges(slide_count, speed=None):
         last_frame += slide_duration
 
     return frame_range_list
+
+
+def get_ranges(slide_count, speed=None, transition=True):
+    if transition:
+        return get_ranges_with_transition(slide_count, speed)
+    else:
+        return get_ranges_without_transition(slide_count)

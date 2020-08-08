@@ -118,18 +118,25 @@ def divide_projects(thisNode):
     divided_project_folder = absolute(thisNode.getParam('project_folder').get())
     prefix = thisNode.getParam('prefix').get()
 
+    # crea lista solo con proyectos .ntp
+    ntp_list = []
+    for proj in os.listdir(divided_project_folder):
+        ext = proj[-3:]
+        if ext == 'ntp':
+            ntp_list.append(proj)
+
     # obtiene el index de la ultima slide, extrayendola del nombre del ntp
     last_slide = 0
-    for proj in os.listdir(divided_project_folder):
+    for proj in ntp_list:
         _last_slide = int(proj.split('-')[-1][:-4])
 
         if _last_slide > last_slide:
             last_slide = _last_slide
     # ----------------------
 
-    ranges = get_ranges(last_slide + 1)
+    ranges = get_ranges(last_slide + 1, transition=False)
 
-    for proj in os.listdir(divided_project_folder):
+    for proj in ntp_list:
         project_path = divided_project_folder + '/' + proj
 
         slides_range = proj.split('_')[-1][:-4]
