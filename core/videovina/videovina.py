@@ -24,9 +24,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'generate_slides':
         generate_base_slides(thisNode, app, workarea)
 
-    elif knob_name == 'save_production':
-        save_production_projects(thisNode)
-
     elif knob_name == 'prerender':
         divide_project(thisNode, workarea)
 

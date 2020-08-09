@@ -30,7 +30,8 @@ def sort():
         posx = get_slide_position(index)[0]
 
         image.setPosition(posx - 12, - 400)
-        reformat.setPosition(posx, - 200)
+        if reformat:
+            reformat.setPosition(posx, - 200)
 
     first_black = getNode(label='FirstBlack')
     first_black.setPosition(-200, 200)

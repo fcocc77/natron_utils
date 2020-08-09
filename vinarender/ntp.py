@@ -36,7 +36,9 @@ _app = app1.loadProject(base_project)
 nx._app = _app
 
 generate_production_slides(None, _app, _app, slides_range, force=True)
-get_videovina().getParam('generate_pictures').trigger()
+videovina_node = get_videovina()
+videovina_node.getParam('reformat').set(False)
+videovina_node.getParam('generate_pictures').trigger()
 
 _app.saveProjectAs(project)
 os.system('chmod 777 "' + project + '"')

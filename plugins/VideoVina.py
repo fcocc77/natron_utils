@@ -94,18 +94,6 @@ def createInstance(app,group):
     lastNode.sep6 = param
     del param
 
-    param = lastNode.createButtonParam("save_production", "Save Production Projects")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Guarda una versión de producción, elimina todo\nlo innecesario, y procesa las capas que no serán modificadas")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.save_production = param
-    del param
-
     param = lastNode.createButtonParam("clean", "Clean")
 
     # Add the param to the page
@@ -113,7 +101,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     lastNode.clean = param
     del param

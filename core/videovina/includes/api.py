@@ -45,10 +45,6 @@ def update_private_content(thisNode, thisParam):
     thisNode.getParam('assets').set(assert_dir)
 
 
-def save_production_projects(thisNode):
-    print 'save_production'
-
-
 def export_video_previs(workarea, app, template_name, resources):
     last_transition = getNode(workarea, 'last_transition')
 
@@ -218,7 +214,7 @@ def update_videovina_project(videovina_node, app, workarea):
     videovina_node.getParam('user').set(pj.user)
     videovina_node.getParam('project_name').set(pj.name)
     videovina_node.getParam('user_id').set(pj.user_id)
-    print()
+
     photos = []
     count = pj.photos_amount
     first_slide = 0
@@ -298,7 +294,7 @@ def update_videovina_project(videovina_node, app, workarea):
     # format
     videovina_node.getParam('format').set(pj.format)
 
-    generate_pictures(photos, pictures_amount=True)
+    generate_pictures(photos, pictures_amount=True, reformat_node=False)
     refresh()
 
 
