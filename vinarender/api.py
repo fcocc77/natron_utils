@@ -50,16 +50,21 @@ def create_multi_project():
     project_data.user_id = user_id
     jwrite(project_json, project_data)
 
-    s3_footage = private_project_dir + '/footage'
-    loal_footage = project_dir + '/footage'
-    makedirs(loal_footage)
-    # copia las fotos de a una, por si ya estan en el directorio local
-    # asi no se gasta tanto trafico
+    # copia las fotos segun su formato
+    format_name = ['quarter', 'mid', 'hd', '4k'][_format]
+
+    if _format == 1:
+        s3_footage = public_project_dir + '/footage/' + format_name
+    else:
+        s3_footage = private_project_dir + '/footage/' + format_name
+
+    local_footage = project_dir + '/footage'
+    makedirs(local_footage)
+
     for photo in os.listdir(s3_footage):
         src = s3_footage + '/' + photo
-        dst = loal_footage + '/' + photo
-        if not os.path.isfile(dst):
-            shutil.copy(src, dst)
+        dst = local_footage + '/' + photo
+        shutil.copy(src, dst)
 
     # copia las fuente al directorio local
     fonts_dir = public_project_dir + '/fonts'
