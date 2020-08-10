@@ -2,7 +2,8 @@
 # HD Medio, Full Hd y 4K; Lento, Normal y Rapido
 import os
 import NatronEngine
-from nx import getNode, alert, value_by_durations, absolute
+from nx import getNode, alert, absolute
+from vina import value_by_durations
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):

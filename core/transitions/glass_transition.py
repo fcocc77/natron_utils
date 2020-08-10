@@ -1,7 +1,8 @@
 import os
 import NatronEngine
-from nx import getNode, alert, value_by_durations, switch, get_connected_nodes, question, delete, warning, input_connected, dots_delete
+from nx import getNode, alert, switch, get_connected_nodes, question, delete, warning, input_connected, dots_delete
 from base import *
+from vina import value_by_durations
 from general import formats
 from twelve_render import send_vinarender_state
 

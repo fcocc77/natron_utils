@@ -13,6 +13,7 @@ from util import jwrite
 from nx import alert, getNode, createNode, get_node_by_label
 from general import formats
 from production import generate_production_slides
+from vina import value_by_durations
 
 
 def update_private_content(thisNode, thisParam):
@@ -298,9 +299,30 @@ def update_videovina_project(videovina_node, app, workarea):
     refresh()
 
 
-def export_default_project(thisNode, app, workarea, project_path):
+def get_seconds_durations(videovina_node):
+    frame_rate = 30.0
+    durations = videovina_node.getParam('durations').get()
+    transition = videovina_node.getParam('transition_duration').get()
+
+    transition_second = transition / frame_rate
+    transition_durations = value_by_durations(transition_second, durations)
+
+    slow_second = durations[0] / frame_rate
+    normal_second = durations[1] / frame_rate
+    fast_second = durations[2] / frame_rate
+
+    durations = [
+        slow_second + transition_durations[0],
+        normal_second + transition_durations[1],
+        fast_second + transition_durations[2]
+    ]
+
+    return [durations, transition_durations]
+
+
+def export_default_project(videovina_node, app, workarea, project_path):
     project_name = app.projectName.get().split('.')[0]
-    videovina_root = thisNode.getParam('videovina_root').get()
+    videovina_root = videovina_node.getParam('videovina_root').get()
 
     base_project = videovina_root + '/misc/base_project.json'
     resources = project_path + '/resources'
@@ -314,7 +336,7 @@ def export_default_project(thisNode, app, workarea, project_path):
     # obtiene colores de muestra
     colors = []
     for i in range(1, 4):
-        _color = thisNode.getParam('color_' + str(i)).get()
+        _color = videovina_node.getParam('color_' + str(i)).get()
         color = [_color[0] * 255, _color[1] * 255, _color[2] * 255]
         colors.append(color)
 
@@ -348,7 +370,7 @@ def export_default_project(thisNode, app, workarea, project_path):
     # ----------------------
 
     # font
-    default_font = thisNode.getParam('default_font')
+    default_font = videovina_node.getParam('default_font')
     font = default_font.getOption(default_font.get())
     # --------------
 
@@ -356,24 +378,12 @@ def export_default_project(thisNode, app, workarea, project_path):
     project.states.timeline.slides_base_count = base_count
     project.states.app.font = font
 
-    frame_rate = 30.0
-    durations = thisNode.getParam('durations').get()
-    transition = thisNode.getParam('transition_duration').get() / frame_rate
-    transition_duration = [
-        (transition * durations[0]) / 100,
-        (transition * durations[1]) / 100,
-        (transition * durations[2]) / 100
-    ]
-    project.states.preview.transition_duration = transition_duration
-
-    project.states.preview.durations = [
-        (durations[0] / frame_rate) + (transition_duration[0] / 2),
-        (durations[1] / frame_rate) + (transition_duration[1] / 2),
-        (durations[2] / frame_rate) + (transition_duration[2] / 2)
-    ]
+    durations, transition_durations = get_seconds_durations(videovina_node)
+    project.states.preview.durations = durations
+    project.states.preview.transition_durations = transition_durations
 
     # song
-    song_name = get_current_song(thisNode)[0]
+    song_name = get_current_song(videovina_node)[0]
     project.states.app.song = song_name
     project.states.music.playing = song_name
     # --------------

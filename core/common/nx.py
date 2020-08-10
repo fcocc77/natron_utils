@@ -326,15 +326,6 @@ def warning(title, message):
         NatronGui.natron.warningDialog(title, message)
 
 
-def value_by_durations(value, durations=[0, 0, 0]):
-    normal_speed = durations[1]
-
-    slow = (value * durations[0]) / normal_speed
-    fast = (value * durations[2]) / normal_speed
-
-    return [slow, value, fast]
-
-
 def get_all_nodes(group=None):
     if not group:
         group = app()

@@ -1,4 +1,5 @@
-from nx import getNode, value_by_durations
+from nx import getNode
+from vina import value_by_durations
 import NatronEngine
 from base import link_to_parent
 

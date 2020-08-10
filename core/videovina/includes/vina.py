@@ -142,3 +142,12 @@ def get_ranges(slide_count, speed=None, transition=True):
         return get_ranges_with_transition(slide_count, speed)
     else:
         return get_ranges_without_transition(slide_count)
+
+
+def value_by_durations(value, durations=[0, 0, 0]):
+    normal_speed = durations[1]
+
+    slow = (value * durations[0]) / normal_speed
+    fast = (value * durations[2]) / normal_speed
+
+    return [slow, value, fast]
