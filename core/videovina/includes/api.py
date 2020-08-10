@@ -221,7 +221,7 @@ def update_videovina_project(videovina_node, app, workarea):
     last_slide = count - 1
 
     for photo in pj.timeline:
-        basename = photo.name.split('.')[0]
+        basename = photo.name.rsplit('.', 1)[0]
         url = pj.footage + '/' + basename + '.jpg'
         photos.append(url)
 
