@@ -219,6 +219,7 @@ def render(thisNode, app, divided_project=False):
 
         extra = {
             'divided_project': False,
+            'production': False,
             'divided_projects': []
         }
     else:
@@ -227,6 +228,7 @@ def render(thisNode, app, divided_project=False):
         last_frame = get_last_frame()
         vina = videovina_data()
         extra = {
+            'production': True,
             'divided_project': divided_project,
             'divided_projects': divided_projects,
             'song': vina.song,
