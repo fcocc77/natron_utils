@@ -2,7 +2,7 @@ from nx import getNode, createNode, alert, copy, warning, question, app
 from vina import get_videovina, get_ranges, videovina_data, get_transition_duration, get_last_frame
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution
-from transition import directional_transition
+from animations import directional_animation
 from pictures import get_picture, get_index_last_picture
 import os
 import random
@@ -50,7 +50,7 @@ def refresh():
     # dissolve a negro en la ultima slide
     dissolve_start_frame = video_last_frame - transition_duration - 5
     dissolve = getNode(workarea, 'last_transition').getParam('which')
-    directional_transition(dissolve, transition_duration, dissolve_start_frame, [0, 1], 0.5, 0.5)
+    directional_animation(dissolve, transition_duration, dissolve_start_frame, [0, 1], [0.5, 0.5])
     # -------------------
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides

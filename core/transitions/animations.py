@@ -1,7 +1,7 @@
 import NatronEngine
 
 
-def back_and_forth_transition(param, duration, start_frame, values):
+def back_and_forth_animation(param, duration, start_frame, values):
     # transicion ida y vuelta
 
     first_frame = start_frame
@@ -24,15 +24,40 @@ def back_and_forth_transition(param, duration, start_frame, values):
         param.setInterpolationAtTime(last_frame,  horizontal, dimension)
 
 
-def lineal_transition(param, start_frame, duration, values, dimension=None):
+def lineal_animation(param, start_frame, duration, values, dimension=None):
     if not dimension == None:
-        directional_transition(param, duration, start_frame, values, 0, 0, dimension)
+        directional_animation(param, duration, start_frame, values, [0, 0], dimension)
     else:
         for dimension in range(param.getNumDimensions()):
-            directional_transition(param, duration, start_frame, values, 0, 0, dimension)
+            directional_animation(param, duration, start_frame, values, [0, 0], dimension)
 
 
-def directional_transition(param, duration, start_frame, values, exaggeration_time=0.7, exaggeration_value=0.7, dimension=0):
+def exaggerated_animation(
+        param,
+        duration,
+        start_frame,
+        values,
+        exaggeration=[0.7, 0.7],
+        dimension=None,
+        key_frames=[True, True]):
+
+    if not dimension == None:
+        directional_animation(param, duration, start_frame, values, exaggeration, dimension, key_frames)
+    else:
+        for dimension in range(param.getNumDimensions()):
+            directional_animation(param, duration, start_frame, values, exaggeration, dimension, key_frames)
+
+
+def directional_animation(
+        param,
+        duration,
+        start_frame,
+        values,
+        exaggeration=[0.7, 0.7],
+        dimension=0,
+        key_frames=[True, True]):
+
+    exaggeration_time, exaggeration_value = exaggeration
 
     exaggeration_value = 1 - exaggeration_value
 
@@ -55,11 +80,9 @@ def directional_transition(param, duration, start_frame, values, exaggeration_ti
     if exaggeration_time > 0:
         # obtiene el valor de la exageracion dependiendo de la cantidad de frames de la transicion
         _exaggeration_time = (duration / 2) * exaggeration_time
-        # -------------------
 
         # obtiene el valor de la exageracion de valor dependiendo de la cantidad del valor
         _exaggeration_value = (value_range / 2) * exaggeration_value
-        # -------------------
 
         exaggeration_first = first_frame + _exaggeration_time
         exaggeration_last = last_frame - _exaggeration_time
@@ -73,10 +96,10 @@ def directional_transition(param, duration, start_frame, values, exaggeration_ti
 
         horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
 
-        param.setValueAtTime(exaggeration_first_value,
-                             exaggeration_first, dimension)
-        param.setValueAtTime(exaggeration_last_value,
-                             exaggeration_last, dimension)
+        if key_frames[0]:
+            param.setValueAtTime(exaggeration_first_value, exaggeration_first, dimension)
+            param.setInterpolationAtTime(first_frame, horizontal, dimension)
 
-        param.setInterpolationAtTime(first_frame,  horizontal, dimension)
-        param.setInterpolationAtTime(last_frame,  horizontal, dimension)
+        if key_frames[1]:
+            param.setValueAtTime(exaggeration_last_value, exaggeration_last, dimension)
+            param.setInterpolationAtTime(last_frame, horizontal, dimension)

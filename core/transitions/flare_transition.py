@@ -1,4 +1,4 @@
-from transition import directional_transition, back_and_forth_transition
+from animations import directional_animation, back_and_forth_animation
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -24,6 +24,6 @@ def set_transition(thisNode):
     flare_merge = thisNode.flare_merge.mix
     blur = thisNode.Blur.size
 
-    directional_transition(dissolve, duration, start_frame, values, exaggeration_time, exaggeration_value)
-    back_and_forth_transition(flare_merge, duration, start_frame, [0, 1])
-    back_and_forth_transition(blur, duration, start_frame, [0, blur_size])
+    directional_animation(dissolve, duration, start_frame, values, [exaggeration_time, exaggeration_value])
+    back_and_forth_animation(flare_merge, duration, start_frame, [0, 1])
+    back_and_forth_animation(blur, duration, start_frame, [0, blur_size])
