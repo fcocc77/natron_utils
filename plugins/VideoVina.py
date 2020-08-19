@@ -467,9 +467,12 @@ def createInstance(app,group):
 
     param = lastNode.createChoiceParam("transition", "Transition")
     entries = [ ("FlareTransition", ""),
-    ("GlassTransition", "")]
+    ("GlassTransition", ""),
+    ("ZoomTransition", "")]
     param.setOptions(entries)
     del entries
+    param.setDefaultValue("ZoomTransition")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)

@@ -1,5 +1,5 @@
 from nx import getNode, createNode, alert, copy, warning, question, app
-from vina import get_videovina, get_ranges, videovina_data, get_transition_duration, get_last_frame
+from vina import get_videovina, get_ranges, videovina_data, get_transition_duration, get_last_frame, value_by_durations
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution
 from animations import directional_animation
@@ -10,6 +10,26 @@ import random
 # separacion de los nodos en horizontal
 xdistance = 200
 # ----------------
+
+
+def transition_refresh(transition_node, start_frame, duration, format, speed, slide_durations):
+    transition = transition_node
+
+    transition_prefix = transition.getParam('prefix')
+    if transition_prefix:
+        transition_prefix.set('transition_' + str(index))
+    transition.getParam('start_frame').set(start_frame)
+    transition.getParam('format').set(format)
+    transition.getParam('speed').set(speed)
+
+    durations = value_by_durations(duration, slide_durations)
+    transition.getParam('durations').set(durations[0], durations[1], durations[2])
+
+    color_param = transition.getParam('color')
+    if color_param:
+        color_param.set(color[0], color[1], color[2], color[3])
+
+    transition.getParam('refresh').trigger()
 
 
 def refresh():
@@ -94,20 +114,14 @@ def refresh():
                 reformat.getParam('refresh').trigger()
 
         # Transition
-        transition = obj['transition']
-        start_frame = last_frame - slide_duration + 1
-
-        transition_prefix = transition.getParam('prefix')
-        if transition_prefix:
-            transition_prefix.set('transition_' + str(index))
-        transition.getParam('start_frame').set(start_frame)
-        transition.getParam('duration').set(transition_duration)
-        transition.getParam('format').set(_format)
-        transition.getParam('speed').set(speed)
-        transition.getParam('durations').set(durations[0], durations[1], durations[2])
-        transition.getParam('color').set(color[0], color[1], color[2], color[3])
-        transition.getParam('refresh').trigger()
-        # --------------------
+        transition_refresh(
+            obj['transition'],
+            last_frame - slide_duration + 1,
+            transition_duration,
+            _format,
+            speed,
+            durations
+        )
 
         connect_slide_inputs(workarea, index)
 
