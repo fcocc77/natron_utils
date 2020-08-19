@@ -102,27 +102,27 @@ def distribute(thisNode):
         thisNode.getNode('merge_' + str(i)).getParam('mix').set(1)
         _start_frame = start_frame + total_gap
 
-        directional_transition(rotate, duration, exaggeration_time,
-                               exaggeration_value, _start_frame, [rotate_src, rotate_dst])
+        directional_transition(rotate, duration, _start_frame, [rotate_src, rotate_dst],
+                               exaggeration_time, exaggeration_value)
 
         position_dst = -left_translate
         position_src = position_dst - initial_translate
-        directional_transition(translate, duration, exaggeration_time,
-                               exaggeration_value, _start_frame, [position_src, position_dst])
+        directional_transition(translate, duration, _start_frame, [position_src, position_dst],
+                               exaggeration_time, exaggeration_value)
 
         if sort == 1:  # Formas ordenadas
             width_src = -initial_width
             width_dst = -(part + 1)
-            directional_transition(width_translate, duration, exaggeration_time,
-                                   exaggeration_value, _start_frame, [width_src, width_dst])
+            directional_transition(width_translate, duration, _start_frame, [width_src, width_dst],
+                                   exaggeration_time, exaggeration_value)
         else:  # Formas Random
             random.seed(seed + 100 * i)
             width_src = -random.randint(0, new_width / 5)
             random.seed(seed + 1000 * i)
             width_dst = -random.randint(0, new_width / 5)
 
-            directional_transition(width_translate, duration, exaggeration_time,
-                                   exaggeration_value, _start_frame, [width_src, width_dst])
+            directional_transition(width_translate, duration, _start_frame, [width_src, width_dst],
+                                   exaggeration_time, exaggeration_value)
 
         total_gap += gap
         left_translate += part

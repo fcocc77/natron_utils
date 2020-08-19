@@ -26,15 +26,13 @@ def back_and_forth_transition(param, duration, start_frame, values):
 
 def lineal_transition(param, start_frame, duration, values, dimension=None):
     if not dimension == None:
-        directional_transition(param, duration, 0, 0,
-                               start_frame, values, dimension)
+        directional_transition(param, duration, start_frame, values, 0, 0, dimension)
     else:
         for dimension in range(param.getNumDimensions()):
-            directional_transition(param, duration, 0, 0,
-                                   start_frame, values, dimension)
+            directional_transition(param, duration, start_frame, values, 0, 0, dimension)
 
 
-def directional_transition(param, duration, exaggeration_time, exaggeration_value, start_frame, values, dimension=0):
+def directional_transition(param, duration, start_frame, values, exaggeration_time=0.7, exaggeration_value=0.7, dimension=0):
 
     exaggeration_value = 1 - exaggeration_value
 

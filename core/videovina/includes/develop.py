@@ -50,7 +50,7 @@ def refresh():
     # dissolve a negro en la ultima slide
     dissolve_start_frame = video_last_frame - transition_duration - 5
     dissolve = getNode(workarea, 'last_transition').getParam('which')
-    directional_transition(dissolve, transition_duration, 0.5, 0.5, dissolve_start_frame, [0, 1])
+    directional_transition(dissolve, transition_duration, dissolve_start_frame, [0, 1], 0.5, 0.5)
     # -------------------
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
