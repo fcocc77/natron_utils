@@ -21,7 +21,7 @@ def refresh(thisNode):
 
     duration = thisNode.getParam('duration').get()
 
-    # animacion para el dissolve solo con la mitad de la duracion
+    # animacion para el 'dissolve' solo con la mitad de la duracion
     mid_duration = duration / 2
     start_frame_dissolve = start_frame + (mid_duration / 2)
     exaggerated_animation(dissolve, mid_duration, start_frame_dissolve, [0.0, 2.0])
