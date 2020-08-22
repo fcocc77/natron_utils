@@ -42,4 +42,4 @@ def sort():
 
 
 NatronGui.natron.addMenuCommand('Videovina/Sort Template', 'sort.sort',
-                                QtCore.Qt.Key.Key_X, QtCore.Qt.KeyboardModifier.ShiftModifier)
+                                QtCore.Qt.Key.Key_T, QtCore.Qt.KeyboardModifier.ShiftModifier)
