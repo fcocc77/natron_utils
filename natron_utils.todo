@@ -9,6 +9,11 @@ modules:
     api:
         ✔ filtrar si en cada slide se uso una fuente del usuario, y si se uso ponerla en videovina_node @today @done (7/29/2020, 3:34:54 PM)
         ☐ si la cancion es mas corta que el video, que se repita igual como se hizo en el editor de la web
+    subtle_move:
+        ☐ integrar un punto de anclaje para el movimiento con zoom @today 
+        ☐ que 'Link To Parent' que tambien funcione cuando el padre tenga solo algunos parametros @today 
+    shape:
+        ☐ separar animacion a otro nodo de animacion @today 
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
     ☐ que los usuario privilegiados tengan baja prioridad en el renderizados, que renderizen solo si no hay ningun usuario pagado, renderizando

@@ -770,6 +770,11 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     groupBase1 = lastNode
 
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("slide_base.main")
+        del param
+
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
@@ -906,6 +911,11 @@ def createInstance(app,group):
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = groupgroup
     lastNode.setColor(0.7, 0.7, 0.7)
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("slide_base.main")
+        del param
+
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")

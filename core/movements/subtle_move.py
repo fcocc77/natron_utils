@@ -76,7 +76,7 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
         param.setInterpolationAtTime(first_frame_break, lineal, dimension)
         param.setInterpolationAtTime(last_frame_break, lineal, dimension)
 
-        # le suma un frame antes y despues del puto de quebre, para que solo el
+        # le suma un frame antes y despues del punto de quebre, para que solo el
         # punto de quebre tenga interpolacion horizontal y el resto lineal
         after_frame = last_frame_break + 1
         after_value = param.getValueAtTime(after_frame, dimension)
