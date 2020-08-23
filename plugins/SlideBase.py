@@ -761,122 +761,6 @@ def createInstance(app,group):
     del lastNode
     # End of node "Transform"
 
-    # Start of node "TwelveRead"
-    lastNode = app.createNode("vv.TwelveRead", 1, group)
-    lastNode.setScriptName("TwelveRead")
-    lastNode.setLabel("TwelveRead")
-    lastNode.setPosition(1210, 361)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupTwelveRead = lastNode
-
-    param = lastNode.getParam("onParamChanged")
-    if param is not None:
-        param.setValue("twelve_read.main")
-        del param
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
-    lastNode.format = param
-    del param
-
-    param = lastNode.createChoiceParam("speed", "Speed")
-    entries = [ ("Slow", ""),
-    ("Normal", ""),
-    ("Fast", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Normal")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Normal")
-    lastNode.speed = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep1", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
-    del param
-
-    param = lastNode.createStringParam("prefix", "Prefix")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue("slide_prefix")
-    lastNode.prefix = param
-    del param
-
-    param = lastNode.createBooleanParam("premult", "Premult")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.premult = param
-    del param
-
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "TwelveRead"
-
     # Start of node "Base1"
     lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
     lastNode.setScriptName("Base1")
@@ -1390,6 +1274,109 @@ def createInstance(app,group):
     del lastNode
     # End of node "TwelveRender"
 
+    # Start of node "TwelveRead"
+    lastNode = app.createNode("vv.TwelveRead", 1, group)
+    lastNode.setScriptName("TwelveRead")
+    lastNode.setLabel("TwelveRead")
+    lastNode.setPosition(1210, 361)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupTwelveRead = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("twelve_read.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.set("Normal")
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep1", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
+    del param
+
+    param = lastNode.createStringParam("prefix", "Prefix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue("slide_prefix")
+    lastNode.prefix = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "TwelveRead"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupFrameRange)
     groupFrameRange.connectInput(0, groupTimeOffset)
@@ -1416,15 +1403,6 @@ def createInstance(app,group):
     param = groupMerge2.getParam("mix")
     param.setExpression("thisGroup.include_text.get()", False, 0)
     del param
-    param = groupTwelveRead.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
-    del param
-    param = groupTwelveRead.getParam("speed")
-    param.setExpression("thisGroup.speed.get()", False, 0)
-    del param
-    param = groupTwelveRead.getParam("prefix")
-    param.setExpression("thisGroup.prefix.get()", False, 0)
-    del param
     param = groupBase1.getParam("durations")
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 0)
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 1)
@@ -1449,6 +1427,15 @@ def createInstance(app,group):
     del param
     param = groupTwelveRender.getParam("current_state")
     param.setExpression("thisGroup.current_state.get()", False, 0)
+    del param
+    param = groupTwelveRead.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
+    del param
+    param = groupTwelveRead.getParam("speed")
+    param.setExpression("thisGroup.speed.get()", False, 0)
+    del param
+    param = groupTwelveRead.getParam("prefix")
+    param.setExpression("thisGroup.prefix.get()", False, 0)
     del param
 
     param = group.getParam("current_format")
