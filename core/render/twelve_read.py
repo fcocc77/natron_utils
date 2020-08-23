@@ -29,12 +29,15 @@ def refresh(thisNode):
     prefix_name = prefix + '_' + current_speed + '_' + current_format
 
     filename_param = read.getParam('filename')
-    filename = '[Project]/../footage/' + prefix + '/' + \
-        prefix_name + '/' + prefix_name + '_###.png'
+    filename = '[Project]/../footage/' + prefix + '/' + prefix_name + '/' + prefix_name + '_###.png'
 
     if filename_param.get() == filename:
         filename_param.reloadFile()
     else:
         filename_param.set(filename)
 
-    read.getParam('outputPremult').set(0)
+    output_premult = read.getParam('outputPremult')
+    if thisNode.getParam('premult').get():
+        output_premult.set(1)
+    else:
+        output_premult.set(0)
