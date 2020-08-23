@@ -1,17 +1,14 @@
 from nx import getNode, createNode, warning
 from base import *
-from slide_base import generate_inputs
+from slide_common import setup
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
 
-    children_refresh(thisParam, thisNode)
-    knob_name = thisParam.getScriptName()
+    setup(thisParam, thisNode)
 
-    if knob_name == 'generate_inputs':
-        generate_inputs(thisNode)
     if knob_name == 'refresh':
         refresh(thisNode)
 
