@@ -22,17 +22,19 @@ if not node:
     node = get_videovina_render()
 
 writer = app.createWriter(output)
+writer.connectInput(0, node)
 
 # el tamanio del render es igual al del nodo
 writer.getParam('formatType').setValue(0)
-# ---------------------
+
+# unPremult
+writer.getParam('inputPremult').set(2)
 
 # codecs name
 # prores_ksap4h - Apple ProRess 4444
 # prores_ksapch - Apple ProRess 422 HQ
 # prores_ksapcn - Apple ProRess 422
 # libx264 - H264
-# --------------------
 if ext == 'mov':
     codec = 'prores_ksapcn'
     format = 'mov'
@@ -54,5 +56,3 @@ if ext == 'mov' or ext == 'mp4':
     codec_param = writer.getParam('codec')
     codec_index = codec_param.getOptions().index(codec)
     codec_param.set(codec_index)
-
-writer.connectInput(0, node)

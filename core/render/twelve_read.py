@@ -36,8 +36,4 @@ def refresh(thisNode):
     else:
         filename_param.set(filename)
 
-    output_premult = read.getParam('outputPremult')
-    if thisNode.getParam('premult').get():
-        output_premult.set(1)
-    else:
-        output_premult.set(0)
+    read.getParam('outputPremult').set(0)

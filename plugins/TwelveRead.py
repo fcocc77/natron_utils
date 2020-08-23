@@ -110,18 +110,6 @@ def createInstance(app,group):
     lastNode.prefix = param
     del param
 
-    param = lastNode.createBooleanParam("premult", "Premult")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.premult = param
-    del param
-
     param = lastNode.createButtonParam("refresh", "Refresh")
 
     # Add the param to the page
