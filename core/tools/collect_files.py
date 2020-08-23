@@ -7,11 +7,36 @@ import NatronGui
 from PySide import QtCore
 
 
+def file_copy(filename, basename, dst_dir):
+    # Padding
+    padding = re.search('(#+)|(%\d\d?d)', filename)
+    padding = padding.group(0) if padding else ''
+
+    if not os.path.isdir(dst_dir):
+        os.makedirs(dst_dir)
+
+    src = filename
+    if padding:
+        _basename = basename.replace(padding, '').split('.')[0]
+        # encuentra todos los archivos que contengas la base de la secuencia
+        sequence = sorted(fnmatch.filter(os.listdir(dirpath), _basename + '*'))
+
+        for _file in sequence:
+            _src = dirpath + '/' + _file
+            dst = dst_dir + '/' + _file
+            if not os.path.isfile(dst):
+                shutil.copy2(_src, dst)
+    else:
+        dst = dst_dir + '/' + basename
+
+        if not os.path.isfile(dst):
+            shutil.copy2(src, dst)
+
+
 def collect_files():
     app = NatronGui.natron.getGuiInstance(0)
 
-    project_path = os.path.dirname(os.path.dirname(
-        app.getProjectParam('projectPath').get()))
+    project_path = os.path.dirname(os.path.dirname(app.getProjectParam('projectPath').get()))
     footage = project_path + '/footage'
     relative_base = '[Project]/../footage'
 
@@ -29,41 +54,18 @@ def collect_files():
             dirname = os.path.basename(dirpath)
             basename = os.path.basename(filename)
 
-            # Padding
-            padding = re.search('(#+)|(%\d\d?d)', filename)
-            padding = padding.group(0) if padding else ''
-            # -----------------------------------------------
-
-            dst_dir = footage + '/' + dirname
-
-            if not os.path.isdir(dst_dir):
-                os.makedirs(dst_dir)
-
-            src = filename
-            if padding:
-                _basename = basename.replace(padding, '').split('.')[0]
-                # encuentra todos los archivos que contengas la base de la secuencia
-                sequence = sorted(fnmatch.filter(
-                    os.listdir(dirpath), _basename + '*'))
-                # ------------------------
-
-                for _file in sequence:
-                    _src = dirpath + '/' + _file
-                    dst = dst_dir + '/' + _file
-                    if not os.path.isfile(dst):
-                        shutil.copy2(_src, dst)
+            # si el archivo ya esta en el directorio del proyecto, no lo copia
+            if not footage in filename:
+                dst_dir = footage + '/' + dirname
+                file_copy(filename, basename, dst_dir)
+                relative = relative_base + '/' + dirname + '/' + basename
             else:
-                dst = dst_dir + '/' + basename
+                relative = relative_base + filename.replace(footage, '')
 
-                if not os.path.isfile(dst):
-                    shutil.copy2(src, dst)
-
-            relative = relative_base + '/' + dirname + '/' + basename
             filename_param.set(relative)
 
             index += 1
-            reconect_files += str(index) + ' - ' + src + \
-                '  --->  ' + relative + '\n\n'
+            reconect_files += str(index) + ' - ' + filename + '  --->  ' + relative + '\n\n'
 
     if reconect_files:
         NatronGui.natron.informationDialog('Collect Files', reconect_files)
