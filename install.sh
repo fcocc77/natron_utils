@@ -2,7 +2,7 @@
 cd $(dirname "$0") # Directorio Raiz
 
 plugins="/usr/share/Natron/Plugins"
-vinarender="/opt/vinarender/modules/natron"
+vinarender="$(cat /etc/vinarender)/modules/natron"
 
 mkdir -p $plugins
 rm -rf $plugins/*
