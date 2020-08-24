@@ -10,8 +10,8 @@ modules:
         ✔ filtrar si en cada slide se uso una fuente del usuario, y si se uso ponerla en videovina_node @today @done (7/29/2020, 3:34:54 PM)
         ☐ si la cancion es mas corta que el video, que se repita igual como se hizo en el editor de la web
     subtle_move:
-        ☐ integrar un punto de anclaje para el movimiento con zoom @today 
-        ☐ que 'Link To Parent' que tambien funcione cuando el padre tenga solo algunos parametros @today 
+        ✔ integrar un punto de anclaje para el movimiento con zoom @today @done (8/24/2020, 2:23:47 PM)
+        ✔ que 'Link To Parent' que tambien funcione cuando el padre tenga solo algunos parametros @today @done (8/24/2020, 2:23:50 PM)
     shape:
         ☐ separar animacion a otro nodo de animacion @today 
 videovina:

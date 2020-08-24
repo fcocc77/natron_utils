@@ -22,11 +22,11 @@ def getPluginID():
 def getLabel():
     return "Shape"
 
-def getIconPath():
-    return "Shape.png"
-
 def getVersion():
     return 1
+
+def getIconPath():
+    return "Shape.png"
 
 def getGrouping():
     return "videovina/Draw"
@@ -71,7 +71,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(6, 0)
+    param.setValue(7, 0)
     lastNode.faces = param
     del param
 
@@ -88,7 +88,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(35, 0)
+    param.setValue(40, 0)
     lastNode.size = param
     del param
 
@@ -182,153 +182,6 @@ def createInstance(app,group):
     lastNode.edge_color = param
     del param
 
-    param = lastNode.createSeparatorParam("sep", "")
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep = param
-    del param
-
-    param = lastNode.createStringParam("animation", "A")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("Animation:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.animation = param
-    del param
-
-    param = lastNode.createInt2DParam("FrameRange2frameRange", "Frame Range")
-    param.setDefaultValue(1, 0)
-    param.restoreDefaultValue(0)
-    param.setDefaultValue(1, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
-    param.setValue(100, 1)
-    lastNode.FrameRange2frameRange = param
-    del param
-
-    param = lastNode.createIntParam("transition", "Transition")
-    param.setMinimum(1, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(20, 0)
-    lastNode.transition = param
-    del param
-
-    param = lastNode.createDoubleParam("max_rotate", "Max Rotate")
-    param.setMinimum(1, 0)
-    param.setMaximum(360, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(360, 0)
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.max_rotate = param
-    del param
-
-    param = lastNode.createChoiceParam("rotate_direction", "Rotate Direction")
-    entries = [ ("Right", ""),
-    ("Left", ""),
-    ("", "")]
-    param.setOptions(entries)
-    del entries
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.rotate_direction = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep2", "")
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
-    del param
-
-    param = lastNode.createStringParam("infinite", "Infinite")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("Infinite:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.infinite = param
-    del param
-
-    param = lastNode.createIntParam("rotate_time", "Rotate Time")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.controls.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(10, 0)
-    lastNode.rotate_time = param
-    del param
-
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['controls', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -337,7 +190,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(3708, 1020)
+    lastNode.setPosition(3702, 898)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -393,7 +246,7 @@ def createInstance(app,group):
     param = lastNode.getParam("translate")
     if param is not None:
         param.setValue(0, 0)
-        param.setValue(350, 1)
+        param.setValue(400, 1)
         del param
 
     param = lastNode.getParam("center")
@@ -420,7 +273,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(60, 0)
+        param.setValue(51, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -448,7 +301,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(180, 0)
+        param.setValue(153, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -493,7 +346,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(120, 0)
+        param.setValue(102, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -521,7 +374,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(240, 0)
+        param.setValue(204, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -588,7 +441,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(300, 0)
+        param.setValue(255, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -638,7 +491,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(360, 0)
+        param.setValue(306, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -669,6 +522,11 @@ def createInstance(app,group):
         param.setValue(1, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge1_2_2_2_2"
 
@@ -683,7 +541,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(420, 0)
+        param.setValue(357, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -711,7 +569,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("mix")
     if param is not None:
-        param.setValue(0, 0)
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -728,7 +591,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(480, 0)
+        param.setValue(408, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -759,6 +622,11 @@ def createInstance(app,group):
         param.setValue(0, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge1_2_2_2_3_2"
 
@@ -767,13 +635,13 @@ def createInstance(app,group):
     lastNode.setScriptName("Transform4_2_2_2_3_3")
     lastNode.setLabel("Transform4_2_2_2_3_3")
     lastNode.setPosition(2951, 95)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform4_2_2_2_3_3 = lastNode
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(540, 0)
+        param.setValue(459, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -804,6 +672,11 @@ def createInstance(app,group):
         param.setValue(0, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge1_2_2_2_3_3"
 
@@ -818,7 +691,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(600, 0)
+        param.setValue(510, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -867,14 +740,9 @@ def createInstance(app,group):
     lastNode.setScriptName("FrameHold1")
     lastNode.setLabel("FrameHold1")
     lastNode.setPosition(3702, 791)
-    lastNode.setSize(104, 57)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameHold1 = lastNode
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(frame 0)</Natron>")
-        del param
 
     del lastNode
     # End of node "FrameHold1"
@@ -1077,96 +945,12 @@ def createInstance(app,group):
     del lastNode
     # End of node "Premult1"
 
-    # Start of node "Transform1"
-    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform1")
-    lastNode.setLabel("Transform1")
-    lastNode.setPosition(3708, 881)
-    lastNode.setSize(104, 33)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform1 = lastNode
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(-100, 0)
-        del param
-
-    param = lastNode.getParam("scale")
-    if param is not None:
-        param.setValue(1, 0)
-        param.setValue(1, 1)
-        del param
-
-    param = lastNode.getParam("center")
-    if param is not None:
-        param.setValue(500, 0)
-        param.setValue(500, 1)
-        del param
-
-    param = lastNode.getParam("transformCenterChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Transform1"
-
-    # Start of node "AnimationRange"
-    lastNode = app.createNode("net.sf.openfx.FrameRange", 1, group)
-    lastNode.setScriptName("AnimationRange")
-    lastNode.setLabel("AnimationRange")
-    lastNode.setPosition(3919, 831)
-    lastNode.setSize(104, 57)
-    lastNode.setColor(0.7, 0.65, 0.35)
-    groupAnimationRange = lastNode
-
-    param = lastNode.getParam("frameRange")
-    if param is not None:
-        param.setValue(100, 1)
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
-        del param
-
-    del lastNode
-    # End of node "AnimationRange"
-
-    # Start of node "Transform2"
-    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform2")
-    lastNode.setLabel("Transform2")
-    lastNode.setPosition(3708, 944)
-    lastNode.setSize(104, 33)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform2 = lastNode
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(-23, 0)
-        del param
-
-    param = lastNode.getParam("center")
-    if param is not None:
-        param.setValue(500.0000000000001, 0)
-        param.setValue(500.0000000000001, 1)
-        del param
-
-    param = lastNode.getParam("transformCenterChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Transform2"
-
     # Start of node "Transform6"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("Transform6")
     lastNode.setLabel("Transform6")
     lastNode.setPosition(3065, 546)
-    lastNode.setSize(104, 33)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform6 = lastNode
 
@@ -1329,7 +1113,7 @@ def createInstance(app,group):
     # End of node "edge_grade"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupTransform2)
+    groupOutput1.connectInput(0, groupFrameHold1)
     groupTransform3.connectInput(0, groupReformat2)
     groupTransform4.connectInput(0, groupTransform3)
     groupTransform4_2.connectInput(0, groupTransform3)
@@ -1368,8 +1152,6 @@ def createInstance(app,group):
     groupShuffle1.connectInput(1, groupInvert1)
     groupReformat1.connectInput(0, groupConstant2)
     groupPremult1.connectInput(0, groupShuffle1)
-    groupTransform1.connectInput(0, groupFrameHold1)
-    groupTransform2.connectInput(0, groupTransform1)
     groupTransform6.connectInput(0, groupInvert1)
     groupMerge2.connectInput(0, groupInvert1)
     groupMerge2.connectInput(1, groupTransform6)
@@ -1439,19 +1221,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.color.getValue(dimension)", False, 1)
     param.setExpression("thisGroup.color.getValue(dimension)", False, 2)
     param.setExpression("thisGroup.color.getValue(dimension)", False, 3)
-    del param
-    param = groupTransform1.getParam("rotate")
-    param.setExpression("from math import sin\n\nframeRange = thisGroup.AnimationRange.frameRange\n\nif thisGroup.rotate_direction.get():\n\tmultiply = thisGroup.max_rotate.get()\nelse:\n\tmultiply = - thisGroup.max_rotate.get()\n\t\n_first = frameRange.getValue(0)\n_last = frameRange.getValue(1)\n\ntransition = thisGroup.transition.get()\n\ndef fade(first_frame, _in = True):\n\tif _in:\n\t\tfadeStart = first_frame\n\t\tfadeEnd = first_frame + transition\n\telse:\n\t\tfadeStart = first_frame - transition\n\t\tfadeEnd = first_frame\n\t\n\t_sin = ( ( frame - fadeStart ) * pi ) / ( fadeEnd - fadeStart )  - pi / 2\n\tvalue = ( ( sin( _sin ) + 1 ) / 2 ) * multiply\n\n\tif _in:\n\t\tif frame < fadeStart:\n\t\t\treturn 0\n\t\telif frame > fadeEnd:\n\t\t\treturn multiply\n\t\telse:\n\t\t\treturn value\n\telse:\n\t\tif frame < fadeStart:\n\t\t\treturn multiply\n\t\telif frame > fadeEnd:\n\t\t\treturn 0\n\t\telse:\n\t\t\treturn multiply - value\n\n\nif frame < ( _first + transition ):\n\tret = fade(_first)\nelse:\n\tret = fade(_last, False)\n", True, 0)
-    del param
-    param = groupTransform1.getParam("scale")
-    param.setExpression("from math import sin\n\nframeRange = thisGroup.AnimationRange.frameRange\n\n_first = frameRange.getValue(0)\n_last = frameRange.getValue(1)\n\nmultiply = 1\ntransition = thisGroup.transition.get()\n\ndef fade(first_frame, _in = True):\n\tif _in:\n\t\tfadeStart = first_frame\n\t\tfadeEnd = first_frame + transition\n\telse:\n\t\tfadeStart = first_frame - transition\n\t\tfadeEnd = first_frame\n\t\n\t_sin = ( ( frame - fadeStart ) * pi ) / ( fadeEnd - fadeStart )  - pi / 2\n\tvalue = ( ( sin( _sin ) + 1 ) / 2 ) * multiply\n\n\tif _in:\n\t\tif frame < fadeStart:\n\t\t\treturn 0\n\t\telif frame > fadeEnd:\n\t\t\treturn multiply\n\t\telse:\n\t\t\treturn value\n\telse:\n\t\tif frame < fadeStart:\n\t\t\treturn multiply\n\t\telif frame > fadeEnd:\n\t\t\treturn 0\n\t\telse:\n\t\t\treturn multiply - value\n\n\nif frame < ( _first + transition ):\n\tret = fade(_first)\nelse:\n\tret = fade(_last, False)\n", True, 0)
-    param.setExpression("from math import sin\n\nframeRange = thisGroup.AnimationRange.frameRange\n\n_first = frameRange.getValue(0)\n_last = frameRange.getValue(1)\n\nmultiply = 1\ntransition = thisGroup.transition.get()\n\ndef fade(first_frame, _in = True):\n\tif _in:\n\t\tfadeStart = first_frame\n\t\tfadeEnd = first_frame + transition\n\telse:\n\t\tfadeStart = first_frame - transition\n\t\tfadeEnd = first_frame\n\t\n\t_sin = ( ( frame - fadeStart ) * pi ) / ( fadeEnd - fadeStart )  - pi / 2\n\tvalue = ( ( sin( _sin ) + 1 ) / 2 ) * multiply\n\n\tif _in:\n\t\tif frame < fadeStart:\n\t\t\treturn 0\n\t\telif frame > fadeEnd:\n\t\t\treturn multiply\n\t\telse:\n\t\t\treturn value\n\telse:\n\t\tif frame < fadeStart:\n\t\t\treturn multiply\n\t\telif frame > fadeEnd:\n\t\t\treturn 0\n\t\telse:\n\t\t\treturn multiply - value\n\n\nif frame < ( _first + transition ):\n\tret = fade(_first)\nelse:\n\tret = fade(_last, False)\n", True, 1)
-    del param
-    param = groupAnimationRange.getParam("frameRange")
-    group.getParam("FrameRange2frameRange").setAsAlias(param)
-    del param
-    param = groupTransform2.getParam("rotate")
-    param.setExpression("value = frame * ( float( thisGroup.rotate_time.get()  )  / 10 )\nif thisGroup.rotate_direction.getValue():\n\tret = value\nelse:\n\tret = - value\n", True, 0)
     del param
     param = groupTransform6.getParam("scale")
     param.setExpression("edge = float( thisGroup.edge.get() )\n\nret = 1 - ( edge / 1000 )", True, 0)
