@@ -1,4 +1,4 @@
-from nx import warning
+from nx import alert, warning
 
 
 def link_to_parent(thisNode, thisParam, thisGroup):
@@ -7,24 +7,40 @@ def link_to_parent(thisNode, thisParam, thisGroup):
     if not thisParam.getScriptName() == 'link':
         return
 
-    if not hasattr(thisGroup, 'format'):
-        warning('Link Error', 'El nodo padre no tiene los atributos para vincularlo')
+    if not hasattr(thisGroup, 'getParam'):
         return
 
-    _format = thisNode.getParam('format')
-    _format.set(thisGroup.format.get())
-    _format.setExpression('thisGroup.format.get()', False)
+    params_count = 0
 
-    speed = thisNode.getParam('speed')
-    speed.set(thisGroup.speed.get())
-    speed.setExpression('thisGroup.speed.get()', False)
+    format_parent = thisGroup.getParam('format')
+    format_child = thisNode.getParam('format')
+    if format_child and format_parent:
+        params_count += 1
+        format_child.set(format_parent.get())
+        format_child.setExpression('thisGroup.format.get()', False)
 
-    for dimension in range(3):
-        durations = thisNode.getParam('durations')
-        durations_value = thisGroup.durations.get()[dimension]
-        durations.setValue(durations_value, dimension)
-        durations_exp = 'thisGroup.durations.get()[dimension]'
-        durations.setExpression(durations_exp, False, dimension)
+    speed_parent = thisGroup.getParam('speed')
+    speed_child = thisNode.getParam('speed')
+    if speed_child and speed_parent:
+        params_count += 1
+        speed_child.set(speed_parent.get())
+        speed_child.setExpression('thisGroup.speed.get()', False)
+
+    durations_parent = thisGroup.getParam('durations')
+    durations_child = thisNode.getParam('durations')
+    if durations_child and durations_parent:
+        params_count += 1
+        for dimension in range(3):
+            durations_value = durations_parent.get()[dimension]
+            durations_child.setValue(durations_value, dimension)
+
+            durations_exp = 'thisGroup.durations.get()[dimension]'
+            durations_child.setExpression(durations_exp, False, dimension)
+
+    if params_count > 0:
+        alert('Se vincularon ' + str(params_count) + ' parametros.')
+    else:
+        warning('Link Error', 'El nodo padre no tiene los atributos para vincularlo')
 
 
 def children_refresh(thisParam, thisNode):
