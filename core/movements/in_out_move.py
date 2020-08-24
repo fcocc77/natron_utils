@@ -85,14 +85,17 @@ def animation(param, values, start_frame, duration, bound, direction, exaggerati
                 bound_animation(value_a, reverse)
         else:
             if direction == 'input':
+                param.setInterpolationAtTime(first_frame, lineal, dimension)
                 param.setInterpolationAtTime(last_frame, horizontal, dimension)
             else:
                 param.setInterpolationAtTime(first_frame, horizontal, dimension)
+                param.setInterpolationAtTime(last_frame, lineal, dimension)
 
 
 def refresh(thisNode):
     transform = getNode(thisNode, 'transform')
     translate = transform.getParam('translate')
+    rotate = transform.getParam('rotate')
     scale = transform.getParam('scale')
     center = transform.getParam('center')
 
@@ -106,6 +109,7 @@ def refresh(thisNode):
     bound = thisNode.getParam('bound').get()
     durations = thisNode.getParam('durations').get()
     transition_duration_percent = thisNode.getParam('transition_duration').get()
+    initial_rotate = thisNode.getParam('initial_rotate').get()
 
     current_format = thisNode.getParam('current_format').get()
     width = current_format[0]
@@ -114,6 +118,7 @@ def refresh(thisNode):
     # restaurar valores
     translate.restoreDefaultValue(0)
     translate.restoreDefaultValue(1)
+    rotate.restoreDefaultValue(0)
     scale.restoreDefaultValue(0)
     scale.restoreDefaultValue(1)
 
@@ -134,16 +139,12 @@ def refresh(thisNode):
 
     if input_move:
         def translate_input_anim(value, dimension=0):
-            animation(translate, [value, 0],
-                      start_frame,
-                      transition_duration,
-                      bound,
-                      'input',
-                      exaggeration,
-                      dimension=dimension)
+            animation(translate, [value, 0], start_frame, transition_duration, bound, 'input', exaggeration, dimension=dimension)
+            animation(rotate, [initial_rotate, 0], start_frame, transition_duration, bound, 'input', exaggeration)
 
         def scale_input_anim(value_a, value_b):
             animation(scale, [value_a, value_b], start_frame, transition_duration, bound, 'input', exaggeration)
+            animation(rotate, [initial_rotate, 0], start_frame, transition_duration, bound, 'input', exaggeration)
 
         if input_move == 1:
             translate_input_anim(value_x1)
@@ -162,16 +163,12 @@ def refresh(thisNode):
         start_frame_output = duration - transition_duration
 
         def translate_output_anim(value, dimension=0):
-            animation(translate, [0, value],
-                      start_frame_output,
-                      transition_duration,
-                      bound,
-                      'output',
-                      exaggeration,
-                      dimension=dimension)
+            animation(translate, [0, value], start_frame_output, transition_duration, bound, 'output', exaggeration, dimension=dimension)
+            animation(rotate, [0, initial_rotate], start_frame_output, transition_duration, bound, 'output', exaggeration)
 
         def scale_output_anim(value_a, value_b):
             animation(scale, [value_a, value_b], start_frame_output, transition_duration, bound, 'output', exaggeration)
+            animation(rotate, [0, initial_rotate], start_frame_output, transition_duration, bound, 'output', exaggeration)
 
         if output_move == 1:
             translate_output_anim(value_x1)
