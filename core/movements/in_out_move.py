@@ -1,6 +1,8 @@
 import NatronEngine
 from nx import getNode
 from base import link_to_parent
+from movements_common import center_from_input_bbox
+
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
@@ -115,14 +117,11 @@ def refresh(thisNode):
     transition_duration = (transition_duration_percent * duration) / 100
 
     # bounding box input
+    center_from_input_bbox(thisNode, center)
+
     bbox = thisNode.getInput(0).getRegionOfDefinition(1, 1)
     input_width = abs(bbox.x1 - bbox.x2)
     input_height = abs(bbox.y1 - bbox.y2)
-
-    center_x = bbox.x1 + (input_width / 2)
-    center_y = bbox.y1 + (input_height / 2)
-
-    center.set(center_x, center_y)
 
     value_x1 = -bbox.x2
     value_x2 = (width - bbox.x2) + input_width

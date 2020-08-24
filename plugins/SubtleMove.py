@@ -248,7 +248,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Left - Right")
+    param.set("Zoom Out")
     lastNode.movement = param
     del param
 
@@ -267,6 +267,18 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(5, 0)
     lastNode.level = param
+    del param
+
+    param = lastNode.createBooleanParam("center", "Center From Input")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Centra el pivote a partir del formato de la imagen.")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.center = param
     del param
 
     param = lastNode.createSeparatorParam("sep7", "")
@@ -422,25 +434,31 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("Transform")
     lastNode.setLabel("Transform")
-    lastNode.setPosition(767, 211)
+    lastNode.setPosition(767, 212)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform = lastNode
 
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValueAtTime(-250, 1, 0)
-        param.setValueAtTime(-145, 22, 0)
-        param.setValueAtTime(-140, 23, 0)
-        param.setValueAtTime(135, 28, 0)
-        param.setValueAtTime(140, 29, 0)
-        param.setValueAtTime(250, 51, 0)
-        del param
-
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(1.260416666666667, 0)
-        param.setValue(1.260416666666667, 1)
+        param.setValueAtTime(2, 1, 0)
+        param.setValueAtTime(1.81, 39, 0)
+        param.setValueAtTime(1.805, 40, 0)
+        param.setValueAtTime(1.205, 60, 0)
+        param.setValueAtTime(1.2, 61, 0)
+        param.setValueAtTime(1, 101, 0)
+        param.setValueAtTime(2, 1, 1)
+        param.setValueAtTime(1.81, 39, 1)
+        param.setValueAtTime(1.805, 40, 1)
+        param.setValueAtTime(1.205, 60, 1)
+        param.setValueAtTime(1.2, 61, 1)
+        param.setValueAtTime(1, 101, 1)
+        del param
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")

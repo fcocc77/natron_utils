@@ -2,6 +2,7 @@ from nx import getNode
 import NatronEngine
 from math import cos, sin
 from base import link_to_parent
+from movements_common import center_from_input_bbox
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -49,10 +50,8 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
         first_frame_break -= break_point_duration / 2
         last_frame_break -= break_point_duration / 2
 
-        break_point_value_a = param.getValueAtTime(
-            first_frame_break, dimension)
-        break_point_value_b = param.getValueAtTime(
-            last_frame_break, dimension)
+        break_point_value_a = param.getValueAtTime(first_frame_break, dimension)
+        break_point_value_b = param.getValueAtTime(last_frame_break, dimension)
 
         if not exaggeration:
             return
@@ -107,6 +106,7 @@ def refresh(thisNode):
     break_point = thisNode.getParam('break_point').get()
     break_duration = thisNode.getParam('break_point_duration').get()
     exaggeration = thisNode.getParam('exaggeration').get()
+    center_from_input = thisNode.getParam('center').get()
 
     width = current_format[0]
     height = current_format[1]
@@ -116,7 +116,12 @@ def refresh(thisNode):
     rotate.restoreDefaultValue(0)
     translate.restoreDefaultValue(0)
     translate.restoreDefaultValue(1)
-    center.set(width / 2, height / 2)
+
+    # centra el pivote a partir del bounding box de entrada
+    if center_from_input:
+        center_from_input_bbox(thisNode, center)
+    else:
+        center.set(width / 2, height / 2)
 
     # Movimiento de translacion
     if movement <= 3:
@@ -128,17 +133,13 @@ def refresh(thisNode):
         scale_for_translate_y = ((translate_level * 2) / height) + 1
 
         if movement == 0:
-            values = [-translate_level, translate_level,
-                      0, scale_for_translate_x]
+            values = [-translate_level, translate_level, 0, scale_for_translate_x]
         if movement == 1:
-            values = [translate_level, -translate_level,
-                      0, scale_for_translate_x]
+            values = [translate_level, -translate_level, 0, scale_for_translate_x]
         if movement == 2:
-            values = [translate_level, -translate_level,
-                      1, scale_for_translate_y]
+            values = [translate_level, -translate_level, 1, scale_for_translate_y]
         if movement == 3:
-            values = [-translate_level, translate_level,
-                      1, scale_for_translate_y]
+            values = [-translate_level, translate_level, 1, scale_for_translate_y]
 
         scale.set(values[3], values[3])
 
@@ -160,7 +161,6 @@ def refresh(thisNode):
         rotate_quarter = abs(rotate_level / 55.0)
         new_width = height * cos(rotate_quarter) + width * sin(rotate_quarter)
         scale_for_rotate = abs(new_width / height)
-        # ----------------------
 
         scale.set(scale_for_rotate, scale_for_rotate)
 
