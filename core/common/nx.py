@@ -4,6 +4,7 @@
 from util import *
 import NatronEngine
 from PySide.QtGui import QMessageBox
+from argparse import Namespace
 try:
     import NatronGui
 except:
@@ -497,3 +498,50 @@ def input_connected(node, _input=0):
             return True
 
     return False
+
+
+def get_output(group):
+    # obtiene el nodo 'Output' de un grupo, si no esta,
+    # lo busca por alguna interacion; 'Output1', 'Output2', etc.
+    output = group.getNode('Output')
+
+    if output:
+        return output
+
+    for i in range(10):
+        output_name = 'Output' + str(i)
+        output = group.getNode(output_name)
+
+        if output:
+            return output
+
+    return None
+
+
+def get_bbox(node):
+    # obtiene el bounding box de la imagen.
+    # Natron no muestra el bbox cuando es un grupo, por eso si
+    # es un grupo busca el bbox en el nodo 'Output'.
+    bbox = node.getRegionOfDefinition(1, 1)
+
+    x1 = bbox.x1
+    x2 = bbox.x2
+    y1 = bbox.y1
+    y2 = bbox.y2
+
+    if not (x1 + x2 + y1 + y2):
+        output = get_output(node)
+        if output:
+            bbox = output.getRegionOfDefinition(1, 1)
+
+            x1 = bbox.x1
+            x2 = bbox.x2
+            y1 = bbox.y1
+            y2 = bbox.y2
+
+    return Namespace(
+        x1=x1,
+        x2=x2,
+        y1=y1,
+        y2=y2
+    )

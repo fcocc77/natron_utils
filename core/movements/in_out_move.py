@@ -1,5 +1,5 @@
 import NatronEngine
-from nx import getNode
+from nx import getNode, get_bbox
 from base import link_to_parent
 from movements_common import center_from_input_bbox
 
@@ -119,7 +119,7 @@ def refresh(thisNode):
     # bounding box input
     center_from_input_bbox(thisNode, center)
 
-    bbox = thisNode.getInput(0).getRegionOfDefinition(1, 1)
+    bbox = get_bbox(thisNode.getInput(0))
     input_width = abs(bbox.x1 - bbox.x2)
     input_height = abs(bbox.y1 - bbox.y2)
 
@@ -139,8 +139,7 @@ def refresh(thisNode):
                   dimension=dimension)
 
     def scale_input_anim(value_a, value_b):
-        animation(scale, [value_a, value_b], start_frame, transition_duration,
-                  bound, 'input', exaggeration)
+        animation(scale, [value_a, value_b], start_frame, transition_duration, bound, 'input', exaggeration)
 
     if input_move == 0:
         translate_input_anim(value_x1)
@@ -169,8 +168,7 @@ def refresh(thisNode):
                   dimension=dimension)
 
     def scale_output_anim(value_a, value_b):
-        animation(scale, [value_a, value_b], start_frame_output,
-                  transition_duration, bound, 'output', exaggeration)
+        animation(scale, [value_a, value_b], start_frame_output, transition_duration, bound, 'output', exaggeration)
 
     if output_move == 0:
         translate_output_anim(value_x1)

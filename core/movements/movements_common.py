@@ -1,8 +1,9 @@
 # funciones en comun que comparten todos los nodos de movimiento.
+from nx import get_bbox
 
 
 def center_from_input_bbox(node, center_param):
-    bbox = node.getInput(0).getRegionOfDefinition(1, 1)
+    bbox = get_bbox(node.getInput(0))
 
     input_width = abs(bbox.x1 - bbox.x2)
     input_height = abs(bbox.y1 - bbox.y2)
