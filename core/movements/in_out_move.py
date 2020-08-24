@@ -35,7 +35,6 @@ def animation(param, values, start_frame, duration, bound, direction, exaggerati
         param.setValueAtTime(value_b, last_frame, dimension)
 
         if bound:
-
             # bound key frame
             bound_value = (abs(value_a - value_b) / 3) * bound
             bound_duration = duration / 2
@@ -84,6 +83,11 @@ def animation(param, values, start_frame, duration, bound, direction, exaggerati
 
                 reverse = value_b > value_a
                 bound_animation(value_a, reverse)
+        else:
+            if direction == 'input':
+                param.setInterpolationAtTime(last_frame, horizontal, dimension)
+            else:
+                param.setInterpolationAtTime(first_frame, horizontal, dimension)
 
 
 def refresh(thisNode):
@@ -128,57 +132,56 @@ def refresh(thisNode):
     value_y1 = -bbox.y2
     value_y2 = (height - bbox.y2) + input_height
 
-    # transicion de entrada
-    def translate_input_anim(value, dimension=0):
-        animation(translate, [value, 0],
-                  start_frame,
-                  transition_duration,
-                  bound,
-                  'input',
-                  exaggeration,
-                  dimension=dimension)
+    if input_move:
+        def translate_input_anim(value, dimension=0):
+            animation(translate, [value, 0],
+                      start_frame,
+                      transition_duration,
+                      bound,
+                      'input',
+                      exaggeration,
+                      dimension=dimension)
 
-    def scale_input_anim(value_a, value_b):
-        animation(scale, [value_a, value_b], start_frame, transition_duration, bound, 'input', exaggeration)
+        def scale_input_anim(value_a, value_b):
+            animation(scale, [value_a, value_b], start_frame, transition_duration, bound, 'input', exaggeration)
 
-    if input_move == 0:
-        translate_input_anim(value_x1)
-    elif input_move == 1:
-        translate_input_anim(value_x2)
-    elif input_move == 2:
-        translate_input_anim(value_y1, 1)
-    elif input_move == 3:
-        translate_input_anim(value_y2, 1)
+        if input_move == 1:
+            translate_input_anim(value_x1)
+        elif input_move == 2:
+            translate_input_anim(value_x2)
+        elif input_move == 3:
+            translate_input_anim(value_y1, 1)
+        elif input_move == 4:
+            translate_input_anim(value_y2, 1)
+        elif input_move == 5:
+            scale_input_anim(1, 0)
+        elif input_move == 6:
+            scale_input_anim(0, 1)
 
-    elif input_move == 4:
-        scale_input_anim(1, 0)
-    elif input_move == 5:
-        scale_input_anim(0, 1)
+    if output_move:
+        start_frame_output = duration - transition_duration
 
-    # transicion de salida
-    start_frame_output = duration - transition_duration
+        def translate_output_anim(value, dimension=0):
+            animation(translate, [0, value],
+                      start_frame_output,
+                      transition_duration,
+                      bound,
+                      'output',
+                      exaggeration,
+                      dimension=dimension)
 
-    def translate_output_anim(value, dimension=0):
-        animation(translate, [0, value],
-                  start_frame_output,
-                  transition_duration,
-                  bound,
-                  'output',
-                  exaggeration,
-                  dimension=dimension)
+        def scale_output_anim(value_a, value_b):
+            animation(scale, [value_a, value_b], start_frame_output, transition_duration, bound, 'output', exaggeration)
 
-    def scale_output_anim(value_a, value_b):
-        animation(scale, [value_a, value_b], start_frame_output, transition_duration, bound, 'output', exaggeration)
-
-    if output_move == 0:
-        translate_output_anim(value_x1)
-    elif output_move == 1:
-        translate_output_anim(value_x2)
-    elif output_move == 2:
-        translate_output_anim(value_y1, 1)
-    elif output_move == 3:
-        translate_output_anim(value_y2, 1)
-    elif output_move == 4:
-        scale_output_anim(1, 0)
-    elif output_move == 5:
-        scale_output_anim(0, 1)
+        if output_move == 1:
+            translate_output_anim(value_x1)
+        elif output_move == 2:
+            translate_output_anim(value_x2)
+        elif output_move == 3:
+            translate_output_anim(value_y1, 1)
+        elif output_move == 4:
+            translate_output_anim(value_y2, 1)
+        elif output_move == 5:
+            scale_output_anim(1, 0)
+        elif output_move == 6:
+            scale_output_anim(0, 1)
