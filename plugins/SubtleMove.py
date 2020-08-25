@@ -294,6 +294,23 @@ def createInstance(app,group):
     lastNode.sep7 = param
     del param
 
+    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    lastNode.exaggeration = param
+    del param
+
     param = lastNode.createIntParam("break_point", "Break Point")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
@@ -326,23 +343,6 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(20, 0)
     lastNode.break_point_duration = param
-    del param
-
-    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.exaggeration = param
     del param
 
     lastNode.exp = lastNode.createPageParam("exp", "Exp")

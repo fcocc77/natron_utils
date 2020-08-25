@@ -28,6 +28,7 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
 
         horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
         lineal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeLinear
+        smooth = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeSmooth
 
         first_frame = start_frame
         last_frame = first_frame + duration
@@ -54,7 +55,7 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
         break_point_value_b = param.getValueAtTime(last_frame_break, dimension)
 
         if not exaggeration:
-            return
+            continue
 
         # exaggeration
         exagg_a = abs(value_a - break_point_value_a) * exaggeration
@@ -66,7 +67,6 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
         else:
             break_point_value_a -= exagg_a
             break_point_value_b += exagg_b
-        # -------------
 
         param.setValueAtTime(break_point_value_a, first_frame_break, dimension)
         param.setValueAtTime(break_point_value_b, last_frame_break, dimension)
@@ -84,10 +84,10 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
         before_frame = first_frame_break - 1
         before_value = param.getValueAtTime(before_frame, dimension)
         param.setValueAtTime(before_value, before_frame, dimension)
-        # -----------------------------
-        # cambia a horizontal la interpolacion del punto de quebre, por que ya se crearon los key 'after' y 'before'
-        param.setInterpolationAtTime(first_frame_break, horizontal, dimension)
-        param.setInterpolationAtTime(last_frame_break, horizontal, dimension)
+
+        # cambia a 'smooth' la interpolacion del punto de quebre, por que ya se crearon los key 'after' y 'before'
+        param.setInterpolationAtTime(first_frame_break, smooth, dimension)
+        param.setInterpolationAtTime(last_frame_break, smooth, dimension)
 
 
 def refresh(thisNode):
