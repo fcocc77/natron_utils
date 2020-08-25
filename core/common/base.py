@@ -12,30 +12,26 @@ def link_to_parent(thisNode, thisParam, thisGroup):
 
     params_count = 0
 
-    format_parent = thisGroup.getParam('format')
-    format_child = thisNode.getParam('format')
-    if format_child and format_parent:
-        params_count += 1
-        format_child.set(format_parent.get())
-        format_child.setExpression('thisGroup.format.get()', False)
+    def link(attribute):
+        attribute_parent = thisGroup.getParam(attribute)
+        attribute_child = thisNode.getParam(attribute)
+        if attribute_child and attribute_parent:
+            dimensions = attribute_parent.getNumDimensions()
+            if dimensions == 1:
+                attribute_child.set(attribute_parent.get())
+                attribute_child.setExpression('thisGroup.' + attribute + '.get()', False)
+            else:
+                for dimension in range(dimensions):
+                    attribute_child.setValue(attribute_parent.get()[dimension], dimension)
+                    attribute_child.setExpression('thisGroup.' + attribute + '.getValue(dimension)', False, dimension)
 
-    speed_parent = thisGroup.getParam('speed')
-    speed_child = thisNode.getParam('speed')
-    if speed_child and speed_parent:
-        params_count += 1
-        speed_child.set(speed_parent.get())
-        speed_child.setExpression('thisGroup.speed.get()', False)
+            return 1
+        return 0
 
-    durations_parent = thisGroup.getParam('durations')
-    durations_child = thisNode.getParam('durations')
-    if durations_child and durations_parent:
-        params_count += 1
-        for dimension in range(3):
-            durations_value = durations_parent.get()[dimension]
-            durations_child.setValue(durations_value, dimension)
-
-            durations_exp = 'thisGroup.durations.get()[dimension]'
-            durations_child.setExpression(durations_exp, False, dimension)
+    params_count += link('format')
+    params_count += link('speed')
+    params_count += link('motion_blur')
+    params_count += link('durations')
 
     if params_count > 0:
         alert('Se vincularon ' + str(params_count) + ' parametros.')

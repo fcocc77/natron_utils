@@ -881,6 +881,51 @@ def createInstance(app,group):
     lastNode.durations = param
     del param
 
+    param = lastNode.createSeparatorParam("sep2", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep2 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
+    del param
+
     lastNode.exp = lastNode.createPageParam("exp", "Exp")
     param = lastNode.createIntParam("duration", "Current Duration")
     param.setDisplayMinimum(0, 0)
@@ -1020,6 +1065,51 @@ def createInstance(app,group):
     param.setValue(100, 1)
     param.setValue(50, 2)
     lastNode.durations = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep2", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep2 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
     del param
 
     lastNode.exp = lastNode.createPageParam("exp", "Exp")

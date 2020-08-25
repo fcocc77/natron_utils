@@ -13,10 +13,10 @@ modules:
         ✔ integrar un punto de anclaje para el movimiento con zoom @today @done (8/24/2020, 2:23:47 PM)
         ✔ que 'Link To Parent' que tambien funcione cuando el padre tenga solo algunos parametros @today @done (8/24/2020, 2:23:50 PM)
     shape:
-        ☐ separar animacion a otro nodo de animacion @today 
+        ✔ separar animacion a otro nodo de animacion @today @done (8/24/2020, 6:07:22 PM)
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
-    ☐ que los usuario privilegiados tengan baja prioridad en el renderizados, que renderizen solo si no hay ningun usuario pagado, renderizando
+    ☐ que los usuario privilegiados tengan baja prioridad en el renderizado, que renderizen solo si no hay ningun usuario pagado renderizando
     ☐ verificar que no se dupliquen los nodos en los plugins en NatronRenderer
     ✔ crear opcion para enviar a vinarender, los 1200 proyectos '.ntp' para produccion, haciendole un testing a cada proyecto para verificar si esta ok @done (7/23/2020, 11:34:04 AM)
     ✔ crear alguna forma de dividir el proyecto con un maximo de 7 slide, para que abra mas rapido y que en vinarender detecte que proyecto dividido corresponde al rango de frames. @today @done (7/23/2020, 11:33:49 AM)
