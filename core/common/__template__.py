@@ -1,17 +1,15 @@
-import NatronEngine
-from nx import *
-from base import *
+from base import link_to_parent, children_refresh
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
 
-    name = thisParam.getScriptName()
+    knob_name = thisParam.getScriptName()
     link_to_parent(thisNode, thisParam, thisGroup)
     children_refresh(thisParam, thisNode)
 
-    if name == 'refresh':
+    if knob_name == 'refresh':
         refresh(thisNode)
 
 
