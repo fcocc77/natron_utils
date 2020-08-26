@@ -34,6 +34,11 @@ def createInstance(app,group):
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = group
     lastNode.setColor(0.7, 0.7, 0.7)
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("base.main")
+        del param
+
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")

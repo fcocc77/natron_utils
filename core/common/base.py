@@ -1,6 +1,14 @@
 from nx import alert, warning
 
 
+def main(thisParam, thisNode, thisGroup, app, userEdited):
+    if not userEdited:
+        return
+
+    link_to_parent(thisNode, thisParam, thisGroup)
+    children_refresh(thisParam, thisNode)
+
+
 def link_to_parent(thisNode, thisParam, thisGroup):
     # vincula algunos parametros al nodo padre
 
