@@ -15,6 +15,12 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         refresh(thisNode)
     elif knob_name == 'reload_assets':
         reload_assets(thisNode)
+    elif knob_name == 'film_isolate':
+        isolate(thisNode, 'film')
+    elif knob_name == 'flare_isolate':
+        isolate(thisNode, 'flare')
+    elif knob_name == 'texture_isolate':
+        isolate(thisNode, 'texture')
 
 
 def refresh(thisNode):
@@ -61,3 +67,31 @@ def files_refresh(thisNode, param_name):
 
     file_path = folder + '/' + name + '/' + name + '_####.jpg'
     filename.set(file_path)
+    filename.reloadFile()
+    filename.reloadFile()
+
+    file_node.getParam('after').set(1)
+    file_node.getParam('before').set(1)
+
+
+def isolate(thisNode, name):
+    display = getNode(thisNode, 'display').getParam('which')
+
+    if name == 'film':
+        display.set(1)
+    elif name == 'flare':
+        display.set(2)
+    elif name == 'texture':
+        display.set(3)
+
+    for _name in ['film', 'flare', 'texture']:
+        param = thisNode.getParam(_name + '_isolate')
+
+        if _name == name:
+            if param.get() == 0:
+                param.set(0)
+                display.set(0)
+            else:
+                param.set(1)
+        else:
+            param.set(0)
