@@ -1,4 +1,5 @@
 from nx import alert, warning
+from vina import get_videovina
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -11,12 +12,18 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 def link_to_parent(thisNode, thisParam, thisGroup):
     # vincula algunos parametros al nodo padre
-
     if not thisParam.getScriptName() == 'link':
         return
 
-    if not hasattr(thisGroup, 'getParam'):
-        return
+    # si el grupo es el root 'app', hace la vinculacion al nodo de videovina
+    node_for_expression = 'thisGroup'
+    if type(thisGroup) == NatronGui.GuiApp:
+        videovina_node = get_videovina()
+
+        if not videovina_node:
+            return
+        node_for_expression = videovina_node.getScriptName()
+        thisGroup = videovina_node
 
     params_count = 0
 
@@ -27,11 +34,11 @@ def link_to_parent(thisNode, thisParam, thisGroup):
             dimensions = attribute_parent.getNumDimensions()
             if dimensions == 1:
                 attribute_child.set(attribute_parent.get())
-                attribute_child.setExpression('thisGroup.' + attribute + '.get()', False)
+                attribute_child.setExpression(node_for_expression + '.' + attribute + '.get()', False)
             else:
                 for dimension in range(dimensions):
                     attribute_child.setValue(attribute_parent.get()[dimension], dimension)
-                    attribute_child.setExpression('thisGroup.' + attribute + '.getValue(dimension)', False, dimension)
+                    attribute_child.setExpression(node_for_expression + '.' + attribute + '.getValue(dimension)', False, dimension)
 
             return 1
         return 0
