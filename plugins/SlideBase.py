@@ -1170,14 +1170,14 @@ def createInstance(app,group):
     param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
     del param
 
-    # Start of node "TwelveRender"
+    # Start of node "TwelveRender1"
     lastNode = app.createNode("vv.TwelveRender", 1, group)
-    lastNode.setScriptName("TwelveRender")
+    lastNode.setScriptName("TwelveRender1")
     lastNode.setLabel("TwelveRender")
     lastNode.setPosition(1210, 249)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupTwelveRender = lastNode
+    groupTwelveRender1 = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
@@ -1242,6 +1242,18 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.set("Normal")
     lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
     del param
 
     param = lastNode.createSeparatorParam("sep5", "")
@@ -1329,6 +1341,39 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
+    param = lastNode.createChoiceParam("sequence_type", "Sequence Type")
+    entries = [ ("PNG", ""),
+    ("JPG", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.sequence_type = param
+    del param
+
+    param = lastNode.createChoiceParam("filter", "Reformat Filter")
+    entries = [ ("Cubic", ""),
+    ("Impulse", ""),
+    ("Notch", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.filter = param
+    del param
+
     param = lastNode.createStringParam("prefix", "Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
@@ -1356,6 +1401,18 @@ def createInstance(app,group):
     lastNode.current_state = param
     del param
 
+    param = lastNode.createBooleanParam("current_speed", "Current Speed")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Renderiza solo una velocidad con los 3 formatos.")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.current_speed = param
+    del param
+
     param = lastNode.createButtonParam("render", "Render")
 
     # Add the param to the page
@@ -1372,16 +1429,16 @@ def createInstance(app,group):
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "TwelveRender"
+    # End of node "TwelveRender1"
 
-    # Start of node "TwelveRead"
+    # Start of node "TwelveRead1"
     lastNode = app.createNode("vv.TwelveRead", 1, group)
-    lastNode.setScriptName("TwelveRead")
+    lastNode.setScriptName("TwelveRead1")
     lastNode.setLabel("TwelveRead")
     lastNode.setPosition(1210, 361)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupTwelveRead = lastNode
+    groupTwelveRead1 = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
@@ -1432,6 +1489,18 @@ def createInstance(app,group):
     lastNode.speed = param
     del param
 
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
     param = lastNode.createSeparatorParam("sep1", "")
 
     # Add the param to the page
@@ -1443,6 +1512,22 @@ def createInstance(app,group):
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep1 = param
+    del param
+
+    param = lastNode.createChoiceParam("sequence_type", "Sequence Type")
+    entries = [ ("PNG", ""),
+    ("JPG", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.sequence_type = param
     del param
 
     param = lastNode.createStringParam("prefix", "Prefix")
@@ -1457,6 +1542,40 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue("slide_prefix")
     lastNode.prefix = param
+    del param
+
+    param = lastNode.createChoiceParam("before", "Before")
+    entries = [ ("Hold", ""),
+    ("Loop", ""),
+    ("Bounce", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.before = param
+    del param
+
+    param = lastNode.createChoiceParam("after", "After")
+    entries = [ ("Hold", ""),
+    ("Loop", ""),
+    ("Bounce", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.after = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")
@@ -1475,7 +1594,7 @@ def createInstance(app,group):
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "TwelveRead"
+    # End of node "TwelveRead1"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupFrameRange)
@@ -1483,7 +1602,7 @@ def createInstance(app,group):
     groupTimeOffset.connectInput(0, groupMerge2)
     groupMerge1.connectInput(0, groupDot5)
     groupMerge1.connectInput(1, groupDot1)
-    groupDot1.connectInput(0, groupTwelveRead)
+    groupDot1.connectInput(0, groupTwelveRead1)
     groupMerge2.connectInput(0, groupMerge1)
     groupMerge2.connectInput(1, groupDot2)
     groupDot2.connectInput(0, groupTransform)
@@ -1491,7 +1610,7 @@ def createInstance(app,group):
     groupDot5.connectInput(0, groupImage)
     groupTransform.connectInput(0, groupConstant1)
     groupBase1.connectInput(0, groupDot4)
-    groupTwelveRender.connectInput(0, groupBase1)
+    groupTwelveRender1.connectInput(0, groupBase1)
 
     param = groupFrameRange.getParam("frameRange")
     param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 0)
@@ -1511,30 +1630,30 @@ def createInstance(app,group):
     param = groupBase1.getParam("duration")
     param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
     del param
-    param = groupTwelveRender.getParam("format")
+    param = groupTwelveRender1.getParam("format")
     param.setExpression("thisGroup.format.get()", False, 0)
     del param
-    param = groupTwelveRender.getParam("speed")
+    param = groupTwelveRender1.getParam("speed")
     param.setExpression("thisGroup.speed.get()", False, 0)
     del param
-    param = groupTwelveRender.getParam("durations")
+    param = groupTwelveRender1.getParam("durations")
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 0)
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 1)
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 2)
     del param
-    param = groupTwelveRender.getParam("prefix")
+    param = groupTwelveRender1.getParam("prefix")
     param.setExpression("thisGroup.prefix.get()", False, 0)
     del param
-    param = groupTwelveRender.getParam("current_state")
+    param = groupTwelveRender1.getParam("current_state")
     param.setExpression("thisGroup.current_state.get()", False, 0)
     del param
-    param = groupTwelveRead.getParam("format")
+    param = groupTwelveRead1.getParam("format")
     param.setExpression("thisGroup.format.get()", False, 0)
     del param
-    param = groupTwelveRead.getParam("speed")
+    param = groupTwelveRead1.getParam("speed")
     param.setExpression("thisGroup.speed.get()", False, 0)
     del param
-    param = groupTwelveRead.getParam("prefix")
+    param = groupTwelveRead1.getParam("prefix")
     param.setExpression("thisGroup.prefix.get()", False, 0)
     del param
 
