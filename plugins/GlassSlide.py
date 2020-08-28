@@ -557,11 +557,6 @@ def createInstance(app,group):
         param.set("hold")
         del param
 
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
-        del param
-
     del lastNode
     # End of node "FrameRange"
 
@@ -1055,6 +1050,18 @@ def createInstance(app,group):
     lastNode.level = param
     del param
 
+    param = lastNode.createBooleanParam("center", "Center From Input")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Centra el pivote a partir del formato de la imagen.")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.center = param
+    del param
+
     param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page
@@ -1066,6 +1073,23 @@ def createInstance(app,group):
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep7 = param
+    del param
+
+    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.3, 0)
+    lastNode.exaggeration = param
     del param
 
     param = lastNode.createIntParam("break_point", "Break Point")
@@ -1100,23 +1124,6 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(20, 0)
     lastNode.break_point_duration = param
-    del param
-
-    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.3, 0)
-    lastNode.exaggeration = param
     del param
 
     lastNode.exp = lastNode.createPageParam("exp", "Exp")
@@ -1198,8 +1205,8 @@ def createInstance(app,group):
     groupSubtleMove.connectInput(0, groupDot5)
 
     param = groupFrameRange.getParam("frameRange")
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 0)
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 1)
+    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\n_range = [start_frame, start_frame + duration]\n\nret = _range[dimension]\n\n", True, 0)
+    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\n_range = [start_frame, start_frame + duration]\n\nret = _range[dimension]\n\n", True, 1)
     del param
     param = groupTimeOffset.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)

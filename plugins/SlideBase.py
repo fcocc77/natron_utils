@@ -537,7 +537,7 @@ def createInstance(app,group):
     lastNode.setScriptName("FrameRange")
     lastNode.setLabel("FrameRange")
     lastNode.setPosition(1567, 739)
-    lastNode.setSize(104, 45)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameRange = lastNode
 
@@ -555,11 +555,6 @@ def createInstance(app,group):
     param = lastNode.getParam("after")
     if param is not None:
         param.set("hold")
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(0 - 100)</Natron>")
         del param
 
     del lastNode
@@ -1613,8 +1608,8 @@ def createInstance(app,group):
     groupTwelveRender1.connectInput(0, groupBase1)
 
     param = groupFrameRange.getParam("frameRange")
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 0)
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 1)
+    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\n_range = [start_frame, start_frame + duration]\n\nret = _range[dimension]", True, 0)
+    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\n_range = [start_frame, start_frame + duration]\n\nret = _range[dimension]", True, 1)
     del param
     param = groupTimeOffset.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)
