@@ -1,5 +1,6 @@
 import os
 from nx import getNode
+from base import link_to_parent
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -7,6 +8,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         return
 
     knob_name = thisParam.getScriptName()
+    link_to_parent(thisNode, thisParam, thisGroup)
 
     if knob_name == 'refresh':
         refresh(thisNode)
@@ -28,8 +30,11 @@ def refresh(thisNode):
 
     prefix_name = prefix + '_' + current_speed + '_' + current_format
 
+    sequence_type = thisNode.getParam('sequence_type').get()
+    ext = ['png', 'jpg'][sequence_type]
+
     filename_param = read.getParam('filename')
-    filename = '[Project]/../footage/' + prefix + '/' + prefix_name + '/' + prefix_name + '_###.png'
+    filename = '[Project]/../footage/' + prefix + '/' + prefix_name + '/' + prefix_name + '_####.' + ext
 
     if filename_param.get() == filename:
         filename_param.reloadFile()
@@ -37,3 +42,9 @@ def refresh(thisNode):
         filename_param.set(filename)
 
     read.getParam('outputPremult').set(0)
+
+    after = thisNode.getParam('after').get()
+    before = thisNode.getParam('before').get()
+
+    read.getParam('after').set(after)
+    read.getParam('before').set(before)

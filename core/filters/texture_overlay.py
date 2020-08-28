@@ -21,6 +21,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         isolate(thisNode, 'flare')
     elif knob_name == 'texture_isolate':
         isolate(thisNode, 'texture')
+    elif knob_name == 'render':
+        getNode(thisNode, 'texture_render').getParam('render').trigger()
+        getNode(thisNode, 'noise_render').getParam('render').trigger()
 
 
 def refresh(thisNode):

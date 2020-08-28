@@ -84,6 +84,18 @@ def createInstance(app,group):
     lastNode.speed = param
     del param
 
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
     param = lastNode.createSeparatorParam("sep1", "")
 
     # Add the param to the page
@@ -97,6 +109,22 @@ def createInstance(app,group):
     lastNode.sep1 = param
     del param
 
+    param = lastNode.createChoiceParam("sequence_type", "Sequence Type")
+    entries = [ ("PNG", ""),
+    ("JPG", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.sequence_type = param
+    del param
+
     param = lastNode.createStringParam("prefix", "Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
@@ -108,6 +136,40 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     lastNode.prefix = param
+    del param
+
+    param = lastNode.createChoiceParam("before", "Before")
+    entries = [ ("Hold", ""),
+    ("Loop", ""),
+    ("Bounce", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.before = param
+    del param
+
+    param = lastNode.createChoiceParam("after", "After")
+    entries = [ ("Hold", ""),
+    ("Loop", ""),
+    ("Bounce", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.after = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")

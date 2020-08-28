@@ -5,6 +5,7 @@ import NatronEngine
 from nx import getNode, alert, absolute, createNode
 from vina import value_by_durations
 from general import formats
+from base import link_to_parent
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -12,6 +13,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         return
 
     knob_name = thisParam.getScriptName()
+    link_to_parent(thisNode, thisParam, thisGroup)
 
     if knob_name == 'render':
         render(thisNode)
@@ -53,6 +55,12 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
 
         reformat.connectInput(0, image_input)
 
+    # Filtro para el reformat
+    filter_param = thisNode.getParam('filter')
+    reformat_filter = filter_param.getOption(filter_param.get())
+    filters_index = {'Cubic': 3, 'Impulse': 0, 'Notch': 9}
+    reformat.getParam('filter').set(filters_index[reformat_filter])
+
     # vinarender node
     vinarender = getNode(thisNode, name)
 
@@ -60,9 +68,16 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
         vinarender = createNode('vinarender', name, thisNode)
         vinarender.connectInput(0, reformat)
 
-    vinarender.getParam('filename').set(render_dir + '/' + prefix_name + '_###.png')
+    sequence_type = thisNode.getParam('sequence_type').get()
+    ext = ['png', 'jpg'][sequence_type]
+
+    if ext == 'png':
+        vinarender.getParam('rgbonly').set(False)
+    else:
+        vinarender.getParam('rgbonly').set(True)
+
+    vinarender.getParam('filename').set(render_dir + '/' + prefix_name + '_####.' + ext)
     vinarender.getParam('job_name').set(prefix + ': ' + name)
-    vinarender.getParam('rgbonly').set(False)
     vinarender.getParam('no_show_message').set(True)
     vinarender.getParam('instances').set(10)
     vinarender.getParam('range').set(1, durations[speed])
@@ -71,19 +86,15 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
 
 def refresh_source_speed(thisNode, speed):
     # Actaualiza el nodo que se va a renderizar, a la velocidad correspondiente.
-
     source_node = thisNode.getInput(0)
     speed_param = source_node.getParam('speed')
     refresh_param = source_node.getParam('refresh')
 
     if not speed_param:
-        alert('El nodo conectado debe tener el parametro de "speed"')
-        return False
+        return
 
     speed_param.set(speed)
     refresh_param.trigger()
-
-    return True
 
 
 def render(thisNode):
@@ -93,6 +104,7 @@ def render(thisNode):
         return
 
     current_state = thisNode.getParam('current_state').get()
+    current_speed_render = thisNode.getParam('current_speed').get()
     prefix = thisNode.getParam('prefix').get()
     durations = thisNode.getParam('durations').get()
 
@@ -100,13 +112,13 @@ def render(thisNode):
     current_speed = thisNode.getParam('speed').get()
 
     if current_state:
-        if not refresh_source_speed(thisNode, current_speed):
-            return
+        refresh_source_speed(thisNode, current_speed)
         send_vinarender_state(durations, current_speed, prefix, current_format, thisNode=thisNode)
+    elif current_speed_render:
+        for format_index in range(3):
+            send_vinarender_state(durations, current_speed, prefix, format_index + 1, thisNode=thisNode)
     else:
         for speed in range(3):
-            if not refresh_source_speed(thisNode, speed):
-                return
-
+            refresh_source_speed(thisNode, speed)
             for format_index in range(3):
                 send_vinarender_state(durations, speed, prefix, format_index + 1, thisNode=thisNode)

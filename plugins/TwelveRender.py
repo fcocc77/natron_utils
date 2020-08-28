@@ -100,6 +100,18 @@ def createInstance(app,group):
     lastNode.speed = param
     del param
 
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
     param = lastNode.createSeparatorParam("sep5", "")
 
     # Add the param to the page
@@ -185,6 +197,39 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
+    param = lastNode.createChoiceParam("sequence_type", "Sequence Type")
+    entries = [ ("PNG", ""),
+    ("JPG", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.sequence_type = param
+    del param
+
+    param = lastNode.createChoiceParam("filter", "Reformat Filter")
+    entries = [ ("Cubic", ""),
+    ("Impulse", ""),
+    ("Notch", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.filter = param
+    del param
+
     param = lastNode.createStringParam("prefix", "Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
@@ -208,6 +253,18 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.current_state = param
+    del param
+
+    param = lastNode.createBooleanParam("current_speed", "Current Speed")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Renderiza solo una velocidad con los 3 formatos.")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.current_speed = param
     del param
 
     param = lastNode.createButtonParam("render", "Render")
