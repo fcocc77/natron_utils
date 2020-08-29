@@ -1,5 +1,6 @@
 from nx import alert, warning
 from vina import get_videovina
+import NatronGui
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
