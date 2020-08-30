@@ -312,6 +312,11 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
     param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:
         param.setValue(1920, 0)
@@ -334,6 +339,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2 = lastNode
+
+    param = lastNode.getParam("bbox")
+    if param is not None:
+        param.set("b")
+        del param
 
     param = lastNode.getParam("mix")
     if param is not None:
