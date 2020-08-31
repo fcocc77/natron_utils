@@ -32,22 +32,24 @@ def link_to_parent(thisNode, thisParam, thisGroup):
         attribute_parent = thisGroup.getParam(attribute)
         attribute_child = thisNode.getParam(attribute)
         if attribute_child and attribute_parent:
-            dimensions = attribute_parent.getNumDimensions()
-            if dimensions == 1:
-                attribute_child.set(attribute_parent.get())
-                attribute_child.setExpression(node_for_expression + '.' + attribute + '.get()', False)
-            else:
-                for dimension in range(dimensions):
-                    attribute_child.setValue(attribute_parent.get()[dimension], dimension)
-                    attribute_child.setExpression(node_for_expression + '.' + attribute + '.getValue(dimension)', False, dimension)
+            if hasattr(attribute_child, 'set'):
+                dimensions = attribute_parent.getNumDimensions()
+                if dimensions == 1:
+                    attribute_child.set(attribute_parent.get())
+                    attribute_child.setExpression(node_for_expression + '.' + attribute + '.get()', False)
+                else:
+                    for dimension in range(dimensions):
+                        attribute_child.setValue(attribute_parent.get()[dimension], dimension)
+                        attribute_child.setExpression(node_for_expression + '.' + attribute + '.getValue(dimension)', False, dimension)
 
-            return 1
+                return 1
         return 0
 
-    params_count += link('format')
-    params_count += link('speed')
-    params_count += link('motion_blur')
-    params_count += link('durations')
+    for param in thisNode.getParams():
+        page = param.getParent()
+        if page:
+            if page.getScriptName() == 'control':
+                params_count += link(param.getScriptName())
 
     if params_count > 0:
         alert('Se vincularon ' + str(params_count) + ' parametros.')
