@@ -78,7 +78,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("4K - 3840 x 2160")
     lastNode.format = param
     del param
 
@@ -179,7 +178,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("2 - Film 02")
+    param.set("5 - Film 05")
     lastNode.film = param
     del param
 
@@ -192,7 +191,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(True)
     lastNode.film_isolate = param
     del param
 
@@ -209,7 +207,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.968, 0)
+    param.setValue(1, 0)
     lastNode.film_amount = param
     del param
 
@@ -226,7 +224,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.792, 0)
+    param.setValue(0.3, 0)
     lastNode.grain = param
     del param
 
@@ -243,7 +241,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(2, 0)
+    param.setValue(1, 0)
     lastNode.grain_size = param
     del param
 
@@ -299,7 +297,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("6 - Corner flares bokeh")
+    param.set("9 - More spectral colour flares")
     lastNode.flare = param
     del param
 
@@ -328,7 +326,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(1.5, 0)
     lastNode.flare_saturation = param
     del param
 
@@ -345,7 +343,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(1.61, 0)
+    param.setValue(1, 0)
     lastNode.flare_gamma = param
     del param
 
@@ -370,9 +368,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    param.setValue(1, 1)
-    param.setValue(1, 2)
+    param.setValue(0.3, 0)
+    param.setValue(0.3, 1)
+    param.setValue(0.3, 2)
     lastNode.flare_color = param
     del param
 
@@ -423,9 +421,8 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("texture", "Texture")
-    entries = [ ("None", ""),
-    ("Texture 1", ""),
-    ("Brik", "")]
+    entries = [ ("1 - Texture 01.jpg", "texture_01.jpg"),
+    ("2 - Texture 02.jpg", "texture_02.jpg")]
     param.setOptions(entries)
     del entries
 
@@ -436,7 +433,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Texture 1")
     lastNode.texture = param
     del param
 
@@ -450,6 +446,84 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.texture_isolate = param
+    del param
+
+    param = lastNode.createDoubleParam("texture_saturation", "Saturation")
+    param.setMinimum(0, 0)
+    param.setMaximum(2, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(2, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.texture_saturation = param
+    del param
+
+    param = lastNode.createDoubleParam("texture_gamma", "Gamma")
+    param.setMinimum(0, 0)
+    param.setMaximum(3, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(3, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.texture_gamma = param
+    del param
+
+    param = lastNode.createColorParam("texture_color", "Color", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    param.setValue(1, 1)
+    param.setValue(1, 2)
+    lastNode.texture_color = param
+    del param
+
+    param = lastNode.createDoubleParam("texture_mix", "Mix")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.4, 0)
+    lastNode.texture_mix = param
     del param
 
     param = lastNode.createSeparatorParam("sep7", "")
@@ -490,6 +564,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.read = param
     del param
 
@@ -502,6 +577,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.current_state = param
     del param
 
@@ -535,8 +611,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(3840, 0)
-    param.setValue(2160, 1)
+    param.setValue(1920, 0)
+    param.setValue(1080, 1)
     lastNode.current_format = param
     del param
 
@@ -553,7 +629,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(2, 0)
+    param.setValue(1, 0)
     lastNode.rscale = param
     del param
 
@@ -565,7 +641,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(1440, 770)
+    lastNode.setPosition(1440, 816)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -599,9 +675,14 @@ def createInstance(app,group):
         param.setValue("fr.inria.openfx.ReadOIIO")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(film_05_0232.jpg)</Natron>")
+        del param
+
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/assets/post_fx/films/film_02/film_02_####.jpg")
+        param.setValue("/home/pancho/Documents/GitHub/videovina/private/assets/post_fx/films/film_05/film_05_####.jpg")
         del param
 
     param = lastNode.getParam("before")
@@ -634,14 +715,14 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("outputLayerChoice")
-    if param is not None:
-        param.setValue("Color.RGB")
-        del param
-
     param = lastNode.getParam("ocioInputSpace")
     if param is not None:
         param.setValue("sRGB")
+        del param
+
+    param = lastNode.getParam("outputLayerChoice")
+    if param is not None:
+        param.setValue("Color.RGB")
         del param
 
     del lastNode
@@ -651,8 +732,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("Shuffle2")
     lastNode.setLabel("Shuffle2")
-    lastNode.setPosition(2215, -137)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(2215, -138)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle2 = lastNode
 
@@ -683,10 +764,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge3")
     lastNode.setLabel("Merge3")
-    lastNode.setPosition(1440, 69)
-    lastNode.setSize(104, 55)
+    lastNode.setPosition(1440, 77)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge3"
@@ -695,7 +781,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
     lastNode.setScriptName("flare_file")
     lastNode.setLabel("flare_file")
-    lastNode.setPosition(2702, -347)
+    lastNode.setPosition(2702, -348)
     lastNode.setSize(128, 78)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupflare_file = lastNode
@@ -705,9 +791,14 @@ def createInstance(app,group):
         param.setValue("fr.inria.openfx.ReadOIIO")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(more_spectral_colour_flares_0532.jpg)</Natron>")
+        del param
+
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/assets/post_fx/flares/corner_flares_bokeh/corner_flares_bokeh_####.jpg")
+        param.setValue("/home/pancho/Documents/GitHub/videovina/private/assets/post_fx/flares/more_spectral_colour_flares/more_spectral_colour_flares_####.jpg")
         del param
 
     param = lastNode.getParam("before")
@@ -740,14 +831,14 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("outputLayerChoice")
-    if param is not None:
-        param.setValue("Color.RGB")
-        del param
-
     param = lastNode.getParam("ocioInputSpace")
     if param is not None:
         param.setValue("sRGB")
+        del param
+
+    param = lastNode.getParam("outputLayerChoice")
+    if param is not None:
+        param.setValue("Color.RGB")
         del param
 
     del lastNode
@@ -758,13 +849,18 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge4")
     lastNode.setLabel("Merge4")
     lastNode.setPosition(2213, 73)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
 
     param = lastNode.getParam("mix")
     if param is not None:
-        param.setValue(0.968, 0)
+        param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -775,7 +871,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat1")
     lastNode.setLabel("Reformat1")
     lastNode.setPosition(2714, -62)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat1 = lastNode
 
@@ -808,8 +904,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
     lastNode.setScriptName("Blur2")
     lastNode.setLabel("Blur2")
-    lastNode.setPosition(2714, -166)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(2714, -165)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2 = lastNode
 
@@ -831,14 +927,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.SeGrain", 1, group)
     lastNode.setScriptName("SeGrain1")
     lastNode.setLabel("SeGrain1")
-    lastNode.setPosition(825, 306)
+    lastNode.setPosition(827, 206)
     lastNode.setSize(80, 55)
     lastNode.setColor(0.75, 0.75, 0.75)
     groupSeGrain1 = lastNode
 
     param = lastNode.getParam("grainSizeAll")
     if param is not None:
-        param.setValue(2, 0)
+        param.setValue(1, 0)
         del param
 
     param = lastNode.getParam("grainIntensityRed")
@@ -856,6 +952,16 @@ def createInstance(app,group):
         param.setValue(1, 0)
         del param
 
+    param = lastNode.getParam("mix")
+    if param is not None:
+        param.setValue(0.3, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(Kodak 5248)</Natron>")
+        del param
+
     del lastNode
     # End of node "SeGrain1"
 
@@ -863,8 +969,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
     lastNode.setScriptName("Constant1")
     lastNode.setLabel("Constant1")
-    lastNode.setPosition(813, 211)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(815, 104)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupConstant1 = lastNode
 
@@ -904,7 +1010,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge6")
     lastNode.setLabel("Merge6")
-    lastNode.setPosition(1440, 450)
+    lastNode.setPosition(1440, 483)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge6 = lastNode
@@ -914,60 +1020,31 @@ def createInstance(app,group):
         param.set("overlay")
         del param
 
-    param = lastNode.getParam("mix")
+    param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue(0.792, 0)
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
     # End of node "Merge6"
-
-    # Start of node "Reformat2"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat2")
-    lastNode.setLabel("Reformat2")
-    lastNode.setPosition(3080, 84)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat2 = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("UHD_4K")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatSize")
-    if param is not None:
-        param.setValue(3840, 0)
-        param.setValue(2160, 1)
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Reformat2"
 
     # Start of node "Merge1"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
     lastNode.setPosition(2714, 73)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
     param = lastNode.getParam("AChannelsA")
     if param is not None:
         param.setValue(False)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -977,7 +1054,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge2")
     lastNode.setLabel("Merge2")
-    lastNode.setPosition(2215, -73)
+    lastNode.setPosition(2215, -74)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2 = lastNode
@@ -992,6 +1069,11 @@ def createInstance(app,group):
         param.setValue(0.5, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge2"
 
@@ -999,7 +1081,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Premult", 2, group)
     lastNode.setScriptName("Premult1")
     lastNode.setLabel("Premult1")
-    lastNode.setPosition(2213, 12)
+    lastNode.setPosition(2215, 4)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupPremult1 = lastNode
@@ -1012,7 +1094,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat1_2")
     lastNode.setLabel("Reformat1_2")
     lastNode.setPosition(1893, 84)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat1_2 = lastNode
 
@@ -1034,8 +1116,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("boxSize")
     if param is not None:
-        param.setValue(3840, 0)
-        param.setValue(2160, 1)
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
         del param
 
     param = lastNode.getParam("boxFixed")
@@ -1050,15 +1132,10 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("display")
     lastNode.setLabel("display")
-    lastNode.setPosition(1440, 675)
+    lastNode.setPosition(1440, 676)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupdisplay = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
 
     del lastNode
     # End of node "display"
@@ -1122,25 +1199,25 @@ def createInstance(app,group):
 
     param = lastNode.getParam("MasterSaturation")
     if param is not None:
+        param.setValue(1.5, 0)
+        param.setValue(1.5, 1)
+        param.setValue(1.5, 2)
+        param.setValue(1.5, 3)
+        del param
+
+    param = lastNode.getParam("MasterGamma")
+    if param is not None:
         param.setValue(1, 0)
         param.setValue(1, 1)
         param.setValue(1, 2)
         param.setValue(1, 3)
         del param
 
-    param = lastNode.getParam("MasterGamma")
-    if param is not None:
-        param.setValue(1.61, 0)
-        param.setValue(1.61, 1)
-        param.setValue(1.61, 2)
-        param.setValue(1.61, 3)
-        del param
-
     param = lastNode.getParam("MasterGain")
     if param is not None:
-        param.setValue(1, 0)
-        param.setValue(1, 1)
-        param.setValue(1, 2)
+        param.setValue(0.3, 0)
+        param.setValue(0.3, 1)
+        param.setValue(0.3, 2)
         param.setValue(0, 3)
         del param
 
@@ -1163,14 +1240,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("read_prerender")
     lastNode.setLabel("read_pre-render")
-    lastNode.setPosition(1703, 69)
-    lastNode.setSize(104, 55)
+    lastNode.setPosition(1703, 84)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupread_prerender = lastNode
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValue(0, 0)
+        param.setValue(1, 0)
         del param
 
     del lastNode
@@ -1181,7 +1258,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat3")
     lastNode.setLabel("Reformat3")
     lastNode.setPosition(2215, -209)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat3 = lastNode
 
@@ -1215,14 +1292,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
-    lastNode.setPosition(1237, 461)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1237, 495)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValue(0, 0)
+        param.setValue(1, 0)
         del param
 
     del lastNode
@@ -1232,8 +1309,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("Reformat1_2_2")
     lastNode.setLabel("Reformat1_2_2")
-    lastNode.setPosition(813, 461)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(811, 495)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat1_2_2 = lastNode
 
@@ -1255,8 +1332,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("boxSize")
     if param is not None:
-        param.setValue(3840, 0)
-        param.setValue(2160, 1)
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
         del param
 
     param = lastNode.getParam("boxFixed")
@@ -1306,7 +1383,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("4K - 3840 x 2160")
+    param.set("Full HD - 1920 x 1080")
     lastNode.format = param
     del param
 
@@ -1380,7 +1457,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("overlay_texture")
+    param.setValue("old_film_and_flares")
     lastNode.prefix = param
     del param
 
@@ -1441,7 +1518,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.TwelveRender", 1, group)
     lastNode.setScriptName("texture_render")
     lastNode.setLabel("texture_render")
-    lastNode.setPosition(2213, 194)
+    lastNode.setPosition(2213, 195)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     grouptexture_render = lastNode
@@ -1487,7 +1564,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("4K - 3840 x 2160")
+    param.set("Full HD - 1920 x 1080")
     lastNode.format = param
     del param
 
@@ -1650,7 +1727,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("overlay_texture")
+    param.setValue("old_film_and_flares")
     lastNode.prefix = param
     del param
 
@@ -1663,7 +1740,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(False)
+    param.setValue(True)
     lastNode.current_state = param
     del param
 
@@ -1702,7 +1779,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.TwelveRead", 1, group)
     lastNode.setScriptName("noise_reader")
     lastNode.setLabel("noise_reader")
-    lastNode.setPosition(1237, 320)
+    lastNode.setPosition(1237, 305)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupnoise_reader = lastNode
@@ -1732,7 +1809,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("4K - 3840 x 2160")
+    param.set("Full HD - 1920 x 1080")
     lastNode.format = param
     del param
 
@@ -1807,7 +1884,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("overlay_noise")
+    param.setValue("noise_and_texture")
     lastNode.prefix = param
     del param
 
@@ -1868,7 +1945,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.TwelveRender", 1, group)
     lastNode.setScriptName("noise_render")
     lastNode.setLabel("noise_render")
-    lastNode.setPosition(1058, 317)
+    lastNode.setPosition(1048, 307)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupnoise_render = lastNode
@@ -1914,7 +1991,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("4K - 3840 x 2160")
+    param.set("Full HD - 1920 x 1080")
     lastNode.format = param
     del param
 
@@ -2079,7 +2156,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("overlay_noise")
+    param.setValue("noise_and_texture")
     lastNode.prefix = param
     del param
 
@@ -2092,7 +2169,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(False)
+    param.setValue(True)
     lastNode.current_state = param
     del param
 
@@ -2127,6 +2204,225 @@ def createInstance(app,group):
     del lastNode
     # End of node "noise_render"
 
+    # Start of node "texture_file"
+    lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
+    lastNode.setScriptName("texture_file")
+    lastNode.setLabel("texture_file")
+    lastNode.setPosition(427, 172)
+    lastNode.setSize(128, 78)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    grouptexture_file = lastNode
+
+    param = lastNode.getParam("decodingPluginID")
+    if param is not None:
+        param.setValue("fr.inria.openfx.ReadOIIO")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(texture_01.jpg)</Natron>")
+        del param
+
+    param = lastNode.getParam("filename")
+    if param is not None:
+        param.setValue("/home/pancho/Documents/GitHub/videovina/private/assets/post_fx/textures/texture_01.jpg")
+        del param
+
+    param = lastNode.getParam("filePremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("outputPremult")
+    if param is not None:
+        param.set("opaque")
+        del param
+
+    param = lastNode.getParam("outputComponents")
+    if param is not None:
+        param.set("RGB")
+        del param
+
+    param = lastNode.getParam("ParamExistingInstance")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("ocioInputSpace")
+    if param is not None:
+        param.setValue("sRGB")
+        del param
+
+    param = lastNode.getParam("outputLayerChoice")
+    if param is not None:
+        param.setValue("Color.RGB")
+        del param
+
+    del lastNode
+    # End of node "texture_file"
+
+    # Start of node "Reformat5"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("Reformat5")
+    lastNode.setLabel("Reformat5")
+    lastNode.setPosition(2996, 79)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupReformat5 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("UHD_4K")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatSize")
+    if param is not None:
+        param.setValue(3840, 0)
+        param.setValue(2160, 1)
+        del param
+
+    del lastNode
+    # End of node "Reformat5"
+
+    # Start of node "Reformat4"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("Reformat4")
+    lastNode.setLabel("Reformat4")
+    lastNode.setPosition(439, 260)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupReformat4 = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("UHD_4K")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatSize")
+    if param is not None:
+        param.setValue(3840, 0)
+        param.setValue(2160, 1)
+        del param
+
+    param = lastNode.getParam("resize")
+    if param is not None:
+        param.set("distort")
+        del param
+
+    del lastNode
+    # End of node "Reformat4"
+
+    # Start of node "Merge7"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge7")
+    lastNode.setLabel("Merge7")
+    lastNode.setPosition(814, 296)
+    lastNode.setSize(104, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge7 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("overlay")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
+    del lastNode
+    # End of node "Merge7"
+
+    # Start of node "ColorCorrect2"
+    lastNode = app.createNode("net.sf.openfx.ColorCorrectPlugin", 2, group)
+    lastNode.setScriptName("ColorCorrect2")
+    lastNode.setLabel("ColorCorrect2")
+    lastNode.setPosition(439, 302)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupColorCorrect2 = lastNode
+
+    param = lastNode.getParam("MasterSaturation")
+    if param is not None:
+        param.setValue(1, 0)
+        param.setValue(1, 1)
+        param.setValue(1, 2)
+        param.setValue(1, 3)
+        del param
+
+    param = lastNode.getParam("MasterGamma")
+    if param is not None:
+        param.setValue(1, 0)
+        param.setValue(1, 1)
+        param.setValue(1, 2)
+        param.setValue(1, 3)
+        del param
+
+    param = lastNode.getParam("MasterGain")
+    if param is not None:
+        param.setValue(1, 0)
+        param.setValue(1, 1)
+        param.setValue(1, 2)
+        param.setValue(1, 3)
+        del param
+
+    param = lastNode.getParam("toneRanges")
+    if param is not None:
+        param.setCurveColor(0, 0.6, 0.4, 0.6)
+        param.deleteAllControlPoints(0)
+        param.addControlPoint(0, 0, 1, 0, 0, NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal)
+        param.addControlPoint(0, 0.09, 0, 0, 0, NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal)
+        param.setCurveColor(1, 0.8, 0.7, 0.6)
+        param.deleteAllControlPoints(1)
+        param.addControlPoint(1, 0.5, 0, 0, 0, NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal)
+        param.addControlPoint(1, 1, 1, 0, 0, NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal)
+        del param
+
+    del lastNode
+    # End of node "ColorCorrect2"
+
+    # Start of node "Dissolve1"
+    lastNode = app.createNode("net.sf.openfx.DissolvePlugin", 1, group)
+    lastNode.setScriptName("Dissolve1")
+    lastNode.setLabel("Dissolve1")
+    lastNode.setPosition(607, 307)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupDissolve1 = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(0.4, 0)
+        del param
+
+    del lastNode
+    # End of node "Dissolve1"
+
+    # Start of node "Dot3"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot3")
+    lastNode.setLabel("Dot3")
+    lastNode.setPosition(652, 112)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot3 = lastNode
+
+    del lastNode
+    # End of node "Dot3"
+
+    # Start of node "Dot7"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot7")
+    lastNode.setLabel("Dot7")
+    lastNode.setPosition(484, 685)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot7 = lastNode
+
+    del lastNode
+    # End of node "Dot7"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupdisplay)
     groupShuffle2.connectInput(0, groupReformat3)
@@ -2139,7 +2435,7 @@ def createInstance(app,group):
     groupSeGrain1.connectInput(0, groupConstant1)
     groupMerge6.connectInput(0, groupMerge3)
     groupMerge6.connectInput(1, groupSwitch1)
-    groupMerge1.connectInput(0, groupReformat2)
+    groupMerge1.connectInput(0, groupReformat5)
     groupMerge1.connectInput(1, groupReformat1)
     groupMerge2.connectInput(0, groupShuffle2)
     groupMerge2.connectInput(1, groupReformat1)
@@ -2148,6 +2444,7 @@ def createInstance(app,group):
     groupdisplay.connectInput(0, groupMerge6)
     groupdisplay.connectInput(1, groupDot2)
     groupdisplay.connectInput(2, groupDot5)
+    groupdisplay.connectInput(3, groupDot7)
     groupDot1.connectInput(0, groupfilm_file)
     groupDot2.connectInput(0, groupDot1)
     groupDot4.connectInput(0, groupDot6)
@@ -2159,9 +2456,17 @@ def createInstance(app,group):
     groupDot6.connectInput(0, groupBlur2)
     groupSwitch1.connectInput(0, groupReformat1_2_2)
     groupSwitch1.connectInput(1, groupnoise_reader)
-    groupReformat1_2_2.connectInput(0, groupSeGrain1)
+    groupReformat1_2_2.connectInput(0, groupMerge7)
     grouptexture_render.connectInput(0, groupMerge4)
-    groupnoise_render.connectInput(0, groupSeGrain1)
+    groupnoise_render.connectInput(0, groupMerge7)
+    groupReformat4.connectInput(0, grouptexture_file)
+    groupMerge7.connectInput(0, groupDissolve1)
+    groupMerge7.connectInput(1, groupSeGrain1)
+    groupColorCorrect2.connectInput(0, groupReformat4)
+    groupDissolve1.connectInput(0, groupDot3)
+    groupDissolve1.connectInput(1, groupColorCorrect2)
+    groupDot3.connectInput(0, groupConstant1)
+    groupDot7.connectInput(0, groupColorCorrect2)
 
     param = groupMerge4.getParam("mix")
     param.setExpression("thisGroup.film_amount.get()", False, 0)
@@ -2173,7 +2478,7 @@ def createInstance(app,group):
     param = groupSeGrain1.getParam("grainSizeAll")
     param.setExpression("thisGroup.grain_size.get()", False, 0)
     del param
-    param = groupMerge6.getParam("mix")
+    param = groupSeGrain1.getParam("mix")
     param.setExpression("thisGroup.grain.get()", False, 0)
     del param
     param = groupReformat1_2.getParam("boxSize")
@@ -2231,6 +2536,27 @@ def createInstance(app,group):
     del param
     param = groupnoise_render.getParam("current_state")
     param.setExpression("thisGroup.current_state.get()", False, 0)
+    del param
+    param = groupColorCorrect2.getParam("MasterSaturation")
+    param.setExpression("thisGroup.texture_saturation.get()", False, 0)
+    param.setExpression("thisGroup.texture_saturation.get()", False, 1)
+    param.setExpression("thisGroup.texture_saturation.get()", False, 2)
+    param.setExpression("thisGroup.texture_saturation.get()", False, 3)
+    del param
+    param = groupColorCorrect2.getParam("MasterGamma")
+    param.setExpression("thisGroup.texture_gamma.get()", False, 0)
+    param.setExpression("thisGroup.texture_gamma.get()", False, 1)
+    param.setExpression("thisGroup.texture_gamma.get()", False, 2)
+    param.setExpression("thisGroup.texture_gamma.get()", False, 3)
+    del param
+    param = groupColorCorrect2.getParam("MasterGain")
+    param.setExpression("thisGroup.texture_color.get()[dimension]", False, 0)
+    param.setExpression("thisGroup.texture_color.get()[dimension]", False, 1)
+    param.setExpression("thisGroup.texture_color.get()[dimension]", False, 2)
+    param.setExpression("thisGroup.texture_color.get()[dimension]", False, 3)
+    del param
+    param = groupDissolve1.getParam("which")
+    param.setExpression("thisGroup.texture_mix.get()", False, 0)
     del param
 
     param = group.getParam("current_format")

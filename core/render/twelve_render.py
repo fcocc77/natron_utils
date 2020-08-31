@@ -2,7 +2,7 @@
 # HD Medio, Full Hd y 4K; Lento, Normal y Rapido
 import os
 import NatronEngine
-from nx import getNode, alert, absolute, createNode
+from nx import getNode, alert, absolute, createNode, node_delete
 from vina import value_by_durations
 from general import formats
 from base import link_to_parent
@@ -82,6 +82,9 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
     vinarender.getParam('instances').set(10)
     vinarender.getParam('range').set(1, durations[speed])
     vinarender.getParam('render').trigger()
+
+    node_delete(vinarender)
+    node_delete(reformat)
 
 
 def refresh_source_speed(thisNode, speed):

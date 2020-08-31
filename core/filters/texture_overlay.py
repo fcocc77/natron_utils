@@ -27,6 +27,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def refresh(thisNode):
+    texture_refresh(thisNode)
     files_refresh(thisNode, 'film')
     files_refresh(thisNode, 'flare')
 
@@ -55,9 +56,29 @@ def reload_assets(thisNode):
 
     flare_choice = thisNode.getParam('flare')
     films_choice = thisNode.getParam('film')
+    texture_choice = thisNode.getParam('texture')
 
     set_choice_list(flare_choice, os.listdir(flares_folder))
     set_choice_list(films_choice, os.listdir(films_folder))
+    set_choice_list(texture_choice, os.listdir(textures_folder))
+
+
+def texture_refresh(thisNode):
+    folder = thisNode.getParam('assets_folder').get() + '/textures'
+
+    file_node = getNode(thisNode, 'texture_file')
+    filename = file_node.getParam('filename')
+
+    name = get_current_choice(thisNode.getParam('texture'))
+
+    file_path = folder + '/' + name
+    filename.set(file_path)
+    filename.reloadFile()
+    filename.reloadFile()
+
+    # Hold
+    file_node.getParam('after').set(0)
+    file_node.getParam('before').set(0)
 
 
 def files_refresh(thisNode, param_name):
@@ -73,6 +94,7 @@ def files_refresh(thisNode, param_name):
     filename.reloadFile()
     filename.reloadFile()
 
+    # Loop
     file_node.getParam('after').set(1)
     file_node.getParam('before').set(1)
 
