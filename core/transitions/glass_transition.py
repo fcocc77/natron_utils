@@ -1,6 +1,6 @@
 import os
 import NatronEngine
-from nx import getNode, alert, switch, get_connected_nodes, question, delete, warning, input_connected, dots_delete
+from nx import getNode, alert, switch, get_connected_nodes, question, node_delete, warning, input_connected, dots_delete
 from base import *
 from vina import value_by_durations
 from general import formats
@@ -36,7 +36,7 @@ def clean(thisNode, dialog=True):
     def action():
         vinarender = getNode(thisNode, 'VinaRender')
         nodes = get_connected_nodes(vinarender)
-        delete(nodes)
+        node_delete(nodes)
         dots_delete(thisNode)
 
     if dialog:

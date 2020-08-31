@@ -1,7 +1,7 @@
 import os
 import random
 from slides import get_slides, get_slide, get_slide_position
-from nx import getNode, delete, app, alert
+from nx import getNode, node_delete, app, alert
 from vv_misc import get_resolution
 from vina import get_videovina
 
@@ -78,7 +78,7 @@ def generate_pictures(pictures, pictures_amount=False, reformat_node=True):
                 node_to_connect.connectInput(0, reformat)
         else:
             if reformat:
-                delete(reformat)
+                node_delete(reformat)
 
         # si la imagen ya fue generada, solo cambia el la imagen 'filename'
         reader_name = 'slide_' + str(index) + '_image'

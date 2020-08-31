@@ -389,7 +389,7 @@ def get_connected_nodes(parent):
     return nodes
 
 
-def delete(nodes):
+def node_delete(nodes):
     # se usa .destroy() 2 veces ya que a veces
     # natron no borra el nodo
     if type(nodes) is list:
@@ -431,7 +431,7 @@ def dots_delete(parent_node):
                     node.disconnectInput(i)
                     node.connectInput(i, input_node)
 
-    delete(dots)
+    node_delete(dots)
 
 
 def get_node_path(node):
