@@ -173,13 +173,8 @@ def render(thisNode, app, divided_project=False):
     if not check_project(thisNode):
         return
 
-    rgb_only = thisNode.rgbonly.get()
-    if rgb_only:
-        output_node = 'to_rgb'
-    else:
-        output_node = 'Source'
-
     filename = thisNode.filename.get()
+    output_node = 'Source'
 
     submit = '/opt/vinarender/bin/submit'
 
@@ -242,7 +237,8 @@ def render(thisNode, app, divided_project=False):
     extra = dict(extra, **{
         'output': output,
         'output_quality': thisNode.getParam('output_quality').get(),
-        'fps': thisNode.getParam('fps').get()
+        'fps': thisNode.getParam('fps').get(),
+        'rgb_only': thisNode.rgbonly.get()
     })
 
     cmd = (submit

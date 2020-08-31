@@ -1,6 +1,7 @@
 from sys import argv
 import NatronEngine
 from vina import get_videovina_render
+from nx import set_option
 import json
 
 app = app1
@@ -12,6 +13,7 @@ node = data['render_node']
 output = data['output']
 output_quality = data['output_quality']
 fps = data['fps']
+rgb_only = data['rgb_only']
 
 ext = output.split('.')[-1]
 
@@ -27,8 +29,14 @@ writer.connectInput(0, node)
 # el tamanio del render es igual al del nodo
 writer.getParam('formatType').setValue(0)
 
-# unPremult
-writer.getParam('inputPremult').set(2)
+output_components = writer.getParam('outputComponents')
+set_option(output_components, 'RGB')
+writer.getParam('inputPremult').set(0)  # Opaque
+
+if ext == 'png':
+    if not rgb_only:
+        set_option(output_components, 'RGBA')
+        writer.getParam('inputPremult').set(2)  # unPremult
 
 # codecs name
 # prores_ksap4h - Apple ProRess 4444

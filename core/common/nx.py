@@ -545,3 +545,11 @@ def get_bbox(node):
         y1=y1,
         y2=y2
     )
+
+
+def set_option(param, option):
+    try:
+        index = param.getOptions().index(option)
+        param.set(index)
+    except:
+        None

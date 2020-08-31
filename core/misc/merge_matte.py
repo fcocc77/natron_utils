@@ -1,3 +1,6 @@
+from nx import set_option
+
+
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
@@ -6,14 +9,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'MergeMatteMainchannels':
         change_channels(thisNode)
-
-
-def set_option(param, option):
-    try:
-        index = param.getOptions().index(option)
-        param.set(index)
-    except:
-        None
 
 
 def change_channels(thisNode):

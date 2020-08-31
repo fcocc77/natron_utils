@@ -57,19 +57,6 @@ def createInstance(app,group):
     lastNode.readfile = param
     del param
 
-    param = lastNode.createBooleanParam("rgbonly", "RGB Only")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.rgbonly = param
-    del param
-
     param = lastNode.createBooleanParam("no_show_message", "No Show Message")
 
     # Add the param to the page
@@ -93,19 +80,6 @@ def createInstance(app,group):
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep4 = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep7", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep7 = param
     del param
 
     param = lastNode.createStringParam("job_name", "Job Name")
@@ -235,7 +209,19 @@ def createInstance(app,group):
     lastNode.output_quality = param
     del param
 
-    param = lastNode.createSeparatorParam("sep2", "")
+    param = lastNode.createBooleanParam("rgbonly", "PNG Only RGB")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.rgbonly = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -245,7 +231,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
+    lastNode.sep7 = param
     del param
 
     param = lastNode.createStringParam("one_project_label", "")
@@ -488,40 +474,11 @@ def createInstance(app,group):
     del lastNode
     # End of node "Switch1"
 
-    # Start of node "to_rgb"
-    lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
-    lastNode.setScriptName("to_rgb")
-    lastNode.setLabel("to_rgb")
-    lastNode.setPosition(-225, -34)
-    lastNode.setSize(104, 30)
-    lastNode.setColor(0.6, 0.24, 0.39)
-    groupto_rgb = lastNode
-
-    param = lastNode.getParam("outputComponents")
-    if param is not None:
-        param.set("rgb")
-        del param
-
-    del lastNode
-    # End of node "to_rgb"
-
-    # Start of node "Dot1"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot1")
-    lastNode.setLabel("Dot1")
-    lastNode.setPosition(-18, -26)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot1 = lastNode
-
-    del lastNode
-    # End of node "Dot1"
-
     # Start of node "Source"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Source")
     lastNode.setLabel("Source")
-    lastNode.setPosition(-63, -176)
+    lastNode.setPosition(66, -34)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupSource = lastNode
@@ -531,10 +488,8 @@ def createInstance(app,group):
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupSwitch1)
-    groupSwitch1.connectInput(0, groupDot1)
+    groupSwitch1.connectInput(0, groupSource)
     groupSwitch1.connectInput(1, groupreading)
-    groupto_rgb.connectInput(0, groupDot1)
-    groupDot1.connectInput(0, groupSource)
 
     param = groupreading.getParam("filename")
     param.setExpression("thisGroup.filename.get()", False, 0)
