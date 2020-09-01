@@ -57,8 +57,8 @@ def set_font(text, font):
 
 def fit_text_to_box(thisNode, format=[1920, 1080]):
 
-    title = getNode(thisNode, "title")
-    subtitle = getNode(thisNode, "subtitle")
+    title = getNode(thisNode, "title_node")
+    subtitle = getNode(thisNode, "subtitle_node")
 
     x = format[0]
     y = format[1]
@@ -89,17 +89,12 @@ def fit_text_to_box(thisNode, format=[1920, 1080]):
     move_up = (y - height) / 2
 
     title_translate = getNode(thisNode, "title_position").getParam('translate')
-    subtitle_translate = getNode(
-        thisNode, "subtitle_position").getParam('translate')
+    subtitle_translate = getNode(thisNode, "subtitle_position").getParam('translate')
 
     # ajusta los textos verticalmente
     title_translate.setValue(subtitle_y + move_up, 1)
     subtitle_translate.setValue(move_up, 1)
 
     # centra los textos horizontalmente
-    title_translate.setValue(
-        (x / 2) - (title_x / 2), 0
-    )
-    subtitle_translate.setValue(
-        (x / 2) - (subtitle_x / 2), 0
-    )
+    title_translate.setValue((x / 2) - (title_x / 2), 0)
+    subtitle_translate.setValue((x / 2) - (subtitle_x / 2), 0)
