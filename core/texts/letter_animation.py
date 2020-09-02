@@ -19,33 +19,14 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         delete_text_nodes(thisNode)
         create_titles(thisNode)
     elif knob_name == 'texts_refresh':
-        refresh_word(thisNode, True, 'title')
-        refresh_word(thisNode, False, 'subtitle')
+        refresh_word(thisNode, 'title')
+        refresh_word(thisNode, 'subtitle')
 
 
 def refresh(thisNode):
-
-    word_gap = thisNode.word_gap_first.get()
-
     preview_text(thisNode)
-
-
-def create_titles(thisNode, only_refresh=False):
-    word_gap = thisNode.word_gap_first.get()
-
-    title = thisNode.title.get()
-    title_conection = getNode(thisNode, 'letter_transform_title')
-    title_gap = False
-    if word_gap == 0:
-        title_gap = True
-    create_word(thisNode, title, title_conection, title_gap, 'title')
-
-    subtitle = thisNode.subtitle.get()
-    subtitle_conection = getNode(thisNode, 'letter_transform_subtitle')
-    subtitle_gap = False
-    if word_gap == 1:
-        subtitle_gap = True
-    create_word(thisNode, subtitle, subtitle_conection, subtitle_gap, 'subtitle')
+    refresh_word(thisNode, 'title')
+    refresh_word(thisNode, 'subtitle')
 
 
 def get_text(thisNode, _type, index):
@@ -82,7 +63,18 @@ def get_texts(thisNode, _type):
     return titles
 
 
-def create_word(thisNode, text, conection, word_gap, _type):
+def create_titles(thisNode, only_refresh=False):
+
+    title = thisNode.title.get()
+    title_conection = getNode(thisNode, 'letter_transform_title')
+    create_word(thisNode, title, title_conection, 'title')
+
+    subtitle = thisNode.subtitle.get()
+    subtitle_conection = getNode(thisNode, 'letter_transform_subtitle')
+    create_word(thisNode, subtitle, subtitle_conection, 'subtitle')
+
+
+def create_word(thisNode, text, conection, _type):
     idxs = range(len(text))
 
     # el desfase en el tiempo de las letras
@@ -105,7 +97,7 @@ def create_word(thisNode, text, conection, word_gap, _type):
             continue
 
         last_merge, letter_width = create_letter(
-            thisNode, letter.strip(), pos, gap, word_gap, last_merge, _type, node_position, index
+            thisNode, letter.strip(), pos, gap, last_merge, _type, node_position, index
         )
 
         pos += letter_width
@@ -115,7 +107,7 @@ def create_word(thisNode, text, conection, word_gap, _type):
     conection.connectInput(0, last_merge)
 
 
-def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _type, node_position, index):
+def create_letter(thisNode, letter, position, letter_gap, conection, _type, node_position, index):
 
     if _type == 'title':
         node_position_y = -1300
@@ -186,7 +178,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     return [merge, letter_width]
 
 
-def refresh_word(thisNode, word_gap, _type):
+def refresh_word(thisNode, _type):
 
     titles = get_texts(thisNode, _type)
     idxs = range(len(titles))
@@ -213,16 +205,44 @@ def refresh_word(thisNode, word_gap, _type):
         position += letter_width
 
 
+def calculate_duration_and_gap(letters_amount, gap, duration):
+
+    gap_amount = (gap * 100) / duration
+
+    duration = duration - ((letters_amount * gap_amount) - gap_amount)
+
+    return [duration, gap_amount]
+
+
 def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
-                   _type, letter_gap, position):
+                   _type, letter_gap_idx, position):
     # Actualiza las animaciones de todos los parametros del texto
 
     #
-    gap = letter_gap * thisNode.letter_gap.get()
+
+    # identifica si el titulo o subtitulo se desfasa primero
+    word_gap = 0
+    if thisNode.word_gap_word.get() == 0:
+        if _type == 'title':
+            word_gap = thisNode.word_gap.get()
+    else:
+        if _type == 'subtitle':
+            word_gap = thisNode.word_gap.get()
+
+    transition_duration = (thisNode.transition.get() * thisNode.duration.get()) / 100
+
+    letter_gap_diff = thisNode.letter_gap.get()
+
+    duration, letter_gap_diff = calculate_duration_and_gap(4, letter_gap_diff, transition_duration)
+
+    letter_gap = letter_gap_idx * letter_gap_diff
+    gap = thisNode.start_frame.get() + letter_gap + word_gap
     # ! falta desfase para las 3 duraciones
 
     start_frame = gap
-    duration = 50
+
+    print duration
+
     #
 
     # Text
