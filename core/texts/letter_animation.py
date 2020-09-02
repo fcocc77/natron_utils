@@ -1,5 +1,5 @@
 from base import link_to_parent, children_refresh
-from nx import getNode, app, createNode
+from nx import getNode, app, createNode, node_delete
 from text_base import set_font, fit_text_to_box
 from util import hash_generator
 from animations import lineal_animation
@@ -16,16 +16,18 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     if knob_name == 'refresh':
         refresh(thisNode)
     elif knob_name == 'text_generator':
+        delete_text_nodes(thisNode)
         create_titles(thisNode)
+    elif knob_name == 'texts_refresh':
+        refresh_word(thisNode, True, 'title')
+        refresh_word(thisNode, False, 'subtitle')
 
 
 def refresh(thisNode):
 
     word_gap = thisNode.word_gap_first.get()
 
-    refresh_word(thisNode, True, 'title')
-
-    # preview_text(thisNode)
+    preview_text(thisNode)
 
 
 def create_titles(thisNode, only_refresh=False):
@@ -46,14 +48,14 @@ def create_titles(thisNode, only_refresh=False):
     create_word(thisNode, subtitle, subtitle_conection, subtitle_gap, 'subtitle')
 
 
-def get_title(thisNode, index):
+def get_text(thisNode, _type, index):
     _index = str(index)
 
-    text = getNode(thisNode, 'title_text_' + _index)
-    local_transform = getNode(thisNode, 'title_local_transform_' + _index)
-    blur = getNode(thisNode, 'title_blur_' + _index)
-    transform = getNode(thisNode, 'title_transform_' + _index)
-    merge = getNode(thisNode, 'title_merge_' + _index)
+    text = getNode(thisNode, 'text_' + _type + '_text_' + _index)
+    local_transform = getNode(thisNode, 'text_' + _type + '_local_transform_' + _index)
+    blur = getNode(thisNode, 'text_' + _type + '_blur_' + _index)
+    transform = getNode(thisNode, 'text_' + _type + '_transform_' + _index)
+    merge = getNode(thisNode, 'text_' + _type + '_merge_' + _index)
 
     if not text:
         return None
@@ -68,10 +70,10 @@ def get_title(thisNode, index):
     }
 
 
-def get_titles(thisNode):
+def get_texts(thisNode, _type):
     titles = []
     for i in range(100):
-        title = get_title(thisNode, i)
+        title = get_text(thisNode, _type,  i)
         if not title:
             break
 
@@ -123,7 +125,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     # create text
     text = createNode(
         node='text',
-        label=_type + '_text_' + str(index),
+        label='text_' + _type + '_text_' + str(index),
         group=thisNode,
         position=[node_position, node_position_y]
     )
@@ -132,7 +134,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     # Transform solo para rotacion y escala local
     local_transform = createNode(
         node='transform',
-        label=_type + '_local_transform_' + str(index),
+        label='text_' + _type + '_local_transform_' + str(index),
         group=thisNode,
         position=[node_position, node_position_y + 100]
     )
@@ -141,7 +143,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     # Blur
     blur = createNode(
         node='blur',
-        label=_type + '_blur_' + str(index),
+        label='text_' + _type + '_blur_' + str(index),
         group=thisNode,
         position=[node_position, node_position_y + 200]
     )
@@ -150,7 +152,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     # Transform
     transform = createNode(
         node='transform',
-        label=_type + '_transform_' + str(index),
+        label='text_' + _type + '_transform_' + str(index),
         group=thisNode,
         position=[node_position, node_position_y + 300]
     )
@@ -159,7 +161,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     # Opacity Merge
     merge = createNode(
         node='merge',
-        label=_type + '_merge_' + str(index),
+        label='text_' + _type + '_merge_' + str(index),
         group=thisNode,
         position=[node_position, node_position_y + 400]
     )
@@ -170,7 +172,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     else:
         crop = createNode(
             node='crop',
-            label=_type + '_crop',
+            label='text_' + _type + '_crop',
             group=thisNode,
             position=[node_position - 100, node_position_y + 500]
         )
@@ -186,7 +188,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
 
 def refresh_word(thisNode, word_gap, _type):
 
-    titles = get_titles(thisNode)
+    titles = get_texts(thisNode, _type)
     idxs = range(len(titles))
 
     # el desfase en el tiempo de las letras
@@ -250,9 +252,9 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     #
 
     # Text color
-    color_exp = 'thisGroup.color.getValue(dimension)'
+    text_color = thisNode.color.get()
     for i in range(3):
-        text.getParam('color').setExpression(color_exp, False, i)
+        text.getParam('color').setValue(text_color[i], i)
 
     # Local Transform
     angle = thisNode.getParam('displacement_angle').get()
@@ -322,6 +324,17 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     lineal_animation(merge.getParam('mix'), start_frame, duration, [opacity_from, opacity_to])
 
     return letter_width
+
+
+def delete_text_nodes(thisNode):
+    text_nodes = []
+    for node in thisNode.getChildren():
+        _node = node.getLabel().split('_')[0]
+
+        if _node == 'text':
+            text_nodes.append(node)
+
+    node_delete(text_nodes)
 
 
 def get_size_font(thisNode, _type):
