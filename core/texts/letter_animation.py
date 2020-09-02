@@ -126,6 +126,7 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     # Transform solo para rotacion y escala local
     local_transform = createNode(thisNode, 'transform')
     local_transform.setPosition(node_position, 100)
+    local_transform.connectInput(0, text)
 
     angle = thisNode.getParam('displacement_angle').get()
 
@@ -138,18 +139,13 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     lineal_animation(local_transform.scale, start_frame, duration, [scale_from, scale_to])
 
     # Position para corregir el tranform del texto
-    local_transform_exp = '-' + str(move_to_rigth)
-
-    local_transform.translate.setExpression(local_transform_exp, False, 0)
-    local_transform.translate.setExpression('0', False, 1)
-
-    local_transform.connectInput(0, text)
+    local_transform.translate.set(-move_to_rigth, 0)
 
     # Blur
     blur = createNode(thisNode, 'blur')
     blur.setPosition(node_position, 200)
-    blur.cropToFormat.set(False)
     blur.connectInput(0, local_transform)
+    blur.cropToFormat.set(False)
 
     blur_x_from = thisNode.getParam('blur_x').get()
     lineal_animation(blur.size, start_frame, duration, [blur_x_from, 0], dimension=0)
@@ -157,11 +153,10 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     blur_y_from = thisNode.getParam('blur_y').get()
     lineal_animation(blur.size, start_frame, duration, [blur_y_from, 0], dimension=1)
 
-    # ------------------
-
     # Transform
     transform = createNode(thisNode, 'transform')
     transform.setPosition(node_position, 300)
+    transform.connectInput(0, blur)
 
     displacement = thisNode.getParam('displacement').get()
 
@@ -183,9 +178,6 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     center.setValue(center_y, 1)
     lineal_animation(center, start_frame, duration, [center_from, center_to], dimension=0)
 
-    transform.connectInput(0, blur)
-    # -----------------------------------
-
     # Opacity expression
     merge = createNode(thisNode, 'merge')
     merge.setPosition(node_position, 400)
@@ -201,9 +193,8 @@ def create_letter(thisNode, letter, position, letter_gap, word_gap, conection, _
     else:
         crop = createNode(thisNode, 'crop')
         crop.setPosition(node_position - 100, 500)
-        crop.getParam('size').set(0, 0)
         merge.connectInput(0, crop)
-    # ------------------------
+        crop.getParam('size').set(0, 0)
 
     return [merge, letter_width]
 
