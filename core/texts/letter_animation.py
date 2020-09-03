@@ -2,7 +2,7 @@ from base import link_to_parent, children_refresh
 from nx import getNode, app, createNode, node_delete
 from text_base import set_font, fit_text_to_box
 from util import hash_generator
-from animations import lineal_animation
+from animations import exaggerated_animation
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -288,11 +288,11 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
 
     rotate_from = -angle + thisNode.getParam('rotate').get()
     rotate_to = -angle
-    lineal_animation(local_transform.getParam('rotate'), start_frame, duration, [rotate_from, rotate_to])
+    exaggerated_animation(local_transform.getParam('rotate'), duration, start_frame, [rotate_from, rotate_to])
 
     scale_from = thisNode.getParam('scale').get()
     scale_to = 1
-    lineal_animation(local_transform.getParam('scale'), start_frame, duration, [scale_from, scale_to])
+    exaggerated_animation(local_transform.getParam('scale'), duration, start_frame, [scale_from, scale_to])
 
     local_transform.getParam('resetCenter').trigger()
 
@@ -308,10 +308,10 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     blur.getParam('cropToFormat').set(False)
 
     blur_x_from = thisNode.getParam('blur_x').get()
-    lineal_animation(blur.getParam('size'), start_frame, duration, [blur_x_from, 0], dimension=0)
+    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_x_from, 0], dimension=0)
 
     blur_y_from = thisNode.getParam('blur_y').get()
-    lineal_animation(blur.getParam('size'), start_frame, duration, [blur_y_from, 0], dimension=1)
+    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_y_from, 0], dimension=1)
 
     #
     #
@@ -323,7 +323,7 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
 
     translate = transform.getParam('translate')
     translate.setValue(0, 1)
-    lineal_animation(translate, start_frame, duration, [position + displacement, position], dimension=0)
+    exaggerated_animation(translate, duration, start_frame, [position + displacement, position], dimension=0)
 
     rotate = transform.getParam('rotate')
     rotate.set(angle)
@@ -337,7 +337,7 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     center_to = center_x
 
     center.setValue(center_y, 1)
-    lineal_animation(center, start_frame, duration, [center_from, center_to], dimension=0)
+    exaggerated_animation(center, duration, start_frame, [center_from, center_to], dimension=0)
 
     #
     #
@@ -348,7 +348,7 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     opacity_from = thisNode.opacity.get()
     opacity_to = 1
 
-    lineal_animation(merge.getParam('mix'), start_frame, duration, [opacity_from, opacity_to])
+    exaggerated_animation(merge.getParam('mix'), duration, start_frame, [opacity_from, opacity_to])
 
     return letter_width
 
