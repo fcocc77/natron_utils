@@ -75,7 +75,8 @@ def create_titles(thisNode, only_refresh=False):
 
 
 def create_word(thisNode, text, conection, _type):
-    idxs = range(len(text))
+    letters_amount = len(text)
+    idxs = range(letters_amount)
 
     # el desfase en el tiempo de las letras
     reverse = thisNode.letter_gap_direction.get()
@@ -97,7 +98,7 @@ def create_word(thisNode, text, conection, _type):
             continue
 
         last_merge, letter_width = create_letter(
-            thisNode, letter.strip(), pos, gap, last_merge, _type, node_position, index
+            thisNode, letter.strip(), pos, gap, last_merge, _type, node_position, index, letters_amount
         )
 
         pos += letter_width
@@ -107,7 +108,7 @@ def create_word(thisNode, text, conection, _type):
     conection.connectInput(0, last_merge)
 
 
-def create_letter(thisNode, letter, position, letter_gap, conection, _type, node_position, index):
+def create_letter(thisNode, letter, position, letter_gap, conection, _type, node_position, index, letters_amount):
 
     if _type == 'title':
         node_position_y = -1300
@@ -173,7 +174,7 @@ def create_letter(thisNode, letter, position, letter_gap, conection, _type, node
         crop.getParam('size').set(0, 0)
 
     letter_width = refresh_letter(thisNode, text, local_transform, blur, transform, merge,
-                                  _type, letter_gap, position)
+                                  _type, letter_gap, position, letters_amount)
 
     return [merge, letter_width]
 
@@ -181,7 +182,8 @@ def create_letter(thisNode, letter, position, letter_gap, conection, _type, node
 def refresh_word(thisNode, _type):
 
     titles = get_texts(thisNode, _type)
-    idxs = range(len(titles))
+    letters_amount = len(titles)
+    idxs = range(letters_amount)
 
     # el desfase en el tiempo de las letras
     reverse = thisNode.letter_gap_direction.get()
@@ -200,48 +202,53 @@ def refresh_word(thisNode, _type):
             letter['blur'],
             letter['transform'],
             letter['merge'],
-            _type, letter_gap, position)
+            _type, letter_gap, position, letters_amount)
 
         position += letter_width
 
 
-def calculate_duration_and_gap(letters_amount, gap, duration):
-
-    gap_amount = (gap * 100) / duration
-
-    duration = duration - ((letters_amount * gap_amount) - gap_amount)
-
-    return [duration, gap_amount]
-
-
-def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
-                   _type, letter_gap_idx, position):
-    # Actualiza las animaciones de todos los parametros del texto
-
-    #
-
-    # identifica si el titulo o subtitulo se desfasa primero
-    word_gap = 0
-    if thisNode.word_gap_word.get() == 0:
-        if _type == 'title':
-            word_gap = thisNode.word_gap.get()
-    else:
-        if _type == 'subtitle':
-            word_gap = thisNode.word_gap.get()
+def calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type):
 
     transition_duration = (thisNode.transition.get() * thisNode.duration.get()) / 100
 
-    letter_gap_diff = thisNode.letter_gap.get()
+    letter_gap_percent = thisNode.letter_gap.get()
+    word_gap_percent = thisNode.word_gap.get()
 
-    duration, letter_gap_diff = calculate_duration_and_gap(4, letter_gap_diff, transition_duration)
+    max_word_gap_duration = transition_duration / 2  # el numero 2 es que hay 2; title y subtitle
+    word_gap_amount = (max_word_gap_duration * word_gap_percent) / 100
 
-    letter_gap = letter_gap_idx * letter_gap_diff
-    gap = thisNode.start_frame.get() + letter_gap + word_gap
-    # ! falta desfase para las 3 duraciones
+    # es el numero maximo de desfase que puede haber dentro de la duracion
+    letters_amount -= 1
+    max_letter_gap_duration = transition_duration / letters_amount
 
+    divide_by_two = (2 * word_gap_percent) / 100
+    if divide_by_two:
+        max_letter_gap_duration /= divide_by_two
+    letter_gap_amount = (max_letter_gap_duration * letter_gap_percent) / 100
+
+    duration = transition_duration - (letters_amount * letter_gap_amount) - word_gap_amount
+
+    # identifica si el titulo o subtitulo se desfasa
+    _word_gap = 0
+    if thisNode.word_gap_word.get() == 0:
+        if _type == 'title':
+            _word_gap = word_gap_amount
+    else:
+        if _type == 'subtitle':
+            _word_gap = word_gap_amount
+
+    letter_gap = letter_gap_idx * letter_gap_amount
+    gap = thisNode.start_frame.get() + letter_gap + _word_gap
+
+    return [duration, gap]
+
+
+def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
+                   _type, letter_gap_idx, position, letters_amount):
+    # Actualiza las animaciones de todos los parametros del texto
+
+    duration, gap = calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type)
     start_frame = gap
-
-    print duration
 
     #
 
