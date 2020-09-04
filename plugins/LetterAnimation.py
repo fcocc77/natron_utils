@@ -97,7 +97,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Slow")
     lastNode.speed = param
     del param
 
@@ -253,7 +252,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("Francisco")
+    param.setValue("Title")
     lastNode.title = param
     del param
 
@@ -267,7 +266,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("Jose")
+    param.setValue("Subtitle")
     lastNode.subtitle = param
     del param
 
@@ -383,7 +382,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(28.4, 0)
+    param.setValue(12.6, 0)
     lastNode.letter_gap = param
     del param
 
@@ -626,7 +625,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(150, 0)
+    param.setValue(100, 0)
     lastNode.duration = param
     del param
 
@@ -655,7 +654,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(-312, 599)
+    lastNode.setPosition(172, 1014)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -663,24 +662,24 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Input1"
+    # Start of node "Full_HD_Transform"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Input1")
-    lastNode.setLabel("Input1")
-    lastNode.setPosition(-980, -245)
+    lastNode.setScriptName("Full_HD_Transform")
+    lastNode.setLabel("Full HD Transform")
+    lastNode.setPosition(-124, -27)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupInput1 = lastNode
+    groupFull_HD_Transform = lastNode
 
     del lastNode
-    # End of node "Input1"
+    # End of node "Full_HD_Transform"
 
     # Start of node "Backdrop1"
     lastNode = app.createNode("fr.inria.built-in.BackDrop", 1, group)
     lastNode.setScriptName("Backdrop1")
     lastNode.setLabel("Backdrop1")
-    lastNode.setPosition(-702, -430)
-    lastNode.setSize(458, 498)
+    lastNode.setPosition(-688, -360)
+    lastNode.setSize(457, 391)
     lastNode.setColor(0.4039, 0.451, 0.2431)
     groupBackdrop1 = lastNode
 
@@ -696,7 +695,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
     lastNode.setScriptName("title_node")
     lastNode.setLabel("title_node")
-    lastNode.setPosition(-659, -208)
+    lastNode.setPosition(-659, -206)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouptitle_node = lastNode
@@ -729,7 +728,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Francisco")
+        param.setValue("Fran")
         del param
 
     param = lastNode.getParam("custom")
@@ -744,7 +743,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(274, 0)
+        param.setValue(362, 0)
         del param
 
     param = lastNode.getParam("arcRadius")
@@ -759,7 +758,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
     lastNode.setScriptName("subtitle_node")
     lastNode.setLabel("subtitle_node")
-    lastNode.setPosition(-383, -244)
+    lastNode.setPosition(-383, -221)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupsubtitle_node = lastNode
@@ -802,10 +801,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge3")
     lastNode.setLabel("Merge3")
-    lastNode.setPosition(-524, -28)
+    lastNode.setPosition(-506, -58)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge3"
@@ -814,15 +818,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
     lastNode.setScriptName("title_position")
     lastNode.setLabel("title_position")
-    lastNode.setPosition(-659, -151)
+    lastNode.setPosition(-659, -143)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptitle_position = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(-4, 0)
-        param.setValue(605.5, 1)
+        param.setValue(396, 0)
+        param.setValue(540, 1)
         del param
 
     del lastNode
@@ -832,7 +836,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
     lastNode.setScriptName("subtitle_position")
     lastNode.setLabel("subtitle_position")
-    lastNode.setPosition(-383, -131)
+    lastNode.setPosition(-383, -145)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupsubtitle_position = lastNode
@@ -840,7 +844,6 @@ def createInstance(app,group):
     param = lastNode.getParam("translate")
     if param is not None:
         param.setValue(393, 0)
-        param.setValue(65.5, 1)
         del param
 
     del lastNode
@@ -850,26 +853,21 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("letter_transform_title")
     lastNode.setLabel("letter_transform_title")
-    lastNode.setPosition(427, 488)
+    lastNode.setPosition(462, 488)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupletter_transform_title = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(478, 0)
-        param.setValue(572.75, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValueAtTime(0, 31, 0)
+        param.setValue(488.3339331034608, 0)
+        param.setValue(390.5966255691107, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(482, 0)
-        param.setValue(-32.75, 1)
+        param.setValue(1014, 0)
+        param.setValue(172.5, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -899,46 +897,26 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("letter_transform_subtitle")
     lastNode.setLabel("letter_transform_subtitle")
-    lastNode.setPosition(172, 313)
+    lastNode.setPosition(172, 308)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupletter_transform_subtitle = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(676.5, 0)
-        param.setValue(302.75, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(0, 0)
+        param.setValue(486.8339331034608, 0)
+        param.setValue(120.5966255691107, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(283.5, 0)
-        param.setValue(237.25, 1)
+        param.setValue(1015.5, 0)
+        param.setValue(442.5, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
     if param is not None:
         param.setValue(True)
-        del param
-
-    param = lastNode.getParam("interactive")
-    if param is not None:
-        param.setValue(False)
-        del param
-
-    param = lastNode.getParam("filter")
-    if param is not None:
-        param.set("bilinear")
-        del param
-
-    param = lastNode.getParam("shutter")
-    if param is not None:
-        param.setValue(0, 0)
         del param
 
     del lastNode
@@ -966,13 +944,18 @@ def createInstance(app,group):
     lastNode.setScriptName("first_hold")
     lastNode.setLabel("first_hold")
     lastNode.setPosition(-108, 705)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(100, 45)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupfirst_hold = lastNode
 
     param = lastNode.getParam("firstFrame")
     if param is not None:
         param.setValue(1, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(frame 1)</Natron>")
         del param
 
     del lastNode
@@ -1017,36 +1000,19 @@ def createInstance(app,group):
     del lastNode
     # End of node "Switch2"
 
-    # Start of node "Dot1"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot1")
-    lastNode.setLabel("Dot1")
-    lastNode.setPosition(215, 871)
-    lastNode.setSize(14, 14)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot1 = lastNode
-
-    del lastNode
-    # End of node "Dot1"
-
     # Start of node "General_Transform"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("General_Transform")
     lastNode.setLabel("General_Transform")
-    lastNode.setPosition(-960, 87)
+    lastNode.setPosition(-506, 106)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupGeneral_Transform = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(0, 0)
-        param.setValue(0, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(0, 0)
+        param.setValue(-921.6660668965392, 0)
+        param.setValue(-321.9033744308893, 1)
         del param
 
     param = lastNode.getParam("scale")
@@ -1057,8 +1023,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(960, 0)
-        param.setValue(540, 1)
+        param.setValue(2424, 0)
+        param.setValue(885, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1069,8 +1035,72 @@ def createInstance(app,group):
     del lastNode
     # End of node "General_Transform"
 
+    # Start of node "Merge1"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge1")
+    lastNode.setLabel("Merge1")
+    lastNode.setPosition(-506, 263)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge1 = lastNode
+
+    del lastNode
+    # End of node "Merge1"
+
+    # Start of node "Reformat1"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("Reformat1")
+    lastNode.setLabel("Reformat1")
+    lastNode.setPosition(-276, 274)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupReformat1 = lastNode
+
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    del lastNode
+    # End of node "Reformat1"
+
+    # Start of node "Merge4"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge4")
+    lastNode.setLabel("Merge4")
+    lastNode.setPosition(172, 916)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge4 = lastNode
+
+    del lastNode
+    # End of node "Merge4"
+
+    # Start of node "Dot2"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot2")
+    lastNode.setLabel("Dot2")
+    lastNode.setPosition(-233, 936)
+    lastNode.setSize(14, 14)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot2 = lastNode
+
+    del lastNode
+    # End of node "Dot2"
+
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupMerge2)
+    groupOutput1.connectInput(0, groupMerge4)
     groupMerge3.connectInput(0, groupsubtitle_position)
     groupMerge3.connectInput(1, grouptitle_position)
     grouptitle_position.connectInput(0, grouptitle_node)
@@ -1082,54 +1112,16 @@ def createInstance(app,group):
     groupSwitch2.connectInput(0, groupfirst_hold)
     groupSwitch2.connectInput(1, groupMerge2)
     groupSwitch2.connectInput(2, grouplast_hold)
-    groupDot1.connectInput(0, groupSwitch2)
     groupGeneral_Transform.connectInput(0, groupMerge3)
+    groupMerge1.connectInput(0, groupReformat1)
+    groupMerge1.connectInput(1, groupGeneral_Transform)
+    groupMerge4.connectInput(0, groupDot2)
+    groupMerge4.connectInput(1, groupSwitch2)
+    groupDot2.connectInput(0, groupReformat1)
 
-    param = groupletter_transform_title.getParam("translate")
-    param.setExpression("position = thisGroup.title_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center, translate = 0, 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n\ttranslate = transform.getParam(\'translate\').curve( frame, dimension )\t\n\ttranslate = ( translate * resolution_scale ) + ( center * resolution_scale ) - center\n# ---------------------------\n\nposition_added = position * scale\nnew_position = position_added + translate + ( center - ( center * scale ) )\n\nret = new_position", True, 0)
-    param.setExpression("position = thisGroup.title_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center, translate = 0, 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n\ttranslate = transform.getParam(\'translate\').curve( frame, dimension )\t\n\ttranslate = ( translate * resolution_scale ) + ( center * resolution_scale ) - center\n# ---------------------------\n\nposition_added = position * scale\nnew_position = position_added + translate + ( center - ( center * scale ) )\n\nret = new_position", True, 1)
-    del param
-    param = groupletter_transform_title.getParam("rotate")
-    param.setExpression("rotate = 0\ntransform = thisGroup.getInput(0)\nif transform:\n\trotate = transform.getParam(\'rotate\').curve( frame )\n\nret = rotate", True, 0)
-    del param
-    param = groupletter_transform_title.getParam("center")
-    param.setExpression("position = thisGroup.title_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center = 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n# ---------------------------\n\nposition_added = position * scale\nnew_center = ( center * scale ) - position_added\n\nret = new_center", True, 0)
-    param.setExpression("position = thisGroup.title_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center = 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n# ---------------------------\n\nposition_added = position * scale\nnew_center = ( center * scale ) - position_added\n\nret = new_center", True, 1)
-    del param
-    param = groupletter_transform_subtitle.getParam("translate")
-    param.setExpression("position = thisGroup.subtitle_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center, translate = 0, 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n\ttranslate = transform.getParam(\'translate\').curve( frame, dimension )\t\n\ttranslate = ( translate * resolution_scale ) + ( center * resolution_scale ) - center\n# ---------------------------\n\nposition_added = position * scale\nnew_position = position_added + translate + ( center - ( center * scale ) )\n\nret = new_position", True, 0)
-    param.setExpression("position = thisGroup.subtitle_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center, translate = 0, 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n\ttranslate = transform.getParam(\'translate\').curve( frame, dimension )\t\n\ttranslate = ( translate * resolution_scale ) + ( center * resolution_scale ) - center\n# ---------------------------\n\nposition_added = position * scale\nnew_position = position_added + translate + ( center - ( center * scale ) )\n\nret = new_position", True, 1)
-    del param
-    param = groupletter_transform_subtitle.getParam("rotate")
-    param.setExpression("rotate = 0\ntransform = thisGroup.getInput(0)\nif transform:\n\trotate = transform.getParam(\'rotate\').curve( frame )\n\nret = rotate", True, 0)
-    del param
-    param = groupletter_transform_subtitle.getParam("center")
-    param.setExpression("position = thisGroup.subtitle_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center = 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n# ---------------------------\n\nposition_added = position * scale\nnew_center = ( center * scale ) - position_added\n\nret = new_center", True, 0)
-    param.setExpression("position = thisGroup.subtitle_position.translate.curve( frame, dimension )\nresolution_scale = thisGroup.rscale.get()\n\n# Transform general\nscale, center = 0, 0\ntransform = thisGroup.getInput(0)\nif transform:\n\tscale = transform.getParam(\'scale\').curve( frame, dimension ) * resolution_scale\n\tcenter = transform.getParam(\'center\').curve( frame, dimension )\n# ---------------------------\n\nposition_added = position * scale\nnew_center = ( center * scale ) - position_added\n\nret = new_center", True, 1)
-    del param
-    param = groupfirst_hold.getParam("firstFrame")
-    param.setExpression("thisGroup.frame_hold.getValue(0)", False, 0)
-    del param
-    param = grouplast_hold.getParam("firstFrame")
-    param.setExpression("thisGroup.frame_hold.getValue(1)", False, 0)
-    del param
-    param = groupSwitch2.getParam("which")
-    param.setExpression("if frame < thisGroup.frame_hold.getValue(0):\n\tret = 0\nelif frame > thisGroup.frame_hold.getValue(1):\n\tret = 2\nelse:\n\tret = 1\n", True, 0)
-    del param
-    param = groupGeneral_Transform.getParam("translate")
-    param.setExpression("transform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.rscale.get()\n\ntranslate = 0\ncenter = 0\nif transform:\n\ttranslate = transform.getParam(\'translate\').curve(frame, dimension)\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = (translate * scale) + (center * scale) - center", True, 0)
-    param.setExpression("transform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.rscale.get()\n\ntranslate = 0\ncenter = 0\nif transform:\n\ttranslate = transform.getParam(\'translate\').curve(frame, dimension)\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = (translate * scale) + (center * scale) - center", True, 1)
-    del param
-    param = groupGeneral_Transform.getParam("rotate")
-    param.setExpression("transform = thisGroup.getInput(0)\n\nif transform:\n\tret = transform.getParam(\'rotate\').curve(frame)\nelse:\n\tret = 0", True, 0)
-    del param
-    param = groupGeneral_Transform.getParam("scale")
-    param.setExpression("# si esta conectada la entrada Transform, obtiene la curva\ntransform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.rscale.get()\n\nif transform:\n\tret = transform.getParam(\'scale\').curve(frame, dimension) * scale\nelse:\n\tret = 1", True, 0)
-    param.setExpression("# si esta conectada la entrada Transform, obtiene la curva\ntransform = thisGroup.getInput(0)\n\n# para la escale de resolucion\nscale = thisGroup.rscale.get()\n\nif transform:\n\tret = transform.getParam(\'scale\').curve(frame, dimension) * scale\nelse:\n\tret = 1", True, 1)
-    del param
-    param = groupGeneral_Transform.getParam("center")
-    param.setExpression("transform = thisGroup.getInput(0)\n\ncenter = 0\nif transform:\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = center", True, 0)
-    param.setExpression("transform = thisGroup.getInput(0)\n\ncenter = 0\nif transform:\n\tcenter = transform.getParam(\'center\').curve(frame, dimension)\n\nret = center", True, 1)
+    param = groupReformat1.getParam("boxSize")
+    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 0)
+    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 1)
     del param
 
     param = group.getParam("current_format")
