@@ -25,6 +25,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 def refresh(thisNode):
 
+    set_general_transform(thisNode)
+
     preview_text(thisNode)
     refresh_word(thisNode, 'title')
     refresh_word(thisNode, 'subtitle')
@@ -35,37 +37,54 @@ def refresh(thisNode):
 
 def set_text_transform(thisNode, _type):
 
-    input_transform = thisNode.getInput(0)
+    general_transform = getNode(thisNode, 'General_Transform')
 
-    if not input_transform:
-        return
-
-    rscale = thisNode.rscale.get()
     transform_title = getNode(thisNode, 'letter_transform_' + _type)
 
     for dimension in range(2):
-
         position = getNode(thisNode, _type + '_position').getParam('translate').getValue(dimension)
+        scale = general_transform.getParam('scale').getValue(dimension)
 
-        scale = input_transform.getParam('scale').getValue(dimension) * rscale
-
-        center = input_transform.getParam('center').getValue(dimension)
-        translate = input_transform.getParam('translate').getValue(dimension)
-        translate = (translate * rscale) + (center * rscale) - center
+        center = general_transform.getParam('center').getValue(dimension)
+        translate = general_transform.getParam('translate').getValue(dimension)
 
         position_added = position * scale
         new_position = position_added + translate + (center - (center * scale))
         new_center = (center * scale) - position_added
 
+        new_position = position * scale + translate + (center - (center * scale))
+
         transform_title.getParam('translate').setValue(new_position, dimension)
         transform_title.getParam('center').setValue(new_center, dimension)
 
-    rotate = input_transform.getParam('rotate').getValue()
+    rotate = general_transform.getParam('rotate').getValue()
     transform_title.getParam('rotate').setValue(rotate)
 
 
-def set_subtitle_transform(thisNode):
-    None
+def set_general_transform(thisNode):
+    input_transform = thisNode.getInput(0)
+    if not input_transform:
+        return
+
+    rscale = thisNode.rscale.get()
+
+    general_transform = getNode(thisNode, 'General_Transform')
+
+    translate = input_transform.getParam('translate').get()
+    translate_x = translate[0] * rscale
+    translate_y = translate[1] * rscale
+
+    center = input_transform.getParam('center').get()
+    center_x = center[0] * rscale
+    center_y = center[1] * rscale
+
+    rotate = input_transform.getParam('rotate').get()
+    scale = input_transform.getParam('scale').get()
+
+    general_transform.getParam('translate').set(translate_x, translate_y)
+    general_transform.getParam('center').set(center_x, center_y)
+    general_transform.getParam('scale').set(scale[0], scale[1])
+    general_transform.getParam('rotate').set(rotate)
 
 
 def get_text(thisNode, _type, index):
@@ -439,4 +458,6 @@ def preview_text(thisNode):
     set_font(title_node, font)
     set_font(subtitle_node, font)
 
-    fit_text_to_box(thisNode)
+    current_format = thisNode.getParam('current_format').get()
+
+    fit_text_to_box(thisNode, current_format)
