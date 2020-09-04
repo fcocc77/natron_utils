@@ -24,9 +24,48 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def refresh(thisNode):
+
     preview_text(thisNode)
     refresh_word(thisNode, 'title')
     refresh_word(thisNode, 'subtitle')
+
+    set_text_transform(thisNode, 'title')
+    set_text_transform(thisNode, 'subtitle')
+
+
+def set_text_transform(thisNode, _type):
+
+    input_transform = thisNode.getInput(0)
+
+    if not input_transform:
+        return
+
+    rscale = thisNode.rscale.get()
+    transform_title = getNode(thisNode, 'letter_transform_' + _type)
+
+    for dimension in range(2):
+
+        position = getNode(thisNode, _type + '_position').getParam('translate').getValue(dimension)
+
+        scale = input_transform.getParam('scale').getValue(dimension) * rscale
+
+        center = input_transform.getParam('center').getValue(dimension)
+        translate = input_transform.getParam('translate').getValue(dimension)
+        translate = (translate * rscale) + (center * rscale) - center
+
+        position_added = position * scale
+        new_position = position_added + translate + (center - (center * scale))
+        new_center = (center * scale) - position_added
+
+        transform_title.getParam('translate').setValue(new_position, dimension)
+        transform_title.getParam('center').setValue(new_center, dimension)
+
+    rotate = input_transform.getParam('rotate').getValue()
+    transform_title.getParam('rotate').setValue(rotate)
+
+
+def set_subtitle_transform(thisNode):
+    None
 
 
 def get_text(thisNode, _type, index):
@@ -250,6 +289,9 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     duration, gap = calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type)
     start_frame = gap
 
+    exaggeration = [0.8, 0.7]
+    key_frames = [False, True]
+
     #
 
     # Text
@@ -288,11 +330,11 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
 
     rotate_from = -angle + thisNode.getParam('rotate').get()
     rotate_to = -angle
-    exaggerated_animation(local_transform.getParam('rotate'), duration, start_frame, [rotate_from, rotate_to])
+    exaggerated_animation(local_transform.getParam('rotate'), duration, start_frame, [rotate_from, rotate_to], exaggeration, key_frames=key_frames)
 
     scale_from = thisNode.getParam('scale').get()
     scale_to = 1
-    exaggerated_animation(local_transform.getParam('scale'), duration, start_frame, [scale_from, scale_to])
+    exaggerated_animation(local_transform.getParam('scale'), duration, start_frame, [scale_from, scale_to], exaggeration, key_frames=key_frames)
 
     local_transform.getParam('resetCenter').trigger()
 
@@ -308,10 +350,10 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     blur.getParam('cropToFormat').set(False)
 
     blur_x_from = thisNode.getParam('blur_x').get()
-    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_x_from, 0], dimension=0)
+    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_x_from, 0], exaggeration, dimension=0, key_frames=key_frames)
 
     blur_y_from = thisNode.getParam('blur_y').get()
-    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_y_from, 0], dimension=1)
+    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_y_from, 0], exaggeration, dimension=1, key_frames=key_frames)
 
     #
     #
@@ -323,7 +365,7 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
 
     translate = transform.getParam('translate')
     translate.setValue(0, 1)
-    exaggerated_animation(translate, duration, start_frame, [position + displacement, position], dimension=0)
+    exaggerated_animation(translate, duration, start_frame, [position + displacement, position], exaggeration, dimension=0, key_frames=key_frames)
 
     rotate = transform.getParam('rotate')
     rotate.set(angle)
@@ -337,7 +379,7 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     center_to = center_x
 
     center.setValue(center_y, 1)
-    exaggerated_animation(center, duration, start_frame, [center_from, center_to], dimension=0)
+    exaggerated_animation(center, duration, start_frame, [center_from, center_to], exaggeration, dimension=0, key_frames=key_frames)
 
     #
     #
@@ -348,7 +390,7 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     opacity_from = thisNode.opacity.get()
     opacity_to = 1
 
-    exaggerated_animation(merge.getParam('mix'), duration, start_frame, [opacity_from, opacity_to])
+    exaggerated_animation(merge.getParam('mix'), duration, start_frame, [opacity_from, opacity_to], exaggeration, key_frames=key_frames)
 
     return letter_width
 
