@@ -563,61 +563,65 @@ def autocrop(thisNode, image_node, crop_node):
     if not image_statictis:
         image_statictis = createNode('statistics', 'autocrop', thisNode)
 
+    image_statictis.disconnectInput(0)
     image_statictis.connectInput(0, image_node)
 
-    each_pixel = 2
+    each_pixel = 10
 
-    clear = image_statictis.getParam('clearFrame')
+    clear = image_statictis.getParam('clearSequence')
     max_param = image_statictis.getParam('statMax')
-    i = 0
 
     width = int(bbox.x2 - bbox.x1)
     height = int(bbox.y2 - bbox.y1)
     left = bbox.x1
     bottom = bbox.y1
 
+    max_param.setValue(0, 0)
     clear.trigger()
     for i in range(width):
-        if max_param.get()[0] > 0:
-            break
-
-        left += each_pixel
-
         image_statictis.getParam('bottomLeft').set(left, bbox.y1)
         image_statictis.getParam('size').set(each_pixel, height)
         image_statictis.getParam('analyzeFrame').trigger()
 
-    clear.trigger()
-    for i in range(height):
         if max_param.get()[0] > 0:
             break
+        else:
+            left += each_pixel
 
-        bottom += each_pixel
-
+    max_param.setValue(0, 0)
+    clear.trigger()
+    for i in range(height):
         image_statictis.getParam('bottomLeft').set(bbox.x1, bottom)
         image_statictis.getParam('size').set(width, each_pixel)
         image_statictis.getParam('analyzeFrame').trigger()
 
+        if max_param.get()[0] > 0:
+            break
+        else:
+            bottom += each_pixel
+
     _left = bbox.x1 + width
     _bottom = bbox.y1 + height
 
+    max_param.setValue(0, 0)
     clear.trigger()
     for i in range(width):
         if max_param.get()[0] > 0:
             break
-
-        _left -= each_pixel
+        else:
+            _left -= each_pixel
 
         image_statictis.getParam('bottomLeft').set(_left, bbox.y1)
         image_statictis.getParam('size').set(each_pixel, height)
         image_statictis.getParam('analyzeFrame').trigger()
 
+    max_param.setValue(0, 0)
     clear.trigger()
     for i in range(height):
         if max_param.get()[0] > 0:
             break
-
-        _bottom -= each_pixel
+        else:
+            _bottom -= each_pixel
 
         image_statictis.getParam('bottomLeft').set(bbox.x1, _bottom)
         image_statictis.getParam('size').set(width, each_pixel)

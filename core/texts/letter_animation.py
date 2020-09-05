@@ -1,5 +1,5 @@
 from base import link_to_parent, children_refresh
-from nx import getNode, app, createNode, node_delete
+from nx import getNode, app, createNode, node_delete, autocrop
 from text_base import set_font, fit_text_to_box
 from util import hash_generator
 from animations import exaggerated_animation
@@ -91,6 +91,7 @@ def get_text(thisNode, _type, index):
     _index = str(index)
 
     text = getNode(thisNode, 'text_' + _type + '_text_' + _index)
+    crop = getNode(thisNode, 'text_' + _type + '_crop_' + _index)
     local_transform = getNode(thisNode, 'text_' + _type + '_local_transform_' + _index)
     blur = getNode(thisNode, 'text_' + _type + '_blur_' + _index)
     transform = getNode(thisNode, 'text_' + _type + '_transform_' + _index)
@@ -101,6 +102,7 @@ def get_text(thisNode, _type, index):
 
     return {
         'text': text,
+        'crop': crop,
         'local_transform': local_transform,
         'blur': blur,
         'transform': transform,
@@ -182,21 +184,30 @@ def create_letter(thisNode, letter, position, letter_gap, conection, _type, node
     )
     text.getParam('text').set(letter)
 
+    # create crop
+    crop = createNode(
+        node='crop',
+        label='text_' + _type + '_crop_' + str(index),
+        group=thisNode,
+        position=[node_position, node_position_y + 100]
+    )
+    crop.connectInput(0, text)
+
     # Transform solo para rotacion y escala local
     local_transform = createNode(
         node='transform',
         label='text_' + _type + '_local_transform_' + str(index),
         group=thisNode,
-        position=[node_position, node_position_y + 100]
+        position=[node_position, node_position_y + 200]
     )
-    local_transform.connectInput(0, text)
+    local_transform.connectInput(0, crop)
 
     # Blur
     blur = createNode(
         node='blur',
         label='text_' + _type + '_blur_' + str(index),
         group=thisNode,
-        position=[node_position, node_position_y + 200]
+        position=[node_position, node_position_y + 300]
     )
     blur.connectInput(0, local_transform)
 
@@ -205,7 +216,7 @@ def create_letter(thisNode, letter, position, letter_gap, conection, _type, node
         node='transform',
         label='text_' + _type + '_transform_' + str(index),
         group=thisNode,
-        position=[node_position, node_position_y + 300]
+        position=[node_position, node_position_y + 400]
     )
     transform.connectInput(0, blur)
 
@@ -214,24 +225,24 @@ def create_letter(thisNode, letter, position, letter_gap, conection, _type, node
         node='merge',
         label='text_' + _type + '_merge_' + str(index),
         group=thisNode,
-        position=[node_position, node_position_y + 400]
+        position=[node_position, node_position_y + 500]
     )
 
     merge.connectInput(1, transform)
     if conection:
         merge.connectInput(0, conection)
     else:
-        crop = createNode(
+        first_crop = createNode(
             node='crop',
             label='text_' + _type + '_crop',
             group=thisNode,
-            position=[node_position - 100, node_position_y + 500]
+            position=[node_position - 100, node_position_y + 600]
         )
 
-        merge.connectInput(0, crop)
-        crop.getParam('size').set(0, 0)
+        merge.connectInput(0, first_crop)
+        first_crop.getParam('size').set(0, 0)
 
-    letter_width = refresh_letter(thisNode, text, local_transform, blur, transform, merge,
+    letter_width = refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge,
                                   _type, letter_gap, position, letters_amount)
 
     return [merge, letter_width]
@@ -256,6 +267,7 @@ def refresh_word(thisNode, _type):
         letter_width = refresh_letter(
             thisNode,
             letter['text'],
+            letter['crop'],
             letter['local_transform'],
             letter['blur'],
             letter['transform'],
@@ -301,7 +313,7 @@ def calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type):
     return [duration, gap]
 
 
-def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
+def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge,
                    _type, letter_gap_idx, position, letters_amount):
     # Actualiza las animaciones de todos los parametros del texto
 
@@ -334,15 +346,19 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     move_to_rigth = letter_width / 2
     text.getParam('center').set(move_to_rigth, letter_height)
 
-    #
-    #
-    #
-    #
-
     # Text color
     text_color = thisNode.color.get()
     for i in range(3):
         text.getParam('color').setValue(text_color[i], i)
+
+    #
+    #
+
+    autocrop(thisNode, text, crop)
+    crop.getParam('disableNode').set(True)
+
+    #
+    #
 
     # Local Transform
     angle = thisNode.getParam('displacement_angle').get()
@@ -410,6 +426,18 @@ def refresh_letter(thisNode, text, local_transform, blur, transform, merge,
     opacity_to = 1
 
     exaggerated_animation(merge.getParam('mix'), duration, start_frame, [opacity_from, opacity_to], exaggeration, key_frames=key_frames)
+
+    #
+    #
+    #
+    #
+
+    crop.getParam('disableNode').set(False)
+
+    #
+    #
+    #
+    #
 
     return letter_width
 
