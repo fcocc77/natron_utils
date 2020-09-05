@@ -1,5 +1,5 @@
 from base import link_to_parent, children_refresh
-from nx import getNode, app, createNode, node_delete, autocrop, bbox_bake
+from nx import getNode, app, createNode, node_delete, autocrop, bbox_bake, question
 from text_base import set_font, fit_text_to_box
 from util import hash_generator
 from animations import exaggerated_animation
@@ -24,6 +24,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     elif knob_name == 'texts_refresh':
         refresh_word(thisNode, 'title')
         refresh_word(thisNode, 'subtitle')
+    elif knob_name == 'clear_text':
+        if question('Seguro que desea borrar todas las letras?', 'Letters Delete'):
+            delete_text_nodes(thisNode)
 
 
 def refresh(thisNode):
@@ -491,14 +494,18 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
 
 
 def delete_text_nodes(thisNode):
-    text_nodes = []
+    delete_nodes = []
     for node in thisNode.getChildren():
         _node = node.getLabel().split('_')[0]
 
         if _node == 'text':
-            text_nodes.append(node)
+            delete_nodes.append(node)
 
-    node_delete(text_nodes)
+    autocrop_node = getNode(thisNode, 'autocrop')
+    if autocrop_node:
+        delete_nodes.append(autocrop_node)
+
+    node_delete(delete_nodes)
 
 
 def get_size_font(thisNode, _type):
