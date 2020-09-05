@@ -519,11 +519,11 @@ def get_output(group):
     return None
 
 
-def get_bbox(node):
+def get_bbox(node, frame=1):
     # obtiene el bounding box de la imagen.
     # Natron no muestra el bbox cuando es un grupo, por eso si
     # es un grupo busca el bbox en el nodo 'Output'.
-    bbox = node.getRegionOfDefinition(1, 1)
+    bbox = node.getRegionOfDefinition(frame, 1)
 
     x1 = bbox.x1
     x2 = bbox.x2
@@ -533,7 +533,7 @@ def get_bbox(node):
     if not (x1 + x2 + y1 + y2):
         output = get_output(node)
         if output:
-            bbox = output.getRegionOfDefinition(1, 1)
+            bbox = output.getRegionOfDefinition(frame, 1)
 
             x1 = bbox.x1
             x2 = bbox.x2
@@ -546,6 +546,29 @@ def get_bbox(node):
         y1=y1,
         y2=y2
     )
+
+
+def bbox_bake(crop, start_frame, last_frame):
+    input_node = crop.getInput(0)
+    if not input_node:
+        return
+
+    bottom_left = crop.getParam('bottomLeft')
+    size = crop.getParam('size')
+
+    bottom_left.restoreDefaultValue(0)
+    bottom_left.restoreDefaultValue(1)
+
+    size.restoreDefaultValue(0)
+    size.restoreDefaultValue(1)
+
+    for frame in range(start_frame, last_frame):
+        bbox = get_bbox(input_node, frame)
+
+        bottom_left.setValueAtTime(bbox.x1, frame, 0)
+        bottom_left.setValueAtTime(bbox.y1, frame, 1)
+        size.setValueAtTime(bbox.x2 - bbox.x1, frame, 0)
+        size.setValueAtTime(bbox.y2 - bbox.y1, frame, 1)
 
 
 def set_option(param, option):
