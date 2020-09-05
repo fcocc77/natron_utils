@@ -1,5 +1,5 @@
 from base import link_to_parent, children_refresh
-from nx import getNode, app, createNode, node_delete, autocrop
+from nx import getNode, app, createNode, node_delete, autocrop, bbox_bake
 from text_base import set_font, fit_text_to_box
 from util import hash_generator
 from animations import exaggerated_animation
@@ -17,7 +17,10 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         refresh(thisNode)
     elif knob_name == 'text_generator':
         delete_text_nodes(thisNode)
+        preview_text(thisNode)
         create_titles(thisNode)
+        set_text_transform(thisNode, 'title')
+        set_text_transform(thisNode, 'subtitle')
     elif knob_name == 'texts_refresh':
         refresh_word(thisNode, 'title')
         refresh_word(thisNode, 'subtitle')
@@ -33,6 +36,44 @@ def refresh(thisNode):
 
     set_text_transform(thisNode, 'title')
     set_text_transform(thisNode, 'subtitle')
+
+    refresh_output(thisNode)
+
+
+def refresh_output(thisNode):
+
+    input_transition = thisNode.getParam('input_transition').get()
+    output_transition = thisNode.getParam('output_transition').get()
+
+    # in_out_switch
+    in_out_switch = getNode(thisNode, 'in_out_switch').getParam('which')
+
+    if input_transition and output_transition:
+        in_out_switch.set(1)
+    elif input_transition:
+        in_out_switch.set(0)
+    elif output_transition:
+        in_out_switch.set(2)
+
+    # time
+    frame_range = getNode(thisNode, 'FrameRange').getParam('frameRange')
+
+    duration = thisNode.getParam('duration').get()
+    start_frame = thisNode.getParam('start_frame').get()
+    last_frame = start_frame + duration
+
+    frame_range.set(start_frame, last_frame)
+
+    switch = getNode(thisNode, 'switch_time_reverse').getParam('which')
+    switch.restoreDefaultValue()
+    mid_frame = last_frame - (duration / 2)
+    switch.setValueAtTime(0, mid_frame)
+    switch.setValueAtTime(1, mid_frame + 1)
+
+    # se crea un crop 'bake' por que el nodo de retime en reversa, se queda pegado con bounding box
+    if output_transition:
+        crop_time_reverse = getNode(thisNode, 'crop_time_reverse')
+        bbox_bake(crop_time_reverse, mid_frame, last_frame)
 
 
 def set_text_transform(thisNode, _type):
@@ -317,13 +358,14 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
                    _type, letter_gap_idx, position, letters_amount):
     # Actualiza las animaciones de todos los parametros del texto
 
-    duration, gap = calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type)
-    start_frame = gap
+    def animation(param, values, dimension=None):
+        duration, gap = calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type)
+        start_frame = gap
 
-    exaggeration = [0.8, 0.7]
-    key_frames = [False, True]
+        exaggeration = [0.8, 0.7]
+        key_frames = [False, True]
 
-    #
+        exaggerated_animation(param, duration, start_frame, values, exaggeration, dimension=dimension, key_frames=key_frames)
 
     # Text
     text.getParam('size').set(get_size_font(thisNode, _type))
@@ -365,11 +407,11 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
 
     rotate_from = -angle + thisNode.getParam('rotate').get()
     rotate_to = -angle
-    exaggerated_animation(local_transform.getParam('rotate'), duration, start_frame, [rotate_from, rotate_to], exaggeration, key_frames=key_frames)
+    animation(local_transform.getParam('rotate'), [rotate_from, rotate_to])
 
     scale_from = thisNode.getParam('scale').get()
     scale_to = 1
-    exaggerated_animation(local_transform.getParam('scale'), duration, start_frame, [scale_from, scale_to], exaggeration, key_frames=key_frames)
+    animation(local_transform.getParam('scale'), [scale_from, scale_to])
 
     local_transform.getParam('resetCenter').trigger()
 
@@ -385,10 +427,10 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     blur.getParam('cropToFormat').set(False)
 
     blur_x_from = thisNode.getParam('blur_x').get() * thisNode.rscale.get()
-    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_x_from, 0], exaggeration, dimension=0, key_frames=key_frames)
+    animation(blur.getParam('size'), [blur_x_from, 0], dimension=0)
 
     blur_y_from = thisNode.getParam('blur_y').get() * thisNode.rscale.get()
-    exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_y_from, 0], exaggeration, dimension=1, key_frames=key_frames)
+    animation(blur.getParam('size'), [blur_y_from, 0], dimension=1)
 
     #
     #
@@ -400,7 +442,7 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
 
     translate = transform.getParam('translate')
     translate.setValue(0, 1)
-    exaggerated_animation(translate, duration, start_frame, [position + displacement, position], exaggeration, dimension=0, key_frames=key_frames)
+    animation(translate, [position + displacement, position], dimension=0)
 
     rotate = transform.getParam('rotate')
     rotate.set(angle)
@@ -414,7 +456,7 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     center_to = center_x
 
     center.setValue(center_y, 1)
-    exaggerated_animation(center, duration, start_frame, [center_from, center_to], exaggeration, dimension=0, key_frames=key_frames)
+    animation(center, [center_from, center_to], dimension=0)
 
     #
     #
@@ -425,7 +467,7 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     opacity_from = thisNode.opacity.get()
     opacity_to = 1
 
-    exaggerated_animation(merge.getParam('mix'), duration, start_frame, [opacity_from, opacity_to], exaggeration, key_frames=key_frames)
+    animation(merge.getParam('mix'), [opacity_from, opacity_to])
 
     #
     #
