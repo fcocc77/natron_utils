@@ -154,10 +154,11 @@ def get_text(thisNode, _type, index):
 
 def get_texts(thisNode, _type):
     titles = []
-    for i in range(100):
+    for i in range(30):
         title = get_text(thisNode, _type,  i)
         if not title:
-            break
+            titles.append('space')
+            continue
 
         titles.append(title)
 
@@ -186,25 +187,22 @@ def create_word(thisNode, text, conection, _type):
     else:
         gaps = idxs
 
-    pos = 0
+    position = 0
     node_position = 1000
-    last_letter_width = 0
     last_merge = None
     letter_index = 0
     for index, gap, letter in zip(idxs, gaps, text):
-        # si la letra es un espacio agrega la posicion de la letra anterior
-        # para que quede el espacio
+        # si la letra es un espacio le suma una parte del tamanio de la fuente
         if letter == ' ':
-            pos += last_letter_width
+            position += get_size_font(thisNode, _type) / 3
             continue
 
         last_merge, letter_width = create_letter(
-            thisNode, letter.strip(), pos, gap, last_merge, _type, node_position, index, letters_amount
+            thisNode, letter.strip(), position, gap, last_merge, _type, node_position, index, letters_amount
         )
 
-        pos += letter_width
+        position += letter_width
         node_position += 200
-        last_letter_width = letter_width
 
     conection.connectInput(0, last_merge)
 
@@ -304,6 +302,10 @@ def refresh_word(thisNode, _type):
 
     position = 0
     for letter, letter_gap in zip(titles, gaps):
+
+        if letter == 'space':
+            position += get_size_font(thisNode, _type) / 3
+            continue
 
         letter_width = refresh_letter(
             thisNode,
