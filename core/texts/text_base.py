@@ -70,7 +70,7 @@ def fit_text_to_box(thisNode, format=[1920, 1080]):
         size_param = text.getParam('size')
         size_param.setValue(0)
 
-        size = 0
+        size = 10  # tamanio inicial
         width = 0
         height = 0
         while(width < x and height < max_height):

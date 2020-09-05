@@ -332,7 +332,11 @@ def calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type):
 
     # es el numero maximo de desfase que puede haber dentro de la duracion
     letters_amount -= 1
-    max_letter_gap_duration = transition_duration / letters_amount
+
+    max_letter_gap_duration = transition_duration
+
+    if letters_amount:
+        max_letter_gap_duration /= letters_amount
 
     divide_by_two = (2 * word_gap_percent) / 100
     if divide_by_two:
