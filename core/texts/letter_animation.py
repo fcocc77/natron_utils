@@ -384,10 +384,10 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     # Blur
     blur.getParam('cropToFormat').set(False)
 
-    blur_x_from = thisNode.getParam('blur_x').get()
+    blur_x_from = thisNode.getParam('blur_x').get() * thisNode.rscale.get()
     exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_x_from, 0], exaggeration, dimension=0, key_frames=key_frames)
 
-    blur_y_from = thisNode.getParam('blur_y').get()
+    blur_y_from = thisNode.getParam('blur_y').get() * thisNode.rscale.get()
     exaggerated_animation(blur.getParam('size'), duration, start_frame, [blur_y_from, 0], exaggeration, dimension=1, key_frames=key_frames)
 
     #
@@ -396,7 +396,7 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     #
 
     # Transform
-    displacement = thisNode.getParam('displacement').get()
+    displacement = thisNode.getParam('displacement').get() * thisNode.rscale.get()
 
     translate = transform.getParam('translate')
     translate.setValue(0, 1)
