@@ -15,12 +15,11 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'refresh':
         refresh(thisNode)
+        refresh_word(thisNode, 'title')
+        refresh_word(thisNode, 'subtitle')
 
     elif knob_name == 'text_generator':
-        delete_text_nodes(thisNode)
-        create_titles(thisNode)
-        set_text_transform(thisNode, 'title')
-        set_text_transform(thisNode, 'subtitle')
+        text_generator(thisNode)
 
     elif knob_name == 'texts_refresh':
         refresh_word(thisNode, 'title')
@@ -34,18 +33,18 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         separated_by_letter(thisParam, thisNode)
 
 
-def text_generator
+def text_generator(thisNode):
+
+    refresh(thisNode)
+    delete_text_nodes(thisNode)
+    create_titles(thisNode)
 
 
 def refresh(thisNode):
-
     set_general_transform(thisNode)
 
     text_fit = getNode(thisNode, 'TextFit')
     text_fit.getParam('refresh').trigger()
-
-    refresh_word(thisNode, 'title')
-    refresh_word(thisNode, 'subtitle')
 
     set_text_transform(thisNode, 'title')
     set_text_transform(thisNode, 'subtitle')
@@ -145,15 +144,25 @@ def get_text(thisNode, _type, index):
 
 def get_texts(thisNode, _type):
     titles = []
-    for i in range(30):
+
+    max_letter = 30
+
+    has_letter = False
+    for i in reversed(range(max_letter)):
         title = get_text(thisNode, _type,  i)
-        if not title:
-            titles.append('space')
-            continue
+
+        if title:
+            has_letter = True
+        else:
+            if has_letter:
+                titles.append('space')
+                continue
+            else:
+                continue
 
         titles.append(title)
 
-    return titles
+    return list(reversed(titles))
 
 
 def create_titles(thisNode, only_refresh=False):
