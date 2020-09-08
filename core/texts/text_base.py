@@ -55,46 +55,24 @@ def set_font(text, font):
     text.getParam('name').set(option)
 
 
-def fit_text_to_box(thisNode, format=[1920, 1080]):
+def transfer_transform(thisNode, input_transform, output_transform):
+    if not input_transform:
+        return
 
-    title = getNode(thisNode, "title_node")
-    subtitle = getNode(thisNode, "subtitle_node")
+    rscale = thisNode.rscale.get()
 
-    x = format[0]
-    y = format[1]
-    max_height = y / 2
+    translate = input_transform.getParam('translate').get()
+    translate_x = translate[0] * rscale
+    translate_y = translate[1] * rscale
 
-    def font_resize(text):
-        # reescala la fuente hasta que quede
-        # del ancho del cuadro
-        size_param = text.getParam('size')
-        size_param.setValue(0)
+    center = input_transform.getParam('center').get()
+    center_x = center[0] * rscale
+    center_y = center[1] * rscale
 
-        size = 10  # tamanio inicial
-        width = 0
-        height = 0
-        while(width < x and height < max_height):
-            size += 1
-            size_param.setValue(size)
-            width = text.getRegionOfDefinition(1, 1).x2
-            height = text.getRegionOfDefinition(1, 1).y2
+    rotate = input_transform.getParam('rotate').get()
+    scale = input_transform.getParam('scale').get()
 
-        return [width, height]
-
-    title_x, title_y = font_resize(title)
-    subtitle_x, subtitle_y = font_resize(subtitle)
-
-    # calcula el alto total, para poder centrar los 2 textos al cuadro
-    height = title_y + subtitle_y
-    move_up = (y - height) / 2
-
-    title_translate = getNode(thisNode, "title_position").getParam('translate')
-    subtitle_translate = getNode(thisNode, "subtitle_position").getParam('translate')
-
-    # ajusta los textos verticalmente
-    title_translate.setValue(subtitle_y + move_up, 1)
-    subtitle_translate.setValue(move_up, 1)
-
-    # centra los textos horizontalmente
-    title_translate.setValue((x / 2) - (title_x / 2), 0)
-    subtitle_translate.setValue((x / 2) - (subtitle_x / 2), 0)
+    output_transform.getParam('translate').set(translate_x, translate_y)
+    output_transform.getParam('center').set(center_x, center_y)
+    output_transform.getParam('scale').set(scale[0], scale[1])
+    output_transform.getParam('rotate').set(rotate)
