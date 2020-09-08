@@ -33,7 +33,7 @@ def refresh(thisNode):
     input_transform = thisNode.getInput(0)
     general_transform = getNode(thisNode, 'General_Transform')
 
-    transfer_transform(thisNode, input_transform, general_transform)
+    transfer_transform(input_transform, general_transform, thisNode.rscale.get())
 
 
 def fit_text_to_box(thisNode):

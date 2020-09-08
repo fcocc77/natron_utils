@@ -55,11 +55,9 @@ def set_font(text, font):
     text.getParam('name').set(option)
 
 
-def transfer_transform(thisNode, input_transform, output_transform):
+def transfer_transform(input_transform, output_transform, rscale=1):
     if not input_transform:
         return
-
-    rscale = thisNode.rscale.get()
 
     translate = input_transform.getParam('translate').get()
     translate_x = translate[0] * rscale

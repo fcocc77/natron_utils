@@ -1,6 +1,7 @@
-from base import link_to_parent, children_refresh
+from base import link_to_parent
 from nx import getNode, app, createNode, node_delete, autocrop, bbox_bake, question
-from text_base import set_font, fit_text_to_box
+from text_base import set_font, transfer_transform
+from text_fit import calcule_text_transform
 from util import hash_generator
 from animations import exaggerated_animation
 
@@ -11,29 +12,38 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     knob_name = thisParam.getScriptName()
     link_to_parent(thisNode, thisParam, thisGroup)
-    children_refresh(thisParam, thisNode)
 
     if knob_name == 'refresh':
         refresh(thisNode)
+
     elif knob_name == 'text_generator':
         delete_text_nodes(thisNode)
-        preview_text(thisNode)
         create_titles(thisNode)
         set_text_transform(thisNode, 'title')
         set_text_transform(thisNode, 'subtitle')
+
     elif knob_name == 'texts_refresh':
         refresh_word(thisNode, 'title')
         refresh_word(thisNode, 'subtitle')
+
     elif knob_name == 'clear_text':
         if question('Seguro que desea borrar todas las letras?', 'Letters Delete'):
             delete_text_nodes(thisNode)
+
+    elif knob_name == 'separated_by_letter':
+        separated_by_letter(thisParam, thisNode)
+
+
+def text_generator
 
 
 def refresh(thisNode):
 
     set_general_transform(thisNode)
 
-    preview_text(thisNode)
+    text_fit = getNode(thisNode, 'TextFit')
+    text_fit.getParam('refresh').trigger()
+
     refresh_word(thisNode, 'title')
     refresh_word(thisNode, 'subtitle')
 
@@ -79,56 +89,34 @@ def refresh_output(thisNode):
         bbox_bake(crop_time_reverse, mid_frame, last_frame)
 
 
+def separated_by_letter(thisParam, thisNode):
+    letter_gap_param = thisNode.getParam('letter_gap')
+    letter_gap_direction = thisNode.getParam('letter_gap_direction')
+
+    separated = thisParam.get()
+
+    letter_gap_param.setEnabled(separated)
+    letter_gap_direction.setEnabled(separated)
+
+
 def set_text_transform(thisNode, _type):
-
-    general_transform = getNode(thisNode, 'General_Transform')
-
+    general_transform = getNode(thisNode, 'general_transform')
     transform_title = getNode(thisNode, 'letter_transform_' + _type)
 
-    for dimension in range(2):
-        position = getNode(thisNode, _type + '_position').getParam('translate').getValue(dimension)
-        scale = general_transform.getParam('scale').getValue(dimension)
+    text_fit = getNode(thisNode, 'TextFit')
+    position = text_fit.getParam(_type + '_position').get()
 
-        center = general_transform.getParam('center').getValue(dimension)
-        translate = general_transform.getParam('translate').getValue(dimension)
-
-        position_added = position * scale
-        new_position = position_added + translate + (center - (center * scale))
-        new_center = (center * scale) - position_added
-
-        new_position = position * scale + translate + (center - (center * scale))
-
-        transform_title.getParam('translate').setValue(new_position, dimension)
-        transform_title.getParam('center').setValue(new_center, dimension)
-
-    rotate = general_transform.getParam('rotate').getValue()
-    transform_title.getParam('rotate').setValue(rotate)
+    calcule_text_transform(transform_title, general_transform, position)
 
 
 def set_general_transform(thisNode):
     input_transform = thisNode.getInput(0)
-    if not input_transform:
-        return
 
-    rscale = thisNode.rscale.get()
+    general_transform = getNode(thisNode, 'general_transform')
+    origina_input_transform = getNode(thisNode, 'origina_input_transform')
 
-    general_transform = getNode(thisNode, 'General_Transform')
-
-    translate = input_transform.getParam('translate').get()
-    translate_x = translate[0] * rscale
-    translate_y = translate[1] * rscale
-
-    center = input_transform.getParam('center').get()
-    center_x = center[0] * rscale
-    center_y = center[1] * rscale
-
-    rotate = input_transform.getParam('rotate').get()
-    scale = input_transform.getParam('scale').get()
-
-    general_transform.getParam('translate').set(translate_x, translate_y)
-    general_transform.getParam('center').set(center_x, center_y)
-    general_transform.getParam('scale').set(scale[0], scale[1])
-    general_transform.getParam('rotate').set(rotate)
+    transfer_transform(input_transform, general_transform, thisNode.rscale.get())
+    transfer_transform(input_transform, origina_input_transform)
 
 
 def get_text(thisNode, _type, index):
@@ -511,36 +499,17 @@ def delete_text_nodes(thisNode):
 def get_size_font(thisNode, _type):
     # calcula el tamanio de la fuente, despues que pasa por la escala de un 'Transform'
 
+    text_fit = getNode(thisNode, 'TextFit')
+
     if _type == 'title':
-        src_size = thisNode.title_node.size.get()
+        src_size = text_fit.getParam('font_size_title').get()
     elif _type == 'subtitle':
-        src_size = thisNode.subtitle_node.size.get()
+        src_size = text_fit.getParam('font_size_subtitle').get()
     else:
         return 0
 
-    scale = thisNode.General_Transform.scale.getValue()
+    scale = thisNode.general_transform.scale.getValue()
 
     font_size = src_size * scale
 
     return font_size
-
-
-def preview_text(thisNode):
-
-    title = thisNode.title.get()
-    subtitle = thisNode.subtitle.get()
-
-    title_node = getNode(thisNode, 'title_node')
-    subtitle_node = getNode(thisNode, 'subtitle_node')
-
-    title_node.getParam('text').setValue(title)
-    subtitle_node.getParam('text').setValue(subtitle)
-
-    font = thisNode.getParam('font').get()
-
-    set_font(title_node, font)
-    set_font(subtitle_node, font)
-
-    current_format = thisNode.getParam('current_format').get()
-
-    fit_text_to_box(thisNode, current_format)
