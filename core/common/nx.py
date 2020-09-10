@@ -276,7 +276,14 @@ def getNode(group=None, label=None):
     return get_node_by_label(label, group)
 
 
-def createNode(node, label=None, group=None, position=None, color=None, output=None):
+def createNode(node, label=None, group=None, position=None, color=None, output=None, force=True):
+
+    if not force:
+        # si el nodo existe, retorta ese nodo
+        _node = getNode(group, label)
+        if _node:
+            return _node
+
     nodes = {
         'blur': 'net.sf.cimg.CImgBlur',
         'text': 'net.fxarena.openfx.Text',
