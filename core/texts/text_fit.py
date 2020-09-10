@@ -117,6 +117,40 @@ def fit_text_to_box(thisNode):
     return[title_size, subtitle_size]
 
 
+def get_fit_text_node(workarea):
+
+    for i in range(10):
+        text_fit = getNode(workarea, 'TextFit' + str(i))
+        if text_fit:
+            break
+
+    return text_fit
+
+
+def refresh_text_fit(workarea):
+    # ya que el 'text_fit' necesita un 'transform' para actualizar (por fuera),
+    # y no se puede acceder al area de trabajo del padre desde 'text_fit', por eso
+    # solo se puede importar el transform del padre desde aqui.
+
+    parent_transform = workarea.getInput(0)
+    if not parent_transform:
+        return
+
+    text_fit = get_fit_text_node(workarea)
+    if not text_fit:
+        return
+
+    transform = createNode('transform', 'hd_transform', workarea, force=False)
+    transform.setPosition(text_fit.getPosition()[0], text_fit.getPosition()[1] - 100)
+    text_fit.connectInput(0, transform)
+
+    transfer_transform(parent_transform, transform)
+
+    text_fit.getParam('refresh').trigger()
+
+    separate_text(text_fit, workarea)
+
+
 def calcule_text_transform(transform_title, transform, position):
     # calcula los parametros de un Transform, a partir de un 'Transform' y un 'Position'
 
@@ -140,82 +174,79 @@ def calcule_text_transform(transform_title, transform, position):
     transform_title.getParam('rotate').setValue(rotate)
 
 
-def separate_text(thisNode):
+def separate_text(fittext_node, parent=None):
 
-    parent = get_parent(thisNode)
-    pos_x, pos_y = thisNode.getPosition()
-    general_transform = getNode(thisNode, 'General_Transform')
+    if not parent:
+        parent = get_parent(fittext_node)
+
+    pos_x, pos_y = fittext_node.getPosition()
+    general_transform = getNode(fittext_node, 'General_Transform')
     scale = general_transform.getParam('scale').getValue()
 
-    title = thisNode.title.get()
-    subtitle = thisNode.subtitle.get()
+    title = fittext_node.getParam('title').get()
+    subtitle = fittext_node.getParam('subtitle').get()
 
-    title_size = thisNode.font_size_title.get() * scale
-    subtitle_size = thisNode.font_size_subtitle.get() * scale
+    title_size = fittext_node.getParam('font_size_title').get() * scale
+    subtitle_size = fittext_node.getParam('font_size_subtitle').get() * scale
 
-    title_position = thisNode.getParam('title_position').get()
-    subtitle_position = thisNode.getParam('subtitle_position').get()
+    title_position = fittext_node.getParam('title_position').get()
+    subtitle_position = fittext_node.getParam('subtitle_position').get()
 
-    font = thisNode.getParam('font').get()
+    font = fittext_node.getParam('font').get()
 
-    title_node = getNode(parent, 'title_node')
-    if not title_node:
-        title_node = createNode(
-            node='text',
-            label='title_node',
-            group=parent,
-            position=[pos_x + 200, pos_y]
-        )
+    title_node = createNode(
+        node='text',
+        label='title_node',
+        group=parent,
+        position=[pos_x + 200, pos_y],
+        force=False
+    )
 
     title_node.getParam('text').setValue(title)
     title_node.getParam('size').setValue(title_size)
     title_node.getParam('autoSize').set(True)
     set_font(title_node, font)
 
-    subtitle_node = getNode(parent, 'subtitle_node')
-    if not subtitle_node:
-        subtitle_node = createNode(
-            node='text',
-            label='subtitle_node',
-            group=parent,
-            position=[pos_x + 400, pos_y]
-        )
+    subtitle_node = createNode(
+        node='text',
+        label='subtitle_node',
+        group=parent,
+        position=[pos_x + 400, pos_y],
+        force=False
+    )
 
     subtitle_node.getParam('text').setValue(subtitle)
     subtitle_node.getParam('size').setValue(subtitle_size)
     subtitle_node.getParam('autoSize').set(True)
     set_font(subtitle_node, font)
 
-    title_transform = getNode(parent, 'title_transform')
-    if not title_transform:
-        title_transform = createNode(
-            node='transform',
-            label='title_transform',
-            group=parent,
-            position=[pos_x + 200, pos_y + 50]
-        )
+    title_transform = createNode(
+        node='transform',
+        label='title_transform',
+        group=parent,
+        position=[pos_x + 200, pos_y + 50],
+        force=False
+    )
     title_transform.connectInput(0, title_node)
     calcule_text_transform(title_transform, general_transform, title_position)
 
-    subtitle_transform = getNode(parent, 'subtitle_transform')
-    if not subtitle_transform:
-        subtitle_transform = createNode(
-            node='transform',
-            label='subtitle_transform',
-            group=parent,
-            position=[pos_x + 400, pos_y + 50]
-        )
+    subtitle_transform = createNode(
+        node='transform',
+        label='subtitle_transform',
+        group=parent,
+        position=[pos_x + 400, pos_y + 50],
+        force=False
+    )
     subtitle_transform.connectInput(0, subtitle_node)
     calcule_text_transform(subtitle_transform, general_transform, subtitle_position)
 
-    merge = getNode(parent, 'titles_merge')
-    if not merge:
-        merge = createNode(
-            node='merge',
-            label='titles_merge',
-            group=parent,
-            position=[pos_x + 400, pos_y + 150]
-        )
+    merge = createNode(
+        node='merge',
+        label='titles_merge',
+        group=parent,
+        position=[pos_x + 400, pos_y + 150],
+        force=False
+    )
 
     merge.connectInput(0, title_transform)
     merge.connectInput(1, subtitle_transform)

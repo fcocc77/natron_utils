@@ -226,32 +226,6 @@ def createInstance(app,group):
     lastNode.texts_label = param
     del param
 
-    param = lastNode.createStringParam("title", "Title")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.title = param
-    del param
-
-    param = lastNode.createStringParam("subtitle", "Subtitle")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.subtitle = param
-    del param
-
     param = lastNode.createFileParam("font", "Font")
     param.setSequenceEnabled(False)
 
@@ -265,7 +239,33 @@ def createInstance(app,group):
     lastNode.font = param
     del param
 
-    param = lastNode.createColorParam("color", "Color", False)
+    param = lastNode.createSeparatorParam("sep8", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep8 = param
+    del param
+
+    param = lastNode.createStringParam("title", "Title")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.title = param
+    del param
+
+    param = lastNode.createColorParam("title_color", "Title Color", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
     param.setDisplayMinimum(0, 0)
@@ -284,12 +284,65 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(1, 0)
     param.setValue(1, 1)
     param.setValue(1, 2)
-    lastNode.color = param
+    lastNode.title_color = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
+    param = lastNode.createStringParam("subtitle", "Subtitle")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.subtitle = param
+    del param
+
+    param = lastNode.createColorParam("subtitle_color", "Subtitle Color", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    param.setValue(1, 1)
+    param.setValue(1, 2)
+    lastNode.subtitle_color = param
     del param
 
     param = lastNode.createSeparatorParam("sep7", "")
@@ -394,20 +447,20 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Input1"
+    # Start of node "Full_HD_Transform"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Input1")
-    lastNode.setLabel("Input1")
-    lastNode.setPosition(767, 195)
+    lastNode.setScriptName("Full_HD_Transform")
+    lastNode.setLabel("Full HD Transform")
+    lastNode.setPosition(767, 197)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupInput1 = lastNode
+    groupFull_HD_Transform = lastNode
 
     del lastNode
-    # End of node "Input1"
+    # End of node "Full_HD_Transform"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupInput1)
+    groupOutput1.connectInput(0, groupFull_HD_Transform)
 
     param = group.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
