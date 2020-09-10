@@ -167,13 +167,31 @@ def get_texts(thisNode, _type):
 
 def create_titles(thisNode, only_refresh=False):
 
+    separated_by_letter = thisNode.separated_by_letter.get()
+
     title = thisNode.title.get()
     title_conection = getNode(thisNode, 'letter_transform_title')
-    create_word(thisNode, title, title_conection, 'title')
 
     subtitle = thisNode.subtitle.get()
     subtitle_conection = getNode(thisNode, 'letter_transform_subtitle')
-    create_word(thisNode, subtitle, subtitle_conection, 'subtitle')
+
+    if separated_by_letter:
+        create_word(thisNode, title, title_conection, 'title')
+        create_word(thisNode, subtitle, subtitle_conection, 'subtitle')
+    else:
+        create_one_word(thisNode, title, title_conection, 'title')
+        create_one_word(thisNode, subtitle, subtitle_conection, 'subtitle')
+
+
+def create_one_word(thisNode, text, conection, _type):
+    # crea el texto sin separar por letras
+
+    node_position = 1000
+    last_merge, letter_width = create_letter(
+        thisNode, text, 0, 0, None, _type, node_position, 0, 1
+    )
+
+    conection.connectInput(0, last_merge)
 
 
 def create_word(thisNode, text, conection, _type):
@@ -395,9 +413,12 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     text.getParam('center').set(move_to_rigth, letter_height)
 
     # Text color
-    text_color = thisNode.color.get()
+
     for i in range(3):
-        text.getParam('color').setValue(text_color[i], i)
+        if _type == 'title':
+            text.getParam('color').setValue(thisNode.color.get()[i], i)
+        else:
+            text.getParam('color').setValue(thisNode.color_subtitle.get()[i], i)
 
     #
     #

@@ -252,7 +252,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("casa")
+    param.setValue("Title")
     lastNode.title = param
     del param
 
@@ -266,7 +266,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("tocornal")
+    param.setValue("Subtitle")
     lastNode.subtitle = param
     del param
 
@@ -283,7 +283,7 @@ def createInstance(app,group):
     lastNode.font = param
     del param
 
-    param = lastNode.createColorParam("color", "Color", False)
+    param = lastNode.createColorParam("color", "Title Color", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
     param.setDisplayMinimum(0, 0)
@@ -310,6 +310,33 @@ def createInstance(app,group):
     lastNode.color = param
     del param
 
+    param = lastNode.createColorParam("color_subtitle", "Subtitle Color", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    param.setValue(1, 1)
+    param.setValue(1, 2)
+    lastNode.color_subtitle = param
+    del param
+
     param = lastNode.createBooleanParam("separated_by_letter", "Separated by Letter")
 
     # Add the param to the page
@@ -317,7 +344,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(True)
     lastNode.separated_by_letter = param
@@ -389,7 +416,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(29.3, 0)
+    param.setValue(30, 0)
     lastNode.word_gap = param
     del param
 
@@ -406,7 +433,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(23.3, 0)
+    param.setValue(30, 0)
     lastNode.letter_gap = param
     del param
 
@@ -469,7 +496,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(2, 0)
+    param.setValue(1.5, 0)
     lastNode.scale = param
     del param
 
@@ -531,7 +558,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
+    param.setValue(100, 0)
     lastNode.blur_x = param
     del param
 
@@ -548,7 +575,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
     lastNode.blur_y = param
     del param
 
@@ -603,6 +629,7 @@ def createInstance(app,group):
     param.setHelp("Es la palabra que se va a desfasar.")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Subtitle")
     lastNode.word_gap_word = param
     del param
 
@@ -712,7 +739,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Full_HD_Transform")
     lastNode.setLabel("Full HD Transform")
     lastNode.setPosition(-723, 845)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupFull_HD_Transform = lastNode
 
@@ -730,19 +757,19 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(501.2215656483262, 0)
-        param.setValue(496.6597506065243, 1)
+        param.setValue(639.000856185075, 0)
+        param.setValue(485.9500691534099, 1)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(24.44614103717126, 0)
+        param.setValue(18.62949147674651, 0)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(266.7784343516738, 0)
-        param.setValue(10.34024939347574, 1)
+        param.setValue(272.999143814925, 0)
+        param.setValue(22.04993084659009, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -773,25 +800,25 @@ def createInstance(app,group):
     lastNode.setScriptName("letter_transform_subtitle")
     lastNode.setLabel("letter_transform_subtitle")
     lastNode.setPosition(172, 287)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(100, 45)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupletter_transform_subtitle = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(271.668029113165, 0)
-        param.setValue(236.6024783606097, 1)
+        param.setValue(392.2516300446619, 0)
+        param.setValue(243.4008298409188, 1)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(24.44614103717126, 0)
+        param.setValue(18.62949147674651, 0)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(496.331970886835, 0)
-        param.setValue(270.3975216393903, 1)
+        param.setValue(519.748369955338, 0)
+        param.setValue(264.5991701590812, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -824,25 +851,25 @@ def createInstance(app,group):
     lastNode.setScriptName("general_transform")
     lastNode.setLabel("general_transform")
     lastNode.setPosition(-222, 728)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(100, 29)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupgeneral_transform = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(-192, 0)
-        param.setValue(-33, 1)
+        param.setValue(-48, 0)
+        param.setValue(-32, 1)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(24.44614103717126, 0)
+        param.setValue(18.62949147674651, 0)
         del param
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.5170124696737864, 0)
-        param.setValue(0.5170124696737864, 1)
+        param.setValue(0.5249983534902405, 0)
+        param.setValue(0.5249983534902405, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -858,7 +885,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Reformat1")
     lastNode.setLabel("Reformat1")
     lastNode.setPosition(-55, 922)
-    lastNode.setSize(100, 32)
+    lastNode.setSize(100, 29)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat1 = lastNode
 
@@ -885,7 +912,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge4")
     lastNode.setLabel("Merge4")
-    lastNode.setPosition(172, 916)
+    lastNode.setPosition(172, 914)
     lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
@@ -915,7 +942,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
+        param.setValue("<Natron>(0 - 100)</Natron>")
         del param
 
     del lastNode
@@ -955,7 +982,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("switch_time_reverse")
     lastNode.setLabel("switch_time_reverse")
-    lastNode.setPosition(170, 1215)
+    lastNode.setPosition(172, 1215)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupswitch_time_reverse = lastNode
@@ -1209,7 +1236,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("in_out_switch")
     lastNode.setLabel("in_out_switch")
-    lastNode.setPosition(-126, 1437)
+    lastNode.setPosition(-126, 1439)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupin_out_switch = lastNode
@@ -1245,7 +1272,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.TextFit", 1, group)
     lastNode.setScriptName("TextFit")
     lastNode.setLabel("TextFit")
-    lastNode.setPosition(-385, 916)
+    lastNode.setPosition(-385, 921)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupTextFit = lastNode
@@ -1360,7 +1387,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("casa")
+    param.setValue("Title")
     lastNode.title = param
     del param
 
@@ -1374,7 +1401,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("tocornal")
+    param.setValue("Subtitle")
     lastNode.subtitle = param
     del param
 
@@ -1437,7 +1464,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(387, 0)
+    param.setValue(390, 0)
     lastNode.font_size_title = param
     del param
 
@@ -1458,8 +1485,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(444, 0)
-    param.setValue(520, 1)
+    param.setValue(440, 0)
+    param.setValue(498, 1)
     lastNode.title_position = param
     del param
 
@@ -1478,7 +1505,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(360, 0)
+    param.setValue(330, 0)
     lastNode.font_size_subtitle = param
     del param
 
@@ -1499,7 +1526,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(17, 1)
+    param.setValue(-30, 0)
+    param.setValue(36, 1)
     lastNode.subtitle_position = param
     del param
 
@@ -1566,25 +1594,25 @@ def createInstance(app,group):
     lastNode.setScriptName("origina_input_transform")
     lastNode.setLabel("origina_input_transform")
     lastNode.setPosition(-385, 731)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(100, 45)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouporigina_input_transform = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(-192, 0)
-        param.setValue(-33, 1)
+        param.setValue(-48, 0)
+        param.setValue(-32, 1)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValue(24.44614103717126, 0)
+        param.setValue(18.62949147674651, 0)
         del param
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.5170124696737864, 0)
-        param.setValue(0.5170124696737864, 1)
+        param.setValue(0.5249983534902405, 0)
+        param.setValue(0.5249983534902405, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
