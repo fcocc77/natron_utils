@@ -148,7 +148,7 @@ def refresh_text_fit(workarea):
 
     text_fit.getParam('refresh').trigger()
 
-    separate_text(text_fit, workarea)
+    return separate_text(text_fit, workarea)
 
 
 def calcule_text_transform(transform_title, transform, position):
@@ -250,3 +250,5 @@ def separate_text(fittext_node, parent=None):
 
     merge.connectInput(0, title_transform)
     merge.connectInput(1, subtitle_transform)
+
+    return [title_node, subtitle_node]
