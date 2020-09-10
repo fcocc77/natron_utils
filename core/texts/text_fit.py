@@ -57,22 +57,29 @@ def fit_text_to_box(thisNode):
     y = current_format[1]
     max_height = y / 2
 
-    def font_resize(text):
+    def font_resize(text, initial_size=10, increase=100):
         # reescala la fuente hasta que quede
         # del ancho del cuadro
         size_param = text.getParam('size')
         size_param.setValue(0)
 
-        size = 10  # tamanio inicial
+        size = initial_size
         width = 0
         height = 0
         while(width < x and height < max_height):
-            size += 1
+            size += increase
             size_param.setValue(size)
             width = text.getRegionOfDefinition(1, 1).x2
             height = text.getRegionOfDefinition(1, 1).y2
 
-        return [size, width, height]
+        if increase > 50:
+            size -= increase
+            return font_resize(text, size, 50)
+        elif increase > 10:
+            size -= increase
+            return font_resize(text, size, 10)
+        else:
+            return [size, width, height]
 
     title_size, title_x, title_y = font_resize(title_node)
     subtitle_size, subtitle_x, subtitle_y = font_resize(subtitle_node)
