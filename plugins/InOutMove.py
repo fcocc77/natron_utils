@@ -97,6 +97,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.set("Slow")
     lastNode.speed = param
     del param
 
@@ -232,8 +233,7 @@ def createInstance(app,group):
     ("Right - Left", ""),
     ("Up - Down", ""),
     ("Down - Up", ""),
-    ("Scale In", ""),
-    ("Scale Out", "")]
+    ("Scale", "")]
     param.setOptions(entries)
     del entries
     param.setDefaultValue("Left - Right")
@@ -246,7 +246,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Right - Left")
     lastNode.input_move = param
     del param
 
@@ -256,8 +255,7 @@ def createInstance(app,group):
     ("Right - Left", ""),
     ("Up - Down", ""),
     ("Down - Up", ""),
-    ("Scale In", ""),
-    ("Scale Out", "")]
+    ("Scale", "")]
     param.setOptions(entries)
     del entries
     param.setDefaultValue("Left - Right")
@@ -272,6 +270,38 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.set("Right - Left")
     lastNode.output_move = param
+    del param
+
+    param = lastNode.createBooleanParam("use_bbox", "Use Bounding Box Outside")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.use_bbox = param
+    del param
+
+    param = lastNode.createChoiceParam("scale_dimension", "Scale Dimension")
+    entries = [ ("X", ""),
+    ("Y", ""),
+    ("Both", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Both")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.scale_dimension = param
     del param
 
     param = lastNode.createIntParam("transition_duration", "Transition Duration")
@@ -323,7 +353,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(90, 0)
     lastNode.initial_rotate = param
     del param
 
@@ -396,7 +425,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
+    param.setValue(150, 0)
     lastNode.duration = param
     del param
 
@@ -456,36 +485,36 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValueAtTime(1922, 1, 0)
-        param.setValueAtTime(-256.1966803216505, 8, 0)
-        param.setValueAtTime(-448.4666666666666, 14, 0)
-        param.setValueAtTime(-381.1966666666666, 20, 0)
-        param.setValueAtTime(0, 26, 0)
-        param.setValueAtTime(0, 75, 0)
-        param.setValueAtTime(-388.9432802306175, 82, 0)
-        param.setValueAtTime(-448.4666666666666, 88, 0)
-        param.setValueAtTime(-226.2354166666665, 94, 0)
-        param.setValueAtTime(1922, 100, 0)
+        param.setValueAtTime(-1293, 1, 0)
+        param.setValueAtTime(166.1074879720075, 11, 0)
+        param.setValueAtTime(301.7, 20, 0)
+        param.setValueAtTime(256.445, 29, 0)
+        param.setValueAtTime(0, 38, 0)
+        param.setValueAtTime(0, 113, 0)
+        param.setValueAtTime(-262.628685425475, 123, 0)
+        param.setValueAtTime(-304.7333333333333, 132, 0)
+        param.setValueAtTime(-153.7270833333333, 141, 0)
+        param.setValueAtTime(1306, 150, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(90, 1, 0)
-        param.setValueAtTime(-11.99672280382339, 8, 0)
-        param.setValueAtTime(-21, 14, 0)
-        param.setValueAtTime(-17.85, 20, 0)
-        param.setValueAtTime(0, 26, 0)
-        param.setValueAtTime(0, 75, 0)
-        param.setValueAtTime(-18.21274465179791, 82, 0)
-        param.setValueAtTime(-21, 88, 0)
-        param.setValueAtTime(-10.59375, 94, 0)
-        param.setValueAtTime(90, 100, 0)
+        param.setValueAtTime(0, 1, 0)
+        param.setValueAtTime(0, 11, 0)
+        param.setValueAtTime(0, 20, 0)
+        param.setValueAtTime(0, 29, 0)
+        param.setValueAtTime(0, 38, 0)
+        param.setValueAtTime(0, 113, 0)
+        param.setValueAtTime(0, 123, 0)
+        param.setValueAtTime(0, 132, 0)
+        param.setValueAtTime(0, 141, 0)
+        param.setValueAtTime(0, 150, 0)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(500, 0)
-        param.setValue(500, 1)
+        param.setValue(953.5, 0)
+        param.setValue(695.5, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")

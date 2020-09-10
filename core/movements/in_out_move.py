@@ -13,6 +13,22 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'refresh':
         refresh(thisNode)
+    if knob_name == 'input_move' or knob_name == 'output_move':
+        disable_scale_dimension(thisNode)
+
+
+def disable_scale_dimension(thisNode):
+
+    scale_dimension_param = thisNode.getParam('scale_dimension')
+
+    input_move = thisNode.getParam('input_move').get()
+    output_move = thisNode.getParam('output_move').get()
+
+    # si no hay ninguna opcion en 'scale' desabilita el parametro
+    if input_move == 5 or output_move == 5:
+        scale_dimension_param.setEnabled(True)
+    else:
+        scale_dimension_param.setEnabled(False)
 
 
 def animation(param, values, start_frame, duration, bound, direction, exaggeration, dimension=None):
@@ -110,6 +126,9 @@ def refresh(thisNode):
     durations = thisNode.getParam('durations').get()
     transition_duration_percent = thisNode.getParam('transition_duration').get()
     initial_rotate = thisNode.getParam('initial_rotate').get()
+    use_bbox = thisNode.getParam('use_bbox').get()
+    scale_dimension_param = thisNode.getParam('scale_dimension')
+    scale_dimension = scale_dimension_param.get()
 
     current_format = thisNode.getParam('current_format').get()
     width = current_format[0]
@@ -132,10 +151,16 @@ def refresh(thisNode):
     input_width = abs(bbox.x1 - bbox.x2)
     input_height = abs(bbox.y1 - bbox.y2)
 
-    value_x1 = -bbox.x2
-    value_x2 = (width - bbox.x2) + input_width
-    value_y1 = -bbox.y2
-    value_y2 = (height - bbox.y2) + input_height
+    if use_bbox:
+        value_x1 = -input_width
+        value_x2 = input_width
+        value_y1 = -input_height
+        value_y2 = input_height
+    else:
+        value_x1 = -bbox.x2
+        value_x2 = (width - bbox.x2) + input_width
+        value_y1 = -bbox.y2
+        value_y2 = (height - bbox.y2) + input_height
 
     if input_move:
         def translate_input_anim(value, dimension=0):
@@ -143,7 +168,10 @@ def refresh(thisNode):
             animation(rotate, [initial_rotate, 0], start_frame, transition_duration, bound, 'input', exaggeration)
 
         def scale_input_anim(value_a, value_b):
-            animation(scale, [value_a, value_b], start_frame, transition_duration, bound, 'input', exaggeration)
+            if scale_dimension == 2:
+                animation(scale, [value_a, value_b], start_frame, transition_duration, bound, 'input', exaggeration)
+            else:
+                animation(scale, [value_a, value_b], start_frame, transition_duration, bound, 'input', exaggeration, dimension=scale_dimension)
             animation(rotate, [initial_rotate, 0], start_frame, transition_duration, bound, 'input', exaggeration)
 
         if input_move == 1:
@@ -155,8 +183,6 @@ def refresh(thisNode):
         elif input_move == 4:
             translate_input_anim(value_y2, 1)
         elif input_move == 5:
-            scale_input_anim(1, 0)
-        elif input_move == 6:
             scale_input_anim(0, 1)
 
     if output_move:
@@ -167,7 +193,11 @@ def refresh(thisNode):
             animation(rotate, [0, initial_rotate], start_frame_output, transition_duration, bound, 'output', exaggeration)
 
         def scale_output_anim(value_a, value_b):
-            animation(scale, [value_a, value_b], start_frame_output, transition_duration, bound, 'output', exaggeration)
+            if scale_dimension == 2:
+                animation(scale, [value_a, value_b], start_frame_output, transition_duration, bound, 'output', exaggeration)
+            else:
+                animation(scale, [value_a, value_b], start_frame_output, transition_duration, bound, 'output', exaggeration, dimension=scale_dimension)
+
             animation(rotate, [0, initial_rotate], start_frame_output, transition_duration, bound, 'output', exaggeration)
 
         if output_move == 1:
@@ -180,5 +210,3 @@ def refresh(thisNode):
             translate_output_anim(value_y2, 1)
         elif output_move == 5:
             scale_output_anim(1, 0)
-        elif output_move == 6:
-            scale_output_anim(0, 1)
