@@ -462,6 +462,69 @@ def createInstance(app,group):
     lastNode.skew_text = param
     del param
 
+    param = lastNode.createDoubleParam("rectangle_width", "Rectangle Width")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(10, 0)
+    lastNode.rectangle_width = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep9", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep9 = param
+    del param
+
+    param = lastNode.createDoubleParam("bound", "Bound")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.bound = param
+    del param
+
+    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
+    lastNode.exaggeration = param
+    del param
+
     lastNode.exp = lastNode.createPageParam("exp", "Exp")
     param = lastNode.createInt2DParam("current_format", "Current Format")
     param.setDisplayMinimum(0, 0)
@@ -566,11 +629,6 @@ def createInstance(app,group):
         param.setValue("Francsisc JOSE")
         del param
 
-    param = lastNode.getParam("name")
-    if param is not None:
-        param.set("K/Kingthings Trypewriter 2")
-        del param
-
     param = lastNode.getParam("custom")
     if param is not None:
         param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Kingthings Trypewriter.ttf")
@@ -613,11 +671,6 @@ def createInstance(app,group):
     param = lastNode.getParam("text")
     if param is not None:
         param.setValue("Jose Contrerasdsd sds casa")
-        del param
-
-    param = lastNode.getParam("name")
-    if param is not None:
-        param.set("K/Kingthings Trypewriter 2")
         del param
 
     param = lastNode.getParam("custom")
@@ -781,6 +834,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge1"
@@ -1145,6 +1203,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupcroping = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
 
     param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:
@@ -1551,7 +1614,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.7, 0)
+    param.setValue(0, 0)
     lastNode.bound = param
     del param
 
@@ -1671,7 +1734,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.InOutMove", 1, group)
     lastNode.setScriptName("subtitle_move")
     lastNode.setLabel("subtitle_move")
-    lastNode.setPosition(503, 225)
+    lastNode.setPosition(503, 226)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupsubtitle_move = lastNode
@@ -2022,6 +2085,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     lastNode.bound = param
     del param
 
@@ -2141,7 +2205,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.InOutMove", 1, group)
     lastNode.setScriptName("title_move")
     lastNode.setLabel("title_move")
-    lastNode.setPosition(301, 237)
+    lastNode.setPosition(301, 236)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     grouptitle_move = lastNode
@@ -2492,6 +2556,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     lastNode.bound = param
     del param
 
@@ -2711,6 +2776,12 @@ def createInstance(app,group):
     param = grouprectangle_move.getParam("transition_duration")
     param.setExpression("thisGroup.transition_duration.get()", False, 0)
     del param
+    param = grouprectangle_move.getParam("bound")
+    param.setExpression("thisGroup.bound.get()", False, 0)
+    del param
+    param = grouprectangle_move.getParam("exaggeration")
+    param.setExpression("thisGroup.exaggeration.get()", False, 0)
+    del param
     param = grouprectangle_move.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
@@ -2747,6 +2818,12 @@ def createInstance(app,group):
     param = groupsubtitle_move.getParam("transition_duration")
     param.setExpression("thisGroup.transition_duration.get()", False, 0)
     del param
+    param = groupsubtitle_move.getParam("bound")
+    param.setExpression("thisGroup.bound.get()", False, 0)
+    del param
+    param = groupsubtitle_move.getParam("exaggeration")
+    param.setExpression("thisGroup.exaggeration.get()", False, 0)
+    del param
     param = groupsubtitle_move.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
@@ -2782,6 +2859,12 @@ def createInstance(app,group):
     del param
     param = grouptitle_move.getParam("transition_duration")
     param.setExpression("thisGroup.transition_duration.get()", False, 0)
+    del param
+    param = grouptitle_move.getParam("bound")
+    param.setExpression("thisGroup.bound.get()", False, 0)
+    del param
+    param = grouptitle_move.getParam("exaggeration")
+    param.setExpression("thisGroup.exaggeration.get()", False, 0)
     del param
     param = grouptitle_move.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)

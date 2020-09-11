@@ -1,4 +1,7 @@
 modules:
+    ☐ sacar la opcion de 'start_frame' de todos los nodos, solo dejarlo en el nodo de la slide @today 
+    ☐ crear nuevo parametros para los nodos de efectos que usaban 'start_frame' que se llame 'center_duration' @today 
+    ☐ la funcion de 'link to parent' modificarla para que funcione con el nuevo parametro de 'center_duration' si el efecto lo tiene @today 
     videovina:
         ✔ la animacion de cada slide queda corta, ya que se penso solo para la mitad del tiempo de la transicion, y dependiendo de la transicion la slide se ve a lo largo de toda la transicion. @today @done (8/7/2020, 11:55:39 AM)
     vina:
@@ -14,6 +17,9 @@ modules:
         ✔ que 'Link To Parent' que tambien funcione cuando el padre tenga solo algunos parametros @today @done (8/24/2020, 2:23:50 PM)
     shape:
         ✔ separar animacion a otro nodo de animacion @today @done (8/24/2020, 6:07:22 PM)
+
+    TextSide:
+        ☐ cuando hay rebote las letras se cortan por el bbox @today 
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
     ☐ que los usuario privilegiados tengan baja prioridad en el renderizado, que renderizen solo si no hay ningun usuario pagado renderizando

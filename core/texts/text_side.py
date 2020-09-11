@@ -19,7 +19,7 @@ def update_rectangle(thisNode, text_fit):
     rscale = thisNode.rscale.get()
 
     rectangle_separation = 20 * rscale
-    rectangle_width = 5 * rscale
+    rectangle_width = thisNode.rectangle_width.get() * rscale
 
     bbox = get_bbox(text_fit)
 
@@ -81,21 +81,19 @@ def update_animation(thisNode):
     #
 
     # desfase
-    max_gap = duration / 5
+    _title_gap = value_by_durations(thisNode.title_gap.get(), durations.get())
+    _subtitle_gap = value_by_durations(thisNode.subtitle_gap.get(), durations.get())
 
-    title_gap = thisNode.title_gap.get() * max_gap / 100
-    subtitle_gap = thisNode.subtitle_gap.get() * max_gap / 100
-
-    title_gap = value_by_durations(title_gap, durations.get())
-    subtitle_gap = value_by_durations(subtitle_gap, durations.get())
+    title_gap = _title_gap[speed] / 2
+    subtitle_gap = _subtitle_gap[speed] / 2
 
     title_durations.restoreDefaultValue(speed)
     subtitle_durations.restoreDefaultValue(speed)
 
-    title_duration = duration - title_gap[speed]
+    title_duration = duration - title_gap
     title_durations.setValue(title_duration, speed)
 
-    subtitle_duration = duration - subtitle_gap[speed]
+    subtitle_duration = duration - subtitle_gap
     subtitle_durations.setValue(subtitle_duration, speed)
 
     #
@@ -110,10 +108,10 @@ def update_animation(thisNode):
     title_start_frame.restoreDefaultValue()
     subtitle_start_frame.restoreDefaultValue()
 
-    start_frame_title = title_gap[speed] / 2
+    start_frame_title = title_gap / 2
     title_start_frame.set(start_frame_title + start_frame)
 
-    start_frame_subtitle = subtitle_gap[speed] / 2
+    start_frame_subtitle = subtitle_gap / 2
     subtitle_start_frame.set(start_frame_subtitle + start_frame)
 
     #
