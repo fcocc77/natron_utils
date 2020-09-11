@@ -272,18 +272,6 @@ def createInstance(app,group):
     lastNode.output_move = param
     del param
 
-    param = lastNode.createBooleanParam("use_bbox", "Use Bounding Box Outside")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.use_bbox = param
-    del param
-
     param = lastNode.createChoiceParam("scale_dimension", "Scale Dimension")
     entries = [ ("X", ""),
     ("Y", ""),
@@ -298,10 +286,64 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     param.setEnabled(False, 0)
     lastNode.scale_dimension = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep8", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep8 = param
+    del param
+
+    param = lastNode.createBooleanParam("use_bbox", "Use Bounding Box Outside")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.use_bbox = param
+    del param
+
+    param = lastNode.createDoubleParam("bbox_extra", "Bounding Box Expand")
+    param.setMinimum(0, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.bbox_extra = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep7 = param
     del param
 
     param = lastNode.createIntParam("transition_duration", "Transition Duration")

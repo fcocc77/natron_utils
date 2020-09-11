@@ -13,8 +13,10 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'refresh':
         refresh(thisNode)
-    if knob_name == 'input_move' or knob_name == 'output_move':
+    elif knob_name == 'input_move' or knob_name == 'output_move':
         disable_scale_dimension(thisNode)
+    elif knob_name == 'use_bbox':
+        thisNode.bbox_extra.setEnabled(thisParam.get())
 
 
 def disable_scale_dimension(thisNode):
@@ -127,6 +129,7 @@ def refresh(thisNode):
     transition_duration_percent = thisNode.getParam('transition_duration').get()
     initial_rotate = thisNode.getParam('initial_rotate').get()
     use_bbox = thisNode.getParam('use_bbox').get()
+    bbox_extra = thisNode.getParam('bbox_extra').get()
     scale_dimension_param = thisNode.getParam('scale_dimension')
     scale_dimension = scale_dimension_param.get()
 
@@ -152,6 +155,10 @@ def refresh(thisNode):
     input_height = abs(bbox.y1 - bbox.y2)
 
     if use_bbox:
+        bbox_extra *= rscale
+        input_width += bbox_extra
+        input_height += bbox_extra
+
         value_x1 = -input_width
         value_x2 = input_width
         value_y1 = -input_height
