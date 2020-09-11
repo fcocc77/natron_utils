@@ -586,12 +586,12 @@ def set_option(param, option):
         None
 
 
-def autocrop(thisNode, image_node, crop_node):
+def autocrop(workarea, image_node, crop_node):
     bbox = get_bbox(image_node)
 
-    image_statictis = getNode(thisNode, 'autocrop')
+    image_statictis = getNode(workarea, 'autocrop')
     if not image_statictis:
-        image_statictis = createNode('statistics', 'autocrop', thisNode)
+        image_statictis = createNode('statistics', 'autocrop', workarea)
 
     image_statictis.disconnectInput(0)
     image_statictis.connectInput(0, image_node)
