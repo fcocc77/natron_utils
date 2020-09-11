@@ -38,6 +38,8 @@ def refresh(thisNode):
 
 def fit_text_to_box(thisNode):
 
+    align = thisNode.align.get()
+
     title = thisNode.title.get()
     subtitle = thisNode.subtitle.get()
 
@@ -95,7 +97,13 @@ def fit_text_to_box(thisNode):
     subtitle_position_param = thisNode.getParam('subtitle_position')
 
     # ajusta los titulos
-    title_x_pos = (x / 2) - (title_x / 2)
+    if align == 0:
+        title_x_pos = (x / 2) - (title_x / 2)
+    elif align == 1:
+        title_x_pos = 0
+    else:
+        title_x_pos = x - title_x
+
     title_y_pos = subtitle_y + move_up
 
     title_translate.setValue(title_x_pos, 0)
@@ -105,7 +113,13 @@ def fit_text_to_box(thisNode):
     title_position_param.setValue(title_y_pos, 1)
 
     # ajusta los subtitulos
-    subtitle_x_pos = (x / 2) - (subtitle_x / 2)
+    if align == 0:
+        subtitle_x_pos = (x / 2) - (subtitle_x / 2)
+    elif align == 1:
+        subtitle_x_pos = 0
+    else:
+        subtitle_x_pos = x - subtitle_x
+
     subtitle_y_pos = move_up
 
     subtitle_translate.setValue(subtitle_x_pos, 0)

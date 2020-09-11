@@ -282,7 +282,7 @@ def createInstance(app,group):
     lastNode.subtitle_position = param
     del param
 
-    param = lastNode.createButtonParam("separate_text", "Separate Text")
+    param = lastNode.createSeparatorParam("sep4", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -290,6 +290,36 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
+    param = lastNode.createChoiceParam("align", "Text Align")
+    entries = [ ("Center", ""),
+    ("Right", ""),
+    ("Left", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.align = param
+    del param
+
+    param = lastNode.createButtonParam("separate_text", "Separate Text")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.separate_text = param
     del param
@@ -402,14 +432,14 @@ def createInstance(app,group):
         param.setValue("Title")
         del param
 
-    param = lastNode.getParam("custom")
+    param = lastNode.getParam("name")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Note This.ttf")
+        param.set("A/AR PL UMing CN")
         del param
 
     param = lastNode.getParam("font")
     if param is not None:
-        param.setValue("Note this")
+        param.setValue("AR PL UMing CN")
         del param
 
     param = lastNode.getParam("size")
@@ -450,14 +480,14 @@ def createInstance(app,group):
         param.setValue("Subtitle")
         del param
 
-    param = lastNode.getParam("custom")
+    param = lastNode.getParam("name")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Note This.ttf")
+        param.set("A/AR PL UMing CN")
         del param
 
     param = lastNode.getParam("font")
     if param is not None:
-        param.setValue("Note this")
+        param.setValue("AR PL UMing CN")
         del param
 
     param = lastNode.getParam("size")
@@ -496,8 +526,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(-2, 0)
-        param.setValue(598, 1)
+        param.setValue(310, 0)
+        param.setValue(519, 1)
         del param
 
     del lastNode
@@ -514,8 +544,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(603, 0)
-        param.setValue(58, 1)
+        param.setValue(16, 1)
         del param
 
     del lastNode
