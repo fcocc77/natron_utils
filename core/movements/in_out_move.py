@@ -145,7 +145,7 @@ def refresh(thisNode):
     scale.restoreDefaultValue(1)
 
     # calcula la duracion de la transicion
-    transition_duration = (transition_duration_percent * duration) / 100
+    transition_duration = ((transition_duration_percent / 2) * duration) / 100
 
     # bounding box input
     center_from_input_bbox(thisNode, center)

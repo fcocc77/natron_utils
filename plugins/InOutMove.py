@@ -346,11 +346,11 @@ def createInstance(app,group):
     lastNode.sep7 = param
     del param
 
-    param = lastNode.createIntParam("transition_duration", "Transition Duration")
+    param = lastNode.createIntParam("transition_duration", "Transition Duration %")
     param.setMinimum(0, 0)
-    param.setMaximum(50, 0)
+    param.setMaximum(100, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(50, 0)
+    param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
 
@@ -361,7 +361,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(25, 0)
+    param.setValue(50, 0)
     lastNode.transition_duration = param
     del param
 
