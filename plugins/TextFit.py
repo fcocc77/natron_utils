@@ -296,11 +296,13 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("align", "Text Align")
-    entries = [ ("Center", ""),
-    ("Right", ""),
-    ("Left", "")]
+    entries = [ ("Right", ""),
+    ("Left", ""),
+    ("Center", "")]
     param.setOptions(entries)
     del entries
+    param.setDefaultValue("Center")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -309,6 +311,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Center")
     lastNode.align = param
     del param
 

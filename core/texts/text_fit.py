@@ -97,7 +97,7 @@ def fit_text_to_box(thisNode):
     subtitle_position_param = thisNode.getParam('subtitle_position')
 
     # ajusta los titulos
-    if align == 0:
+    if align == 2:
         title_x_pos = (x / 2) - (title_x / 2)
     elif align == 1:
         title_x_pos = 0
@@ -113,7 +113,7 @@ def fit_text_to_box(thisNode):
     title_position_param.setValue(title_y_pos, 1)
 
     # ajusta los subtitulos
-    if align == 0:
+    if align == 2:
         subtitle_x_pos = (x / 2) - (subtitle_x / 2)
     elif align == 1:
         subtitle_x_pos = 0
