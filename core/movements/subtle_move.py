@@ -1,7 +1,7 @@
 from nx import getNode
 import NatronEngine
 from math import cos, sin
-from base import link_to_parent
+from base import link_to_parent, get_duration, get_format, get_rscale
 from movements_common import center_from_input_bbox
 
 
@@ -91,18 +91,20 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
 
 
 def refresh(thisNode):
+    duration = get_duration(thisNode)
+    start_frame = 1
+    rscale = get_rscale(thisNode)
+    current_format = get_format(thisNode)
+
     transform = getNode(thisNode, 'Transform')
     scale = transform.getParam('scale')
     rotate = transform.getParam('rotate')
     translate = transform.getParam('translate')
     center = transform.getParam('center')
 
-    duration = thisNode.getParam('duration').get()
-    start_frame = thisNode.getParam('start_frame').get()
     movement = thisNode.getParam('movement').get()
     level = thisNode.getParam('level').get()
-    current_format = thisNode.getParam('current_format').get()
-    rscale = thisNode.getParam('rscale').get()
+
     break_point = thisNode.getParam('break_point').get()
     break_duration = thisNode.getParam('break_point_duration').get()
     exaggeration = thisNode.getParam('exaggeration').get()
