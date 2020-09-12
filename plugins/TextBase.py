@@ -265,6 +265,32 @@ def createInstance(app,group):
     lastNode.title = param
     del param
 
+    param = lastNode.createStringParam("subtitle", "Subtitle")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.subtitle = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
     param = lastNode.createColorParam("title_color", "Title Color", False)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
@@ -290,32 +316,6 @@ def createInstance(app,group):
     param.setValue(1, 1)
     param.setValue(1, 2)
     lastNode.title_color = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep3", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
-    del param
-
-    param = lastNode.createStringParam("subtitle", "Subtitle")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.subtitle = param
     del param
 
     param = lastNode.createColorParam("subtitle_color", "Subtitle Color", False)
