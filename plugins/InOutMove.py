@@ -97,7 +97,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Slow")
     lastNode.speed = param
     del param
 
@@ -154,8 +153,10 @@ def createInstance(app,group):
     lastNode.time_label = param
     del param
 
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setDisplayMinimum(0, 0)
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(25, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(25, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
@@ -167,8 +168,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.start_frame = param
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
     del param
 
     param = lastNode.createInt3DParam("durations", "Durations")
@@ -268,7 +269,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Right - Left")
     lastNode.output_move = param
     del param
 
@@ -431,65 +431,8 @@ def createInstance(app,group):
     lastNode.motion_blur = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(150, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -528,29 +471,29 @@ def createInstance(app,group):
     param = lastNode.getParam("translate")
     if param is not None:
         param.setValueAtTime(-1293, 1, 0)
-        param.setValueAtTime(166.1074879720075, 11, 0)
-        param.setValueAtTime(301.7, 20, 0)
-        param.setValueAtTime(256.445, 29, 0)
-        param.setValueAtTime(0, 38, 0)
-        param.setValueAtTime(0, 113, 0)
-        param.setValueAtTime(-262.628685425475, 123, 0)
-        param.setValueAtTime(-304.7333333333333, 132, 0)
-        param.setValueAtTime(-153.7270833333333, 141, 0)
-        param.setValueAtTime(1306, 150, 0)
+        param.setValueAtTime(172.3529176149295, 8, 0)
+        param.setValueAtTime(301.7, 14, 0)
+        param.setValueAtTime(256.445, 20, 0)
+        param.setValueAtTime(0, 26, 0)
+        param.setValueAtTime(0, 76, 0)
+        param.setValueAtTime(261.6564314974966, 83, 0)
+        param.setValueAtTime(301.7, 89, 0)
+        param.setValueAtTime(152.196875, 95, 0)
+        param.setValueAtTime(-1293, 101, 0)
         del param
 
     param = lastNode.getParam("rotate")
     if param is not None:
         param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(0, 11, 0)
+        param.setValueAtTime(0, 8, 0)
+        param.setValueAtTime(0, 14, 0)
         param.setValueAtTime(0, 20, 0)
-        param.setValueAtTime(0, 29, 0)
-        param.setValueAtTime(0, 38, 0)
-        param.setValueAtTime(0, 113, 0)
-        param.setValueAtTime(0, 123, 0)
-        param.setValueAtTime(0, 132, 0)
-        param.setValueAtTime(0, 141, 0)
-        param.setValueAtTime(0, 150, 0)
+        param.setValueAtTime(0, 26, 0)
+        param.setValueAtTime(0, 76, 0)
+        param.setValueAtTime(0, 83, 0)
+        param.setValueAtTime(0, 89, 0)
+        param.setValueAtTime(0, 95, 0)
+        param.setValueAtTime(0, 101, 0)
         del param
 
     param = lastNode.getParam("center")
@@ -580,16 +523,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.motion_blur.get()", False, 0)
     del param
 
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["InOutMoveExt"]
     except KeyError:

@@ -1,4 +1,4 @@
-from base import link_to_parent, children_refresh
+from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, get_start_frame
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -14,4 +14,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def refresh(thisNode):
-    None
+    rscale = get_rscale(thisNode)
+    duration = get_duration(thisNode)
+    current_format = get_format(thisNode)
+    start_frame = get_start_frame(thisNode)

@@ -1,6 +1,6 @@
 import NatronEngine
 from nx import getNode, get_bbox
-from base import link_to_parent
+from base import link_to_parent, get_duration, get_start_frame, get_rscale
 from movements_common import center_from_input_bbox
 
 
@@ -111,21 +111,22 @@ def animation(param, values, start_frame, duration, bound, direction, exaggerati
 
 
 def refresh(thisNode):
+    rscale = get_rscale(thisNode)
+    duration = get_duration(thisNode)
+    current_format = get_format(thisNode)
+    start_frame = get_start_frame(thisNode)
+
     transform = getNode(thisNode, 'transform')
     translate = transform.getParam('translate')
     rotate = transform.getParam('rotate')
     scale = transform.getParam('scale')
     center = transform.getParam('center')
 
-    rscale = thisNode.getParam('rscale').get()
-    start_frame = thisNode.getParam('start_frame').get()
     speed = thisNode.getParam('speed').get()
     input_move = thisNode.getParam('input_move').get()
     output_move = thisNode.getParam('output_move').get()
-    duration = thisNode.getParam('duration').get()
     exaggeration = thisNode.getParam('exaggeration').get()
     bound = thisNode.getParam('bound').get()
-    durations = thisNode.getParam('durations').get()
     transition_duration_percent = thisNode.getParam('transition_duration').get()
     initial_rotate = thisNode.getParam('initial_rotate').get()
     use_bbox = thisNode.getParam('use_bbox').get()
@@ -133,7 +134,6 @@ def refresh(thisNode):
     scale_dimension_param = thisNode.getParam('scale_dimension')
     scale_dimension = scale_dimension_param.get()
 
-    current_format = thisNode.getParam('current_format').get()
     width = current_format[0]
     height = current_format[1]
 
@@ -193,7 +193,7 @@ def refresh(thisNode):
             scale_input_anim(0, 1)
 
     if output_move:
-        start_frame_output = duration - transition_duration
+        start_frame_output = start_frame + duration - transition_duration
 
         def translate_output_anim(value, dimension=0):
             animation(translate, [0, value], start_frame_output, transition_duration, bound, 'output', exaggeration, dimension=dimension)

@@ -1,5 +1,7 @@
 from nx import alert, warning
 from vina import get_videovina
+from general import formats, rscale
+
 import NatronGui
 
 
@@ -84,3 +86,64 @@ def refresh_expressions(node):
 
     for child in node.getChildren():
         refresh_expressions(child)
+
+
+def get_durations(node):
+    durations_param = node.getParam('durations')
+
+    if not durations_param:
+        return None
+
+    return durations_param.get()
+
+
+def get_duration(node):
+    speed_param = node.getParam('speed')
+    duration_percent_param = node.getParam('duration_percent')
+
+    if not speed_param:
+        return None
+
+    if duration_percent_param:
+        duration_percent = duration_percent_param.get()
+    else:
+        duration_percent = 100
+
+    duration = get_durations(node)[speed_param.get()]
+
+    return duration_percent * duration / 100
+
+
+def get_start_frame(node):
+    speed_param = node.getParam('speed')
+    duration_percent_param = node.getParam('duration_percent')
+
+    if duration_percent_param:
+        duration_percent = duration_percent_param.get()
+    else:
+        duration_percent = 100
+
+    duration = get_durations(node)[speed_param.get()]
+    duration -= get_duration(node)
+
+    start_frame = duration / 2
+
+    return start_frame + 1
+
+
+def get_format(node):
+    format_param = node.getParam('format')
+
+    if not format_param:
+        return None
+
+    return formats[format_param.get()]
+
+
+def get_rscale(node):
+    format_param = node.getParam('format')
+
+    if not format_param:
+        return None
+
+    return rscale[format_param.get()]
