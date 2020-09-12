@@ -62,19 +62,52 @@ Templates:
 Templates Bases:
     blurred:
         ☐ opcion para las letras random en el nodo de 'letter_animation'
-    ink:
-        ☐ crear background con textura de pergamino
-        ☐ falta calcar 2 formas mas
-        ☐ crear 4 slide diferentes con el ink base
-        ☐ crear 1 slide con multi fotos
-        ☐ crear overlap de particulas y polvo
+        ☐ terminar la transicion de flare con blur 'FlareTransition'
+    clippings:
+        ☐ crear transicion con 1 input para cambiar las formas
+    cloud:
+        ☐ ...
+    depth:
+        ☐ mejorar nodo 'Depth_Separation'
+        ☐ crear nodo de texto, con 3 opciones de formas como las que estan en la referencia
+        ☐ crear transicion de profundidad y slide con 4 direcciones; derecha ,izquierda, superior e inferior, y incluir 2 adicionales con rotacion
+    draw:
+        ☐ crear nodo, que convierta una imagen de dibujo en una imagen real, como una transicion pero no es la transicion ( archivo draw.ntp hay avance )
     glass:
         ☐ textura de rasguños
         transition:
             ☐ poner otra opcion de transicion, con movimiento de la imagen
-    photos:
-        ☐ cuadros de fotos antiguas
+        ☐ crear slide de glass base ( ya estan todos los elementos necesarios )
+        ☐ crear 5 slide con el glass base, y 1 que contenga varias imagen como vidrio
+    glitch:
+        ☐ crear nodo de efecto con glish sutiles para la slide
+        ☐ crear transicion como la referencia
+        ☐ crear nodo de texto como la referencia
+    ink:
+        ☐ crear background con textura de pergamino
+        ☐ falta calcar 2 formas mas @high 
+        ☐ crear 4 slide diferentes con el ink base
+        ☐ crear 1 slide con multi fotos
+        ☐ crear overlap de particulas y polvo
+    photos-1:
+        ☐ crear nodo similar al 'SubtleMove' con 2 input de imagen para dar la sensacion de 3D, pero que contenga un modo random de movimiento.
+        ☐ nodo de formato de foto antiguas
+        ☐ crear nodo que simule las luces 'spotlight', que funcione en random, y que tenga un parametro de velocidad
+    photos-2:
+        ☐ crear texto encuadrado en color y que el texto tenga mas estilo con colores
+    plants:
+        ☐ sacar fotos de direrentes partes del jardin para el video
+        ☐ crear nodo de textos, que esten sobre diferentes tipos de hojas
+        ☐ crear transicion; que sea como una slide pero que pase por encima un tronco o ramas
+    stripes:
+        ☐ ...
     stroke:
-        ☐ trazos de pintura
-    draw:
-        ☐ hacer texto que aparesca como trazo y que se mueva con un zoom
+        ☐ crear nodo de texto con trazos
+        ☐ crear transicion de trazos similar a 'Depth_Separation' pero con trazos
+        ☐ crear nodo de trazos con movimientos sutiles
+        ☐ sobreponer textos con versiculos biblicos pequeño y gigantes con blur para estilizar la imagen
+    tech-1:
+        ☐ crear nodo como el 'Depth_Separation' pero con cuadrados y rectangulos
+        ☐ crear transicion con cuadrados
+    tech-2:
+        ☐ crear transicion como lareferencia pero, con la opcion de cambiarle la forma con un input
