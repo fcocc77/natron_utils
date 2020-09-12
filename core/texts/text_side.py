@@ -1,4 +1,4 @@
-from base import link_to_parent
+from base import link_to_parent, get_rscale, get_start_frame, reformat_update
 from text_fit import refresh_text_fit
 from nx import getNode, get_bbox, bbox_bake, createNode, autocrop, alert
 from vina import value_by_durations
@@ -16,7 +16,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def update_rectangle(thisNode, text_fit):
-    rscale = thisNode.rscale.get()
+    rscale = get_rscale(thisNode)
 
     rectangle_separation = 20 * rscale
     rectangle_width = thisNode.rectangle_width.get() * rscale
@@ -69,60 +69,15 @@ def update_animation(thisNode):
     #
     #
 
-    # desfase de tiempo
-    durations = thisNode.getParam('durations')
-    title_durations = title_move.getParam('durations')
-    subtitle_durations = subtitle_move.getParam('durations')
-
-    speed = thisNode.speed.get()
-    duration = durations.getValue(speed)
-
-    #
-    #
-
-    # desfase
-    _title_gap = value_by_durations(thisNode.title_gap.get(), durations.get())
-    _subtitle_gap = value_by_durations(thisNode.subtitle_gap.get(), durations.get())
-
-    title_gap = _title_gap[speed] / 2
-    subtitle_gap = _subtitle_gap[speed] / 2
-
-    title_durations.restoreDefaultValue(speed)
-    subtitle_durations.restoreDefaultValue(speed)
-
-    title_duration = duration - title_gap
-    title_durations.setValue(title_duration, speed)
-
-    subtitle_duration = duration - subtitle_gap
-    subtitle_durations.setValue(subtitle_duration, speed)
-
-    #
-    #
-
-    # start frame
-    start_frame = thisNode.start_frame.get()
-
-    title_start_frame = title_move.getParam('start_frame')
-    subtitle_start_frame = subtitle_move.getParam('start_frame')
-
-    title_start_frame.restoreDefaultValue()
-    subtitle_start_frame.restoreDefaultValue()
-
-    start_frame_title = title_gap / 2
-    title_start_frame.set(start_frame_title + start_frame)
-
-    start_frame_subtitle = subtitle_gap / 2
-    subtitle_start_frame.set(start_frame_subtitle + start_frame)
-
-    #
-    #
-
     # actualiza los nodos de movimiento
     subtitle_move.getParam('refresh').trigger()
     title_move.getParam('refresh').trigger()
 
 
 def refresh(thisNode):
+
+    reformat_update(thisNode, 'reformat')
+
     title_node, subtitle_node = refresh_text_fit(thisNode)
 
     title_color = thisNode.title_color
@@ -131,7 +86,7 @@ def refresh(thisNode):
     title_node.getParam('color').copy(title_color)
     subtitle_node.getParam('color').copy(subtitle_color)
 
-    text_fit = getNode(thisNode, 'TextFit0')
+    text_fit = getNode(thisNode, 'TextFit1')
 
     rectangle_separation, rectangle_width = update_rectangle(thisNode, text_fit)
 

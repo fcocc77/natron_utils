@@ -1,4 +1,4 @@
-from base import link_to_parent, children_refresh
+from base import link_to_parent, children_refresh, get_format, get_rscale, reformat_update
 from text_base import set_font, transfer_transform
 from nx import getNode, get_parent, createNode
 
@@ -25,6 +25,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def refresh(thisNode):
+
+    reformat_update(thisNode, 'reformat')
+
     title_size, subtitle_size = fit_text_to_box(thisNode)
 
     thisNode.getParam('font_size_title').set(title_size)
@@ -33,7 +36,7 @@ def refresh(thisNode):
     input_transform = thisNode.getInput(0)
     general_transform = getNode(thisNode, 'General_Transform')
 
-    transfer_transform(input_transform, general_transform, thisNode.rscale.get())
+    transfer_transform(input_transform, general_transform, get_rscale(thisNode))
 
 
 def fit_text_to_box(thisNode):
@@ -53,7 +56,7 @@ def fit_text_to_box(thisNode):
     set_font(title_node, font)
     set_font(subtitle_node, font)
 
-    current_format = thisNode.getParam('current_format').get()
+    current_format = get_format(thisNode)
 
     x = current_format[0]
     y = current_format[1]

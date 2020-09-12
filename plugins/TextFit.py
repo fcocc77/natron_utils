@@ -219,7 +219,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
     lastNode.font_size_title = param
     del param
 
@@ -258,7 +257,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
     lastNode.font_size_subtitle = param
     del param
 
@@ -311,7 +309,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Center")
     lastNode.align = param
     del param
 
@@ -327,48 +324,8 @@ def createInstance(app,group):
     lastNode.separate_text = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -447,7 +404,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(10, 0)
+        param.setValue(1, 0)
         del param
 
     param = lastNode.getParam("arcRadius")
@@ -495,7 +452,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(10, 0)
+        param.setValue(1, 0)
         del param
 
     del lastNode
@@ -562,21 +519,10 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     groupGeneral_Transform = lastNode
 
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(-195, 0)
-        param.setValue(-59, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(-19.58178566213562, 0)
-        del param
-
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.5170124696737864, 0)
-        param.setValue(0.5170124696737864, 1)
+        param.setValue(0.5100153006885364, 0)
+        param.setValue(0.5100153006885364, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -604,14 +550,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Merge1"
 
-    # Start of node "Reformat1"
+    # Start of node "reformat"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat1")
-    lastNode.setLabel("Reformat1")
-    lastNode.setPosition(1557, 366)
-    lastNode.setSize(100, 32)
+    lastNode.setScriptName("reformat")
+    lastNode.setLabel("reformat")
+    lastNode.setPosition(1587, 366)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat1 = lastNode
+    groupreformat = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
@@ -629,8 +575,13 @@ def createInstance(app,group):
         param.setValue(1080, 1)
         del param
 
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
-    # End of node "Reformat1"
+    # End of node "reformat"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupMerge1)
@@ -639,7 +590,7 @@ def createInstance(app,group):
     grouptitle_position_node.connectInput(0, grouptitle_node)
     groupsubtitle_position_node.connectInput(0, groupsubtitle_node)
     groupGeneral_Transform.connectInput(0, groupMerge3)
-    groupMerge1.connectInput(0, groupReformat1)
+    groupMerge1.connectInput(0, groupreformat)
     groupMerge1.connectInput(1, groupGeneral_Transform)
 
     param = grouptitle_node.getParam("text")
@@ -648,18 +599,7 @@ def createInstance(app,group):
     param = groupsubtitle_node.getParam("text")
     param.setExpression("thisGroup.subtitle.get()", False, 0)
     del param
-    param = groupReformat1.getParam("boxSize")
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 1)
-    del param
 
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["TextFitExt"]
     except KeyError:

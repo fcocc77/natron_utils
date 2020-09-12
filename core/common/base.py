@@ -1,4 +1,4 @@
-from nx import alert, warning
+from nx import alert, warning, getNode
 from vina import get_videovina
 from general import formats, rscale
 
@@ -147,3 +147,18 @@ def get_rscale(node):
         return None
 
     return rscale[format_param.get()]
+
+
+def reformat_update(node, reformat):
+    # actualiza un reformat al actual resolucion del nodo
+
+    if type(reformat) == str:
+        reformat = getNode(node, reformat)
+
+    if not reformat:
+        return
+
+    current_format = get_format(node)
+
+    reformat.getParam('reformatType').set(1)
+    reformat.getParam('boxSize').set(current_format[0], current_format[1])

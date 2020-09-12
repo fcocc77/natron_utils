@@ -153,22 +153,6 @@ def createInstance(app,group):
     lastNode.time_label = param
     del param
 
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.start_frame = param
-    del param
-
     param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
@@ -188,7 +172,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(150, 0)
     param.setValue(100, 1)
@@ -215,11 +199,13 @@ def createInstance(app,group):
     lastNode.transition_duration = param
     del param
 
-    param = lastNode.createDoubleParam("title_gap", "Title Gap %")
-    param.setMinimum(0, 0)
+    param = lastNode.createIntParam("rectangle_duration", "Rectangle Duration %")
+    param.setMinimum(25, 0)
     param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
+    param.setDisplayMinimum(25, 0)
     param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -228,14 +214,14 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
-    lastNode.title_gap = param
+    param.setValue(100, 0)
+    lastNode.rectangle_duration = param
     del param
 
-    param = lastNode.createDoubleParam("subtitle_gap", "Subtitle Gap %")
-    param.setMinimum(0, 0)
+    param = lastNode.createDoubleParam("title_duration", "Title Duration %")
+    param.setMinimum(25, 0)
     param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
+    param.setDisplayMinimum(25, 0)
     param.setDisplayMaximum(100, 0)
 
     # Add the param to the page
@@ -245,8 +231,25 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(20, 0)
-    lastNode.subtitle_gap = param
+    param.setValue(90, 0)
+    lastNode.title_duration = param
+    del param
+
+    param = lastNode.createDoubleParam("subtitle_duration", "Subtitle duration %")
+    param.setMinimum(25, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(25, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(80, 0)
+    lastNode.subtitle_duration = param
     del param
 
     param = lastNode.createSeparatorParam("sep6", "")
@@ -366,9 +369,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.6375969648361206, 0)
-    param.setValue(0.9911022186279297, 1)
-    param.setValue(0.0423114113509655, 2)
+    param.setValue(1, 0)
+    param.setValue(1, 1)
+    param.setValue(1, 2)
     lastNode.title_color = param
     del param
 
@@ -525,65 +528,8 @@ def createInstance(app,group):
     lastNode.exaggeration = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -602,7 +548,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Full_HD_Transform")
     lastNode.setLabel("Full HD Transform")
-    lastNode.setPosition(-43, 247)
+    lastNode.setPosition(128, 244)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupFull_HD_Transform = lastNode
@@ -615,7 +561,7 @@ def createInstance(app,group):
     lastNode.setScriptName("title_node")
     lastNode.setLabel("title_node")
     lastNode.setPosition(301, 144)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouptitle_node = lastNode
 
@@ -626,29 +572,22 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Francsisc JOSE")
+        param.setValue("Title")
         del param
 
-    param = lastNode.getParam("custom")
+    param = lastNode.getParam("name")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Kingthings Trypewriter.ttf")
+        param.set("A/AR PL UMing CN")
         del param
 
     param = lastNode.getParam("font")
     if param is not None:
-        param.setValue("Kingthings Trypewriter 2")
+        param.setValue("AR PL UMing CN")
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(54, 0)
-        del param
-
-    param = lastNode.getParam("color")
-    if param is not None:
-        param.setValue(0.6375969648361206, 0)
-        param.setValue(0.9911022186279297, 1)
-        param.setValue(0.0423114113509655, 2)
+        param.setValue(198, 0)
         del param
 
     del lastNode
@@ -659,7 +598,7 @@ def createInstance(app,group):
     lastNode.setScriptName("subtitle_node")
     lastNode.setLabel("subtitle_node")
     lastNode.setPosition(503, 130)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupsubtitle_node = lastNode
 
@@ -670,22 +609,22 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Jose Contrerasdsd sds casa")
+        param.setValue("Subtitle")
         del param
 
-    param = lastNode.getParam("custom")
+    param = lastNode.getParam("name")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/fonts/Kingthings Trypewriter.ttf")
+        param.set("A/AR PL UMing CN")
         del param
 
     param = lastNode.getParam("font")
     if param is not None:
-        param.setValue("Kingthings Trypewriter 2")
+        param.setValue("AR PL UMing CN")
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(30, 0)
+        param.setValue(183, 0)
         del param
 
     del lastNode
@@ -702,14 +641,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(646, 0)
-        param.setValue(572, 1)
+        param.setValue(470.3853113390051, 0)
+        param.setValue(529.2896786855407, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(288, 0)
-        param.setValue(18, 1)
+        param.setValue(489.6146886609949, 0)
+        param.setValue(10.71032131445929, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -725,20 +664,20 @@ def createInstance(app,group):
     lastNode.setScriptName("subtitle_transform")
     lastNode.setLabel("subtitle_transform")
     lastNode.setPosition(503, 322)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupsubtitle_transform = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(646, 0)
-        param.setValue(527, 1)
+        param.setValue(470.3853113390051, 0)
+        param.setValue(272.7519824392069, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(288, 0)
-        param.setValue(63, 1)
+        param.setValue(489.6146886609949, 0)
+        param.setValue(267.2480175607931, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -770,21 +709,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("hd_transform")
     lastNode.setLabel("hd_transform")
-    lastNode.setPosition(-254, 146)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-254, 144)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouphd_transform = lastNode
 
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(-26, 0)
-        param.setValue(50, 1)
-        del param
-
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.3, 0)
-        param.setValue(0.3, 1)
+        param.setValue(0.5100153006885364, 0)
+        param.setValue(0.5100153006885364, 1)
         del param
 
     del lastNode
@@ -795,7 +728,7 @@ def createInstance(app,group):
     lastNode.setScriptName("rectangle")
     lastNode.setLabel("rectangle")
     lastNode.setPosition(918, 315)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouprectangle = lastNode
 
@@ -806,21 +739,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("bottomLeft")
     if param is not None:
-        param.setValue(620, 0)
-        param.setValue(526.3, 1)
+        param.setValue(439.3853113390051, 0)
+        param.setValue(271.7519824392069, 1)
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(5, 0)
-        param.setValue(127.7, 1)
-        del param
-
-    param = lastNode.getParam("color1")
-    if param is not None:
-        param.setValue(0.8187984824180603, 0)
-        param.setValue(0.9955511093139648, 1)
-        param.setValue(0.5211557056754827, 2)
+        param.setValue(10, 0)
+        param.setValue(536.4960351215861, 1)
         del param
 
     del lastNode
@@ -831,7 +757,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
     lastNode.setPosition(918, 519)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
@@ -843,18 +769,114 @@ def createInstance(app,group):
     del lastNode
     # End of node "Merge1"
 
-    # Start of node "TextFit0"
-    lastNode = app.createNode("vv.TextFit", 1, group)
-    lastNode.setScriptName("TextFit0")
-    lastNode.setLabel("TextFit0")
-    lastNode.setPosition(-254, 246)
+    # Start of node "croping"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
+    lastNode.setScriptName("croping")
+    lastNode.setLabel("croping")
+    lastNode.setPosition(501, 530)
+    lastNode.setSize(104, 30)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupcroping = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("bottomLeft")
+    if param is not None:
+        param.setValue(444.3853113390051, 0)
+        param.setValue(321.7519824392069, 1)
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(1021, 0)
+        param.setValue(436, 1)
+        del param
+
+    param = lastNode.getParam("blackOutside")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "croping"
+
+    # Start of node "skew_node"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("skew_node")
+    lastNode.setLabel("skew_node")
+    lastNode.setPosition(918, 637)
+    lastNode.setSize(104, 30)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupskew_node = lastNode
+
+    param = lastNode.getParam("skewX")
+    if param is not None:
+        param.setValue(0.4, 0)
+        del param
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(952.6926556695025, 0)
+        del param
+
+    del lastNode
+    # End of node "skew_node"
+
+    # Start of node "reformat"
+    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
+    lastNode.setScriptName("reformat")
+    lastNode.setLabel("reformat")
+    lastNode.setPosition(1133, 526)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupreformat = lastNode
+
+    param = lastNode.getParam("reformatType")
+    if param is not None:
+        param.set("box")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("boxSize")
+    if param is not None:
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
+        del param
+
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "reformat"
+
+    # Start of node "subtitle_move"
+    lastNode = app.createNode("vv.InOutMove", 1, group)
+    lastNode.setScriptName("subtitle_move")
+    lastNode.setLabel("subtitle_move")
+    lastNode.setPosition(503, 225)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupTextFit0 = lastNode
+    groupsubtitle_move = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("text_fit.main")
+        param.setValue("in_out_move.main")
         del param
 
 
@@ -898,6 +920,26 @@ def createInstance(app,group):
     lastNode.format = param
     del param
 
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.set("Normal")
+    lastNode.speed = param
+    del param
+
     param = lastNode.createButtonParam("link", "Link To Parent")
 
     # Add the param to the page
@@ -935,9 +977,9 @@ def createInstance(app,group):
     lastNode.sep5 = param
     del param
 
-    param = lastNode.createStringParam("texts_label", "")
+    param = lastNode.createStringParam("time_label", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    TEXT :")
+    param.setDefaultValue("- - - - - - - >    TIME :")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -948,12 +990,17 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    TEXT :")
-    lastNode.texts_label = param
+    param.setValue("- - - - - - - >    TIME :")
+    lastNode.time_label = param
     del param
 
-    param = lastNode.createStringParam("title", "Title")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(25, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(25, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -962,39 +1009,38 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("Title")
-    lastNode.title = param
+    param.setValue(80, 0)
+    lastNode.duration_percent = param
     del param
 
-    param = lastNode.createStringParam("subtitle", "Subtitle")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+    param = lastNode.createInt3DParam("durations", "Durations")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue("Subtitle")
-    lastNode.subtitle = param
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    lastNode.durations = param
     del param
 
-    param = lastNode.createFileParam("font", "Font")
-    param.setSequenceEnabled(False)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
-    param.setValue("")
-    lastNode.font = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep7", "")
+    param = lastNode.createSeparatorParam("sep6", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -1004,7 +1050,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep7 = param
+    lastNode.sep6 = param
     del param
 
     param = lastNode.createStringParam("settings_label", "")
@@ -1024,106 +1070,16 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
-    param = lastNode.createIntParam("font_size_title", "Title Font Size")
-    param.setMinimum(0, 0)
-    param.setMaximum(2000, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1000, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(180, 0)
-    lastNode.font_size_title = param
-    del param
-
-    param = lastNode.createInt2DParam("title_position", "Title Position")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(480, 1)
-    lastNode.title_position = param
-    del param
-
-    param = lastNode.createIntParam("font_size_subtitle", "Subtitle Font Size")
-    param.setMinimum(0, 0)
-    param.setMaximum(2000, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1000, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.font_size_subtitle = param
-    del param
-
-    param = lastNode.createInt2DParam("subtitle_position", "Subtitle Position")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(330, 1)
-    lastNode.subtitle_position = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep4", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep4 = param
-    del param
-
-    param = lastNode.createChoiceParam("align", "Text Align")
-    entries = [ ("Right", ""),
-    ("Left", ""),
-    ("Center", "")]
+    param = lastNode.createChoiceParam("input_move", "Input")
+    entries = [ ("None", ""),
+    ("Left - Right", ""),
+    ("Right - Left", ""),
+    ("Up - Down", ""),
+    ("Down - Up", ""),
+    ("Scale", "")]
     param.setOptions(entries)
     del entries
-    param.setDefaultValue("Center")
+    param.setDefaultValue("Left - Right")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -1133,11 +1089,274 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Left")
-    lastNode.align = param
+    lastNode.input_move = param
     del param
 
-    param = lastNode.createButtonParam("separate_text", "Separate Text")
+    param = lastNode.createChoiceParam("output_move", "Output")
+    entries = [ ("None", ""),
+    ("Left - Right", ""),
+    ("Right - Left", ""),
+    ("Up - Down", ""),
+    ("Down - Up", ""),
+    ("Scale", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Left - Right")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.output_move = param
+    del param
+
+    param = lastNode.createChoiceParam("scale_dimension", "Scale Dimension")
+    entries = [ ("X", ""),
+    ("Y", ""),
+    ("Both", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Both")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.scale_dimension = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep8", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep8 = param
+    del param
+
+    param = lastNode.createBooleanParam("use_bbox", "Use Bounding Box Outside")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.use_bbox = param
+    del param
+
+    param = lastNode.createDoubleParam("bbox_extra", "Bounding Box Expand")
+    param.setMinimum(0, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.bbox_extra = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep7 = param
+    del param
+
+    param = lastNode.createIntParam("transition_duration", "Transition Duration %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.transition_duration = param
+    del param
+
+    param = lastNode.createDoubleParam("bound", "Bound")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0, 0)
+    lastNode.bound = param
+    del param
+
+    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
+    param.setDisplayMinimum(-180, 0)
+    param.setDisplayMaximum(180, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_rotate = param
+    del param
+
+    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
+    lastNode.exaggeration = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "subtitle_move"
+
+    # Start of node "title_move"
+    lastNode = app.createNode("vv.InOutMove", 1, group)
+    lastNode.setScriptName("title_move")
+    lastNode.setLabel("title_move")
+    lastNode.setPosition(301, 228)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    grouptitle_move = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("in_out_move.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setValue("- - - - - - - >    STATE :")
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.set("Normal")
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -1146,11 +1365,71 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
-    lastNode.separate_text = param
+    lastNode.link = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createStringParam("time_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    TIME :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setValue("- - - - - - - >    TIME :")
+    lastNode.time_label = param
+    del param
+
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(25, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(25, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(90, 0)
+    lastNode.duration_percent = param
+    del param
+
+    param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -1159,110 +1438,270 @@ def createInstance(app,group):
     param.setDisplayMaximum(100, 1)
     param.setDefaultValue(0, 1)
     param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
 
     # Add the param to the page
-    lastNode.exp.addParam(param)
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(150, 0)
+    param.setValue(95, 1)
+    param.setValue(50, 2)
+    lastNode.durations = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep6", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep6 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setValue("- - - - - - - >    SETTINGS :")
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createChoiceParam("input_move", "Input")
+    entries = [ ("None", ""),
+    ("Left - Right", ""),
+    ("Right - Left", ""),
+    ("Up - Down", ""),
+    ("Down - Up", ""),
+    ("Scale", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Left - Right")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
+    lastNode.input_move = param
     del param
 
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
+    param = lastNode.createChoiceParam("output_move", "Output")
+    entries = [ ("None", ""),
+    ("Left - Right", ""),
+    ("Right - Left", ""),
+    ("Up - Down", ""),
+    ("Down - Up", ""),
+    ("Scale", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Left - Right")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.output_move = param
+    del param
+
+    param = lastNode.createChoiceParam("scale_dimension", "Scale Dimension")
+    entries = [ ("X", ""),
+    ("Y", ""),
+    ("Both", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Both")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.scale_dimension = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep8", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep8 = param
+    del param
+
+    param = lastNode.createBooleanParam("use_bbox", "Use Bounding Box Outside")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.use_bbox = param
+    del param
+
+    param = lastNode.createDoubleParam("bbox_extra", "Bounding Box Expand")
+    param.setMinimum(0, 0)
     param.setMaximum(2147483647, 0)
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
 
     # Add the param to the page
-    lastNode.exp.addParam(param)
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.bbox_extra = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep7 = param
+    del param
+
+    param = lastNode.createIntParam("transition_duration", "Transition Duration %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    param.setValue(50, 0)
+    lastNode.transition_duration = param
+    del param
+
+    param = lastNode.createDoubleParam("bound", "Bound")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0, 0)
+    lastNode.bound = param
+    del param
+
+    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
+    param.setDisplayMinimum(-180, 0)
+    param.setDisplayMaximum(180, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_rotate = param
+    del param
+
+    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
+    lastNode.exaggeration = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
     del param
 
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "TextFit0"
-
-    # Start of node "croping"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("croping")
-    lastNode.setLabel("croping")
-    lastNode.setPosition(501, 530)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupcroping = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatSize")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    param = lastNode.getParam("bottomLeft")
-    if param is not None:
-        param.setValue(622.5, 0)
-        param.setValue(526.3, 1)
-        del param
-
-    param = lastNode.getParam("size")
-    if param is not None:
-        param.setValue(656, 0)
-        param.setValue(117, 1)
-        del param
-
-    param = lastNode.getParam("blackOutside")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "croping"
-
-    # Start of node "skew_node"
-    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("skew_node")
-    lastNode.setLabel("skew_node")
-    lastNode.setPosition(918, 636)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupskew_node = lastNode
-
-    param = lastNode.getParam("skewX")
-    if param is not None:
-        param.setValue(0.4, 0)
-        del param
-
-    param = lastNode.getParam("center")
-    if param is not None:
-        param.setValue(949.5, 0)
-        param.setValue(590, 1)
-        del param
-
-    del lastNode
-    # End of node "skew_node"
+    # End of node "title_move"
 
     # Start of node "rectangle_move"
     lastNode = app.createNode("vv.InOutMove", 1, group)
     lastNode.setScriptName("rectangle_move")
     lastNode.setLabel("rectangle_move")
-    lastNode.setPosition(918, 372)
+    lastNode.setPosition(918, 364)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.7, 0.7)
     grouprectangle_move = lastNode
@@ -1387,8 +1826,10 @@ def createInstance(app,group):
     lastNode.time_label = param
     del param
 
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setDisplayMinimum(0, 0)
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(25, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(25, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
@@ -1400,8 +1841,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.start_frame = param
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
     del param
 
     param = lastNode.createInt3DParam("durations", "Durations")
@@ -1667,81 +2108,24 @@ def createInstance(app,group):
     lastNode.motion_blur = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
     # End of node "rectangle_move"
 
-    # Start of node "subtitle_move"
-    lastNode = app.createNode("vv.InOutMove", 1, group)
-    lastNode.setScriptName("subtitle_move")
-    lastNode.setLabel("subtitle_move")
-    lastNode.setPosition(503, 226)
-    lastNode.setSize(104, 32)
+    # Start of node "TextFit1"
+    lastNode = app.createNode("vv.TextFit", 1, group)
+    lastNode.setScriptName("TextFit1")
+    lastNode.setLabel("TextFit1")
+    lastNode.setPosition(-254, 244)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupsubtitle_move = lastNode
+    groupTextFit1 = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("in_out_move.main")
+        param.setValue("text_fit.main")
         del param
 
 
@@ -1785,26 +2169,6 @@ def createInstance(app,group):
     lastNode.format = param
     del param
 
-    param = lastNode.createChoiceParam("speed", "Speed")
-    entries = [ ("Slow", ""),
-    ("Normal", ""),
-    ("Fast", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Normal")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.set("Normal")
-    lastNode.speed = param
-    del param
-
     param = lastNode.createButtonParam("link", "Link To Parent")
 
     # Add the param to the page
@@ -1842,9 +2206,9 @@ def createInstance(app,group):
     lastNode.sep5 = param
     del param
 
-    param = lastNode.createStringParam("time_label", "")
+    param = lastNode.createStringParam("texts_label", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    TIME :")
+    param.setDefaultValue("- - - - - - - >    TEXT :")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -1855,15 +2219,12 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    TIME :")
-    lastNode.time_label = param
+    param.setValue("- - - - - - - >    TEXT :")
+    lastNode.texts_label = param
     del param
 
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
+    param = lastNode.createStringParam("title", "Title")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -1872,38 +2233,39 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.start_frame = param
+    param.setValue("Title")
+    lastNode.title = param
     del param
 
-    param = lastNode.createInt3DParam("durations", "Durations")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-    param.setDisplayMinimum(0, 2)
-    param.setDisplayMaximum(100, 2)
-    param.setDefaultValue(0, 2)
-    param.restoreDefaultValue(2)
+    param = lastNode.createStringParam("subtitle", "Subtitle")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(150, 0)
-    param.setValue(100, 1)
-    param.setValue(50, 2)
-    lastNode.durations = param
+    param.setValue("Subtitle")
+    lastNode.subtitle = param
     del param
 
-    param = lastNode.createSeparatorParam("sep6", "")
+    param = lastNode.createFileParam("font", "Font")
+    param.setSequenceEnabled(False)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    param.setValue("")
+    lastNode.font = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -1913,7 +2275,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep6 = param
+    lastNode.sep7 = param
     del param
 
     param = lastNode.createStringParam("settings_label", "")
@@ -1933,131 +2295,11 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
-    param = lastNode.createChoiceParam("input_move", "Input")
-    entries = [ ("None", ""),
-    ("Left - Right", ""),
-    ("Right - Left", ""),
-    ("Up - Down", ""),
-    ("Down - Up", ""),
-    ("Scale", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Left - Right")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.input_move = param
-    del param
-
-    param = lastNode.createChoiceParam("output_move", "Output")
-    entries = [ ("None", ""),
-    ("Left - Right", ""),
-    ("Right - Left", ""),
-    ("Up - Down", ""),
-    ("Down - Up", ""),
-    ("Scale", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Left - Right")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.output_move = param
-    del param
-
-    param = lastNode.createChoiceParam("scale_dimension", "Scale Dimension")
-    entries = [ ("X", ""),
-    ("Y", ""),
-    ("Both", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Both")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setEnabled(False, 0)
-    lastNode.scale_dimension = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep8", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep8 = param
-    del param
-
-    param = lastNode.createBooleanParam("use_bbox", "Use Bounding Box Outside")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.use_bbox = param
-    del param
-
-    param = lastNode.createDoubleParam("bbox_extra", "Bounding Box Expand")
+    param = lastNode.createIntParam("font_size_title", "Title Font Size")
     param.setMinimum(0, 0)
-    param.setMaximum(2147483647, 0)
+    param.setMaximum(2000, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.bbox_extra = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep7", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep7 = param
-    del param
-
-    param = lastNode.createIntParam("transition_duration", "Transition Duration %")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
+    param.setDisplayMaximum(1000, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
 
@@ -2068,78 +2310,11 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.transition_duration = param
+    param.setValue(390, 0)
+    lastNode.font_size_title = param
     del param
 
-    param = lastNode.createDoubleParam("bound", "Bound")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.bound = param
-    del param
-
-    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
-    param.setDisplayMinimum(-180, 0)
-    param.setDisplayMaximum(180, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_rotate = param
-    del param
-
-    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.7, 0)
-    lastNode.exaggeration = param
-    del param
-
-    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.motion_blur = param
-    del param
-
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
+    param = lastNode.createInt2DParam("title_position", "Title Position")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -2150,555 +2325,178 @@ def createInstance(app,group):
     param.restoreDefaultValue(1)
 
     # Add the param to the page
-    lastNode.exp.addParam(param)
+    lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
+    param.setValue(519, 1)
+    lastNode.title_position = param
     del param
 
-    param = lastNode.createIntParam("duration", "Current Duration")
+    param = lastNode.createIntParam("font_size_subtitle", "Subtitle Font Size")
+    param.setMinimum(0, 0)
+    param.setMaximum(2000, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
+    param.setDisplayMaximum(1000, 0)
     param.setDefaultValue(0, 0)
     param.restoreDefaultValue(0)
 
     # Add the param to the page
-    lastNode.exp.addParam(param)
+    lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
+    param.setValue(360, 0)
+    lastNode.font_size_subtitle = param
     del param
 
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
+    param = lastNode.createInt2DParam("subtitle_position", "Subtitle Position")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
 
     # Add the param to the page
-    lastNode.exp.addParam(param)
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(16, 1)
+    lastNode.subtitle_position = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
+    param = lastNode.createChoiceParam("align", "Text Align")
+    entries = [ ("Right", ""),
+    ("Left", ""),
+    ("Center", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Center")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
+    param.set("Left")
+    lastNode.align = param
+    del param
+
+    param = lastNode.createButtonParam("separate_text", "Separate Text")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.separate_text = param
     del param
 
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "subtitle_move"
+    # End of node "TextFit1"
 
-    # Start of node "title_move"
-    lastNode = app.createNode("vv.InOutMove", 1, group)
-    lastNode.setScriptName("title_move")
-    lastNode.setLabel("title_move")
-    lastNode.setPosition(301, 236)
-    lastNode.setSize(104, 32)
+    # Start of node "ImageStatistics2"
+    lastNode = app.createNode("net.sf.openfx.ImageStatistics", 1, group)
+    lastNode.setScriptName("ImageStatistics2")
+    lastNode.setLabel("autocrop")
+    lastNode.setPosition(947, 493)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
-    grouptitle_move = lastNode
+    groupImageStatistics2 = lastNode
 
-    param = lastNode.getParam("onParamChanged")
+    param = lastNode.getParam("bottomLeft")
     if param is not None:
-        param.setValue("in_out_move.main")
+        param.setValue(469.3853113390051, 0)
+        param.setValue(747.7519824392069, 1)
         del param
 
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createStringParam("state_label", "State")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    STATE :")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    STATE :")
-    lastNode.state_label = param
-    del param
-
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
-    lastNode.format = param
-    del param
-
-    param = lastNode.createChoiceParam("speed", "Speed")
-    entries = [ ("Slow", ""),
-    ("Normal", ""),
-    ("Fast", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Normal")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.set("Normal")
-    lastNode.speed = param
-    del param
-
-    param = lastNode.createButtonParam("link", "Link To Parent")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.link = param
-    del param
-
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep5", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep5 = param
-    del param
-
-    param = lastNode.createStringParam("time_label", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    TIME :")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    TIME :")
-    lastNode.time_label = param
-    del param
-
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.start_frame = param
-    del param
-
-    param = lastNode.createInt3DParam("durations", "Durations")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-    param.setDisplayMinimum(0, 2)
-    param.setDisplayMaximum(100, 2)
-    param.setDefaultValue(0, 2)
-    param.restoreDefaultValue(2)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(150, 0)
-    param.setValue(100, 1)
-    param.setValue(50, 2)
-    lastNode.durations = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep6", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep6 = param
-    del param
-
-    param = lastNode.createStringParam("settings_label", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    SETTINGS :")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    SETTINGS :")
-    lastNode.settings_label = param
-    del param
-
-    param = lastNode.createChoiceParam("input_move", "Input")
-    entries = [ ("None", ""),
-    ("Left - Right", ""),
-    ("Right - Left", ""),
-    ("Up - Down", ""),
-    ("Down - Up", ""),
-    ("Scale", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Left - Right")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.input_move = param
-    del param
-
-    param = lastNode.createChoiceParam("output_move", "Output")
-    entries = [ ("None", ""),
-    ("Left - Right", ""),
-    ("Right - Left", ""),
-    ("Up - Down", ""),
-    ("Down - Up", ""),
-    ("Scale", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Left - Right")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.output_move = param
-    del param
-
-    param = lastNode.createChoiceParam("scale_dimension", "Scale Dimension")
-    entries = [ ("X", ""),
-    ("Y", ""),
-    ("Both", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Both")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setEnabled(False, 0)
-    lastNode.scale_dimension = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep8", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep8 = param
-    del param
-
-    param = lastNode.createBooleanParam("use_bbox", "Use Bounding Box Outside")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.use_bbox = param
-    del param
-
-    param = lastNode.createDoubleParam("bbox_extra", "Bounding Box Expand")
-    param.setMinimum(0, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.bbox_extra = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep7", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep7 = param
-    del param
-
-    param = lastNode.createIntParam("transition_duration", "Transition Duration %")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.transition_duration = param
-    del param
-
-    param = lastNode.createDoubleParam("bound", "Bound")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.bound = param
-    del param
-
-    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
-    param.setDisplayMinimum(-180, 0)
-    param.setDisplayMaximum(180, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_rotate = param
-    del param
-
-    param = lastNode.createDoubleParam("exaggeration", "Exaggeration")
-    param.setMinimum(0, 0)
-    param.setMaximum(1, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.7, 0)
-    lastNode.exaggeration = param
-    del param
-
-    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.motion_blur = param
-    del param
-
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "title_move"
-
-    # Start of node "Reformat1"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat1")
-    lastNode.setLabel("Reformat1")
-    lastNode.setPosition(1131, 530)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat1 = lastNode
-
-    param = lastNode.getParam("reformatType")
+    param = lastNode.getParam("size")
     if param is not None:
-        param.set("box")
+        param.setValue(981, 0)
+        param.setValue(10, 1)
         del param
 
-    param = lastNode.getParam("NatronParamFormatChoice")
+    param = lastNode.getParam("statMin")
     if param is not None:
-        param.set("PC_Video")
+        param.setValueAtTime(0, 58, 0)
+        param.setValueAtTime(0, 58, 1)
+        param.setValueAtTime(0, 58, 2)
+        param.setValueAtTime(0, 58, 3)
         del param
 
-    param = lastNode.getParam("boxSize")
+    param = lastNode.getParam("statMax")
     if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
+        param.setValueAtTime(1, 58, 0)
+        param.setValueAtTime(1, 58, 1)
+        param.setValueAtTime(1, 58, 2)
+        param.setValueAtTime(1, 58, 3)
+        del param
+
+    param = lastNode.getParam("statMean")
+    if param is not None:
+        param.setValueAtTime(0.03557214211121118, 58, 0)
+        param.setValueAtTime(0.03557214211121118, 58, 1)
+        param.setValueAtTime(0.03557214211121118, 58, 2)
+        param.setValueAtTime(0.03557214211121118, 58, 3)
+        del param
+
+    param = lastNode.getParam("statSDev")
+    if param is not None:
+        param.setValueAtTime(0.1778426736432799, 58, 0)
+        param.setValueAtTime(0.1778426736432799, 58, 1)
+        param.setValueAtTime(0.1778426736432799, 58, 2)
+        param.setValueAtTime(0.1778426736432799, 58, 3)
+        del param
+
+    param = lastNode.getParam("statSkewness")
+    if param is not None:
+        param.setValueAtTime(5.004227625346363, 58, 0)
+        param.setValueAtTime(5.004227625346363, 58, 1)
+        param.setValueAtTime(5.004227625346363, 58, 2)
+        param.setValueAtTime(5.004227625346363, 58, 3)
+        del param
+
+    param = lastNode.getParam("statKurtosis")
+    if param is not None:
+        param.setValueAtTime(23.34738458143361, 58, 0)
+        param.setValueAtTime(23.34738458143361, 58, 1)
+        param.setValueAtTime(23.34738458143361, 58, 2)
+        param.setValueAtTime(23.34738458143361, 58, 3)
         del param
 
     del lastNode
-    # End of node "Reformat1"
+    # End of node "ImageStatistics2"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupskew_node)
@@ -2706,91 +2504,19 @@ def createInstance(app,group):
     groupsubtitle_transform.connectInput(0, groupsubtitle_move)
     grouptitles_merge.connectInput(0, grouptitle_transform)
     grouptitles_merge.connectInput(1, groupsubtitle_transform)
-    groupMerge1.connectInput(0, groupReformat1)
+    groupMerge1.connectInput(0, groupreformat)
     groupMerge1.connectInput(1, grouprectangle_move)
     groupMerge1.connectInput(3, groupcroping)
-    groupTextFit0.connectInput(0, grouphd_transform)
     groupcroping.connectInput(0, grouptitles_merge)
     groupskew_node.connectInput(0, groupMerge1)
-    grouprectangle_move.connectInput(0, grouprectangle)
     groupsubtitle_move.connectInput(0, groupsubtitle_node)
     grouptitle_move.connectInput(0, grouptitle_node)
+    grouprectangle_move.connectInput(0, grouprectangle)
+    groupTextFit1.connectInput(0, grouphd_transform)
+    groupImageStatistics2.connectInput(0, groupTextFit1)
 
-    param = groupTextFit0.getParam("state_label")
-    param.setExpression("thisGroup.state_label.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("texts_label")
-    param.setExpression("thisGroup.texts_label.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("title")
-    param.setExpression("thisGroup.title.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("subtitle")
-    param.setExpression("thisGroup.subtitle.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("font")
-    param.setExpression("thisGroup.font.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("settings_label")
-    param.setExpression("thisGroup.settings_label.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("align")
-    param.setExpression("thisGroup.align.get()", False, 0)
-    del param
-    param = groupTextFit0.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = groupTextFit0.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     param = groupskew_node.getParam("skewX")
     param.setExpression("thisGroup.skew_text.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("state_label")
-    param.setExpression("thisGroup.state_label.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("speed")
-    param.setExpression("thisGroup.speed.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("time_label")
-    param.setExpression("thisGroup.time_label.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("start_frame")
-    param.setExpression("thisGroup.start_frame.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("durations")
-    param.setExpression("thisGroup.durations.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.durations.getValue(dimension)", False, 1)
-    param.setExpression("thisGroup.durations.getValue(dimension)", False, 2)
-    del param
-    param = grouprectangle_move.getParam("settings_label")
-    param.setExpression("thisGroup.settings_label.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("transition_duration")
-    param.setExpression("thisGroup.transition_duration.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("bound")
-    param.setExpression("thisGroup.bound.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("exaggeration")
-    param.setExpression("thisGroup.exaggeration.get()", False, 0)
-    del param
-    param = grouprectangle_move.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = grouprectangle_move.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = grouprectangle_move.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
     del param
     param = groupsubtitle_move.getParam("state_label")
     param.setExpression("thisGroup.state_label.get()", False, 0)
@@ -2804,8 +2530,8 @@ def createInstance(app,group):
     param = groupsubtitle_move.getParam("time_label")
     param.setExpression("thisGroup.time_label.get()", False, 0)
     del param
-    param = groupsubtitle_move.getParam("start_frame")
-    param.setExpression("thisGroup.start_frame.get()", False, 0)
+    param = groupsubtitle_move.getParam("duration_percent")
+    param.setExpression("thisGroup.subtitle_duration.get()", False, 0)
     del param
     param = groupsubtitle_move.getParam("durations")
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 0)
@@ -2824,16 +2550,6 @@ def createInstance(app,group):
     param = groupsubtitle_move.getParam("exaggeration")
     param.setExpression("thisGroup.exaggeration.get()", False, 0)
     del param
-    param = groupsubtitle_move.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = groupsubtitle_move.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = groupsubtitle_move.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     param = grouptitle_move.getParam("state_label")
     param.setExpression("thisGroup.state_label.get()", False, 0)
     del param
@@ -2846,12 +2562,11 @@ def createInstance(app,group):
     param = grouptitle_move.getParam("time_label")
     param.setExpression("thisGroup.time_label.get()", False, 0)
     del param
-    param = grouptitle_move.getParam("start_frame")
-    param.setExpression("thisGroup.start_frame.get()", False, 0)
+    param = grouptitle_move.getParam("duration_percent")
+    param.setExpression("thisGroup.title_duration.get()", False, 0)
     del param
     param = grouptitle_move.getParam("durations")
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.durations.getValue(dimension)", False, 1)
     param.setExpression("thisGroup.durations.getValue(dimension)", False, 2)
     del param
     param = grouptitle_move.getParam("settings_label")
@@ -2866,31 +2581,63 @@ def createInstance(app,group):
     param = grouptitle_move.getParam("exaggeration")
     param.setExpression("thisGroup.exaggeration.get()", False, 0)
     del param
-    param = grouptitle_move.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
+    param = grouprectangle_move.getParam("state_label")
+    param.setExpression("thisGroup.state_label.get()", False, 0)
     del param
-    param = grouptitle_move.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
+    param = grouprectangle_move.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
     del param
-    param = grouptitle_move.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
+    param = grouprectangle_move.getParam("speed")
+    param.setExpression("thisGroup.speed.get()", False, 0)
     del param
-    param = groupReformat1.getParam("boxSize")
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 1)
+    param = grouprectangle_move.getParam("time_label")
+    param.setExpression("thisGroup.time_label.get()", False, 0)
+    del param
+    param = grouprectangle_move.getParam("duration_percent")
+    param.setExpression("thisGroup.rectangle_duration.get()", False, 0)
+    del param
+    param = grouprectangle_move.getParam("durations")
+    param.setExpression("thisGroup.durations.getValue(dimension)", False, 0)
+    param.setExpression("thisGroup.durations.getValue(dimension)", False, 1)
+    param.setExpression("thisGroup.durations.getValue(dimension)", False, 2)
+    del param
+    param = grouprectangle_move.getParam("settings_label")
+    param.setExpression("thisGroup.settings_label.get()", False, 0)
+    del param
+    param = grouprectangle_move.getParam("transition_duration")
+    param.setExpression("thisGroup.transition_duration.get()", False, 0)
+    del param
+    param = grouprectangle_move.getParam("bound")
+    param.setExpression("thisGroup.bound.get()", False, 0)
+    del param
+    param = grouprectangle_move.getParam("exaggeration")
+    param.setExpression("thisGroup.exaggeration.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("state_label")
+    param.setExpression("thisGroup.state_label.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("format")
+    param.setExpression("thisGroup.format.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("texts_label")
+    param.setExpression("thisGroup.texts_label.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("title")
+    param.setExpression("thisGroup.title.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("subtitle")
+    param.setExpression("thisGroup.subtitle.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("font")
+    param.setExpression("thisGroup.font.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("settings_label")
+    param.setExpression("thisGroup.settings_label.get()", False, 0)
+    del param
+    param = groupTextFit1.getParam("align")
+    param.setExpression("thisGroup.align.get()", False, 0)
     del param
 
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["TextSideExt"]
     except KeyError:

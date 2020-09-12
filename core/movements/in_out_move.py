@@ -1,6 +1,6 @@
 import NatronEngine
 from nx import getNode, get_bbox
-from base import link_to_parent, get_duration, get_start_frame, get_rscale
+from base import link_to_parent, get_duration, get_start_frame, get_rscale, get_format
 from movements_common import center_from_input_bbox
 
 

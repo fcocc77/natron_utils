@@ -1,7 +1,6 @@
 modules:
-    ☐ sacar la opcion de 'start_frame' de todos los nodos, solo dejarlo en el nodo de la slide @today 
-    ☐ crear nuevo parametros para los nodos de efectos que usaban 'start_frame' que se llame 'duration_percent' @today 
-    ☐ la funcion de 'link to parent' modificarla para que funcione con el nuevo parametro de 'duration_percent' si el efecto lo tiene @today 
+    ✔ sacar la opcion de 'start_frame' de todos los nodos, solo dejarlo en el nodo de la slide @today @done (9/12/2020, 8:45:55 PM)
+    ✔ crear nuevo parametros para los nodos de efectos que usaban 'start_frame' que se llame 'duration_percent' @today @done (9/12/2020, 8:45:59 PM)
     videovina:
         ✔ la animacion de cada slide queda corta, ya que se penso solo para la mitad del tiempo de la transicion, y dependiendo de la transicion la slide se ve a lo largo de toda la transicion. @today @done (8/7/2020, 11:55:39 AM)
     vina:
