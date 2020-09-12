@@ -60,7 +60,14 @@ Templates:
         ☐ color rojiso de atardecer
     wedding_03:
 Templates Bases:
+    blurred:
+        ☐ opcion para las letras random en el nodo de 'letter_animation'
     ink:
+        ☐ crear background con textura de pergamino
+        ☐ falta calcar 2 formas mas
+        ☐ crear 4 slide diferentes con el ink base
+        ☐ crear 1 slide con multi fotos
+        ☐ crear overlap de particulas y polvo
     glass:
         ☐ textura de rasguños
         transition:
