@@ -1,4 +1,4 @@
-from base import link_to_parent, children_refresh
+from base import link_to_parent, children_refresh, reformat_update
 import os
 from nx import getNode
 
@@ -27,6 +27,9 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def refresh(thisNode):
+    reformat_update(thisNode, 'reformat_a')
+    reformat_update(thisNode, 'reformat_b')
+
     texture_refresh(thisNode)
     files_refresh(thisNode, 'film')
     files_refresh(thisNode, 'flare')

@@ -593,48 +593,8 @@ def createInstance(app,group):
     lastNode.render = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -677,7 +637,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(film_05_0232.jpg)</Natron>")
+        param.setValue("<Natron>(film_05_0052.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
@@ -793,7 +753,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(more_spectral_colour_flares_0532.jpg)</Natron>")
+        param.setValue("<Natron>(more_spectral_colour_flares_0052.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
@@ -1089,23 +1049,18 @@ def createInstance(app,group):
     del lastNode
     # End of node "Premult1"
 
-    # Start of node "Reformat1_2"
+    # Start of node "reformat_a"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat1_2")
-    lastNode.setLabel("Reformat1_2")
-    lastNode.setPosition(1893, 84)
-    lastNode.setSize(104, 30)
+    lastNode.setScriptName("reformat_a")
+    lastNode.setLabel("reformat_a")
+    lastNode.setPosition(1898, 80)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat1_2 = lastNode
+    groupreformat_a = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
         param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
         del param
 
     param = lastNode.getParam("NatronParamFormatSize")
@@ -1126,7 +1081,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Reformat1_2"
+    # End of node "reformat_a"
 
     # Start of node "display"
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
@@ -1305,23 +1260,18 @@ def createInstance(app,group):
     del lastNode
     # End of node "Switch1"
 
-    # Start of node "Reformat1_2_2"
+    # Start of node "reformat_b"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat1_2_2")
-    lastNode.setLabel("Reformat1_2_2")
-    lastNode.setPosition(811, 495)
-    lastNode.setSize(104, 30)
+    lastNode.setScriptName("reformat_b")
+    lastNode.setLabel("reformat_b")
+    lastNode.setPosition(814, 495)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat1_2_2 = lastNode
+    groupreformat_b = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
         param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
         del param
 
     param = lastNode.getParam("NatronParamFormatSize")
@@ -1341,13 +1291,8 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("filter")
-    if param is not None:
-        param.set("impulse")
-        del param
-
     del lastNode
-    # End of node "Reformat1_2_2"
+    # End of node "reformat_b"
 
     # Start of node "TwelveRead3"
     lastNode = app.createNode("vv.TwelveRead", 1, group)
@@ -2265,7 +2210,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("Reformat5")
     lastNode.setLabel("Reformat5")
-    lastNode.setPosition(2996, 79)
+    lastNode.setPosition(2998, 79)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat5 = lastNode
@@ -2440,7 +2385,7 @@ def createInstance(app,group):
     groupMerge2.connectInput(0, groupShuffle2)
     groupMerge2.connectInput(1, groupReformat1)
     groupPremult1.connectInput(0, groupMerge2)
-    groupReformat1_2.connectInput(0, groupMerge4)
+    groupreformat_a.connectInput(0, groupMerge4)
     groupdisplay.connectInput(0, groupMerge6)
     groupdisplay.connectInput(1, groupDot2)
     groupdisplay.connectInput(2, groupDot5)
@@ -2450,13 +2395,13 @@ def createInstance(app,group):
     groupDot4.connectInput(0, groupDot6)
     groupDot5.connectInput(0, groupDot4)
     groupColorCorrect1.connectInput(0, groupflare_file)
-    groupread_prerender.connectInput(0, groupReformat1_2)
+    groupread_prerender.connectInput(0, groupreformat_a)
     groupread_prerender.connectInput(1, groupTwelveRead3)
     groupReformat3.connectInput(0, groupfilm_file)
     groupDot6.connectInput(0, groupBlur2)
-    groupSwitch1.connectInput(0, groupReformat1_2_2)
+    groupSwitch1.connectInput(0, groupreformat_b)
     groupSwitch1.connectInput(1, groupnoise_reader)
-    groupReformat1_2_2.connectInput(0, groupMerge7)
+    groupreformat_b.connectInput(0, groupMerge7)
     grouptexture_render.connectInput(0, groupMerge4)
     groupnoise_render.connectInput(0, groupMerge7)
     groupReformat4.connectInput(0, grouptexture_file)
@@ -2481,10 +2426,6 @@ def createInstance(app,group):
     param = groupSeGrain1.getParam("mix")
     param.setExpression("thisGroup.grain.get()", False, 0)
     del param
-    param = groupReformat1_2.getParam("boxSize")
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 1)
-    del param
     param = groupColorCorrect1.getParam("MasterSaturation")
     param.setExpression("thisGroup.flare_saturation.get()", False, 0)
     param.setExpression("thisGroup.flare_saturation.get()", False, 1)
@@ -2508,10 +2449,6 @@ def createInstance(app,group):
     del param
     param = groupSwitch1.getParam("which")
     param.setExpression("thisGroup.read.get()", False, 0)
-    del param
-    param = groupReformat1_2_2.getParam("boxSize")
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 1)
     del param
     param = groupTwelveRead3.getParam("format")
     param.setExpression("thisGroup.format.get()", False, 0)
@@ -2559,13 +2496,6 @@ def createInstance(app,group):
     param.setExpression("thisGroup.texture_mix.get()", False, 0)
     del param
 
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["TextureOverlayExt"]
     except KeyError:

@@ -1,6 +1,7 @@
 import NatronEngine
 from nx import getNode
 from animations import exaggerated_animation
+from base import get_rscale, get_duration, reformat_update, get_format
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -15,11 +16,14 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 def refresh(thisNode):
 
+    reformat_update(thisNode, 'reformat')
+
     dissolve = thisNode.Dissolve1.which
     start_frame = thisNode.getParam('start_frame').get()
-    rscale = thisNode.getParam('rscale').get()
+    rscale = get_rscale(thisNode)
+    current_format = get_format(thisNode)
 
-    duration = thisNode.getParam('duration').get()
+    duration = get_duration(thisNode)
 
     # animacion para el 'dissolve' solo con la mitad de la duracion
     mid_duration = duration / 2
@@ -32,6 +36,7 @@ def refresh(thisNode):
     exaggerated_animation(src_blur_param, duration, start_frame, [0, blur_size])
 
     src_transform = getNode(thisNode, 'src_transform')
+    src_transform.getParam('center').set(current_format[0] / 2, current_format[1] / 2)
 
     src_rotate_param = src_transform.getParam('rotate')
     src_rotate = thisNode.getParam('src_rotate').get()
@@ -42,6 +47,7 @@ def refresh(thisNode):
     exaggerated_animation(src_scale_param, duration, start_frame, [1.0, src_scale])
 
     dst_transform = getNode(thisNode, 'dst_transform')
+    dst_transform.getParam('center').set(current_format[0] / 2, current_format[1] / 2)
 
     dst_rotate_param = dst_transform.getParam('rotate')
     dst_rotate = thisNode.getParam('dst_rotate').get()

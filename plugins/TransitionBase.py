@@ -335,65 +335,8 @@ def createInstance(app,group):
     lastNode.render = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -718,20 +661,7 @@ def createInstance(app,group):
     param = groupTimeOffset.getParam("timeOffset")
     param.setExpression("thisGroup.start_frame.get()", False, 0)
     del param
-    param = groupMerge2.getParam("mix")
-    param.setExpression("thisGroup.include_text.get()", False, 0)
-    del param
 
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["TransitionBaseExt"]
     except KeyError:

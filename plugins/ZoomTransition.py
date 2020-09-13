@@ -78,7 +78,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Half HD - 960 x 540")
     lastNode.format = param
     del param
 
@@ -98,7 +97,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.set("Slow")
     lastNode.speed = param
     del param
 
@@ -168,7 +166,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
+    param.setValue(1, 0)
     lastNode.start_frame = param
     del param
 
@@ -329,65 +327,8 @@ def createInstance(app,group):
     lastNode.blur = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(960, 0)
-    param.setValue(540, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -437,10 +378,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValueAtTime(0, 125, 0)
-        param.setValueAtTime(0.3, 142.5, 0)
-        param.setValueAtTime(1.7, 157.5, 0)
-        param.setValueAtTime(2, 175, 0)
+        param.setValueAtTime(0, 13, 0)
+        param.setValueAtTime(0.3, 21.4, 0)
+        param.setValueAtTime(1.7, 29.6, 0)
+        param.setValueAtTime(2, 38, 0)
         del param
 
     del lastNode
@@ -457,28 +398,28 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(0, 100, 0)
-        param.setValueAtTime(1.5, 135, 0)
-        param.setValueAtTime(8.5, 165, 0)
-        param.setValueAtTime(10, 200, 0)
+        param.setValueAtTime(0, 1, 0)
+        param.setValueAtTime(1.5, 18.5, 0)
+        param.setValueAtTime(8.5, 33.5, 0)
+        param.setValueAtTime(10, 51, 0)
         del param
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValueAtTime(1, 100, 0)
-        param.setValueAtTime(0.85, 135, 0)
-        param.setValueAtTime(0.15, 165, 0)
-        param.setValueAtTime(0, 200, 0)
-        param.setValueAtTime(1, 100, 1)
-        param.setValueAtTime(0.85, 135, 1)
-        param.setValueAtTime(0.15, 165, 1)
-        param.setValueAtTime(0, 200, 1)
+        param.setValueAtTime(1, 1, 0)
+        param.setValueAtTime(0.85, 18.5, 0)
+        param.setValueAtTime(0.15, 33.5, 0)
+        param.setValueAtTime(0, 51, 0)
+        param.setValueAtTime(1, 1, 1)
+        param.setValueAtTime(0.85, 18.5, 1)
+        param.setValueAtTime(0.15, 33.5, 1)
+        param.setValueAtTime(0, 51, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(480, 0)
-        param.setValue(270, 1)
+        param.setValue(960, 0)
+        param.setValue(540, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -500,28 +441,28 @@ def createInstance(app,group):
 
     param = lastNode.getParam("rotate")
     if param is not None:
-        param.setValueAtTime(-10, 100, 0)
-        param.setValueAtTime(-8.5, 135, 0)
-        param.setValueAtTime(-1.5, 165, 0)
-        param.setValueAtTime(0, 200, 0)
+        param.setValueAtTime(-10, 1, 0)
+        param.setValueAtTime(-8.5, 18.5, 0)
+        param.setValueAtTime(-1.5, 33.5, 0)
+        param.setValueAtTime(0, 51, 0)
         del param
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValueAtTime(3, 100, 0)
-        param.setValueAtTime(2.7, 135, 0)
-        param.setValueAtTime(1.3, 165, 0)
-        param.setValueAtTime(1, 200, 0)
-        param.setValueAtTime(3, 100, 1)
-        param.setValueAtTime(2.7, 135, 1)
-        param.setValueAtTime(1.3, 165, 1)
-        param.setValueAtTime(1, 200, 1)
+        param.setValueAtTime(3, 1, 0)
+        param.setValueAtTime(2.7, 18.5, 0)
+        param.setValueAtTime(1.3, 33.5, 0)
+        param.setValueAtTime(1, 51, 0)
+        param.setValueAtTime(3, 1, 1)
+        param.setValueAtTime(2.7, 18.5, 1)
+        param.setValueAtTime(1.3, 33.5, 1)
+        param.setValueAtTime(1, 51, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(480, 0)
-        param.setValue(270, 1)
+        param.setValue(960, 0)
+        param.setValue(540, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -543,42 +484,43 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValueAtTime(0, 100, 0)
-        param.setValueAtTime(15, 135, 0)
-        param.setValueAtTime(85, 165, 0)
-        param.setValueAtTime(100, 200, 0)
-        param.setValueAtTime(0, 100, 1)
-        param.setValueAtTime(15, 135, 1)
-        param.setValueAtTime(85, 165, 1)
-        param.setValueAtTime(100, 200, 1)
+        param.setValueAtTime(0, 1, 0)
+        param.setValueAtTime(30, 18.5, 0)
+        param.setValueAtTime(170, 33.5, 0)
+        param.setValueAtTime(200, 51, 0)
+        param.setValueAtTime(0, 1, 1)
+        param.setValueAtTime(30, 18.5, 1)
+        param.setValueAtTime(170, 33.5, 1)
+        param.setValueAtTime(200, 51, 1)
         del param
 
     del lastNode
     # End of node "src_blur"
 
-    # Start of node "Reformat2"
+    # Start of node "reformat"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat2")
-    lastNode.setLabel("Reformat2")
+    lastNode.setScriptName("reformat")
+    lastNode.setLabel("reformat")
     lastNode.setPosition(981, 246)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat2 = lastNode
+    groupreformat = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
         param.set("box")
         del param
 
-    param = lastNode.getParam("NatronParamFormatChoice")
+    param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:
-        param.set("PC_Video")
+        param.setValue(2560, 0)
+        param.setValue(1440, 1)
         del param
 
     param = lastNode.getParam("boxSize")
     if param is not None:
-        param.setValue(960, 0)
-        param.setValue(540, 1)
+        param.setValue(1920, 0)
+        param.setValue(1080, 1)
         del param
 
     param = lastNode.getParam("boxFixed")
@@ -587,40 +529,17 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Reformat2"
+    # End of node "reformat"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupDissolve1)
     groupDissolve1.connectInput(0, groupsrc_blur)
-    groupDissolve1.connectInput(1, groupReformat2)
+    groupDissolve1.connectInput(1, groupreformat)
     groupDissolve1.connectInput(3, groupdst_transform)
     groupsrc_transform.connectInput(0, groupA)
     groupdst_transform.connectInput(0, groupB)
     groupsrc_blur.connectInput(0, groupsrc_transform)
 
-    param = groupsrc_transform.getParam("center")
-    param.setExpression("thisGroup.current_format.get()[dimension] / 2", False, 0)
-    param.setExpression("thisGroup.current_format.get()[dimension] / 2", False, 1)
-    del param
-    param = groupdst_transform.getParam("center")
-    param.setExpression("thisGroup.current_format.get()[dimension] / 2", False, 0)
-    param.setExpression("thisGroup.current_format.get()[dimension] / 2", False, 1)
-    del param
-    param = groupReformat2.getParam("boxSize")
-    param.setExpression("thisGroup.current_format.get()[dimension]", False, 0)
-    param.setExpression("thisGroup.current_format.get()[dimension]", False, 1)
-    del param
-
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["ZoomTransitionExt"]
     except KeyError:
