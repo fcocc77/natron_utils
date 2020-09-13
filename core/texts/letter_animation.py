@@ -203,11 +203,13 @@ def create_word(thisNode, text, conection, _type):
     idxs = range(letters_amount)
 
     # el desfase en el tiempo de las letras
-    reverse = thisNode.letter_gap_direction.get()
-    if (reverse):
-        gaps = reversed(idxs)
-    else:
+    gap_direction = thisNode.letter_gap_direction.get()
+    if gap_direction == 0:
         gaps = idxs
+    elif gap_direction == 1:
+        gaps = list(reversed(idxs))
+    else:
+        gaps = random.sample(idxs, letters_amount)
 
     position = 0
     node_position = 1000
