@@ -1,4 +1,4 @@
-from base import link_to_parent
+from base import link_to_parent, reformat_update, get_rscale, get_start_frame, get_duration
 from nx import getNode, app, createNode, node_delete, autocrop, bbox_bake, question
 from text_base import set_font, transfer_transform
 from text_fit import calcule_text_transform
@@ -41,6 +41,9 @@ def text_generator(thisNode):
 
 
 def refresh(thisNode):
+
+    reformat_update(thisNode, 'reformat')
+
     set_general_transform(thisNode)
 
     text_fit = getNode(thisNode, 'TextFit')
@@ -70,8 +73,8 @@ def refresh_output(thisNode):
     # time
     frame_range = getNode(thisNode, 'FrameRange').getParam('frameRange')
 
-    duration = thisNode.getParam('duration').get()
-    start_frame = thisNode.getParam('start_frame').get()
+    duration = get_duration(thisNode, base=True)
+    start_frame = 1
     last_frame = start_frame + duration
 
     frame_range.set(start_frame, last_frame)
@@ -114,7 +117,7 @@ def set_general_transform(thisNode):
     general_transform = getNode(thisNode, 'general_transform')
     origina_input_transform = getNode(thisNode, 'origina_input_transform')
 
-    transfer_transform(input_transform, general_transform, thisNode.rscale.get())
+    transfer_transform(input_transform, general_transform, get_rscale(thisNode))
     transfer_transform(input_transform, origina_input_transform)
 
 
@@ -340,7 +343,7 @@ def refresh_word(thisNode, _type):
 
 def calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type):
 
-    transition_duration = (thisNode.transition.get() * thisNode.duration.get()) / 100
+    transition_duration = (thisNode.transition.get() * get_duration(thisNode)) / 100
 
     letter_gap_percent = thisNode.letter_gap.get()
     word_gap_percent = thisNode.word_gap.get()
@@ -373,7 +376,8 @@ def calculate_duration_and_gap(thisNode, letters_amount, letter_gap_idx, _type):
             _word_gap = word_gap_amount
 
     letter_gap = letter_gap_idx * letter_gap_amount
-    gap = thisNode.start_frame.get() + letter_gap + _word_gap
+    start_frame = get_start_frame(thisNode)
+    gap = start_frame + letter_gap + _word_gap
 
     return [duration, gap]
 
@@ -451,12 +455,13 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     #
 
     # Blur
+    rscale = get_rscale(thisNode)
     blur.getParam('cropToFormat').set(False)
 
-    blur_x_from = thisNode.getParam('blur_x').get() * thisNode.rscale.get()
+    blur_x_from = thisNode.getParam('blur_x').get() * rscale
     animation(blur.getParam('size'), [blur_x_from, 0], dimension=0)
 
-    blur_y_from = thisNode.getParam('blur_y').get() * thisNode.rscale.get()
+    blur_y_from = thisNode.getParam('blur_y').get() * rscale
     animation(blur.getParam('size'), [blur_y_from, 0], dimension=1)
 
     #
@@ -465,7 +470,7 @@ def refresh_letter(thisNode, text, crop, local_transform, blur, transform, merge
     #
 
     # Transform
-    displacement = thisNode.getParam('displacement').get() * thisNode.rscale.get()
+    displacement = thisNode.getParam('displacement').get() * rscale
 
     translate = transform.getParam('translate')
     translate.setValue(0, 1)

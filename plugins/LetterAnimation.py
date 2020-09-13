@@ -153,7 +153,9 @@ def createInstance(app,group):
     lastNode.time_label = param
     del param
 
-    param = lastNode.createIntParam("start_frame", "Start Frame")
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -166,7 +168,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    lastNode.start_frame = param
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
     del param
 
     param = lastNode.createInt3DParam("durations", "Durations")
@@ -661,65 +664,8 @@ def createInstance(app,group):
     lastNode.texts_refresh = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -757,19 +703,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(639.000856185075, 0)
-        param.setValue(485.9500691534099, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(18.62949147674651, 0)
+        param.setValue(989, 0)
+        param.setValue(659.7, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(272.999143814925, 0)
-        param.setValue(22.04993084659009, 1)
+        param.setValue(291, 0)
+        param.setValue(60.30000000000001, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -806,19 +747,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(392.2516300446619, 0)
-        param.setValue(243.4008298409188, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(18.62949147674651, 0)
+        param.setValue(896, 0)
+        param.setValue(508.8, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(519.748369955338, 0)
-        param.setValue(264.5991701590812, 1)
+        param.setValue(384, 0)
+        param.setValue(211.2, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -855,21 +791,10 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     groupgeneral_transform = lastNode
 
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(-48, 0)
-        param.setValue(-32, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(18.62949147674651, 0)
-        del param
-
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.5249983534902405, 0)
-        param.setValue(0.5249983534902405, 1)
+        param.setValue(0.3, 0)
+        param.setValue(0.3, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -880,23 +805,24 @@ def createInstance(app,group):
     del lastNode
     # End of node "general_transform"
 
-    # Start of node "Reformat1"
+    # Start of node "reformat"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat1")
-    lastNode.setLabel("Reformat1")
-    lastNode.setPosition(-55, 922)
-    lastNode.setSize(100, 29)
+    lastNode.setScriptName("reformat")
+    lastNode.setLabel("reformat")
+    lastNode.setPosition(-53, 922)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat1 = lastNode
+    groupreformat = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
         param.set("box")
         del param
 
-    param = lastNode.getParam("NatronParamFormatChoice")
+    param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:
-        param.set("PC_Video")
+        param.setValue(2560, 0)
+        param.setValue(1440, 1)
         del param
 
     param = lastNode.getParam("boxSize")
@@ -905,14 +831,19 @@ def createInstance(app,group):
         param.setValue(1080, 1)
         del param
 
+    param = lastNode.getParam("boxFixed")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     del lastNode
-    # End of node "Reformat1"
+    # End of node "reformat"
 
     # Start of node "Merge4"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge4")
     lastNode.setLabel("Merge4")
-    lastNode.setPosition(172, 914)
+    lastNode.setPosition(172, 916)
     lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
@@ -930,19 +861,13 @@ def createInstance(app,group):
     lastNode.setScriptName("FrameRange")
     lastNode.setLabel("FrameRange")
     lastNode.setPosition(172, 1066)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameRange = lastNode
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(0, 0)
-        param.setValue(100, 1)
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(0 - 100)</Natron>")
+        param.setValue(101, 1)
         del param
 
     del lastNode
@@ -952,8 +877,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Retime", 1, group)
     lastNode.setScriptName("time_reverse")
     lastNode.setLabel("time_reverse")
-    lastNode.setPosition(501, 1074)
-    lastNode.setSize(100, 29)
+    lastNode.setPosition(501, 1079)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.65, 0.35)
     grouptime_reverse = lastNode
 
@@ -989,8 +914,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValueAtTime(0, 50, 0)
-        param.setValueAtTime(1, 51, 0)
+        param.setValueAtTime(0, 51, 0)
+        param.setValueAtTime(1, 52, 0)
         del param
 
     del lastNode
@@ -1018,210 +943,210 @@ def createInstance(app,group):
 
     param = lastNode.getParam("bottomLeft")
     if param is not None:
-        param.setValueAtTime(238.2870332804825, 50, 0)
-        param.setValueAtTime(238.2870332804825, 51, 0)
-        param.setValueAtTime(238.2870332804825, 52, 0)
-        param.setValueAtTime(238.2870332804825, 53, 0)
-        param.setValueAtTime(238.2870332804825, 54, 0)
-        param.setValueAtTime(238.3129636349337, 55, 0)
-        param.setValueAtTime(238.5303249064833, 56, 0)
-        param.setValueAtTime(239.0283565597697, 57, 0)
-        param.setValueAtTime(234.5822605751152, 58, 0)
-        param.setValueAtTime(235.2660235441974, 59, 0)
-        param.setValueAtTime(237.6893391926757, 60, 0)
-        param.setValueAtTime(240.1369706806856, 61, 0)
-        param.setValueAtTime(242.2202275933286, 62, 0)
-        param.setValueAtTime(246.2928992559222, 63, 0)
-        param.setValueAtTime(250.6596457839831, 64, 0)
-        param.setValueAtTime(256.7510568477652, 65, 0)
-        param.setValueAtTime(264.467052540415, 66, 0)
-        param.setValueAtTime(275.648791571683, 67, 0)
-        param.setValueAtTime(290.0941324586453, 68, 0)
-        param.setValueAtTime(308.1510355094929, 69, 0)
-        param.setValueAtTime(332.6965757098749, 70, 0)
-        param.setValueAtTime(333.6631048561875, 71, 0)
-        param.setValueAtTime(325.7888052626114, 72, 0)
-        param.setValueAtTime(317.0437077808215, 73, 0)
-        param.setValueAtTime(312.5559468683375, 74, 0)
-        param.setValueAtTime(310.5822971934336, 75, 0)
-        param.setValueAtTime(313.5506211656364, 76, 0)
-        param.setValueAtTime(323.030171939932, 77, 0)
-        param.setValueAtTime(339.9556135242876, 78, 0)
-        param.setValueAtTime(366.408829689256, 79, 0)
-        param.setValueAtTime(403.4464429742562, 80, 0)
-        param.setValueAtTime(402.9866395692238, 81, 0)
-        param.setValueAtTime(403.7429044244878, 82, 0)
-        param.setValueAtTime(402.4358591439901, 83, 0)
-        param.setValueAtTime(379.8860009211413, 84, 0)
-        param.setValueAtTime(367.549165441364, 85, 0)
-        param.setValueAtTime(367.0145028150257, 86, 0)
-        param.setValueAtTime(382.7157044687797, 87, 0)
-        param.setValueAtTime(414.8507836875036, 88, 0)
-        param.setValueAtTime(466.034151812699, 89, 0)
-        param.setValueAtTime(477.2908376497417, 90, 0)
-        param.setValueAtTime(460.4337236953467, 91, 0)
-        param.setValueAtTime(429.9889604203452, 92, 0)
-        param.setValueAtTime(395.2884374500147, 93, 0)
-        param.setValueAtTime(477.9583380607816, 94, 0)
-        param.setValueAtTime(514.0264033510605, 95, 0)
-        param.setValueAtTime(567.6227766241659, 96, 0)
-        param.setValueAtTime(623.4483879372624, 97, 0)
-        param.setValueAtTime(580.1972490640588, 98, 0)
-        param.setValueAtTime(549.5111329959529, 99, 0)
-        param.setValueAtTime(259.9252129723475, 50, 1)
-        param.setValueAtTime(259.8852644382758, 51, 1)
-        param.setValueAtTime(259.7472506268023, 52, 1)
-        param.setValueAtTime(258.6571315356425, 53, 1)
-        param.setValueAtTime(258.2873487573608, 54, 1)
-        param.setValueAtTime(257.6915167659013, 55, 1)
-        param.setValueAtTime(256.9466972159766, 56, 1)
-        param.setValueAtTime(256.1794677428543, 57, 1)
-        param.setValueAtTime(250.2878022650969, 58, 1)
-        param.setValueAtTime(249.0225565123775, 59, 1)
-        param.setValueAtTime(248.7171993760178, 60, 1)
-        param.setValueAtTime(247.3179415097954, 61, 1)
-        param.setValueAtTime(246.0013074335108, 62, 1)
-        param.setValueAtTime(245.334576575085, 63, 1)
-        param.setValueAtTime(244.0199597013868, 64, 1)
-        param.setValueAtTime(244.6253919403956, 65, 1)
-        param.setValueAtTime(245.3118079593666, 66, 1)
-        param.setValueAtTime(245.3167248400878, 67, 1)
-        param.setValueAtTime(247.0765638862285, 68, 1)
-        param.setValueAtTime(251.5287081343456, 69, 1)
-        param.setValueAtTime(258.1962773748509, 70, 1)
-        param.setValueAtTime(250.1888147293274, 71, 1)
-        param.setValueAtTime(235.3574325659912, 72, 1)
-        param.setValueAtTime(220.1958335448812, 73, 1)
-        param.setValueAtTime(209.2555602577362, 74, 1)
-        param.setValueAtTime(202.4838619078038, 75, 1)
-        param.setValueAtTime(201.8591607705972, 76, 1)
-        param.setValueAtTime(206.2342145142887, 77, 1)
-        param.setValueAtTime(211.8922126559619, 78, 1)
-        param.setValueAtTime(226.5196262243386, 79, 1)
-        param.setValueAtTime(253.0310256184732, 80, 1)
-        param.setValueAtTime(290.4184363107595, 81, 1)
-        param.setValueAtTime(271.5924291857389, 82, 1)
-        param.setValueAtTime(244.9746940963682, 83, 1)
-        param.setValueAtTime(226.3882409110137, 84, 1)
-        param.setValueAtTime(218.3630950834496, 85, 1)
-        param.setValueAtTime(215.8455280364803, 86, 1)
-        param.setValueAtTime(217.7764567241051, 87, 1)
-        param.setValueAtTime(234.9548107311022, 88, 1)
-        param.setValueAtTime(288.5310400736437, 89, 1)
-        param.setValueAtTime(350.3381863554154, 90, 1)
-        param.setValueAtTime(353.9985629460441, 91, 1)
-        param.setValueAtTime(323.1784921193387, 92, 1)
-        param.setValueAtTime(311.0239895475895, 93, 1)
-        param.setValueAtTime(533.8867384216734, 94, 1)
-        param.setValueAtTime(545.3703234072207, 95, 1)
-        param.setValueAtTime(597.9014839749839, 96, 1)
-        param.setValueAtTime(661.675882572981, 97, 1)
-        param.setValueAtTime(643.5160758561765, 98, 1)
-        param.setValueAtTime(654.4053737379168, 99, 1)
+        param.setValueAtTime(898, 51, 0)
+        param.setValueAtTime(898, 52, 0)
+        param.setValueAtTime(898, 53, 0)
+        param.setValueAtTime(898, 54, 0)
+        param.setValueAtTime(898, 55, 0)
+        param.setValueAtTime(898, 56, 0)
+        param.setValueAtTime(898, 57, 0)
+        param.setValueAtTime(898, 58, 0)
+        param.setValueAtTime(898, 59, 0)
+        param.setValueAtTime(898, 60, 0)
+        param.setValueAtTime(898, 61, 0)
+        param.setValueAtTime(898, 62, 0)
+        param.setValueAtTime(898, 63, 0)
+        param.setValueAtTime(898, 64, 0)
+        param.setValueAtTime(898, 65, 0)
+        param.setValueAtTime(898, 66, 0)
+        param.setValueAtTime(898, 67, 0)
+        param.setValueAtTime(898, 68, 0)
+        param.setValueAtTime(898, 69, 0)
+        param.setValueAtTime(898, 70, 0)
+        param.setValueAtTime(898, 71, 0)
+        param.setValueAtTime(898, 72, 0)
+        param.setValueAtTime(898, 73, 0)
+        param.setValueAtTime(898, 74, 0)
+        param.setValueAtTime(898, 75, 0)
+        param.setValueAtTime(898, 76, 0)
+        param.setValueAtTime(898, 77, 0)
+        param.setValueAtTime(898, 78, 0)
+        param.setValueAtTime(898, 79, 0)
+        param.setValueAtTime(897.0375022032714, 80, 0)
+        param.setValueAtTime(929.9207180336132, 81, 0)
+        param.setValueAtTime(987.4839358758909, 82, 0)
+        param.setValueAtTime(1021.113341894822, 83, 0)
+        param.setValueAtTime(1098.888181127504, 84, 0)
+        param.setValueAtTime(1202.560762111194, 85, 0)
+        param.setValueAtTime(0, 86, 0)
+        param.setValueAtTime(0, 87, 0)
+        param.setValueAtTime(0, 88, 0)
+        param.setValueAtTime(0, 89, 0)
+        param.setValueAtTime(0, 90, 0)
+        param.setValueAtTime(0, 91, 0)
+        param.setValueAtTime(0, 92, 0)
+        param.setValueAtTime(0, 93, 0)
+        param.setValueAtTime(0, 94, 0)
+        param.setValueAtTime(0, 95, 0)
+        param.setValueAtTime(0, 96, 0)
+        param.setValueAtTime(0, 97, 0)
+        param.setValueAtTime(0, 98, 0)
+        param.setValueAtTime(0, 99, 0)
+        param.setValueAtTime(0, 100, 0)
+        param.setValueAtTime(535.8, 51, 1)
+        param.setValueAtTime(535.8, 52, 1)
+        param.setValueAtTime(535.8, 53, 1)
+        param.setValueAtTime(535.8, 54, 1)
+        param.setValueAtTime(535.8, 55, 1)
+        param.setValueAtTime(535.8, 56, 1)
+        param.setValueAtTime(535.8, 57, 1)
+        param.setValueAtTime(535.8, 58, 1)
+        param.setValueAtTime(535.8, 59, 1)
+        param.setValueAtTime(535.8, 60, 1)
+        param.setValueAtTime(535.8, 61, 1)
+        param.setValueAtTime(535.8, 62, 1)
+        param.setValueAtTime(535.8, 63, 1)
+        param.setValueAtTime(535.8, 64, 1)
+        param.setValueAtTime(535.8, 65, 1)
+        param.setValueAtTime(535.8, 66, 1)
+        param.setValueAtTime(535.8, 67, 1)
+        param.setValueAtTime(535.8, 68, 1)
+        param.setValueAtTime(535.8, 69, 1)
+        param.setValueAtTime(535.8, 70, 1)
+        param.setValueAtTime(535.8, 71, 1)
+        param.setValueAtTime(535.8, 72, 1)
+        param.setValueAtTime(535.7899312483609, 73, 1)
+        param.setValueAtTime(530.8, 74, 1)
+        param.setValueAtTime(526.8, 75, 1)
+        param.setValueAtTime(520.8, 76, 1)
+        param.setValueAtTime(512.8, 77, 1)
+        param.setValueAtTime(512.8, 78, 1)
+        param.setValueAtTime(511.8, 79, 1)
+        param.setValueAtTime(511.8, 80, 1)
+        param.setValueAtTime(510.8, 81, 1)
+        param.setValueAtTime(510.8, 82, 1)
+        param.setValueAtTime(509.8, 83, 1)
+        param.setValueAtTime(509.8, 84, 1)
+        param.setValueAtTime(666.7, 85, 1)
+        param.setValueAtTime(0, 86, 1)
+        param.setValueAtTime(0, 87, 1)
+        param.setValueAtTime(0, 88, 1)
+        param.setValueAtTime(0, 89, 1)
+        param.setValueAtTime(0, 90, 1)
+        param.setValueAtTime(0, 91, 1)
+        param.setValueAtTime(0, 92, 1)
+        param.setValueAtTime(0, 93, 1)
+        param.setValueAtTime(0, 94, 1)
+        param.setValueAtTime(0, 95, 1)
+        param.setValueAtTime(0, 96, 1)
+        param.setValueAtTime(0, 97, 1)
+        param.setValueAtTime(0, 98, 1)
+        param.setValueAtTime(0, 99, 1)
+        param.setValueAtTime(0, 100, 1)
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValueAtTime(1123.957437124015, 50, 0)
-        param.setValueAtTime(1123.957437124015, 51, 0)
-        param.setValueAtTime(1123.957437124015, 52, 0)
-        param.setValueAtTime(1123.957437124015, 53, 0)
-        param.setValueAtTime(1123.957437124015, 54, 0)
-        param.setValueAtTime(1125.36109549548, 55, 0)
-        param.setValueAtTime(1130.447753678689, 56, 0)
-        param.setValueAtTime(1136.284805470273, 57, 0)
-        param.setValueAtTime(1151.1849615356, 58, 0)
-        param.setValueAtTime(1160.654490128342, 59, 0)
-        param.setValueAtTime(1170.612087767988, 60, 0)
-        param.setValueAtTime(1183.429185283331, 61, 0)
-        param.setValueAtTime(1197.695570241569, 62, 0)
-        param.setValueAtTime(1211.214139165078, 63, 0)
-        param.setValueAtTime(1227.677370228804, 64, 0)
-        param.setValueAtTime(1241.016359422482, 65, 0)
-        param.setValueAtTime(1260.771903712504, 66, 0)
-        param.setValueAtTime(1300.411882472331, 67, 0)
-        param.setValueAtTime(1339.62259346754, 68, 0)
-        param.setValueAtTime(1376.497077254975, 69, 0)
-        param.setValueAtTime(1405.882505946312, 70, 0)
-        param.setValueAtTime(1455.102837672056, 71, 0)
-        param.setValueAtTime(1511.193266425151, 72, 0)
-        param.setValueAtTime(1561.312283732246, 73, 0)
-        param.setValueAtTime(1601.266419143787, 74, 0)
-        param.setValueAtTime(1629.811290855497, 75, 0)
-        param.setValueAtTime(1644.94106985025, 76, 0)
-        param.setValueAtTime(1663.135729876966, 77, 0)
-        param.setValueAtTime(1719.911149241728, 78, 0)
-        param.setValueAtTime(1761.964826419948, 79, 0)
-        param.setValueAtTime(1782.612113572057, 80, 0)
-        param.setValueAtTime(1831.016243537299, 81, 0)
-        param.setValueAtTime(1863.93823238264, 82, 0)
-        param.setValueAtTime(1886.251508148886, 83, 0)
-        param.setValueAtTime(1913.888876311355, 84, 0)
-        param.setValueAtTime(1917.994740964371, 85, 0)
-        param.setValueAtTime(1942.397739962166, 86, 0)
-        param.setValueAtTime(2011.391464169229, 87, 0)
-        param.setValueAtTime(2054.874877808617, 88, 0)
-        param.setValueAtTime(1943.307851244649, 89, 0)
-        param.setValueAtTime(1843.42518128438, 90, 0)
-        param.setValueAtTime(1861.714650294181, 91, 0)
-        param.setValueAtTime(1877.078107805387, 92, 0)
-        param.setValueAtTime(1956.931219275314, 93, 0)
-        param.setValueAtTime(1960.259808364138, 94, 0)
-        param.setValueAtTime(2000.2483049495, 95, 0)
-        param.setValueAtTime(1841.421418133228, 96, 0)
-        param.setValueAtTime(1616.788703656823, 97, 0)
-        param.setValueAtTime(1491.630835291694, 98, 0)
-        param.setValueAtTime(1219.156389368938, 99, 0)
-        param.setValueAtTime(706.2213497154792, 50, 1)
-        param.setValueAtTime(706.2612982495508, 51, 1)
-        param.setValueAtTime(706.3993120610244, 52, 1)
-        param.setValueAtTime(707.4894311521841, 53, 1)
-        param.setValueAtTime(707.8592139304658, 54, 1)
-        param.setValueAtTime(708.4550459219254, 55, 1)
-        param.setValueAtTime(709.19986547185, 56, 1)
-        param.setValueAtTime(709.9670949449724, 57, 1)
-        param.setValueAtTime(715.8587604227298, 58, 1)
-        param.setValueAtTime(717.1240061754492, 59, 1)
-        param.setValueAtTime(717.4293633118089, 60, 1)
-        param.setValueAtTime(718.8286211780312, 61, 1)
-        param.setValueAtTime(720.2321943777947, 62, 1)
-        param.setValueAtTime(721.4059828026265, 63, 1)
-        param.setValueAtTime(723.7959738886868, 64, 1)
-        param.setValueAtTime(730.9319484582679, 65, 1)
-        param.setValueAtTime(734.8066185641571, 66, 1)
-        param.setValueAtTime(743.5188060900025, 67, 1)
-        param.setValueAtTime(751.0863778624695, 68, 1)
-        param.setValueAtTime(757.6908334511834, 69, 1)
-        param.setValueAtTime(762.4921882252888, 70, 1)
-        param.setValueAtTime(781.9226434773003, 71, 1)
-        param.setValueAtTime(808.6156540808538, 72, 1)
-        param.setValueAtTime(843.6560468025923, 73, 1)
-        param.setValueAtTime(894.2612847709847, 74, 1)
-        param.setValueAtTime(940.9354657732257, 75, 1)
-        param.setValueAtTime(982.0199585166391, 76, 1)
-        param.setValueAtTime(1017.627531111364, 77, 1)
-        param.setValueAtTime(1054.861843084889, 78, 1)
-        param.setValueAtTime(1080.649525893264, 79, 1)
-        param.setValueAtTime(1107.384903751605, 80, 1)
-        param.setValueAtTime(1116.013071306873, 81, 1)
-        param.setValueAtTime(1178.678866299629, 82, 1)
-        param.setValueAtTime(1237.136767826909, 83, 1)
-        param.setValueAtTime(1274.098586323129, 84, 1)
-        param.setValueAtTime(1314.483909405667, 85, 1)
-        param.setValueAtTime(1383.813411977068, 86, 1)
-        param.setValueAtTime(1439.312481954886, 87, 1)
-        param.setValueAtTime(1467.84739501908, 88, 1)
-        param.setValueAtTime(1457.847590940966, 89, 1)
-        param.setValueAtTime(1424.754958823422, 90, 1)
-        param.setValueAtTime(1431.46571836435, 91, 1)
-        param.setValueAtTime(1455.574394449679, 92, 1)
-        param.setValueAtTime(1505.708651185298, 93, 1)
-        param.setValueAtTime(1350.350288696687, 94, 1)
-        param.setValueAtTime(1390.623499918545, 95, 1)
-        param.setValueAtTime(1329.335098189503, 96, 1)
-        param.setValueAtTime(1226.526592690956, 97, 1)
-        param.setValueAtTime(1274.713151704909, 98, 1)
-        param.setValueAtTime(1191.841097662673, 99, 1)
+        param.setValueAtTime(573, 51, 0)
+        param.setValueAtTime(573, 52, 0)
+        param.setValueAtTime(573, 53, 0)
+        param.setValueAtTime(573, 54, 0)
+        param.setValueAtTime(573, 55, 0)
+        param.setValueAtTime(573, 56, 0)
+        param.setValueAtTime(573, 57, 0)
+        param.setValueAtTime(573, 58, 0)
+        param.setValueAtTime(573, 59, 0)
+        param.setValueAtTime(573, 60, 0)
+        param.setValueAtTime(573, 61, 0)
+        param.setValueAtTime(573, 62, 0)
+        param.setValueAtTime(573, 63, 0)
+        param.setValueAtTime(573, 64, 0)
+        param.setValueAtTime(573, 65, 0)
+        param.setValueAtTime(573, 66, 0)
+        param.setValueAtTime(573, 67, 0)
+        param.setValueAtTime(573, 68, 0)
+        param.setValueAtTime(573, 69, 0)
+        param.setValueAtTime(573, 70, 0)
+        param.setValueAtTime(573, 71, 0)
+        param.setValueAtTime(573, 72, 0)
+        param.setValueAtTime(573.2283725646498, 73, 0)
+        param.setValueAtTime(603.3896871448133, 74, 0)
+        param.setValueAtTime(722.8582558596045, 75, 0)
+        param.setValueAtTime(912.8779072113034, 76, 0)
+        param.setValueAtTime(1135.5881444478, 77, 0)
+        param.setValueAtTime(1077.079766592946, 78, 0)
+        param.setValueAtTime(1054.131236782807, 79, 0)
+        param.setValueAtTime(962.0957367213813, 80, 0)
+        param.setValueAtTime(1027.614072581835, 81, 0)
+        param.setValueAtTime(756.7708287830778, 82, 0)
+        param.setValueAtTime(664.7181116625553, 83, 0)
+        param.setValueAtTime(620.6221722621578, 84, 0)
+        param.setValueAtTime(304, 85, 0)
+        param.setValueAtTime(0, 86, 0)
+        param.setValueAtTime(0, 87, 0)
+        param.setValueAtTime(0, 88, 0)
+        param.setValueAtTime(0, 89, 0)
+        param.setValueAtTime(0, 90, 0)
+        param.setValueAtTime(0, 91, 0)
+        param.setValueAtTime(0, 92, 0)
+        param.setValueAtTime(0, 93, 0)
+        param.setValueAtTime(0, 94, 0)
+        param.setValueAtTime(0, 95, 0)
+        param.setValueAtTime(0, 96, 0)
+        param.setValueAtTime(0, 97, 0)
+        param.setValueAtTime(0, 98, 0)
+        param.setValueAtTime(0, 99, 0)
+        param.setValueAtTime(0, 100, 0)
+        param.setValueAtTime(260.9000000000001, 51, 1)
+        param.setValueAtTime(260.9000000000001, 52, 1)
+        param.setValueAtTime(260.9000000000001, 53, 1)
+        param.setValueAtTime(260.9000000000001, 54, 1)
+        param.setValueAtTime(260.9000000000001, 55, 1)
+        param.setValueAtTime(260.9000000000001, 56, 1)
+        param.setValueAtTime(260.9000000000001, 57, 1)
+        param.setValueAtTime(260.9000000000001, 58, 1)
+        param.setValueAtTime(260.9000000000001, 59, 1)
+        param.setValueAtTime(260.9000000000001, 60, 1)
+        param.setValueAtTime(260.9000000000001, 61, 1)
+        param.setValueAtTime(260.9000000000001, 62, 1)
+        param.setValueAtTime(260.9000000000001, 63, 1)
+        param.setValueAtTime(260.9000000000001, 64, 1)
+        param.setValueAtTime(260.9000000000001, 65, 1)
+        param.setValueAtTime(260.9000000000001, 66, 1)
+        param.setValueAtTime(260.9000000000001, 67, 1)
+        param.setValueAtTime(260.9000000000001, 68, 1)
+        param.setValueAtTime(260.9000000000001, 69, 1)
+        param.setValueAtTime(260.9000000000001, 70, 1)
+        param.setValueAtTime(260.9000000000001, 71, 1)
+        param.setValueAtTime(260.9000000000001, 72, 1)
+        param.setValueAtTime(260.9100687516392, 73, 1)
+        param.setValueAtTime(265.9000000000001, 74, 1)
+        param.setValueAtTime(269.9000000000001, 75, 1)
+        param.setValueAtTime(275.9000000000001, 76, 1)
+        param.setValueAtTime(287.9000000000001, 77, 1)
+        param.setValueAtTime(289.9000000000001, 78, 1)
+        param.setValueAtTime(296.9000000000001, 79, 1)
+        param.setValueAtTime(304.9000000000001, 80, 1)
+        param.setValueAtTime(314.9, 81, 1)
+        param.setValueAtTime(295.9, 82, 1)
+        param.setValueAtTime(303.9, 83, 1)
+        param.setValueAtTime(312.9, 84, 1)
+        param.setValueAtTime(150, 85, 1)
+        param.setValueAtTime(0, 86, 1)
+        param.setValueAtTime(0, 87, 1)
+        param.setValueAtTime(0, 88, 1)
+        param.setValueAtTime(0, 89, 1)
+        param.setValueAtTime(0, 90, 1)
+        param.setValueAtTime(0, 91, 1)
+        param.setValueAtTime(0, 92, 1)
+        param.setValueAtTime(0, 93, 1)
+        param.setValueAtTime(0, 94, 1)
+        param.setValueAtTime(0, 95, 1)
+        param.setValueAtTime(0, 96, 1)
+        param.setValueAtTime(0, 97, 1)
+        param.setValueAtTime(0, 98, 1)
+        param.setValueAtTime(0, 99, 1)
+        param.setValueAtTime(0, 100, 1)
         del param
 
     param = lastNode.getParam("blackOutside")
@@ -1241,6 +1166,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupin_out_switch = lastNode
 
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
     del lastNode
     # End of node "in_out_switch"
 
@@ -1249,7 +1179,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(-83, 1081)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -1261,7 +1191,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
     lastNode.setPosition(544, 1446)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
 
@@ -1485,8 +1415,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(440, 0)
-    param.setValue(498, 1)
+    param.setValue(310, 0)
+    param.setValue(519, 1)
     lastNode.title_position = param
     del param
 
@@ -1505,7 +1435,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(330, 0)
+    param.setValue(360, 0)
     lastNode.font_size_subtitle = param
     del param
 
@@ -1526,9 +1456,40 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(-30, 0)
-    param.setValue(36, 1)
+    param.setValue(16, 1)
     lastNode.subtitle_position = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
+    param = lastNode.createChoiceParam("align", "Text Align")
+    entries = [ ("Right", ""),
+    ("Left", ""),
+    ("Center", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Center")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.align = param
     del param
 
     param = lastNode.createButtonParam("separate_text", "Separate Text")
@@ -1598,21 +1559,10 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     grouporigina_input_transform = lastNode
 
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(-48, 0)
-        param.setValue(-32, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(18.62949147674651, 0)
-        del param
-
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.5249983534902405, 0)
-        param.setValue(0.5249983534902405, 1)
+        param.setValue(0.3, 0)
+        param.setValue(0.3, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1627,7 +1577,7 @@ def createInstance(app,group):
     groupOutput1.connectInput(0, groupin_out_switch)
     groupMerge2.connectInput(0, groupletter_transform_subtitle)
     groupMerge2.connectInput(1, groupletter_transform_title)
-    groupMerge4.connectInput(0, groupReformat1)
+    groupMerge4.connectInput(0, groupreformat)
     groupMerge4.connectInput(1, groupMerge2)
     groupFrameRange.connectInput(0, groupMerge4)
     grouptime_reverse.connectInput(0, groupFrameRange)
@@ -1641,10 +1591,6 @@ def createInstance(app,group):
     groupDot3.connectInput(0, groupcrop_time_reverse)
     groupTextFit.connectInput(0, grouporigina_input_transform)
 
-    param = groupReformat1.getParam("boxSize")
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.current_format.getValue(dimension)", False, 1)
-    del param
     param = groupTextFit.getParam("state_label")
     param.setExpression("thisGroup.state_label.get()", False, 0)
     del param
@@ -1674,16 +1620,6 @@ def createInstance(app,group):
     param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
     del param
 
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["LetterAnimationExt"]
     except KeyError:

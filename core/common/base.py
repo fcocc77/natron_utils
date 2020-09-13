@@ -97,7 +97,7 @@ def get_durations(node):
     return durations_param.get()
 
 
-def get_duration(node):
+def get_duration(node, base=False):
     speed_param = node.getParam('speed')
     duration_percent_param = node.getParam('duration_percent')
 
@@ -110,6 +110,9 @@ def get_duration(node):
         duration_percent = 100
 
     duration = get_durations(node)[speed_param.get()]
+
+    if base:
+        return duration
 
     return duration_percent * duration / 100
 
