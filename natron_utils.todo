@@ -60,7 +60,7 @@ Templates:
     wedding_03:
 Templates Bases:
     blurred:
-        ☐ opcion para las letras random en el nodo de 'letter_animation'
+        ✔ opcion para las letras random en el nodo de 'letter_animation' @done (9/13/2020, 3:58:56 PM)
         ☐ terminar la transicion de flare con blur 'FlareTransition'
     clippings:
         ☐ crear transicion con 1 input para cambiar las formas

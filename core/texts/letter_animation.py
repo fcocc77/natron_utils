@@ -4,6 +4,7 @@ from text_base import set_font, transfer_transform
 from text_fit import calcule_text_transform
 from util import hash_generator
 from animations import exaggerated_animation
+import random
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -315,11 +316,13 @@ def refresh_word(thisNode, _type):
     idxs = range(letters_amount)
 
     # el desfase en el tiempo de las letras
-    reverse = thisNode.letter_gap_direction.get()
-    if (reverse):
-        gaps = reversed(idxs)
-    else:
+    gap_direction = thisNode.letter_gap_direction.get()
+    if gap_direction == 0:
         gaps = idxs
+    elif gap_direction == 1:
+        gaps = list(reversed(idxs))
+    else:
+        gaps = random.sample(idxs, letters_amount)
 
     position = 0
     for letter, letter_gap in zip(titles, gaps):
