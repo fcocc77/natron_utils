@@ -18,7 +18,7 @@ modules:
         ✔ separar animacion a otro nodo de animacion @today @done (8/24/2020, 6:07:22 PM)
 
     TextSide:
-        ☐ cuando hay rebote, las letras se cortan por el bbox @today 
+        ✔ cuando hay rebote, las letras se cortan por el bbox @today @done (9/12/2020, 10:16:56 PM)
 videovina:
     ☐ crear un testing para verificar que el proyecto exportado .ntp, cumpla con todos lo datos, formato, velocidad, duracion final, color, etc
     ☐ que los usuario privilegiados tengan baja prioridad en el renderizado, que renderizen solo si no hay ningun usuario pagado renderizando
@@ -84,8 +84,8 @@ Templates Bases:
         ☐ crear nodo de texto como la referencia
     ink:
         ☐ crear background con textura de pergamino
-        ☐ falta calcar 2 formas mas @high 
-        ☐ crear 4 slide diferentes con el ink base
+        ☐ falta calcar 2 formas mas @today  
+        ☐ crear 4 slide diferentes con el ink base @today 
         ☐ crear 1 slide con multi fotos
         ☐ crear overlap de particulas y polvo
     photos-1:

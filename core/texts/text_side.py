@@ -101,6 +101,13 @@ def refresh(thisNode):
     crop_size_x = crop_size.getValue(0) + (crop_added * 2)
     crop_pos_x = crop_bottom_left.getValue(0) - crop_added
 
+    # si tiene rebote, agranda el bbox para que no se corte el texto
+    if thisNode.bound.get():
+        mid_width = crop_size_x / 2
+        crop_size_x += mid_width
+        if thisNode.align.get() == 0:
+            crop_pos_x -= mid_width
+
     crop_size.setValue(crop_size_x, 0)
     crop_bottom_left.setValue(crop_pos_x, 0)
 
