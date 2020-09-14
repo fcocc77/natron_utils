@@ -84,10 +84,29 @@ def fit_text_to_box(thisNode):
             size -= increase
             return font_resize(text, size, 10)
         else:
-            return [size, width, height]
+            return size
 
-    title_size, title_x, title_y = font_resize(title_node)
-    subtitle_size, subtitle_x, subtitle_y = font_resize(subtitle_node)
+    title_size = font_resize(title_node)
+    subtitle_size = font_resize(subtitle_node)
+
+    #
+    #
+
+    # max size
+    title_size = title_size * thisNode.title_max_size.get() / 100
+    subtitle_size = subtitle_size * thisNode.subtitle_max_size.get() / 100
+
+    title_node.getParam('size').set(title_size)
+    subtitle_node.getParam('size').set(subtitle_size)
+
+    title_x = title_node.getRegionOfDefinition(1, 1).x2
+    title_y = title_node.getRegionOfDefinition(1, 1).y2
+
+    subtitle_x = subtitle_node.getRegionOfDefinition(1, 1).x2
+    subtitle_y = subtitle_node.getRegionOfDefinition(1, 1).y2
+
+    #
+    #
 
     # calcula el alto total, para poder centrar los 2 textos al cuadro
     height = title_y + subtitle_y
@@ -98,6 +117,9 @@ def fit_text_to_box(thisNode):
 
     title_position_param = thisNode.getParam('title_position')
     subtitle_position_param = thisNode.getParam('subtitle_position')
+
+    #
+    #
 
     # ajusta los titulos
     if align == 2:
@@ -114,6 +136,9 @@ def fit_text_to_box(thisNode):
 
     title_position_param.setValue(title_x_pos, 0)
     title_position_param.setValue(title_y_pos, 1)
+
+    #
+    #
 
     # ajusta los subtitulos
     if align == 2:
