@@ -245,6 +245,32 @@ def createInstance(app,group):
     lastNode.texts_label = param
     del param
 
+    param = lastNode.createFileParam("font", "Font")
+    param.setSequenceEnabled(False)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    lastNode.font = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep11", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep11 = param
+    del param
+
     param = lastNode.createStringParam("title", "Title")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
@@ -273,8 +299,7 @@ def createInstance(app,group):
     lastNode.subtitle = param
     del param
 
-    param = lastNode.createFileParam("font", "Font")
-    param.setSequenceEnabled(False)
+    param = lastNode.createSeparatorParam("sep12", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -282,8 +307,9 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
-    lastNode.font = param
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep12 = param
     del param
 
     param = lastNode.createColorParam("color", "Title Color", False)
@@ -340,6 +366,57 @@ def createInstance(app,group):
     lastNode.color_subtitle = param
     del param
 
+    param = lastNode.createSeparatorParam("sep13", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep13 = param
+    del param
+
+    param = lastNode.createIntParam("title_max_size", "Title Max Size %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.title_max_size = param
+    del param
+
+    param = lastNode.createIntParam("subtitle_max_size", "Subtitle Max Size")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.subtitle_max_size = param
+    del param
+
     param = lastNode.createBooleanParam("separated_by_letter", "Separated by Letter")
 
     # Add the param to the page
@@ -351,6 +428,25 @@ def createInstance(app,group):
     param.setAnimationEnabled(True)
     param.setValue(True)
     lastNode.separated_by_letter = param
+    del param
+
+    param = lastNode.createChoiceParam("align", "Text Align")
+    entries = [ ("Right", ""),
+    ("Left", ""),
+    ("Center", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Center")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.align = param
     del param
 
     param = lastNode.createButtonParam("text_generator", "Text Generator")
@@ -941,6 +1037,11 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     groupcrop_time_reverse = lastNode
 
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
     param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:
         param.setValue(2560, 0)
@@ -1000,7 +1101,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.TextFit", 1, group)
     lastNode.setScriptName("TextFit")
     lastNode.setLabel("TextFit")
-    lastNode.setPosition(-385, 921)
+    lastNode.setPosition(-385, 922)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupTextFit = lastNode
@@ -1218,6 +1319,38 @@ def createInstance(app,group):
     lastNode.title_position = param
     del param
 
+    param = lastNode.createIntParam("title_max_size", "Title Max Size %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.title_max_size = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep9", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep9 = param
+    del param
+
     param = lastNode.createIntParam("font_size_subtitle", "Subtitle Font Size")
     param.setMinimum(0, 0)
     param.setMaximum(2000, 0)
@@ -1258,6 +1391,25 @@ def createInstance(app,group):
     lastNode.subtitle_position = param
     del param
 
+    param = lastNode.createIntParam("subtitle_max_size", "Subtitle Max Size %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.subtitle_max_size = param
+    del param
+
     param = lastNode.createSeparatorParam("sep4", "")
 
     # Add the param to the page
@@ -1287,6 +1439,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("Center")
     lastNode.align = param
     del param
 
@@ -1409,6 +1562,15 @@ def createInstance(app,group):
     del param
     param = groupTextFit.getParam("settings_label")
     param.setExpression("thisGroup.settings_label.get()", False, 0)
+    del param
+    param = groupTextFit.getParam("title_max_size")
+    param.setExpression("thisGroup.title_max_size.get()", False, 0)
+    del param
+    param = groupTextFit.getParam("subtitle_max_size")
+    param.setExpression("thisGroup.subtitle_max_size.get()", False, 0)
+    del param
+    param = groupTextFit.getParam("align")
+    param.setExpression("thisGroup.align.get()", False, 0)
     del param
     param = groupTextFit.getParam("current_format")
     param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
