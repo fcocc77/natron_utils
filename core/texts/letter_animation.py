@@ -15,9 +15,12 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     link_to_parent(thisNode, thisParam, thisGroup)
 
     if knob_name == 'refresh':
-        refresh(thisNode)
-        refresh_word(thisNode, 'title')
-        refresh_word(thisNode, 'subtitle')
+        if is_text_created(thisNode):
+            refresh(thisNode)
+            refresh_word(thisNode, 'title')
+            refresh_word(thisNode, 'subtitle')
+        else:
+            text_generator(thisNode)
 
     elif knob_name == 'text_generator':
         text_generator(thisNode)
@@ -120,6 +123,16 @@ def set_general_transform(thisNode):
 
     transfer_transform(input_transform, general_transform, get_rscale(thisNode))
     transfer_transform(input_transform, origina_input_transform)
+
+
+def is_text_created(thisNode):
+    if getNode(thisNode, 'text_title_text_0'):
+        return True
+
+    if getNode(thisNode, 'text_subtitle_text_0'):
+        return True
+
+    return False
 
 
 def get_text(thisNode, _type, index):
