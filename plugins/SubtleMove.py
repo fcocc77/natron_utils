@@ -264,6 +264,18 @@ def createInstance(app,group):
     lastNode.center = param
     del param
 
+    param = lastNode.createBooleanParam("image_within_format", "Image Within Format")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Mantiene la imagen dentro del formato.")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.image_within_format = param
+    del param
+
     param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page

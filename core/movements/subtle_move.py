@@ -130,9 +130,13 @@ def refresh(thisNode):
         param = translate
         translate_level = level * 50 * rscale
 
-        # calcula la escala para que la translacion siempre quede dentro de cuadro
-        scale_for_translate_x = ((translate_level * 2) / width) + 1
-        scale_for_translate_y = ((translate_level * 2) / height) + 1
+        if thisNode.image_within_format.get():
+            scale_for_translate_x = 1 - ((translate_level * 2) / width)
+            scale_for_translate_y = 1 - ((translate_level * 2) / height)
+        else:
+            # calcula la escala para que la translacion siempre quede dentro de cuadro
+            scale_for_translate_x = ((translate_level * 2) / width) + 1
+            scale_for_translate_y = ((translate_level * 2) / height) + 1
 
         if movement == 0:
             values = [-translate_level, translate_level, 0, scale_for_translate_x]
@@ -146,12 +150,18 @@ def refresh(thisNode):
         scale.set(values[3], values[3])
 
     # Movimiento de escala
-    scale_level = 1 + (level * 0.2)
+    if thisNode.image_within_format.get():
+        from_scale_level = 1
+        to_scale_level = 1 - (level * 0.2)
+    else:
+        from_scale_level = 1 + (level * 0.2)
+        to_scale_level = 1
+
     if movement == 4:
-        values = [1, scale_level, None]
+        values = [to_scale_level, from_scale_level, None]
         param = scale
     if movement == 5:
-        values = [scale_level, 1, None]
+        values = [from_scale_level, to_scale_level, None]
         param = scale
 
     # Movimiento de rotacion
@@ -164,7 +174,10 @@ def refresh(thisNode):
         new_width = height * cos(rotate_quarter) + width * sin(rotate_quarter)
         scale_for_rotate = abs(new_width / height)
 
-        scale.set(scale_for_rotate, scale_for_rotate)
+        if thisNode.image_within_format.get():
+            None
+        else:
+            scale.set(scale_for_rotate, scale_for_rotate)
 
         if movement == 6:
             values = [rotate_level, -rotate_level, None]
