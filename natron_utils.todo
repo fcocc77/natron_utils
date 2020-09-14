@@ -52,6 +52,7 @@ Templates:
     love_01:
         ☐ vidrios con corazones
     love_02:
+        ☐ ink con corazones
     love_03:
     wedding_01:
         ☐ Sacar fotos con hojas y flores
@@ -84,9 +85,9 @@ Templates Bases:
         ☐ crear nodo de texto como la referencia
     ink:
         ☐ crear background con textura de pergamino
-        ☐ falta calcar 2 formas mas @today  
+        ✔ falta calcar 2 formas mas @today @done (9/14/2020, 9:04:44 AM)
         ☐ crear 4 slide diferentes con el ink base @today 
-        ☐ crear 1 slide con multi fotos
+        ☐ crear 1 slide con multi fotos @today 
         ☐ crear overlap de particulas y polvo
     photos-1:
         ☐ crear nodo similar al 'SubtleMove' con 2 input de imagen para dar la sensacion de 3D, pero que contenga un modo random de movimiento.
