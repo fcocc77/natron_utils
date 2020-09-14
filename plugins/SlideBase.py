@@ -490,21 +490,6 @@ def createInstance(app,group):
         param.setValue(100, 1)
         del param
 
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("hold")
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("hold")
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
-        del param
-
     del lastNode
     # End of node "FrameRange"
 
@@ -513,14 +498,9 @@ def createInstance(app,group):
     lastNode.setScriptName("TimeOffset")
     lastNode.setLabel("TimeOffset")
     lastNode.setPosition(1567, 664)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupTimeOffset = lastNode
-
-    param = lastNode.getParam("timeOffset")
-    if param is not None:
-        param.setValue(0, 0)
-        del param
 
     del lastNode
     # End of node "TimeOffset"
@@ -547,7 +527,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(1255, 468)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -615,7 +595,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
     lastNode.setPosition(1992, 576)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
 
@@ -627,7 +607,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
     lastNode.setPosition(1255, -34)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
 
@@ -639,7 +619,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot5")
     lastNode.setLabel("Dot5")
     lastNode.setPosition(1612, -34)
-    lastNode.setSize(15, 15)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot5 = lastNode
 
@@ -1555,13 +1535,6 @@ def createInstance(app,group):
     groupBase1.connectInput(0, groupDot4)
     groupTwelveRender1.connectInput(0, groupBase1)
 
-    param = groupFrameRange.getParam("frameRange")
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\n_range = [start_frame, start_frame + duration]\n\nret = _range[dimension]", True, 0)
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\n_range = [start_frame, start_frame + duration]\n\nret = _range[dimension]", True, 1)
-    del param
-    param = groupTimeOffset.getParam("timeOffset")
-    param.setExpression("thisGroup.start_frame.get()", False, 0)
-    del param
     param = groupMerge2.getParam("mix")
     param.setExpression("thisGroup.include_text.get()", False, 0)
     del param
