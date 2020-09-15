@@ -54,7 +54,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
@@ -62,20 +61,13 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.setDefaultValue(2)
     param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     lastNode.format = param
@@ -130,7 +122,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -252,7 +243,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
     lastNode.font = param
@@ -278,7 +268,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue("Title")
@@ -292,7 +281,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue("Subtitle")
@@ -391,7 +379,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(100, 0)
@@ -410,7 +397,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     param.setValue(100, 0)
@@ -431,19 +417,13 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("align", "Text Align")
-    entries = [ ("Right", ""),
-    ("Left", ""),
-    ("Center", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Center")
+    param.setDefaultValue(2)
     param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.align = param
@@ -479,7 +459,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -637,7 +616,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -770,7 +748,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
     lastNode.setPosition(-126, 1542)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 
@@ -782,7 +760,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Full_HD_Transform")
     lastNode.setLabel("Full HD Transform")
     lastNode.setPosition(-723, 845)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupFull_HD_Transform = lastNode
 
@@ -794,7 +772,7 @@ def createInstance(app,group):
     lastNode.setScriptName("letter_transform_title")
     lastNode.setLabel("letter_transform_title")
     lastNode.setPosition(470, 501)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupletter_transform_title = lastNode
 
@@ -838,7 +816,7 @@ def createInstance(app,group):
     lastNode.setScriptName("letter_transform_subtitle")
     lastNode.setLabel("letter_transform_subtitle")
     lastNode.setPosition(172, 287)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupletter_transform_subtitle = lastNode
 
@@ -867,7 +845,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge2")
     lastNode.setLabel("Merge2")
     lastNode.setPosition(172, 493)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2 = lastNode
 
@@ -884,7 +862,7 @@ def createInstance(app,group):
     lastNode.setScriptName("general_transform")
     lastNode.setLabel("general_transform")
     lastNode.setPosition(-222, 728)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupgeneral_transform = lastNode
 
@@ -907,7 +885,7 @@ def createInstance(app,group):
     lastNode.setScriptName("reformat")
     lastNode.setLabel("reformat")
     lastNode.setPosition(-53, 922)
-    lastNode.setSize(100, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupreformat = lastNode
 
@@ -946,7 +924,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge4")
     lastNode.setLabel("Merge4")
     lastNode.setPosition(172, 916)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
 
@@ -963,7 +941,7 @@ def createInstance(app,group):
     lastNode.setScriptName("FrameRange")
     lastNode.setLabel("FrameRange")
     lastNode.setPosition(172, 1066)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(104, 45)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameRange = lastNode
 
@@ -985,7 +963,7 @@ def createInstance(app,group):
     lastNode.setScriptName("time_reverse")
     lastNode.setLabel("time_reverse")
     lastNode.setPosition(501, 1079)
-    lastNode.setSize(100, 32)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.65, 0.35)
     grouptime_reverse = lastNode
 
@@ -1015,7 +993,7 @@ def createInstance(app,group):
     lastNode.setScriptName("switch_time_reverse")
     lastNode.setLabel("switch_time_reverse")
     lastNode.setPosition(172, 1215)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupswitch_time_reverse = lastNode
 
@@ -1033,7 +1011,7 @@ def createInstance(app,group):
     lastNode.setScriptName("crop_time_reverse")
     lastNode.setLabel("crop_time_reverse")
     lastNode.setPosition(501, 1202)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupcrop_time_reverse = lastNode
 
@@ -1061,7 +1039,7 @@ def createInstance(app,group):
     lastNode.setScriptName("in_out_switch")
     lastNode.setLabel("in_out_switch")
     lastNode.setPosition(-126, 1439)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupin_out_switch = lastNode
 
@@ -1078,7 +1056,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
     lastNode.setPosition(-83, 1086)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -1090,19 +1068,42 @@ def createInstance(app,group):
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
     lastNode.setPosition(544, 1446)
-    lastNode.setSize(14, 14)
+    lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
 
     del lastNode
     # End of node "Dot3"
 
+    # Start of node "origina_input_transform"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("origina_input_transform")
+    lastNode.setLabel("origina_input_transform")
+    lastNode.setPosition(-385, 731)
+    lastNode.setSize(104, 45)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    grouporigina_input_transform = lastNode
+
+    param = lastNode.getParam("scale")
+    if param is not None:
+        param.setValue(0.3, 0)
+        param.setValue(0.3, 1)
+        del param
+
+    param = lastNode.getParam("transformCenterChanged")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "origina_input_transform"
+
     # Start of node "TextFit"
     lastNode = app.createNode("vv.TextFit", 1, group)
     lastNode.setScriptName("TextFit")
     lastNode.setLabel("TextFit")
-    lastNode.setPosition(-385, 922)
-    lastNode.setSize(100, 32)
+    lastNode.setPosition(-385, 903)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupTextFit = lastNode
 
@@ -1127,7 +1128,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    STATE :")
+    param.setEnabled(False, 0)
     lastNode.state_label = param
     del param
 
@@ -1148,7 +1149,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
+    param.setEnabled(False, 0)
     lastNode.format = param
     del param
 
@@ -1186,6 +1187,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
+    param.setEnabled(False, 0)
     lastNode.sep5 = param
     del param
 
@@ -1202,7 +1204,6 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    TEXT :")
     lastNode.texts_label = param
     del param
 
@@ -1217,6 +1218,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue("Title")
+    param.setEnabled(False, 0)
     lastNode.title = param
     del param
 
@@ -1231,6 +1233,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue("Subtitle")
+    param.setEnabled(False, 0)
     lastNode.subtitle = param
     del param
 
@@ -1244,7 +1247,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("")
+    param.setEnabled(False, 0)
     lastNode.font = param
     del param
 
@@ -1258,6 +1261,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
+    param.setEnabled(False, 0)
     lastNode.sep7 = param
     del param
 
@@ -1274,7 +1278,6 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    param.setValue("- - - - - - - >    SETTINGS :")
     lastNode.settings_label = param
     del param
 
@@ -1293,7 +1296,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(390, 0)
     lastNode.font_size_title = param
     del param
 
@@ -1314,8 +1316,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(310, 0)
-    param.setValue(519, 1)
     lastNode.title_position = param
     del param
 
@@ -1335,6 +1335,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(100, 0)
+    param.setEnabled(False, 0)
     lastNode.title_max_size = param
     del param
 
@@ -1348,6 +1349,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
+    param.setEnabled(False, 0)
     lastNode.sep9 = param
     del param
 
@@ -1366,7 +1368,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(360, 0)
     lastNode.font_size_subtitle = param
     del param
 
@@ -1387,7 +1388,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(16, 1)
     lastNode.subtitle_position = param
     del param
 
@@ -1407,6 +1407,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(100, 0)
+    param.setEnabled(False, 0)
     lastNode.subtitle_max_size = param
     del param
 
@@ -1439,7 +1440,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Center")
+    param.setEnabled(False, 0)
     lastNode.align = param
     del param
 
@@ -1450,79 +1451,16 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.separate_text = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
     # End of node "TextFit"
-
-    # Start of node "origina_input_transform"
-    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("origina_input_transform")
-    lastNode.setLabel("origina_input_transform")
-    lastNode.setPosition(-385, 731)
-    lastNode.setSize(100, 45)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    grouporigina_input_transform = lastNode
-
-    param = lastNode.getParam("scale")
-    if param is not None:
-        param.setValue(0.3, 0)
-        param.setValue(0.3, 1)
-        del param
-
-    param = lastNode.getParam("transformCenterChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "origina_input_transform"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupin_out_switch)
@@ -1543,41 +1481,37 @@ def createInstance(app,group):
     groupTextFit.connectInput(0, grouporigina_input_transform)
 
     param = groupTextFit.getParam("state_label")
-    param.setExpression("thisGroup.state_label.get()", False, 0)
+    group.getParam("state_label").setAsAlias(param)
     del param
     param = groupTextFit.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
+    group.getParam("format").setAsAlias(param)
     del param
-    param = groupTextFit.getParam("texts_label")
-    param.setExpression("thisGroup.texts_label.get()", False, 0)
+    param = groupTextFit.getParam("sep5")
+    group.getParam("sep5").setAsAlias(param)
     del param
     param = groupTextFit.getParam("title")
-    param.setExpression("thisGroup.title.get()", False, 0)
+    group.getParam("title").setAsAlias(param)
     del param
     param = groupTextFit.getParam("subtitle")
-    param.setExpression("thisGroup.subtitle.get()", False, 0)
+    group.getParam("subtitle").setAsAlias(param)
     del param
     param = groupTextFit.getParam("font")
-    param.setExpression("thisGroup.font.get()", False, 0)
+    group.getParam("font").setAsAlias(param)
     del param
-    param = groupTextFit.getParam("settings_label")
-    param.setExpression("thisGroup.settings_label.get()", False, 0)
+    param = groupTextFit.getParam("sep7")
+    group.getParam("sep7").setAsAlias(param)
     del param
     param = groupTextFit.getParam("title_max_size")
-    param.setExpression("thisGroup.title_max_size.get()", False, 0)
+    group.getParam("title_max_size").setAsAlias(param)
+    del param
+    param = groupTextFit.getParam("sep9")
+    group.getParam("sep9").setAsAlias(param)
     del param
     param = groupTextFit.getParam("subtitle_max_size")
-    param.setExpression("thisGroup.subtitle_max_size.get()", False, 0)
+    group.getParam("subtitle_max_size").setAsAlias(param)
     del param
     param = groupTextFit.getParam("align")
-    param.setExpression("thisGroup.align.get()", False, 0)
-    del param
-    param = groupTextFit.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = groupTextFit.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
+    group.getParam("align").setAsAlias(param)
     del param
 
     try:
