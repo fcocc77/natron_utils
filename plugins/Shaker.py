@@ -39,7 +39,7 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("base.main")
+        param.setValue("shaker.main")
         del param
 
 
@@ -112,7 +112,19 @@ def createInstance(app,group):
     lastNode.link = param
     del param
 
-    param = lastNode.createSeparatorParam("sep5", "")
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -122,7 +134,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep5 = param
+    lastNode.sep7 = param
     del param
 
     param = lastNode.createStringParam("time_label", "")
@@ -235,7 +247,7 @@ def createInstance(app,group):
     param.setMinimum(0, 0)
     param.setMaximum(2147483647, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(5, 0)
+    param.setDisplayMaximum(1, 0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -273,69 +285,12 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(50, 0)
+    param.setValue(30, 0)
     lastNode.frequency = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Current Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
@@ -362,36 +317,18 @@ def createInstance(app,group):
     del lastNode
     # End of node "Input1"
 
-    # Start of node "Transform"
+    # Start of node "transform"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform")
-    lastNode.setLabel("Transform")
+    lastNode.setScriptName("transform")
+    lastNode.setLabel("transform")
     lastNode.setPosition(767, 221)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform = lastNode
+    grouptransform = lastNode
 
-    param = lastNode.getParam("translate")
+    param = lastNode.getParam("skewY")
     if param is not None:
-        param.setValue(-9.273945201799439, 0)
-        param.setValue(4.988368024089517, 1)
-        del param
-
-    param = lastNode.getParam("rotate")
-    if param is not None:
-        param.setValue(-0.6314643113169951, 0)
-        del param
-
-    param = lastNode.getParam("scale")
-    if param is not None:
-        param.setValue(1, 0)
-        param.setValue(1, 1)
-        del param
-
-    param = lastNode.getParam("center")
-    if param is not None:
-        param.setValue(960, 0)
-        param.setValue(540, 1)
+        param.setValue(0, 0)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -400,38 +337,12 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Transform"
+    # End of node "transform"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupTransform)
-    groupTransform.connectInput(0, groupInput1)
+    groupOutput1.connectInput(0, grouptransform)
+    grouptransform.connectInput(0, groupInput1)
 
-    param = groupTransform.getParam("translate")
-    param.setExpression("import random\n\nfrequency = thisGroup.frequency.get()\ndurations = thisGroup.durations.get()\nspeed = thisGroup.speed.get()\nfrequency = vina.value_by_durations(frequency, durations, True)[speed]\n\namplitude = thisGroup.translate.curve(frame) * thisGroup.rscale.get()\ncomplexity = 10\nseed = 10 + dimension * 10\nfps = 24\n\nvalue = 0\n\n# Wiggle Expression\nfor x in range( 1 , complexity):\n\trandom.seed(seed)\n\toffset = random.randint(1,1000)\n\tt = (offset + float( frame )) / fps\n\tfactor = 0.8 ** x\n\tvalue += sin( t * factor * frequency ) * amplitude / complexity\nret = value", True, 0)
-    param.setExpression("import random\n\nfrequency = thisGroup.frequency.get()\ndurations = thisGroup.durations.get()\nspeed = thisGroup.speed.get()\nfrequency = vina.value_by_durations(frequency, durations, True)[speed]\n\namplitude = thisGroup.translate.curve(frame) * thisGroup.rscale.get()\ncomplexity = 10\nseed = 10 + dimension * 10\nfps = 24\n\nvalue = 0\n\n# Wiggle Expression\nfor x in range( 1 , complexity):\n\trandom.seed(seed)\n\toffset = random.randint(1,1000)\n\tt = (offset + float( frame )) / fps\n\tfactor = 0.8 ** x\n\tvalue += sin( t * factor * frequency ) * amplitude / complexity\nret = value", True, 1)
-    del param
-    param = groupTransform.getParam("rotate")
-    param.setExpression("import random\n\nfrequency = thisGroup.frequency.get()\ndurations = thisGroup.durations.get()\nspeed = thisGroup.speed.get()\nfrequency = vina.value_by_durations(frequency, durations, True)[speed]\n\namplitude = thisGroup.rotate.curve(frame) * thisGroup.rscale.get()\ncomplexity = 10\nseed = 50\nfps = 24\n\nvalue = 0\n\n# Wiggle Expression\nfor x in range( 1 , complexity):\n\trandom.seed(seed)\n\toffset = random.randint(1,1000)\n\tt = (offset + float( frame )) / fps\n\tfactor = 0.8 ** x\n\tvalue += sin( t * factor * frequency ) * amplitude / complexity\nret = value", True, 0)
-    del param
-    param = groupTransform.getParam("scale")
-    param.setExpression("import random\n\nfrequency = thisGroup.frequency.get()\ndurations = thisGroup.durations.get()\nspeed = thisGroup.speed.get()\nfrequency = vina.value_by_durations(frequency, durations, True)[speed]\n\namplitude = thisGroup.scale.curve(frame) * thisGroup.rscale.get()\ncomplexity = 10\nseed = 200\nfps = 24\n\nvalue = 0\n\n# Wiggle Expression\nfor x in range( 1 , complexity):\n\trandom.seed(seed)\n\toffset = random.randint(1,1000)\n\tt = (offset + float( frame )) / fps\n\tfactor = 0.8 ** x\n\tvalue += sin( t * factor * frequency ) * amplitude / complexity\nret = value + 1", True, 0)
-    param.setExpression("import random\n\nfrequency = thisGroup.frequency.get()\ndurations = thisGroup.durations.get()\nspeed = thisGroup.speed.get()\nfrequency = vina.value_by_durations(frequency, durations, True)[speed]\n\namplitude = thisGroup.scale.curve(frame) * thisGroup.rscale.get()\ncomplexity = 10\nseed = 200\nfps = 24\n\nvalue = 0\n\n# Wiggle Expression\nfor x in range( 1 , complexity):\n\trandom.seed(seed)\n\toffset = random.randint(1,1000)\n\tt = (offset + float( frame )) / fps\n\tfactor = 0.8 ** x\n\tvalue += sin( t * factor * frequency ) * amplitude / complexity\nret = value + 1", True, 1)
-    del param
-    param = groupTransform.getParam("center")
-    param.setExpression("thisGroup.current_format.get()[dimension] / 2", False, 0)
-    param.setExpression("thisGroup.current_format.get()[dimension] / 2", False, 1)
-    del param
-
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("duration")
-    param.setExpression("index = thisNode.speed.get()\nret = thisNode.durations.get()[index]", True, 0)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["ShakerExt"]
     except KeyError:
