@@ -3,6 +3,7 @@ from vina import get_videovina
 from general import formats, rscale
 
 import NatronGui
+import NatronEngine
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -30,15 +31,32 @@ def link_to_parent(thisNode, thisParam, thisGroup):
 
     params_count = 0
 
+    def allow(param):
+        blacklist_params = [
+            NatronEngine.ButtonParam,
+            NatronEngine.PageParam
+        ]
+        param_type = type(param)
+
+        if param_type in blacklist_params:
+            return False
+
+        if param_type == NatronEngine.StringParam:
+            if not param.getLabel():
+                return False
+
+        return True
+
     def link(attribute):
         attribute_parent = thisGroup.getParam(attribute)
         attribute_child = thisNode.getParam(attribute)
         if attribute_child and attribute_parent:
-            if hasattr(attribute_parent, 'setAsAlias'):
-                restore_default(param)
-                attribute_parent.setAsAlias(attribute_child)
+            if allow(attribute_child):
+                if hasattr(attribute_parent, 'setAsAlias'):
+                    restore_default(attribute_child)
+                    attribute_parent.setAsAlias(attribute_child)
 
-                return 1
+                    return 1
         return 0
 
     for param in thisNode.getParams():

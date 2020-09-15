@@ -110,8 +110,7 @@ def copy(node, group=None):
 
                 elif _type == NatronEngine.ParametricParam:
                     nbCurves = 0
-                    param = new_node.createParametricParam(
-                        name, label, nbCurves)
+                    param = new_node.createParametricParam(name, label, nbCurves)
 
                 elif _type == NatronEngine.PathParam:
                     param = new_node.createPathParam(name, label)
@@ -120,8 +119,7 @@ def copy(node, group=None):
                     param = new_node.createStringParam(name, label)
                     # si no tiene label, lo mas probable que sea una "eStringTypeLabel"
                     if not param.getLabel():
-                        param.setType(
-                            NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+                        param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
 
                 if param:
                     if hasattr(p, 'getMinimum'):
