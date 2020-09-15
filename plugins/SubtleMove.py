@@ -174,9 +174,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    param.setValue(50, 1)
-    param.setValue(25, 2)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
     lastNode.durations = param
     del param
 
@@ -231,7 +231,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Zoom Out")
+    param.set("Left - Right")
     lastNode.movement = param
     del param
 
@@ -248,7 +248,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(5, 0)
+    param.setValue(3, 0)
     lastNode.level = param
     del param
 
@@ -340,6 +340,113 @@ def createInstance(app,group):
     lastNode.break_point_duration = param
     del param
 
+    param = lastNode.createSeparatorParam("sep9", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep9 = param
+    del param
+
+    param = lastNode.createStringParam("shaker_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SHAKER:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.shaker_label = param
+    del param
+
+    param = lastNode.createDoubleParam("translate_shaker", "Translate Shaker")
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.translate_shaker = param
+    del param
+
+    param = lastNode.createDoubleParam("scale_shaker", "Scale Shaker")
+    param.setMinimum(0, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.scale_shaker = param
+    del param
+
+    param = lastNode.createDoubleParam("rotate_shaker", "Rotate Shaker")
+    param.setMinimum(0, 0)
+    param.setMaximum(180, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(180, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.rotate_shaker = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep10", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep10 = param
+    del param
+
+    param = lastNode.createDoubleParam("frequency", "Frequency")
+    param.setMinimum(1, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(1, 0)
+    param.setDisplayMaximum(100, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.frequency = param
+    del param
+
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -372,26 +479,10 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("Transform")
     lastNode.setLabel("Transform")
-    lastNode.setPosition(767, 212)
+    lastNode.setPosition(767, 211)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform = lastNode
-
-    param = lastNode.getParam("scale")
-    if param is not None:
-        param.setValueAtTime(2, 1, 0)
-        param.setValueAtTime(1.81, 39, 0)
-        param.setValueAtTime(1.805, 40, 0)
-        param.setValueAtTime(1.205, 60, 0)
-        param.setValueAtTime(1.2, 61, 0)
-        param.setValueAtTime(1, 101, 0)
-        param.setValueAtTime(2, 1, 1)
-        param.setValueAtTime(1.81, 39, 1)
-        param.setValueAtTime(1.805, 40, 1)
-        param.setValueAtTime(1.205, 60, 1)
-        param.setValueAtTime(1.2, 61, 1)
-        param.setValueAtTime(1, 101, 1)
-        del param
 
     param = lastNode.getParam("transformCenterChanged")
     if param is not None:

@@ -3,6 +3,7 @@ import NatronEngine
 from math import cos, sin
 from base import link_to_parent, get_duration, get_format, get_rscale
 from movements_common import center_from_input_bbox
+from shaker import shaker
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -88,6 +89,21 @@ def animation(param, start_frame, duration, values, break_point, break_duration,
         # cambia a 'smooth' la interpolacion del punto de quebre, por que ya se crearon los key 'after' y 'before'
         param.setInterpolationAtTime(first_frame_break, smooth, dimension)
         param.setInterpolationAtTime(last_frame_break, smooth, dimension)
+
+
+def shaker_move(thisNode, scale_param, rotate_param, translate_param):
+    frequency = thisNode.frequency.get()
+
+    scale = thisNode.scale_shaker.get()
+    translate = thisNode.translate_shaker.get()
+    rotate = thisNode.rotate_shaker.get()
+
+    if scale:
+        shaker(thisNode, scale_param, frequency, scale=scale, restore=False)
+    if translate:
+        shaker(thisNode, translate_param, frequency, translate=translate, restore=False)
+    if rotate:
+        shaker(thisNode, rotate_param, frequency, rotate=rotate, restore=False)
 
 
 def refresh(thisNode):
@@ -190,3 +206,5 @@ def refresh(thisNode):
         values[0], values[1]], break_point, break_duration,
         exaggeration=exaggeration, dimension=values[2]
     )
+
+    shaker_move(thisNode, scale, rotate, translate)
