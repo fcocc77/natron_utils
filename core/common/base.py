@@ -1,4 +1,4 @@
-from nx import alert, warning, getNode
+from nx import alert, warning, getNode, restore_default
 from vina import get_videovina
 from general import formats, rscale
 
@@ -35,7 +35,9 @@ def link_to_parent(thisNode, thisParam, thisGroup):
         attribute_child = thisNode.getParam(attribute)
         if attribute_child and attribute_parent:
             if hasattr(attribute_parent, 'setAsAlias'):
+                restore_default(param)
                 attribute_parent.setAsAlias(attribute_child)
+
                 return 1
         return 0
 

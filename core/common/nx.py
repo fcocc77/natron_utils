@@ -662,3 +662,13 @@ def autocrop(workarea, image_node, crop_node):
 
     crop_node.getParam('bottomLeft').set(left, bottom)
     crop_node.getParam('size').set(_width, _height)
+
+
+def restore_default(param):
+    if hasattr(param, 'restoreDefaultValue'):
+        dimensions = param.getNumDimensions()
+        if dimensions > 1:
+            for dimension in range(dimensions):
+                param.restoreDefaultValue(dimension)
+        else:
+            param.restoreDefaultValue()
