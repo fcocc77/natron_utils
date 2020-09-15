@@ -125,6 +125,7 @@ def refresh(thisNode):
     break_duration = thisNode.getParam('break_point_duration').get()
     exaggeration = thisNode.getParam('exaggeration').get()
     center_from_input = thisNode.getParam('center').get()
+    offset = thisNode.scale_offset.get()
 
     width = current_format[0]
     height = current_format[1]
@@ -154,6 +155,9 @@ def refresh(thisNode):
             scale_for_translate_x = ((translate_level * 2) / width) + 1
             scale_for_translate_y = ((translate_level * 2) / height) + 1
 
+        scale_for_translate_x += offset
+        scale_for_translate_y += offset
+
         if movement == 0:
             values = [-translate_level, translate_level, 0, scale_for_translate_x]
         if movement == 1:
@@ -173,6 +177,9 @@ def refresh(thisNode):
         from_scale_level = 1 + (level * 0.2)
         to_scale_level = 1
 
+    from_scale_level += offset
+    to_scale_level += offset
+
     if movement == 4:
         values = [to_scale_level, from_scale_level, None]
         param = scale
@@ -189,6 +196,8 @@ def refresh(thisNode):
         rotate_quarter = abs(rotate_level / 55.0)
         new_width = height * cos(rotate_quarter) + width * sin(rotate_quarter)
         scale_for_rotate = abs(new_width / height)
+
+        scale_for_rotate += offset
 
         if thisNode.image_within_format.get():
             None

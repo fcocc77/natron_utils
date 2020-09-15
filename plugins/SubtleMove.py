@@ -252,6 +252,22 @@ def createInstance(app,group):
     lastNode.level = param
     del param
 
+    param = lastNode.createDoubleParam("scale_offset", "Scale Offset")
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(-1, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.scale_offset = param
+    del param
+
     param = lastNode.createBooleanParam("center", "Center From Input")
 
     # Add the param to the page
@@ -302,7 +318,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
+    param.setValue(0.7, 0)
     lastNode.exaggeration = param
     del param
 
