@@ -342,8 +342,8 @@ def createInstance(app,group):
 
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
-    lastNode.setLabel("Output_2")
-    lastNode.setPosition(1567, 822)
+    lastNode.setLabel("Output")
+    lastNode.setPosition(1567, 892)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -351,317 +351,31 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Image"
+    # Start of node "A"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Image")
-    lastNode.setLabel("Image")
+    lastNode.setScriptName("A")
+    lastNode.setLabel("A")
     lastNode.setPosition(1567, -250)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupImage = lastNode
+    groupA = lastNode
 
     del lastNode
-    # End of node "Image"
+    # End of node "A"
 
-    # Start of node "FrameRange"
-    lastNode = app.createNode("net.sf.openfx.FrameRange", 1, group)
-    lastNode.setScriptName("FrameRange")
-    lastNode.setLabel("FrameRange")
-    lastNode.setPosition(1567, 739)
-    lastNode.setSize(104, 55)
-    lastNode.setColor(0.7, 0.65, 0.35)
-    groupFrameRange = lastNode
-
-    param = lastNode.getParam("frameRange")
-    if param is not None:
-        param.setValue(0, 0)
-        param.setValue(100, 1)
-        del param
-
-    param = lastNode.getParam("before")
-    if param is not None:
-        param.set("hold")
-        del param
-
-    param = lastNode.getParam("after")
-    if param is not None:
-        param.set("hold")
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
-        del param
-
-    del lastNode
-    # End of node "FrameRange"
-
-    # Start of node "TimeOffset"
-    lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
-    lastNode.setScriptName("TimeOffset")
-    lastNode.setLabel("TimeOffset")
-    lastNode.setPosition(1567, 664)
+    # Start of node "B"
+    lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
+    lastNode.setScriptName("B")
+    lastNode.setLabel("B")
+    lastNode.setPosition(1836, -261)
     lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.65, 0.35)
-    groupTimeOffset = lastNode
-
-    param = lastNode.getParam("timeOffset")
-    if param is not None:
-        param.setValue(0, 0)
-        del param
-
-    del lastNode
-    # End of node "TimeOffset"
-
-    # Start of node "Merge1"
-    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge1")
-    lastNode.setLabel("Merge1")
-    lastNode.setPosition(1567, 448)
-    lastNode.setSize(104, 55)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge1 = lastNode
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
-        del param
-
-    del lastNode
-    # End of node "Merge1"
-
-    # Start of node "FX"
-    lastNode = app.createNode("fr.inria.built-in.Group", 1, group)
-    lastNode.setScriptName("FX")
-    lastNode.setLabel("FX")
-    lastNode.setPosition(1210, 213)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupFX = lastNode
-
-    del lastNode
-    # End of node "FX"
-
-    groupgroup = groupFX
-    # Create all nodes in the group
-
-    # Create the parameters of the group node the same way we did for all internal nodes
-    lastNode = groupgroup
-    lastNode.setColor(0.7, 0.7, 0.7)
-    del lastNode
-
-    # Start of node "Output1"
-    lastNode = app.createNode("fr.inria.built-in.Output", 1, groupgroup)
-    lastNode.setLabel("Output")
-    lastNode.setPosition(1180, 609)
-    lastNode.setSize(104, 30)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupgroupOutput1 = lastNode
-
-    del lastNode
-    # End of node "Output1"
-
-    # Start of node "Input1"
-    lastNode = app.createNode("fr.inria.built-in.Input", 1, groupgroup)
-    lastNode.setScriptName("Input1")
-    lastNode.setLabel("Input1")
-    lastNode.setPosition(1180, 509)
-    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupgroupInput1 = lastNode
+    groupB = lastNode
 
     del lastNode
-    # End of node "Input1"
+    # End of node "B"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupgroupOutput1.connectInput(0, groupgroupInput1)
-
-
-    # Start of node "Dot1"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot1")
-    lastNode.setLabel("Dot1")
-    lastNode.setPosition(1255, 468)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot1 = lastNode
-
-    del lastNode
-    # End of node "Dot1"
-
-    # Start of node "Backdrop1"
-    lastNode = app.createNode("fr.inria.built-in.BackDrop", 1, group)
-    lastNode.setScriptName("Backdrop1")
-    lastNode.setLabel("Backdrop1")
-    lastNode.setPosition(1049, 127)
-    lastNode.setSize(317, 268)
-    lastNode.setColor(0.45, 0.45, 0.45)
-    groupBackdrop1 = lastNode
-
-    param = lastNode.getParam("Label")
-    if param is not None:
-        param.setValue("<font size=\"6\" color=\"#000000\" face=\"Droid Sans\">Efectos, formas y otros que no necesitan la imagen de entrada</font>")
-        del param
-
-    del lastNode
-    # End of node "Backdrop1"
-
-    # Start of node "Merge2"
-    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge2")
-    lastNode.setLabel("Merge2")
-    lastNode.setPosition(1567, 561)
-    lastNode.setSize(104, 55)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge2 = lastNode
-
-    param = lastNode.getParam("mix")
-    if param is not None:
-        param.setValue(0, 0)
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
-        del param
-
-    del lastNode
-    # End of node "Merge2"
-
-    # Start of node "Backdrop2"
-    lastNode = app.createNode("fr.inria.built-in.BackDrop", 1, group)
-    lastNode.setScriptName("Backdrop2")
-    lastNode.setLabel("Backdrop2")
-    lastNode.setPosition(1830, 111)
-    lastNode.setSize(329, 302)
-    lastNode.setColor(0.45, 0.45, 0.45)
-    groupBackdrop2 = lastNode
-
-    param = lastNode.getParam("Label")
-    if param is not None:
-        param.setValue("<font size=\"6\" color=\"#000000\" face=\"Droid Sans\">Textos</font>")
-        del param
-
-    del lastNode
-    # End of node "Backdrop2"
-
-    # Start of node "Dot2"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot2")
-    lastNode.setLabel("Dot2")
-    lastNode.setPosition(1990, 581)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot2 = lastNode
-
-    del lastNode
-    # End of node "Dot2"
-
-    # Start of node "Dot4"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot4")
-    lastNode.setLabel("Dot4")
-    lastNode.setPosition(1255, -34)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot4 = lastNode
-
-    del lastNode
-    # End of node "Dot4"
-
-    # Start of node "Dot5"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot5")
-    lastNode.setLabel("Dot5")
-    lastNode.setPosition(1612, -34)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot5 = lastNode
-
-    del lastNode
-    # End of node "Dot5"
-
-    # Start of node "Constant1"
-    lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
-    lastNode.setScriptName("Constant1")
-    lastNode.setLabel("Constant1")
-    lastNode.setPosition(1947, 198)
-    lastNode.setSize(100, 32)
-    lastNode.setColor(0.3, 0.5, 0.2)
-    groupConstant1 = lastNode
-
-    param = lastNode.getParam("extent")
-    if param is not None:
-        param.set("size")
-        del param
-
-    param = lastNode.getParam("reformat")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("color")
-    if param is not None:
-        param.setValue(0.5, 0)
-        param.setValue(0.5, 1)
-        param.setValue(1, 2)
-        param.setValue(1, 3)
-        del param
-
-    del lastNode
-    # End of node "Constant1"
-
-    # Start of node "Transform"
-    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform")
-    lastNode.setLabel("Transform")
-    lastNode.setPosition(1947, 262)
-    lastNode.setSize(100, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform = lastNode
-
-    param = lastNode.getParam("scale")
-    if param is not None:
-        param.setValue(0.5, 0)
-        param.setValue(0.5, 1)
-        del param
-
-    param = lastNode.getParam("transformCenterChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Transform"
-
-    # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupFrameRange)
-    groupFrameRange.connectInput(0, groupTimeOffset)
-    groupTimeOffset.connectInput(0, groupMerge2)
-    groupMerge1.connectInput(0, groupDot5)
-    groupMerge1.connectInput(1, groupDot1)
-    groupFX.connectInput(0, groupDot4)
-    groupDot1.connectInput(0, groupFX)
-    groupMerge2.connectInput(0, groupMerge1)
-    groupMerge2.connectInput(1, groupDot2)
-    groupDot2.connectInput(0, groupTransform)
-    groupDot4.connectInput(0, groupDot5)
-    groupDot5.connectInput(0, groupImage)
-    groupTransform.connectInput(0, groupConstant1)
-
-    param = groupFrameRange.getParam("frameRange")
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 0)
-    param.setExpression("start_frame = thisGroup.start_frame.get()\nduration = thisGroup.duration.get()\nrange = [start_frame, start_frame + duration]\n\nret = range[dimension]\n\n", True, 1)
-    del param
-    param = groupTimeOffset.getParam("timeOffset")
-    param.setExpression("thisGroup.start_frame.get()", False, 0)
-    del param
-
     try:
         extModule = sys.modules["TransitionBaseExt"]
     except KeyError:
