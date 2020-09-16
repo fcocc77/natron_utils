@@ -1,4 +1,4 @@
-from base import link_to_parent, children_refresh, get_duration, get_start_frame, reformat_update
+from base import link_to_parent, children_refresh, get_duration, get_start_frame, reformat_update, get_format
 from nx import getNode
 from animations import exaggerated_animation
 
@@ -18,9 +18,12 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 def refresh(thisNode):
     duration = get_duration(thisNode)
     start_frame = get_start_frame(thisNode)
+    current_format = get_format(thisNode)
 
     transition_duration = thisNode.transition_duration.get() * duration / 100
     last_frame = start_frame + transition_duration
+
+    getNode(thisNode, 'crop').getParam('size').set(current_format[0], current_format[1])
 
     # formato de entrada
     reformat_input = getNode(thisNode, 'reformat_input')
@@ -37,4 +40,3 @@ def refresh(thisNode):
     switch.restoreDefaultValue()
     switch.setValueAtTime(0, last_frame)
     switch.setValueAtTime(1, last_frame + 1)
-

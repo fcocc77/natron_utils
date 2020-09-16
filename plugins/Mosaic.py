@@ -313,8 +313,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("boxSize")
     if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
+        param.setValue(0, 0)
+        param.setValue(0, 1)
         del param
 
     param = lastNode.getParam("boxFixed")
@@ -334,7 +334,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("reformat")
     lastNode.setLabel("reformat")
-    lastNode.setPosition(1049, 215)
+    lastNode.setPosition(1049, 175)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupreformat = lastNode
@@ -347,6 +347,11 @@ def createInstance(app,group):
     param = lastNode.getParam("reformatType")
     if param is not None:
         param.set("box")
+        del param
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
         del param
 
     param = lastNode.getParam("NatronParamFormatSize")
@@ -411,7 +416,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("switch")
     lastNode.setLabel("switch")
-    lastNode.setPosition(763, 215)
+    lastNode.setPosition(763, 236)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupswitch = lastNode
@@ -419,13 +424,31 @@ def createInstance(app,group):
     del lastNode
     # End of node "switch"
 
+    # Start of node "crop"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
+    lastNode.setScriptName("crop")
+    lastNode.setLabel("crop")
+    lastNode.setPosition(1049, 236)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupcrop = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    del lastNode
+    # End of node "crop"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupswitch)
     groupreformat_input.connectInput(0, groupReformat1)
     groupreformat.connectInput(0, groupreformat_input)
     groupReformat1.connectInput(0, groupInput1)
-    groupswitch.connectInput(0, groupreformat)
+    groupswitch.connectInput(0, groupcrop)
     groupswitch.connectInput(1, groupInput1)
+    groupcrop.connectInput(0, groupreformat)
 
     try:
         extModule = sys.modules["MosaicExt"]
