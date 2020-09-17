@@ -363,6 +363,18 @@ def createInstance(app,group):
     lastNode.align = param
     del param
 
+    param = lastNode.createBooleanParam("one_line", "One Line")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.one_line = param
+    del param
+
     param = lastNode.createButtonParam("separate_text", "Separate Text")
 
     # Add the param to the page
@@ -407,7 +419,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
     lastNode.setScriptName("title_node")
     lastNode.setLabel("title_node")
-    lastNode.setPosition(1172, -124)
+    lastNode.setPosition(1172, -241)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouptitle_node = lastNode
@@ -440,7 +452,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Title")
+        param.setValue("Francisco")
         del param
 
     param = lastNode.getParam("name")
@@ -470,8 +482,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
     lastNode.setScriptName("subtitle_node")
     lastNode.setLabel("subtitle_node")
-    lastNode.setPosition(1448, -119)
-    lastNode.setSize(100, 32)
+    lastNode.setPosition(1448, -236)
+    lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupsubtitle_node = lastNode
 
@@ -488,7 +500,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Subtitle")
+        param.setValue("Jose")
         del param
 
     param = lastNode.getParam("name")
@@ -509,14 +521,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "subtitle_node"
 
-    # Start of node "Merge3"
+    # Start of node "merge"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge3")
-    lastNode.setLabel("Merge3")
-    lastNode.setPosition(1325, 40)
-    lastNode.setSize(100, 45)
+    lastNode.setScriptName("merge")
+    lastNode.setLabel("merge")
+    lastNode.setPosition(1325, 48)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge3 = lastNode
+    groupmerge = lastNode
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
@@ -524,21 +536,21 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Merge3"
+    # End of node "merge"
 
     # Start of node "title_position_node"
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
     lastNode.setScriptName("title_position_node")
     lastNode.setLabel("title_position_node")
-    lastNode.setPosition(1172, -49)
+    lastNode.setPosition(1172, -48)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptitle_position_node = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(310, 0)
-        param.setValue(519, 1)
+        param.setValue(438, 0)
+        param.setValue(690.5, 1)
         del param
 
     del lastNode
@@ -548,14 +560,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
     lastNode.setScriptName("subtitle_position_node")
     lastNode.setLabel("subtitle_position_node")
-    lastNode.setPosition(1448, -47)
+    lastNode.setPosition(1448, -56)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupsubtitle_position_node = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(16, 1)
+        param.setValue(440, 0)
+        param.setValue(145.5, 1)
         del param
 
     del lastNode
@@ -565,16 +578,10 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("General_Transform")
     lastNode.setLabel("General_Transform")
-    lastNode.setPosition(1325, 187)
+    lastNode.setPosition(1325, 190)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupGeneral_Transform = lastNode
-
-    param = lastNode.getParam("scale")
-    if param is not None:
-        param.setValue(0.5100153006885364, 0)
-        param.setValue(0.5100153006885364, 1)
-        del param
 
     param = lastNode.getParam("transformCenterChanged")
     if param is not None:
@@ -588,7 +595,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(1325, 360)
+    lastNode.setPosition(1325, 358)
     lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
@@ -606,7 +613,7 @@ def createInstance(app,group):
     lastNode.setScriptName("reformat")
     lastNode.setLabel("reformat")
     lastNode.setPosition(1587, 366)
-    lastNode.setSize(104, 32)
+    lastNode.setSize(100, 29)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupreformat = lastNode
 
@@ -634,22 +641,83 @@ def createInstance(app,group):
     del lastNode
     # End of node "reformat"
 
+    # Start of node "title_crop"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
+    lastNode.setScriptName("title_crop")
+    lastNode.setLabel("title_crop")
+    lastNode.setPosition(1174, -167)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    grouptitle_crop = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("bottomLeft")
+    if param is not None:
+        param.setValue(30, 1)
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(666, 0)
+        param.setValue(96, 1)
+        del param
+
+    param = lastNode.getParam("disableNode")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "title_crop"
+
+    # Start of node "subtitle_crop"
+    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
+    lastNode.setScriptName("subtitle_crop")
+    lastNode.setLabel("subtitle_crop")
+    lastNode.setPosition(1450, -160)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupsubtitle_crop = lastNode
+
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
+    param = lastNode.getParam("bottomLeft")
+    if param is not None:
+        param.setValue(60, 1)
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(550, 0)
+        param.setValue(174, 1)
+        del param
+
+    param = lastNode.getParam("disableNode")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "subtitle_crop"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupMerge1)
-    groupMerge3.connectInput(0, groupsubtitle_position_node)
-    groupMerge3.connectInput(1, grouptitle_position_node)
-    grouptitle_position_node.connectInput(0, grouptitle_node)
-    groupsubtitle_position_node.connectInput(0, groupsubtitle_node)
-    groupGeneral_Transform.connectInput(0, groupMerge3)
+    groupmerge.connectInput(0, groupsubtitle_position_node)
+    groupmerge.connectInput(1, grouptitle_position_node)
+    grouptitle_position_node.connectInput(0, grouptitle_crop)
+    groupsubtitle_position_node.connectInput(0, groupsubtitle_crop)
+    groupGeneral_Transform.connectInput(0, groupmerge)
     groupMerge1.connectInput(0, groupreformat)
     groupMerge1.connectInput(1, groupGeneral_Transform)
-
-    param = grouptitle_node.getParam("text")
-    param.setExpression("thisGroup.title.get()", False, 0)
-    del param
-    param = groupsubtitle_node.getParam("text")
-    param.setExpression("thisGroup.subtitle.get()", False, 0)
-    del param
+    grouptitle_crop.connectInput(0, grouptitle_node)
+    groupsubtitle_crop.connectInput(0, groupsubtitle_node)
 
     try:
         extModule = sys.modules["TextFitExt"]

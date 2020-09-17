@@ -112,6 +112,7 @@ Templates Bases:
         ☐ crear nodo de trazos con movimientos sutiles
         ☐ sobreponer textos con versiculos biblicos pequeño y gigantes con blur para estilizar la imagen
     tech-1:
+        ☐ ... @low
         ☐ crear nodo como el 'Depth_Separation' pero con cuadrados y rectangulos
         ☐ crear transicion con cuadrados
     tech-2:

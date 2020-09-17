@@ -1,6 +1,6 @@
 from base import link_to_parent, children_refresh, get_format, get_rscale, reformat_update
 from text_base import set_font, transfer_transform
-from nx import getNode, get_parent, createNode
+from nx import getNode, get_parent, createNode, autocrop, get_bbox
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -28,7 +28,16 @@ def refresh(thisNode):
 
     reformat_update(thisNode, 'reformat')
 
-    title_size, subtitle_size = fit_text_to_box(thisNode)
+    one_line_param = thisNode.getParam('one_line')
+    one_line = False
+    if one_line_param:
+        if one_line_param.get():
+            one_line = True
+
+    if one_line:
+        title_size, subtitle_size = one_line_fit(thisNode)
+    else:
+        title_size, subtitle_size = fit_text_to_box(thisNode)
 
     thisNode.getParam('font_size_title').set(title_size)
     thisNode.getParam('font_size_subtitle').set(subtitle_size)
@@ -39,15 +48,165 @@ def refresh(thisNode):
     transfer_transform(input_transform, general_transform, get_rscale(thisNode))
 
 
-def fit_text_to_box(thisNode):
+def font_resize(text, current_format, initial_size=10, increase=100):
+    # reescala la fuente hasta que quede
+    # del ancho del cuadro
+    size_param = text.getParam('size')
+    size_param.setValue(0)
 
-    align = thisNode.align.get()
+    x = current_format[0]
+    y = current_format[1]
+
+    max_height = y / 2
+
+    size = initial_size
+    width = 0
+    height = 0
+    while(width < x and height < max_height):
+        size += increase
+        size_param.setValue(size)
+        width = text.getRegionOfDefinition(1, 1).x2
+        height = text.getRegionOfDefinition(1, 1).y2
+
+    if increase > 50:
+        size -= increase
+        return font_resize(text, current_format, size, 50)
+    elif increase > 10:
+        size -= increase
+        return font_resize(text, current_format, size, 10)
+    else:
+        return size
+
+
+def one_line_fit(thisNode):
+
+    title_node = getNode(thisNode, "title_node")
+    subtitle_node = getNode(thisNode, "subtitle_node")
 
     title = thisNode.title.get()
     subtitle = thisNode.subtitle.get()
 
+    font = thisNode.getParam('font').get()
+    set_font(title_node, font)
+    set_font(subtitle_node, font)
+
+    join_text = title + ' ' + subtitle
+
+    # temporal texto para, obtener el tamanio
+    title_node.getParam('text').setValue(join_text)
+    subtitle_node.getParam('text').setValue('')
+
+    current_format = get_format(thisNode)
+    join_text_size = font_resize(title_node, current_format)
+
+    #
+    #
+
+    title_node.getParam('text').setValue(title)
+    subtitle_node.getParam('text').setValue(subtitle)
+
+    # size
+    title_max_size = thisNode.title_max_size.get()
+    subtitle_max_size = thisNode.subtitle_max_size.get()
+
+    title_size = title_max_size * join_text_size / 100
+    subtitle_size = subtitle_max_size * join_text_size / 100
+
+    title_node.getParam('size').set(title_size)
+    subtitle_node.getParam('size').set(subtitle_size)
+
+    #
+    #
+
+    # autocrop
+    title_crop = getNode(thisNode, 'title_crop')
+    subtitle_crop = getNode(thisNode, 'subtitle_crop')
+
+    title_crop.getParam('disableNode').set(False)
+    subtitle_crop.getParam('disableNode').set(False)
+
+    autocrop(thisNode, title_node, title_crop)
+    autocrop(thisNode, subtitle_node, subtitle_crop)
+
+    #
+    #
+
+    # position
+    title_translate = getNode(thisNode, "title_position_node").getParam('translate')
+    subtitle_translate = getNode(thisNode, "subtitle_position_node").getParam('translate')
+
+    title_bbox = get_bbox(title_crop)
+    subtitle_bbox = get_bbox(subtitle_crop)
+
+    title_size_y = title_bbox.y2 - title_bbox.y1
+    title_size_x = title_bbox.x2 - title_bbox.x1
+    subtitle_size_y = subtitle_bbox.y2 - subtitle_bbox.y1
+    subtitle_size_x = subtitle_bbox.x2 - subtitle_bbox.x1
+
+    # el tamanio de la palabra mas grande
+    if title_max_size < subtitle_max_size:
+        y_max = subtitle_size_y
+    else:
+        y_max = title_size_y
+
+    subtitle_pos_y = (current_format[1] / 2) - subtitle_bbox.y1 - (subtitle_size_y / 2)
+    subtitle_pos_y -= (y_max / 2) - (subtitle_size_y / 2)
+    subtitle_pos_x = title_bbox.x2 + (join_text_size / 2)
+
+    title_pos_y = (current_format[1] / 2) - title_bbox.y1 - (title_size_y / 2)
+    title_pos_y -= (y_max / 2) - (title_size_y / 2)
+
+    title_translate.set(0, title_pos_y)
+    subtitle_translate.set(subtitle_pos_x, subtitle_pos_y)
+
+    #
+    #
+
+    # centrar textos
+    align = thisNode.align.get()
+
+    merge_bbox = get_bbox(getNode(thisNode, 'merge'))
+    extra_x_size = (current_format[0] - merge_bbox.x2)
+
+    # update position
+    title_new_x = title_translate.getValue(0)
+    subtitle_new_x = subtitle_translate.getValue(0)
+
+    if align == 2:
+        title_new_x += extra_x_size / 2
+        subtitle_new_x += extra_x_size / 2
+    elif align == 0:
+        title_new_x += extra_x_size
+        subtitle_new_x += extra_x_size
+
+    title_translate.set(
+        title_new_x,
+        title_translate.getValue(1)
+    )
+    subtitle_translate.set(
+        subtitle_new_x,
+        subtitle_translate.getValue(1)
+    )
+
+    return[title_size, subtitle_size]
+
+
+def fit_text_to_box(thisNode):
+
+    # desabilita el crop que se usa para el 'one_line_fit'
+    getNode(thisNode, 'title_crop').getParam('disableNode').set(True)
+    getNode(thisNode, 'subtitle_crop').getParam('disableNode').set(True)
+
+    #
+    #
+
+    align = thisNode.align.get()
+
     title_node = getNode(thisNode, "title_node")
     subtitle_node = getNode(thisNode, "subtitle_node")
+
+    title = thisNode.title.get()
+    subtitle = thisNode.subtitle.get()
 
     title_node.getParam('text').setValue(title)
     subtitle_node.getParam('text').setValue(subtitle)
@@ -57,37 +216,11 @@ def fit_text_to_box(thisNode):
     set_font(subtitle_node, font)
 
     current_format = get_format(thisNode)
-
     x = current_format[0]
     y = current_format[1]
-    max_height = y / 2
 
-    def font_resize(text, initial_size=10, increase=100):
-        # reescala la fuente hasta que quede
-        # del ancho del cuadro
-        size_param = text.getParam('size')
-        size_param.setValue(0)
-
-        size = initial_size
-        width = 0
-        height = 0
-        while(width < x and height < max_height):
-            size += increase
-            size_param.setValue(size)
-            width = text.getRegionOfDefinition(1, 1).x2
-            height = text.getRegionOfDefinition(1, 1).y2
-
-        if increase > 50:
-            size -= increase
-            return font_resize(text, size, 50)
-        elif increase > 10:
-            size -= increase
-            return font_resize(text, size, 10)
-        else:
-            return size
-
-    title_size = font_resize(title_node)
-    subtitle_size = font_resize(subtitle_node)
+    title_size = font_resize(title_node, current_format)
+    subtitle_size = font_resize(subtitle_node, current_format)
 
     #
     #
