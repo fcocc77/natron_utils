@@ -28,11 +28,10 @@ def refresh(thisNode):
 
     reformat_update(thisNode, 'reformat')
 
-    one_line_param = thisNode.getParam('one_line')
-    one_line = False
-    if one_line_param:
-        if one_line_param.get():
-            one_line = True
+    one_line = thisNode.getParam('one_line').get()
+
+    if not thisNode.title.get() or not thisNode.subtitle.get():
+        one_line = True
 
     if one_line:
         title_size, subtitle_size = one_line_fit(thisNode)
@@ -90,9 +89,8 @@ def one_line_fit(thisNode):
     set_font(title_node, font)
     set_font(subtitle_node, font)
 
-    join_text = title + ' ' + subtitle
-
     # temporal texto para, obtener el tamanio
+    join_text = title + ' ' + subtitle
     title_node.getParam('text').setValue(join_text)
     subtitle_node.getParam('text').setValue('')
 
@@ -125,8 +123,17 @@ def one_line_fit(thisNode):
     title_crop.getParam('disableNode').set(False)
     subtitle_crop.getParam('disableNode').set(False)
 
-    autocrop(thisNode, title_node, title_crop)
-    autocrop(thisNode, subtitle_node, subtitle_crop)
+    if title:
+        autocrop(thisNode, title_node, title_crop)
+    else:
+        title_crop.getParam('size').set(0, 0)
+        title_crop.getParam('bottomLeft').set(0, 0)
+
+    if subtitle:
+        autocrop(thisNode, subtitle_node, subtitle_crop)
+    else:
+        subtitle_crop.getParam('size').set(0, 0)
+        subtitle_crop.getParam('bottomLeft').set(0, 0)
 
     #
     #
@@ -145,13 +152,23 @@ def one_line_fit(thisNode):
 
     # el tamanio de la palabra mas grande
     if title_max_size < subtitle_max_size:
-        y_max = subtitle_size_y
+        if subtitle:
+            y_max = subtitle_size_y
+        else:
+            y_max = title_size_y
+
     else:
-        y_max = title_size_y
+        if title:
+            y_max = title_size_y
+        else:
+            y_max = subtitle_size_y
 
     subtitle_pos_y = (current_format[1] / 2) - subtitle_bbox.y1 - (subtitle_size_y / 2)
     subtitle_pos_y -= (y_max / 2) - (subtitle_size_y / 2)
-    subtitle_pos_x = title_bbox.x2 + (join_text_size / 2)
+    if title:
+        subtitle_pos_x = title_bbox.x2 + (join_text_size / 2)
+    else:
+        subtitle_pos_x = title_bbox.x2
 
     title_pos_y = (current_format[1] / 2) - title_bbox.y1 - (title_size_y / 2)
     title_pos_y -= (y_max / 2) - (title_size_y / 2)
@@ -395,6 +412,12 @@ def separate_text(fittext_node, parent=None):
     title_node.getParam('autoSize').set(True)
     set_font(title_node, font)
 
+    disable_title = title_node.getParam('disableNode')
+    if title:
+        disable_title.set(False)
+    else:
+        disable_title.set(True)
+
     subtitle_node = createNode(
         node='text',
         label='subtitle_node',
@@ -407,6 +430,12 @@ def separate_text(fittext_node, parent=None):
     subtitle_node.getParam('size').setValue(subtitle_size)
     subtitle_node.getParam('autoSize').set(True)
     set_font(subtitle_node, font)
+
+    disable_subtitle = subtitle_node.getParam('disableNode')
+    if subtitle:
+        disable_subtitle.set(False)
+    else:
+        disable_subtitle.set(True)
 
     title_transform = createNode(
         node='transform',
