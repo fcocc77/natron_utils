@@ -170,7 +170,9 @@ def one_line_fit(thisNode):
 
     # update position
     title_new_x = title_translate.getValue(0)
+    title_new_y = title_translate.getValue(1)
     subtitle_new_x = subtitle_translate.getValue(0)
+    subtitle_new_y = subtitle_translate.getValue(1)
 
     if align == 2:
         title_new_x += extra_x_size / 2
@@ -181,12 +183,25 @@ def one_line_fit(thisNode):
 
     title_translate.set(
         title_new_x,
-        title_translate.getValue(1)
+        title_new_y
     )
     subtitle_translate.set(
         subtitle_new_x,
-        subtitle_translate.getValue(1)
+        subtitle_new_y
     )
+
+    #
+    #
+
+    # cambia los parametros exterior
+    title_position_param = thisNode.getParam('title_position')
+    subtitle_position_param = thisNode.getParam('subtitle_position')
+
+    title_position_param.setValue(title_new_x, 0)
+    title_position_param.setValue(title_new_y, 1)
+
+    subtitle_position_param.setValue(subtitle_new_x, 0)
+    subtitle_position_param.setValue(subtitle_new_y, 1)
 
     return[title_size, subtitle_size]
 
@@ -339,8 +354,6 @@ def calcule_text_transform(transform_title, transform, position):
         position_added = _position * scale
         new_position = position_added + translate + (center - (center * scale))
         new_center = (center * scale) - position_added
-
-        new_position = _position * scale + translate + (center - (center * scale))
 
         transform_title.getParam('translate').setValue(new_position, dimension)
         transform_title.getParam('center').setValue(new_center, dimension)
