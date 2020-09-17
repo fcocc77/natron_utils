@@ -64,9 +64,10 @@ Templates Bases:
         ✔ opcion para las letras random en el nodo de 'letter_animation' @done (9/13/2020, 3:58:56 PM)
         ☐ terminar la transicion de flare con blur 'FlareTransition'
     clippings:
+        ☐ ... @low 
         ☐ crear transicion con 1 input para cambiar las formas
     cloud:
-        ☐ ...
+        ☐ ... @low 
     depth:
         ☐ mejorar nodo 'Depth_Separation'
         ☐ crear nodo de texto, con 3 opciones de formas como las que estan en la referencia
@@ -95,13 +96,17 @@ Templates Bases:
         ☐ crear nodo que simule las luces 'spotlight', que funcione en random, y que tenga un parametro de velocidad
     photos-2:
         ☐ crear texto encuadrado en color y que el texto tenga mas estilo con colores
+    photos-3:
+        ☐ ... @low 
     plants:
+        ☐ ... @low 
         ☐ sacar fotos de direrentes partes del jardin para el video
         ☐ crear nodo de textos, que esten sobre diferentes tipos de hojas
         ☐ crear transicion; que sea como una slide pero que pase por encima un tronco o ramas
     stripes:
-        ☐ ...
+        ☐ ... @low 
     stroke:
+        ☐ ... @low
         ☐ crear nodo de texto con trazos
         ☐ crear transicion de trazos similar a 'Depth_Separation' pero con trazos
         ☐ crear nodo de trazos con movimientos sutiles
@@ -110,4 +115,5 @@ Templates Bases:
         ☐ crear nodo como el 'Depth_Separation' pero con cuadrados y rectangulos
         ☐ crear transicion con cuadrados
     tech-2:
+        ☐ ... @low 
         ☐ crear transicion como lareferencia pero, con la opcion de cambiarle la forma con un input
