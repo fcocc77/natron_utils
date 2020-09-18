@@ -403,17 +403,17 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Full_HD_Transform"
+    # Start of node "Transform_Or_BBox"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Full_HD_Transform")
-    lastNode.setLabel("Full HD Transform")
-    lastNode.setPosition(1645, 111)
+    lastNode.setScriptName("Transform_Or_BBox")
+    lastNode.setLabel("Transform Or BBox")
+    lastNode.setPosition(1646, 112)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupFull_HD_Transform = lastNode
+    groupTransform_Or_BBox = lastNode
 
     del lastNode
-    # End of node "Full_HD_Transform"
+    # End of node "Transform_Or_BBox"
 
     # Start of node "title_node"
     lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)

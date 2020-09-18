@@ -553,6 +553,15 @@ def get_bbox(node, frame=1):
     )
 
 
+def get_bbox_format(node):
+
+    bbox = get_bbox(node)
+    width = int(bbox.x2 - bbox.x1)
+    height = int(bbox.y2 - bbox.y1)
+
+    return [width, height]
+
+
 def bbox_bake(crop, start_frame, last_frame):
     input_node = crop.getInput(0)
     if not input_node:

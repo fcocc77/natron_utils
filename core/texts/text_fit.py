@@ -1,6 +1,6 @@
 from base import link_to_parent, children_refresh, get_format, get_rscale, reformat_update
 from text_base import set_font, transfer_transform
-from nx import getNode, get_parent, createNode, autocrop, get_bbox
+from nx import getNode, get_parent, createNode, autocrop, get_bbox, get_bbox_format
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -41,13 +41,48 @@ def refresh(thisNode):
     thisNode.getParam('font_size_title').set(title_size)
     thisNode.getParam('font_size_subtitle').set(subtitle_size)
 
-    input_transform = thisNode.getInput(0)
+    general_transform_refresh(thisNode)
+
+
+def general_transform_refresh(thisNode):
+    # si el nodo de entrada es un 'Transform' mueve el 'Transform' dentro del nodo,
+    # si no, ajusta el 'general_transform' al bounding box
+
+    input_node = thisNode.getInput(0)
+    if not input_node:
+        return
+
     general_transform = getNode(thisNode, 'General_Transform')
 
-    transfer_transform(input_transform, general_transform, get_rscale(thisNode))
+    if input_node.getPluginID() == 'net.sf.openfx.TransformPlugin':
+        transfer_transform(input_node, general_transform, get_rscale(thisNode))
+    else:
+        bbox = get_bbox(input_node)
+        bbox_x, bbox_y = get_bbox_format(input_node)
+
+        general_transform.getParam('center').set(bbox_x / 2, bbox_y / 2)
+        general_transform.getParam('translate').set(bbox.x1, bbox.y1)
+        general_transform.getParam('scale').set(1, 1)
+        general_transform.getParam('rotate').set(0)
 
 
-def font_resize(text, current_format, initial_size=10, increase=100):
+def get_current_format(thisNode):
+    # si la entrada es un 'Transform' usa el formato seleccionado en el 'combobox',
+    # si no, usa el formato que tiene el bounding box del nodo de entrada
+    input_node = thisNode.getInput(0)
+
+    if not input_node:
+        return get_format(thisNode)
+
+    if input_node.getPluginID() == 'net.sf.openfx.TransformPlugin':
+        current_format = get_format(thisNode)
+    else:
+        current_format = get_bbox_format(thisNode.getInput(0))
+
+    return current_format
+
+
+def font_resize(text, current_format, initial_size=10, increase=100, two_word=True):
     # reescala la fuente hasta que quede
     # del ancho del cuadro
     size_param = text.getParam('size')
@@ -56,7 +91,9 @@ def font_resize(text, current_format, initial_size=10, increase=100):
     x = current_format[0]
     y = current_format[1]
 
-    max_height = y / 2
+    max_height = y
+    if two_word:
+        max_height /= 2
 
     size = initial_size
     width = 0
@@ -69,10 +106,10 @@ def font_resize(text, current_format, initial_size=10, increase=100):
 
     if increase > 50:
         size -= increase
-        return font_resize(text, current_format, size, 50)
+        return font_resize(text, current_format, size, 50, two_word)
     elif increase > 10:
         size -= increase
-        return font_resize(text, current_format, size, 10)
+        return font_resize(text, current_format, size, 10, two_word)
     else:
         return size
 
@@ -94,8 +131,8 @@ def one_line_fit(thisNode):
     title_node.getParam('text').setValue(join_text)
     subtitle_node.getParam('text').setValue('')
 
-    current_format = get_format(thisNode)
-    join_text_size = font_resize(title_node, current_format)
+    current_format = get_current_format(thisNode)
+    join_text_size = font_resize(title_node, current_format, two_word=False)
 
     #
     #
@@ -247,7 +284,7 @@ def fit_text_to_box(thisNode):
     set_font(title_node, font)
     set_font(subtitle_node, font)
 
-    current_format = get_format(thisNode)
+    current_format = get_current_format(thisNode)
     x = current_format[0]
     y = current_format[1]
 
