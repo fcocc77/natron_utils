@@ -14,32 +14,21 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         refresh(thisNode)
 
 
-def get_current_format(thisNode):
-    input_node = thisNode.getInput(0)
-
-    current_format = get_format(thisNode)
-    width, height = get_bbox_format(input_node)
-
-    if width < height:  # vertical
-        return [current_format[1], current_format[0]]
-    else:
-        return current_format
-
-
 def refresh(thisNode):
     rscale = get_rscale(thisNode)
     duration = get_duration(thisNode)
-    current_format = get_current_format(thisNode)
     start_frame = get_start_frame(thisNode)
 
+    bbox_format = get_bbox_format(thisNode.getInput(0))
+
     corner_radius = thisNode.corner_radius.get() * rscale
-    bottom_margin = current_format[1] * thisNode.bottom_margin.get() / 100
+    bottom_margin = bbox_format[1] * thisNode.bottom_margin.get() / 100
 
     rectangle = getNode(thisNode, 'rectangle')
-    rectangle_height = current_format[1] + bottom_margin
+    rectangle_height = bbox_format[1] + bottom_margin
     rectangle.getParam('cornerRadius').set(corner_radius, corner_radius)
 
-    rectangle.getParam('size').set(current_format[0], rectangle_height)
+    rectangle.getParam('size').set(bbox_format[0], rectangle_height)
     rectangle.getParam('bottomLeft').set(0, -bottom_margin)
 
     #
@@ -48,12 +37,12 @@ def refresh(thisNode):
     frame_width = 100 - (thisNode.frame_width.get() / 2)
 
     photo_mask = getNode(thisNode, 'photo_mask')
-    photo_mask_width = current_format[0] * frame_width / 100
-    width_residue = current_format[0] - photo_mask_width
-    photo_mask_height = current_format[1] - width_residue
+    photo_mask_width = bbox_format[0] * frame_width / 100
+    width_residue = bbox_format[0] - photo_mask_width
+    photo_mask_height = bbox_format[1] - width_residue
 
-    photo_mask_left = (current_format[0] - photo_mask_width) / 2
-    photo_mask_bottom = (current_format[1] - photo_mask_height) / 2
+    photo_mask_left = (bbox_format[0] - photo_mask_width) / 2
+    photo_mask_bottom = (bbox_format[1] - photo_mask_height) / 2
 
     photo_mask.getParam('size').set(photo_mask_width, photo_mask_height)
     photo_mask.getParam('bottomLeft').set(photo_mask_left, photo_mask_bottom)
@@ -82,7 +71,7 @@ def refresh(thisNode):
 
     set_text_color(thisNode)
 
-    adjust_photo_transform(thisNode, [photo_mask_width, photo_mask_height], current_format)
+    adjust_photo_transform(thisNode, [photo_mask_width, photo_mask_height], bbox_format)
     adjust_output_transform(thisNode)
 
 
@@ -91,18 +80,18 @@ def set_text_color(thisNode):
     getNode(thisNode, 'subtitle_node').getParam('color').copy(thisNode.subtitle_color)
 
 
-def adjust_photo_transform(thisNode, photo_mask_format, current_format):
+def adjust_photo_transform(thisNode, photo_mask_format, bbox_format):
     transform = getNode(thisNode, 'photo_transform')
 
-    vertical = current_format[0] < current_format[1]
+    vertical = bbox_format[0] < bbox_format[1]
     dimension = 0
     if vertical:
         dimension = 1
 
-    scale = float(photo_mask_format[dimension]) / current_format[dimension]
+    scale = float(photo_mask_format[dimension]) / bbox_format[dimension]
     transform.getParam('scale').set(scale, scale)
 
-    transform.getParam('center').set(current_format[0] / 2, current_format[1] / 2)
+    transform.getParam('center').set(bbox_format[0] / 2, bbox_format[1] / 2)
 
 
 def adjust_output_transform(thisNode):
