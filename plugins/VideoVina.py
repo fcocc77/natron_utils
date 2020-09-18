@@ -449,8 +449,11 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("slide", "Slide")
-    entries = [ ("GlassSlide", ""),
-    ("SlideBase", "")]
+    entries = [ ("SlideBase", ""),
+    ("GlassSlide", ""),
+    ("InkSlide", ""),
+    ("", ""),
+    ("", "")]
     param.setOptions(entries)
     del entries
 
@@ -461,7 +464,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("SlideBase")
     lastNode.slide = param
     del param
 
