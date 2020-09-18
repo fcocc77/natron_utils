@@ -110,6 +110,12 @@ def font_resize(text, current_format, initial_size=10, increase=100, two_word=Tr
     elif increase > 10:
         size -= increase
         return font_resize(text, current_format, size, 10, two_word)
+    elif increase > 5:
+        size -= increase
+        return font_resize(text, current_format, size, 5, two_word)
+    elif increase > 1:
+        size -= increase
+        return font_resize(text, current_format, size, 1, two_word)
     else:
         return size
 
