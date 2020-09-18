@@ -34,10 +34,15 @@ def refresh(thisNode):
     #
     #
 
-    frame_width = 100 - (thisNode.frame_width.get() / 2)
+    frame_width = thisNode.frame_width.get() * rscale
+
+    vertical = bbox_format[0] < bbox_format[1]
+    if vertical:
+        aspect = float(bbox_format[1]) / bbox_format[0]
+        frame_width *= aspect
 
     photo_mask = getNode(thisNode, 'photo_mask')
-    photo_mask_width = bbox_format[0] * frame_width / 100
+    photo_mask_width = bbox_format[0] - frame_width
     width_residue = bbox_format[0] - photo_mask_width
     photo_mask_height = bbox_format[1] - width_residue
 

@@ -385,11 +385,11 @@ def createInstance(app,group):
     lastNode.corner_radius = param
     del param
 
-    param = lastNode.createDoubleParam("frame_width", "Frame Width %")
+    param = lastNode.createDoubleParam("frame_width", "Frame Width")
     param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
+    param.setMaximum(1000, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
+    param.setDisplayMaximum(1000, 0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -398,7 +398,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
+    param.setValue(100, 0)
     lastNode.frame_width = param
     del param
 
@@ -717,7 +717,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     param.setEnabled(False, 0)
     lastNode.format = param
     del param
@@ -1245,6 +1244,11 @@ def createInstance(app,group):
         param.set("box")
         del param
 
+    param = lastNode.getParam("NatronParamFormatChoice")
+    if param is not None:
+        param.set("PC_Video")
+        del param
+
     param = lastNode.getParam("NatronParamFormatSize")
     if param is not None:
         param.setValue(1920, 0)
@@ -1268,6 +1272,11 @@ def createInstance(app,group):
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge2"
