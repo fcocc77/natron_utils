@@ -167,13 +167,13 @@ def one_line_fit(thisNode):
     subtitle_crop.getParam('disableNode').set(False)
 
     if title:
-        autocrop(thisNode, title_node, title_crop)
+        autocrop(thisNode, title_node, title_crop, each_pixel=2)
     else:
         title_crop.getParam('size').set(0, 0)
         title_crop.getParam('bottomLeft').set(0, 0)
 
     if subtitle:
-        autocrop(thisNode, subtitle_node, subtitle_crop)
+        autocrop(thisNode, subtitle_node, subtitle_crop, each_pixel=2)
     else:
         subtitle_crop.getParam('size').set(0, 0)
         subtitle_crop.getParam('bottomLeft').set(0, 0)

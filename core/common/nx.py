@@ -593,7 +593,7 @@ def set_option(param, option):
         None
 
 
-def autocrop(workarea, image_node, crop_node):
+def autocrop(workarea, image_node, crop_node, each_pixel=10):
     bbox = get_bbox(image_node)
 
     image_statictis = getNode(workarea, 'autocrop')
@@ -603,69 +603,83 @@ def autocrop(workarea, image_node, crop_node):
     image_statictis.disconnectInput(0)
     image_statictis.connectInput(0, image_node)
 
-    each_pixel = 10
-
     clear = image_statictis.getParam('clearSequence')
     max_param = image_statictis.getParam('statMax')
 
     width = int(bbox.x2 - bbox.x1)
     height = int(bbox.y2 - bbox.y1)
-    left = bbox.x1
-    bottom = bbox.y1
 
-    max_param.setValue(0, 0)
-    clear.trigger()
-    for i in range(width):
-        image_statictis.getParam('bottomLeft').set(left, bbox.y1)
-        image_statictis.getParam('size').set(each_pixel, height)
-        image_statictis.getParam('analyzeFrame').trigger()
+    def left_adjust(each_pixel, left):
+        max_param.setValue(0, 0)
+        clear.trigger()
+        for i in range(width):
+            image_statictis.getParam('bottomLeft').set(left, bbox.y1)
+            image_statictis.getParam('size').set(each_pixel, height)
+            image_statictis.getParam('analyzeFrame').trigger()
 
-        if max_param.get()[0] > 0:
-            break
-        else:
-            left += each_pixel
+            if max_param.get()[0] > 0:
+                break
+            else:
+                left += each_pixel
 
-    max_param.setValue(0, 0)
-    clear.trigger()
-    for i in range(height):
-        image_statictis.getParam('bottomLeft').set(bbox.x1, bottom)
-        image_statictis.getParam('size').set(width, each_pixel)
-        image_statictis.getParam('analyzeFrame').trigger()
+        return left
 
-        if max_param.get()[0] > 0:
-            break
-        else:
-            bottom += each_pixel
+    def bottom_adjust(each_pixel, bottom):
+        max_param.setValue(0, 0)
+        clear.trigger()
+        for i in range(height):
+            image_statictis.getParam('bottomLeft').set(bbox.x1, bottom)
+            image_statictis.getParam('size').set(width, each_pixel)
+            image_statictis.getParam('analyzeFrame').trigger()
 
-    _left = bbox.x1 + width
-    _bottom = bbox.y1 + height
+            if max_param.get()[0] > 0:
+                break
+            else:
+                bottom += each_pixel
 
-    max_param.setValue(0, 0)
-    clear.trigger()
-    for i in range(width):
-        if max_param.get()[0] > 0:
-            break
-        else:
-            _left -= each_pixel
+        return bottom
 
-        image_statictis.getParam('bottomLeft').set(_left, bbox.y1)
-        image_statictis.getParam('size').set(each_pixel, height)
-        image_statictis.getParam('analyzeFrame').trigger()
+    def right_adjust(each_pixel, right):
+        max_param.setValue(0, 0)
+        clear.trigger()
+        for i in range(width):
+            if max_param.get()[0] > 0:
+                break
+            else:
+                right -= each_pixel
 
-    max_param.setValue(0, 0)
-    clear.trigger()
-    for i in range(height):
-        if max_param.get()[0] > 0:
-            break
-        else:
-            _bottom -= each_pixel
+            image_statictis.getParam('bottomLeft').set(right, bbox.y1)
+            image_statictis.getParam('size').set(each_pixel, height)
+            image_statictis.getParam('analyzeFrame').trigger()
 
-        image_statictis.getParam('bottomLeft').set(bbox.x1, _bottom)
-        image_statictis.getParam('size').set(width, each_pixel)
-        image_statictis.getParam('analyzeFrame').trigger()
+        return right
 
-    _width = _left - left + each_pixel
-    _height = _bottom - bottom + each_pixel
+    def top_adjust(each_pixel, top):
+        max_param.setValue(0, 0)
+        clear.trigger()
+        for i in range(height):
+            if max_param.get()[0] > 0:
+                break
+            else:
+                top -= each_pixel
+
+            image_statictis.getParam('bottomLeft').set(bbox.x1, top)
+            image_statictis.getParam('size').set(width, each_pixel)
+            image_statictis.getParam('analyzeFrame').trigger()
+
+        return top
+
+    #
+
+    left = left_adjust(each_pixel, bbox.x1)
+    bottom = bottom_adjust(each_pixel, bbox.y1)
+    right = right_adjust(each_pixel, bbox.x1 + width)
+    top = top_adjust(each_pixel, bbox.y1 + height)
+
+    #
+
+    _width = right - left + each_pixel
+    _height = top - bottom + each_pixel
 
     crop_node.getParam('bottomLeft').set(left, bottom)
     crop_node.getParam('size').set(_width, _height)
