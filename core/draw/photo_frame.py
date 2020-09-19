@@ -1,4 +1,4 @@
-from base import link_to_parent, get_rscale, get_duration, get_format, get_start_frame, reformat_update
+from base import link_to_parent, get_rscale, get_duration, get_format, reformat_update
 from nx import getNode
 from text_fit import separate_text, get_bbox_format, get_bbox
 
@@ -16,10 +16,26 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 def refresh(thisNode):
     rscale = get_rscale(thisNode)
-    duration = get_duration(thisNode)
-    start_frame = get_start_frame(thisNode)
-
     bbox_format = get_bbox_format(thisNode.getInput(0))
+
+    to_frame(thisNode, rscale, bbox_format)
+    adjust_metadata(thisNode, rscale, bbox_format)
+    set_shadow(thisNode, rscale, bbox_format)
+
+
+def get_frame_width(thisNode, bbox_format, rscale):
+
+    frame_width = thisNode.frame_width.get() * rscale
+
+    vertical = bbox_format[0] < bbox_format[1]
+    if vertical:
+        aspect = float(bbox_format[1]) / bbox_format[0]
+        frame_width *= aspect
+
+    return frame_width
+
+
+def to_frame(thisNode, rscale, bbox_format):
 
     corner_radius = thisNode.corner_radius.get() * rscale
     bottom_margin = bbox_format[1] * thisNode.bottom_margin.get() / 100
@@ -34,12 +50,7 @@ def refresh(thisNode):
     #
     #
 
-    frame_width = thisNode.frame_width.get() * rscale
-
-    vertical = bbox_format[0] < bbox_format[1]
-    if vertical:
-        aspect = float(bbox_format[1]) / bbox_format[0]
-        frame_width *= aspect
+    frame_width = get_frame_width(thisNode, bbox_format, rscale)
 
     photo_mask = getNode(thisNode, 'photo_mask')
     photo_mask_width = bbox_format[0] - frame_width
@@ -122,3 +133,55 @@ def adjust_output_transform(thisNode):
     transform.getParam('translate').set(translate_x, -center_y)
 
     reformat_update(thisNode, getNode(thisNode, 'reformat'))
+
+
+def set_shadow(thisNode, rscale, bbox_format):
+
+    expand = thisNode.shadow_expand.get() * rscale
+    blur = thisNode.shadow_blur.get() * rscale
+    opacity = thisNode.shadow_opacity.get()
+    direction = thisNode.shadow_direction.get()
+
+    translate = getNode(thisNode, 'shadow_position').getParam('translate')
+
+    if direction == 0:
+        x_expand = expand
+    else:
+        x_expand = -expand
+
+    translate.set(x_expand, -expand)
+
+    size_blur = getNode(thisNode, 'shadow_blur').getParam('size')
+    size_blur.set(blur, blur)
+
+    mix = getNode(thisNode, 'shadow_merge').getParam('mix')
+    mix.set(opacity)
+
+    getNode(thisNode, 'shadow_crop').getParam('size').set(bbox_format[0], bbox_format[1])
+
+
+def adjust_metadata(thisNode, rscale, bbox_format):
+
+    width, height = bbox_format
+
+    frame_width = get_frame_width(thisNode, bbox_format, rscale) / 2
+    size = thisNode.meta_size.get() * rscale
+
+    a_text = getNode(thisNode, 'A1')
+    b_text = getNode(thisNode, 'B1')
+
+    a_text.getParam('size').set(size)
+    b_text.getParam('size').set(size)
+
+    a_width, a_height = get_bbox_format(a_text)
+    b_width, b_height = get_bbox_format(b_text)
+
+    translate_a = getNode(thisNode, 'a1_position').getParam('translate')
+    translate_b = getNode(thisNode, 'b1_position').getParam('translate')
+
+    height_position = height - (frame_width / 2) - (a_height / 2)
+    width_position_a = frame_width
+    width_position_b = width - frame_width - b_width
+
+    translate_a.set(width_position_a, height_position)
+    translate_b.set(width_position_b, height_position)
