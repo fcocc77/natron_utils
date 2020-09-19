@@ -73,25 +73,6 @@ def createInstance(app,group):
     lastNode.format = param
     del param
 
-    param = lastNode.createChoiceParam("speed", "Speed")
-    entries = [ ("Slow", ""),
-    ("Normal", ""),
-    ("Fast", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Normal")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.speed = param
-    del param
-
     param = lastNode.createButtonParam("link", "Link To Parent")
 
     # Add the param to the page
@@ -114,81 +95,6 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.refresh = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep5", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep5 = param
-    del param
-
-    param = lastNode.createStringParam("time_label", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    TIME :")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.time_label = param
-    del param
-
-    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration_percent = param
-    del param
-
-    param = lastNode.createInt3DParam("durations", "Durations")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-    param.setDisplayMinimum(0, 2)
-    param.setDisplayMaximum(100, 2)
-    param.setDefaultValue(0, 2)
-    param.restoreDefaultValue(2)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(150, 0)
-    param.setValue(100, 1)
-    param.setValue(50, 2)
-    lastNode.durations = param
     del param
 
     param = lastNode.createSeparatorParam("sep6", "")
@@ -255,7 +161,7 @@ def createInstance(app,group):
     # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("Title")
+    param.setValue("TITLE")
     lastNode.title = param
     del param
 
@@ -268,7 +174,7 @@ def createInstance(app,group):
     # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("Subtitle")
+    param.setValue("SUBTITLE")
     lastNode.subtitle = param
     del param
 
@@ -306,9 +212,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.318, 0)
-    param.setValue(0.318, 1)
-    param.setValue(0.318, 2)
+    param.setValue(0.5, 0)
+    param.setValue(0.5, 1)
+    param.setValue(0.5, 2)
     lastNode.title_color = param
     del param
 
@@ -333,9 +239,9 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.095, 0)
-    param.setValue(0.095, 1)
-    param.setValue(0.095, 2)
+    param.setValue(0.2, 0)
+    param.setValue(0.2, 1)
+    param.setValue(0.2, 2)
     lastNode.subtitle_color = param
     del param
 
@@ -381,7 +287,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(20, 0)
+    param.setValue(5, 0)
     lastNode.corner_radius = param
     del param
 
@@ -398,7 +304,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(165, 0)
+    param.setValue(150, 0)
     lastNode.frame_width = param
     del param
 
@@ -415,27 +321,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(9.1, 0)
+    param.setValue(5, 0)
     lastNode.bottom_margin = param
-    del param
-
-    param = lastNode.createIntParam("meta_size", "MetaData Size")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.meta_size = param
     del param
 
     param = lastNode.createSeparatorParam("sep9", "")
@@ -467,37 +354,57 @@ def createInstance(app,group):
     lastNode.inside_shadow_label = param
     del param
 
-    param = lastNode.createDoubleParam("shadow_expand", "Expand")
+    param = lastNode.createIntParam("shadow_angle", "Angle")
     param.setMinimum(0, 0)
-    param.setMaximum(2147483647, 0)
+    param.setMaximum(360, 0)
     param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
+    param.setDisplayMaximum(360, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(26.7, 0)
-    lastNode.shadow_expand = param
+    param.setValue(300, 0)
+    lastNode.shadow_angle = param
     del param
 
-    param = lastNode.createDoubleParam("shadow_blur", "Blur")
+    param = lastNode.createIntParam("shadow_distance", "Distance")
     param.setMinimum(0, 0)
-    param.setMaximum(2147483647, 0)
+    param.setMaximum(1000, 0)
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(2.1, 0)
+    param.setValue(15, 0)
+    lastNode.shadow_distance = param
+    del param
+
+    param = lastNode.createIntParam("shadow_blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(1000, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(10, 0)
     lastNode.shadow_blur = param
     del param
 
@@ -511,18 +418,48 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(1, 0)
+    param.setValue(0.5, 0)
     lastNode.shadow_opacity = param
     del param
 
-    param = lastNode.createChoiceParam("shadow_direction", "Direction")
-    entries = [ ("Left", ""),
-    ("Right", "")]
-    param.setOptions(entries)
-    del entries
+    param = lastNode.createSeparatorParam("sep10", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep10 = param
+    del param
+
+    param = lastNode.createStringParam("meta_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >   META DATA:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.meta_label = param
+    del param
+
+    param = lastNode.createIntParam("meta_size", "Size")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -531,7 +468,145 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    lastNode.shadow_direction = param
+    param.setValue(20, 0)
+    lastNode.meta_size = param
+    del param
+
+    param = lastNode.createColorParam("prefix_color", "Prefix Color", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.25, 0)
+    param.setValue(0.25, 1)
+    param.setValue(0.25, 2)
+    lastNode.prefix_color = param
+    del param
+
+    param = lastNode.createColorParam("suffix_color", "Suffix Color", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    param.setValue(0.5, 1)
+    param.setValue(0.5, 2)
+    lastNode.suffix_color = param
+    del param
+
+    param = lastNode.createColorParam("symbol_color", "Symbol Color", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.9301109313964844, 0)
+    param.setValue(0.5088813304901123, 1)
+    param.setValue(0.02121900953352451, 2)
+    lastNode.symbol_color = param
+    del param
+
+    param = lastNode.createStringParam("meta_a_prefix", "A Prefix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue("X")
+    lastNode.meta_a_prefix = param
+    del param
+
+    param = lastNode.createStringParam("meta_a_suffix", "A Suffix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue("HD")
+    lastNode.meta_a_suffix = param
+    del param
+
+    param = lastNode.createStringParam("meta_b_prefix", "B Prefix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue("Y")
+    lastNode.meta_b_prefix = param
+    del param
+
+    param = lastNode.createStringParam("meta_b_suffix", "B Suffix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue("1920 x 1080")
+    lastNode.meta_b_suffix = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -554,7 +629,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Photo")
     lastNode.setLabel("Photo")
-    lastNode.setPosition(910, -107)
+    lastNode.setPosition(910, 39)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupPhoto = lastNode
@@ -566,7 +641,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Rectangle", 2, group)
     lastNode.setScriptName("photo_mask")
     lastNode.setLabel("photo_mask")
-    lastNode.setPosition(1240, -3)
+    lastNode.setPosition(1139, 236)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupphoto_mask = lastNode
@@ -578,20 +653,20 @@ def createInstance(app,group):
 
     param = lastNode.getParam("bottomLeft")
     if param is not None:
-        param.setValue(115.4532577903683, 0)
-        param.setValue(115.4532577903683, 1)
+        param.setValue(75, 0)
+        param.setValue(75, 1)
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(828.0934844192634, 0)
-        param.setValue(1251.093484419263, 1)
+        param.setValue(1770, 0)
+        param.setValue(930, 1)
         del param
 
     param = lastNode.getParam("cornerRadius")
     if param is not None:
-        param.setValue(20, 0)
-        param.setValue(20, 1)
+        param.setValue(5, 0)
+        param.setValue(5, 1)
         del param
 
     del lastNode
@@ -601,7 +676,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("Shuffle1")
     lastNode.setLabel("Shuffle1")
-    lastNode.setPosition(910, 237)
+    lastNode.setPosition(910, 236)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle1 = lastNode
@@ -618,7 +693,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Premult", 2, group)
     lastNode.setScriptName("Premult1")
     lastNode.setLabel("Premult1")
-    lastNode.setPosition(907, 360)
+    lastNode.setPosition(910, 331)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupPremult1 = lastNode
@@ -630,7 +705,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Rectangle", 2, group)
     lastNode.setScriptName("rectangle")
     lastNode.setLabel("rectangle")
-    lastNode.setPosition(675, 480)
+    lastNode.setPosition(647, 395)
     lastNode.setSize(100, 29)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouprectangle = lastNode
@@ -648,19 +723,18 @@ def createInstance(app,group):
 
     param = lastNode.getParam("bottomLeft")
     if param is not None:
-        param.setValue(-134.862, 1)
+        param.setValue(-54, 1)
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(1059, 0)
-        param.setValue(1616.862, 1)
+        param.setValue(1134, 1)
         del param
 
     param = lastNode.getParam("cornerRadius")
     if param is not None:
-        param.setValue(20, 0)
-        param.setValue(20, 1)
+        param.setValue(5, 0)
+        param.setValue(5, 1)
         del param
 
     del lastNode
@@ -670,7 +744,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(907, 472)
+    lastNode.setPosition(910, 472)
     lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
@@ -692,27 +766,27 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("transform")
     lastNode.setLabel("transform")
-    lastNode.setPosition(907, 1055)
+    lastNode.setPosition(907, 1056)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptransform = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(604.1060419235512, 0)
-        param.setValue(135.862, 1)
+        param.setValue(46.37323943661977, 0)
+        param.setValue(55, 1)
         del param
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.6658446362515413, 0)
-        param.setValue(0.6658446362515413, 1)
+        param.setValue(0.9507042253521126, 0)
+        param.setValue(0.9507042253521126, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(-5, 0)
-        param.setValue(-135.862, 1)
+        param.setValue(-1, 0)
+        param.setValue(-55, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -744,14 +818,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("bottomLeft")
     if param is not None:
-        param.setValue(115.4532577903683, 0)
-        param.setValue(-77.13537110481585, 1)
+        param.setValue(75, 0)
+        param.setValue(-16.5, 1)
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(828.0934844192634, 0)
-        param.setValue(134.862, 1)
+        param.setValue(1770, 0)
+        param.setValue(54, 1)
         del param
 
     param = lastNode.getParam("color")
@@ -769,7 +843,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("merge")
     lastNode.setLabel("merge")
-    lastNode.setPosition(907, 720)
+    lastNode.setPosition(910, 720)
     lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge = lastNode
@@ -833,7 +907,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     param.setEnabled(False, 0)
     lastNode.format = param
     del param
@@ -901,7 +974,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("Title")
+    param.setValue("TITLE")
     param.setEnabled(False, 0)
     lastNode.title = param
     del param
@@ -916,7 +989,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("Subtitle")
+    param.setValue("SUBTITLE")
     param.setEnabled(False, 0)
     lastNode.subtitle = param
     del param
@@ -980,7 +1053,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(60, 0)
+    param.setValue(28, 0)
     lastNode.font_size_title = param
     del param
 
@@ -1001,8 +1074,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(34, 0)
-    param.setValue(18, 1)
+    param.setValue(706, 0)
+    param.setValue(3, 1)
     lastNode.title_position = param
     del param
 
@@ -1053,7 +1126,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(78, 0)
+    param.setValue(36, 0)
     lastNode.font_size_subtitle = param
     del param
 
@@ -1074,8 +1147,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(302, 0)
-    param.setValue(12, 1)
+    param.setValue(832, 0)
+    param.setValue(1, 1)
     lastNode.subtitle_position = param
     del param
 
@@ -1177,7 +1250,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Title")
+        param.setValue("TITLE")
         del param
 
     param = lastNode.getParam("custom")
@@ -1192,14 +1265,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(60, 0)
+        param.setValue(28, 0)
         del param
 
     param = lastNode.getParam("color")
     if param is not None:
-        param.setValue(0.318, 0)
-        param.setValue(0.318, 1)
-        param.setValue(0.318, 2)
+        param.setValue(0.5, 0)
+        param.setValue(0.5, 1)
+        param.setValue(0.5, 2)
         del param
 
     del lastNode
@@ -1221,7 +1294,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Subtitle")
+        param.setValue("SUBTITLE")
         del param
 
     param = lastNode.getParam("custom")
@@ -1236,14 +1309,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(78, 0)
+        param.setValue(36, 0)
         del param
 
     param = lastNode.getParam("color")
     if param is not None:
-        param.setValue(0.095, 0)
-        param.setValue(0.095, 1)
-        param.setValue(0.095, 2)
+        param.setValue(0.2, 0)
+        param.setValue(0.2, 1)
+        param.setValue(0.2, 2)
         del param
 
     del lastNode
@@ -1260,14 +1333,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(149.4532577903683, 0)
-        param.setValue(-59.13537110481585, 1)
+        param.setValue(781, 0)
+        param.setValue(-13.5, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(380, 0)
-        param.setValue(49, 1)
+        param.setValue(179, 0)
+        param.setValue(24, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1289,14 +1362,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(417.4532577903683, 0)
-        param.setValue(-65.13537110481585, 1)
+        param.setValue(907, 0)
+        param.setValue(-15.5, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(112, 0)
-        param.setValue(55, 1)
+        param.setValue(53, 0)
+        param.setValue(26, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1328,21 +1401,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("photo_transform")
     lastNode.setLabel("photo_transform")
-    lastNode.setPosition(910, -46)
-    lastNode.setSize(100, 55)
+    lastNode.setPosition(910, 111)
+    lastNode.setSize(100, 29)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupphoto_transform = lastNode
 
     param = lastNode.getParam("scale")
     if param is not None:
-        param.setValue(0.8441926345609064, 0)
-        param.setValue(0.8441926345609064, 1)
-        del param
-
-    param = lastNode.getParam("center")
-    if param is not None:
-        param.setValue(529, 0)
-        param.setValue(741, 1)
+        param.setValue(0.921875, 0)
+        param.setValue(0.921875, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1358,7 +1425,7 @@ def createInstance(app,group):
     lastNode.setScriptName("reformat")
     lastNode.setLabel("reformat")
     lastNode.setPosition(667, 1227)
-    lastNode.setSize(100, 32)
+    lastNode.setSize(100, 29)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupreformat = lastNode
 
@@ -1391,8 +1458,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge2")
     lastNode.setLabel("Merge2")
-    lastNode.setPosition(907, 1216)
-    lastNode.setSize(100, 55)
+    lastNode.setPosition(907, 1219)
+    lastNode.setSize(100, 45)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2 = lastNode
 
@@ -1404,14 +1471,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Merge2"
 
-    # Start of node "A1"
+    # Start of node "a_prefix"
     lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
-    lastNode.setScriptName("A1")
-    lastNode.setLabel("A1")
-    lastNode.setPosition(270, 799)
+    lastNode.setScriptName("a_prefix")
+    lastNode.setLabel("a_prefix")
+    lastNode.setPosition(-756, 654)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupA1 = lastNode
+    groupa_prefix = lastNode
 
     param = lastNode.getParam("transform")
     if param is not None:
@@ -1425,34 +1492,39 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("A13 -->")
+        param.setValue("X28")
+        del param
+
+    param = lastNode.getParam("name")
+    if param is not None:
+        param.set("M/Montserrat")
         del param
 
     param = lastNode.getParam("font")
     if param is not None:
-        param.setValue("DejaVu Sans")
+        param.setValue("Montserrat")
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(30, 0)
+        param.setValue(20, 0)
         del param
 
     param = lastNode.getParam("color")
     if param is not None:
-        param.setValue(0.09989874064922333, 0)
-        param.setValue(0.07421357929706573, 1)
-        param.setValue(0.01298303063958883, 2)
+        param.setValue(0.25, 0)
+        param.setValue(0.25, 1)
+        param.setValue(0.25, 2)
         del param
 
     del lastNode
-    # End of node "A1"
+    # End of node "a_prefix"
 
     # Start of node "Merge3"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge3")
     lastNode.setLabel("Merge3")
-    lastNode.setPosition(471, 853)
+    lastNode.setPosition(-23, 857)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
@@ -1460,14 +1532,19 @@ def createInstance(app,group):
     del lastNode
     # End of node "Merge3"
 
-    # Start of node "B1"
+    # Start of node "b_prefix"
     lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
-    lastNode.setScriptName("B1")
-    lastNode.setLabel("B1")
-    lastNode.setPosition(471, 705)
+    lastNode.setScriptName("b_prefix")
+    lastNode.setLabel("b_prefix")
+    lastNode.setPosition(170, 659)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupB1 = lastNode
+    groupb_prefix = lastNode
+
+    param = lastNode.getParam("scale")
+    if param is not None:
+        param.setValue(-1.025210084033608, 0)
+        del param
 
     param = lastNode.getParam("transform")
     if param is not None:
@@ -1481,34 +1558,44 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("B13 -->")
+        param.setValue("Y13")
+        del param
+
+    param = lastNode.getParam("name")
+    if param is not None:
+        param.set("M/Montserrat")
         del param
 
     param = lastNode.getParam("font")
     if param is not None:
-        param.setValue("DejaVu Sans")
+        param.setValue("Montserrat")
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(30, 0)
+        param.setValue(20, 0)
         del param
 
     param = lastNode.getParam("color")
     if param is not None:
-        param.setValue(0.09989874064922333, 0)
-        param.setValue(0.07421357929706573, 1)
-        param.setValue(0.01298303063958883, 2)
+        param.setValue(0.25, 0)
+        param.setValue(0.25, 1)
+        param.setValue(0.25, 2)
+        del param
+
+    param = lastNode.getParam("style")
+    if param is not None:
+        param.set("Bold")
         del param
 
     del lastNode
-    # End of node "B1"
+    # End of node "b_prefix"
 
     # Start of node "Merge4"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge4")
     lastNode.setLabel("Merge4")
-    lastNode.setPosition(907, 853)
+    lastNode.setPosition(907, 857)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
@@ -1516,185 +1603,707 @@ def createInstance(app,group):
     del lastNode
     # End of node "Merge4"
 
-    # Start of node "a1_position"
+    # Start of node "a_position"
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("a1_position")
-    lastNode.setLabel("a1_position")
-    lastNode.setPosition(270, 864)
+    lastNode.setScriptName("a_position")
+    lastNode.setLabel("a_position")
+    lastNode.setPosition(-572, 868)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupa1_position = lastNode
+    groupa_position = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(115.4532577903683, 0)
-        param.setValue(1400.273371104816, 1)
+        param.setValue(75, 0)
+        param.setValue(1026.5, 1)
         del param
 
     del lastNode
-    # End of node "a1_position"
+    # End of node "a_position"
 
-    # Start of node "b1_position"
+    # Start of node "b_position"
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("b1_position")
-    lastNode.setLabel("b1_position")
-    lastNode.setPosition(471, 766)
+    lastNode.setScriptName("b_position")
+    lastNode.setLabel("b_position")
+    lastNode.setPosition(-23, 765)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupb1_position = lastNode
+    groupb_position = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(791.5467422096317, 0)
-        param.setValue(1400.273371104816, 1)
+        param.setValue(1613, 0)
+        param.setValue(1026.5, 1)
         del param
 
     del lastNode
-    # End of node "b1_position"
+    # End of node "b_position"
 
-    # Start of node "shadow_crop"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("shadow_crop")
-    lastNode.setLabel("shadow_crop")
-    lastNode.setPosition(1240, 56)
+    # Start of node "symbol"
+    lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
+    lastNode.setScriptName("symbol")
+    lastNode.setLabel("symbol")
+    lastNode.setPosition(-306, 505)
     lastNode.setSize(100, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupshadow_crop = lastNode
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupsymbol = lastNode
 
-    param = lastNode.getParam("NatronParamFormatSize")
+    param = lastNode.getParam("transform")
     if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
+        param.setValue(False)
+        del param
+
+    param = lastNode.getParam("autoSize")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("text")
+    if param is not None:
+        param.setValue(" ➤ ")
+        del param
+
+    param = lastNode.getParam("name")
+    if param is not None:
+        param.set("M/Montserrat")
+        del param
+
+    param = lastNode.getParam("font")
+    if param is not None:
+        param.setValue("Montserrat")
         del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(1059, 0)
-        param.setValue(1482, 1)
+        param.setValue(20, 0)
         del param
 
-    param = lastNode.getParam("blackOutside")
+    param = lastNode.getParam("color")
     if param is not None:
-        param.setValue(True)
+        param.setValue(0.9301109313964844, 0)
+        param.setValue(0.5088813304901123, 1)
+        param.setValue(0.02121900953352451, 2)
         del param
 
     del lastNode
-    # End of node "shadow_crop"
+    # End of node "symbol"
 
-    # Start of node "Invert1"
-    lastNode = app.createNode("net.sf.openfx.Invert", 2, group)
-    lastNode.setScriptName("Invert1")
-    lastNode.setLabel("Invert1")
-    lastNode.setPosition(1240, 124)
-    lastNode.setSize(100, 32)
-    lastNode.setColor(0.48, 0.66, 1)
-    groupInvert1 = lastNode
-
-    param = lastNode.getParam("premultChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Invert1"
-
-    # Start of node "shadow_merge"
+    # Start of node "a_merge"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("shadow_merge")
-    lastNode.setLabel("shadow_merge")
-    lastNode.setPosition(910, 46)
+    lastNode.setScriptName("a_merge")
+    lastNode.setLabel("a_merge")
+    lastNode.setPosition(-572, 643)
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupshadow_merge = lastNode
-
-    param = lastNode.getParam("aChannelsChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("bChannelsChanged")
-    if param is not None:
-        param.setValue(True)
-        del param
+    groupa_merge = lastNode
 
     del lastNode
-    # End of node "shadow_merge"
+    # End of node "a_merge"
 
-    # Start of node "shadow_position"
-    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("shadow_position")
-    lastNode.setLabel("shadow_position")
-    lastNode.setPosition(1240, 302)
-    lastNode.setSize(100, 55)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupshadow_position = lastNode
-
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(26.7, 0)
-        param.setValue(-26.7, 1)
-        del param
-
-    del lastNode
-    # End of node "shadow_position"
-
-    # Start of node "Blur1"
-    lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
-    lastNode.setScriptName("Blur1")
-    lastNode.setLabel("shadow_blur")
-    lastNode.setPosition(1240, 430)
+    # Start of node "a_suffix"
+    lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
+    lastNode.setScriptName("a_suffix")
+    lastNode.setLabel("a_suffix")
+    lastNode.setPosition(-572, 466)
     lastNode.setSize(100, 32)
-    lastNode.setColor(0.8, 0.5, 0.3)
-    groupBlur1 = lastNode
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupa_suffix = lastNode
+
+    param = lastNode.getParam("transform")
+    if param is not None:
+        param.setValue(False)
+        del param
+
+    param = lastNode.getParam("autoSize")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("text")
+    if param is not None:
+        param.setValue("HD")
+        del param
+
+    param = lastNode.getParam("name")
+    if param is not None:
+        param.set("F/FreeSans")
+        del param
+
+    param = lastNode.getParam("font")
+    if param is not None:
+        param.setValue("FreeSans")
+        del param
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(2.1, 0)
-        param.setValue(2.1, 1)
+        param.setValue(20, 0)
         del param
 
-    param = lastNode.getParam("boundary")
+    param = lastNode.getParam("color")
     if param is not None:
-        param.set("nearest")
+        param.setValue(0.5, 0)
+        param.setValue(0.5, 1)
+        param.setValue(0.5, 2)
         del param
 
     del lastNode
-    # End of node "Blur1"
+    # End of node "a_suffix"
 
-    # Start of node "Shuffle2"
-    lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
-    lastNode.setScriptName("Shuffle2")
-    lastNode.setLabel("Shuffle2")
-    lastNode.setPosition(1240, 186)
+    # Start of node "b_suffix"
+    lastNode = app.createNode("net.fxarena.openfx.Text", 6, group)
+    lastNode.setScriptName("b_suffix")
+    lastNode.setLabel("b_suffix")
+    lastNode.setPosition(-23, 506)
     lastNode.setSize(100, 32)
-    lastNode.setColor(0.6, 0.24, 0.39)
-    groupShuffle2 = lastNode
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupb_suffix = lastNode
 
-    param = lastNode.getParam("outputR")
+    param = lastNode.getParam("scale")
     if param is not None:
-        param.set("0")
+        param.setValue(-1.025210084033608, 0)
         del param
 
-    param = lastNode.getParam("outputG")
+    param = lastNode.getParam("transform")
     if param is not None:
-        param.set("0")
+        param.setValue(False)
         del param
 
-    param = lastNode.getParam("outputB")
+    param = lastNode.getParam("autoSize")
     if param is not None:
-        param.set("0")
+        param.setValue(True)
+        del param
+
+    param = lastNode.getParam("text")
+    if param is not None:
+        param.setValue("1920 x 1080")
+        del param
+
+    param = lastNode.getParam("name")
+    if param is not None:
+        param.set("F/FreeSans")
+        del param
+
+    param = lastNode.getParam("font")
+    if param is not None:
+        param.setValue("FreeSans")
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(20, 0)
+        del param
+
+    param = lastNode.getParam("color")
+    if param is not None:
+        param.setValue(0.5, 0)
+        param.setValue(0.5, 1)
+        param.setValue(0.5, 2)
+        del param
+
+    param = lastNode.getParam("style")
+    if param is not None:
+        param.set("Bold")
         del param
 
     del lastNode
-    # End of node "Shuffle2"
+    # End of node "b_suffix"
+
+    # Start of node "b_merge"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("b_merge")
+    lastNode.setLabel("b_merge")
+    lastNode.setPosition(-23, 648)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupb_merge = lastNode
+
+    del lastNode
+    # End of node "b_merge"
+
+    # Start of node "a_suffix_position"
+    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
+    lastNode.setScriptName("a_suffix_position")
+    lastNode.setLabel("a_suffix_position")
+    lastNode.setPosition(-572, 553)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupa_suffix_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(93, 0)
+        del param
+
+    del lastNode
+    # End of node "a_suffix_position"
+
+    # Start of node "b_suffix_position"
+    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
+    lastNode.setScriptName("b_suffix_position")
+    lastNode.setLabel("b_suffix_position")
+    lastNode.setPosition(-23, 569)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupb_suffix_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(85, 0)
+        del param
+
+    del lastNode
+    # End of node "b_suffix_position"
+
+    # Start of node "a_symbol_position"
+    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
+    lastNode.setScriptName("a_symbol_position")
+    lastNode.setLabel("a_symbol_position")
+    lastNode.setPosition(-408, 654)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupa_symbol_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(53, 0)
+        del param
+
+    del lastNode
+    # End of node "a_symbol_position"
+
+    # Start of node "b_symbol_position"
+    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
+    lastNode.setScriptName("b_symbol_position")
+    lastNode.setLabel("b_symbol_position")
+    lastNode.setPosition(-255, 648)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupb_symbol_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(45, 0)
+        del param
+
+    del lastNode
+    # End of node "b_symbol_position"
+
+    # Start of node "shadow"
+    lastNode = app.createNode("vv.Shadow", 1, group)
+    lastNode.setScriptName("shadow")
+    lastNode.setLabel("shadow")
+    lastNode.setPosition(647, 478)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupshadow = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("shadow.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createBooleanParam("shadow_inside", "Inside")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.shadow_inside = param
+    del param
+
+    param = lastNode.createIntParam("shadow_angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(300, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_angle = param
+    del param
+
+    param = lastNode.createIntParam("shadow_distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(1000, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(15, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_distance = param
+    del param
+
+    param = lastNode.createIntParam("shadow_blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(10, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_blur = param
+    del param
+
+    param = lastNode.createDoubleParam("shadow_opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_opacity = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "shadow"
+
+    # Start of node "shadow_inside"
+    lastNode = app.createNode("vv.Shadow", 1, group)
+    lastNode.setScriptName("shadow_inside")
+    lastNode.setLabel("shadow_inside")
+    lastNode.setPosition(910, 404)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupshadow_inside = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("shadow.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createBooleanParam("shadow_inside", "Inside")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.shadow_inside = param
+    del param
+
+    param = lastNode.createIntParam("shadow_angle", "Angle")
+    param.setMinimum(0, 0)
+    param.setMaximum(360, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(360, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(300, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_angle = param
+    del param
+
+    param = lastNode.createIntParam("shadow_distance", "Distance")
+    param.setMinimum(0, 0)
+    param.setMaximum(1000, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(15, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_distance = param
+    del param
+
+    param = lastNode.createIntParam("shadow_blur", "Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(10, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_blur = param
+    del param
+
+    param = lastNode.createDoubleParam("shadow_opacity", "Opacity")
+    param.setMinimum(0, 0)
+    param.setMaximum(1, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    param.setEnabled(False, 0)
+    lastNode.shadow_opacity = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "shadow_inside"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupMerge2)
-    groupShuffle1.connectInput(0, groupshadow_merge)
+    groupShuffle1.connectInput(0, groupphoto_transform)
     groupShuffle1.connectInput(1, groupphoto_mask)
     groupPremult1.connectInput(0, groupShuffle1)
-    groupMerge1.connectInput(0, groupPremult1)
-    groupMerge1.connectInput(1, grouprectangle)
+    groupMerge1.connectInput(0, groupshadow_inside)
+    groupMerge1.connectInput(1, groupshadow)
     grouptransform.connectInput(0, groupMerge4)
     groupmerge.connectInput(0, groupMerge1)
     groupmerge.connectInput(1, grouptitles_merge)
@@ -1706,19 +2315,24 @@ def createInstance(app,group):
     groupphoto_transform.connectInput(0, groupPhoto)
     groupMerge2.connectInput(0, groupreformat)
     groupMerge2.connectInput(1, grouptransform)
-    groupMerge3.connectInput(0, groupb1_position)
-    groupMerge3.connectInput(1, groupa1_position)
+    groupMerge3.connectInput(0, groupb_position)
+    groupMerge3.connectInput(1, groupa_position)
     groupMerge4.connectInput(0, groupmerge)
     groupMerge4.connectInput(1, groupMerge3)
-    groupa1_position.connectInput(0, groupA1)
-    groupb1_position.connectInput(0, groupB1)
-    groupshadow_crop.connectInput(0, groupphoto_mask)
-    groupInvert1.connectInput(0, groupshadow_crop)
-    groupshadow_merge.connectInput(0, groupphoto_transform)
-    groupshadow_merge.connectInput(1, groupBlur1)
-    groupshadow_position.connectInput(0, groupShuffle2)
-    groupBlur1.connectInput(0, groupshadow_position)
-    groupShuffle2.connectInput(0, groupInvert1)
+    groupa_position.connectInput(0, groupa_merge)
+    groupb_position.connectInput(0, groupb_merge)
+    groupa_merge.connectInput(0, groupa_suffix_position)
+    groupa_merge.connectInput(1, groupa_prefix)
+    groupa_merge.connectInput(3, groupa_symbol_position)
+    groupb_merge.connectInput(0, groupb_suffix_position)
+    groupb_merge.connectInput(1, groupb_prefix)
+    groupb_merge.connectInput(3, groupb_symbol_position)
+    groupa_suffix_position.connectInput(0, groupa_suffix)
+    groupb_suffix_position.connectInput(0, groupb_suffix)
+    groupa_symbol_position.connectInput(0, groupsymbol)
+    groupb_symbol_position.connectInput(0, groupsymbol)
+    groupshadow.connectInput(0, grouprectangle)
+    groupshadow_inside.connectInput(0, groupPremult1)
 
     param = grouptext_fit.getParam("state_label")
     group.getParam("state_label").setAsAlias(param)
@@ -1734,6 +2348,42 @@ def createInstance(app,group):
     del param
     param = grouptext_fit.getParam("font")
     group.getParam("font").setAsAlias(param)
+    del param
+    param = groupshadow.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupshadow.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupshadow.getParam("shadow_angle")
+    group.getParam("shadow_angle").setAsAlias(param)
+    del param
+    param = groupshadow.getParam("shadow_distance")
+    group.getParam("shadow_distance").setAsAlias(param)
+    del param
+    param = groupshadow.getParam("shadow_blur")
+    group.getParam("shadow_blur").setAsAlias(param)
+    del param
+    param = groupshadow.getParam("shadow_opacity")
+    group.getParam("shadow_opacity").setAsAlias(param)
+    del param
+    param = groupshadow_inside.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupshadow_inside.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupshadow_inside.getParam("shadow_angle")
+    group.getParam("shadow_angle").setAsAlias(param)
+    del param
+    param = groupshadow_inside.getParam("shadow_distance")
+    group.getParam("shadow_distance").setAsAlias(param)
+    del param
+    param = groupshadow_inside.getParam("shadow_blur")
+    group.getParam("shadow_blur").setAsAlias(param)
+    del param
+    param = groupshadow_inside.getParam("shadow_opacity")
+    group.getParam("shadow_opacity").setAsAlias(param)
     del param
 
     try:

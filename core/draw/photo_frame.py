@@ -1,6 +1,7 @@
 from base import link_to_parent, get_rscale, get_duration, get_format, reformat_update
 from nx import getNode
 from text_fit import separate_text, get_bbox_format, get_bbox
+import random
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -18,9 +19,21 @@ def refresh(thisNode):
     rscale = get_rscale(thisNode)
     bbox_format = get_bbox_format(thisNode.getInput(0))
 
+    shadow_node = getNode(thisNode, 'shadow')
+    disable_shadow = shadow_node.getParam('disableNode')
+    inside_shadow_node = getNode(thisNode, 'shadow_inside')
+
+    shadow_node.getParam('refresh').trigger()
+    inside_shadow_node.getParam('refresh').trigger()
+
+    # se desabilita la sombra, por que modifica el bbox,
+    # y se descuadre todo lo demas.
+    disable_shadow.set(True)
+
     to_frame(thisNode, rscale, bbox_format)
     adjust_metadata(thisNode, rscale, bbox_format)
-    set_shadow(thisNode, rscale, bbox_format)
+
+    disable_shadow.set(False)
 
 
 def get_frame_width(thisNode, bbox_format, rscale):
@@ -135,53 +148,69 @@ def adjust_output_transform(thisNode):
     reformat_update(thisNode, getNode(thisNode, 'reformat'))
 
 
-def set_shadow(thisNode, rscale, bbox_format):
-
-    expand = thisNode.shadow_expand.get() * rscale
-    blur = thisNode.shadow_blur.get() * rscale
-    opacity = thisNode.shadow_opacity.get()
-    direction = thisNode.shadow_direction.get()
-
-    translate = getNode(thisNode, 'shadow_position').getParam('translate')
-
-    if direction == 0:
-        x_expand = expand
-    else:
-        x_expand = -expand
-
-    translate.set(x_expand, -expand)
-
-    size_blur = getNode(thisNode, 'shadow_blur').getParam('size')
-    size_blur.set(blur, blur)
-
-    mix = getNode(thisNode, 'shadow_merge').getParam('mix')
-    mix.set(opacity)
-
-    getNode(thisNode, 'shadow_crop').getParam('size').set(bbox_format[0], bbox_format[1])
-
-
 def adjust_metadata(thisNode, rscale, bbox_format):
 
-    width, height = bbox_format
+    adjust_metadata_text(thisNode, rscale, bbox_format, 'a')
+    adjust_metadata_text(thisNode, rscale, bbox_format, 'b')
+
+
+def adjust_metadata_text(thisNode, rscale, bbox_format, base_name):
+    bbox_width, bbox_height = bbox_format
 
     frame_width = get_frame_width(thisNode, bbox_format, rscale) / 2
     size = thisNode.meta_size.get() * rscale
 
-    a_text = getNode(thisNode, 'A1')
-    b_text = getNode(thisNode, 'B1')
+    prefix_node = getNode(thisNode, base_name + '_prefix')
+    suffix_node = getNode(thisNode, base_name + '_suffix')
+    symbol_node = getNode(thisNode, 'symbol')
 
-    a_text.getParam('size').set(size)
-    b_text.getParam('size').set(size)
+    suffix_translate = getNode(thisNode, base_name + '_suffix_position').getParam('translate')
+    symbol_translate = getNode(thisNode, base_name + '_symbol_position').getParam('translate')
 
-    a_width, a_height = get_bbox_format(a_text)
-    b_width, b_height = get_bbox_format(b_text)
+    prefix = str(thisNode.getParam('meta_' + base_name + '_prefix').get())
+    suffix = str(thisNode.getParam('meta_' + base_name + '_suffix').get())
 
-    translate_a = getNode(thisNode, 'a1_position').getParam('translate')
-    translate_b = getNode(thisNode, 'b1_position').getParam('translate')
+    number = random.randint(10, 99)
+    text = prefix + str(number)
+    prefix_node.getParam('text').set(text)
 
-    height_position = height - (frame_width / 2) - (a_height / 2)
-    width_position_a = frame_width
-    width_position_b = width - frame_width - b_width
+    suffix_node.getParam('text').set(suffix)
+    suffix_disable = suffix_node.getParam('disableNode')
+    if suffix:
+        suffix_disable.set(False)
+    else:
+        suffix_disable.set(True)
 
-    translate_a.set(width_position_a, height_position)
-    translate_b.set(width_position_b, height_position)
+    prefix_node.getParam('size').set(size)
+    suffix_node.getParam('size').set(size)
+    symbol_node.getParam('size').set(size)
+
+    prefix_width, prefix_height = get_bbox_format(prefix_node)
+
+    #
+
+    # color
+    prefix_node.getParam('color').copy(thisNode.prefix_color)
+    suffix_node.getParam('color').copy(thisNode.suffix_color)
+    symbol_node.getParam('color').copy(thisNode.symbol_color)
+
+    #
+
+    symbol_size = size * 2
+
+    symbol_translate.set(prefix_width, 0)
+    suffix_translate.set(prefix_width + symbol_size, 0)
+
+    #
+
+    width, height = get_bbox_format(getNode(thisNode, base_name + '_merge'))
+
+    translate = getNode(thisNode, base_name + '_position').getParam('translate')
+
+    height_position = bbox_height - (frame_width / 2) - (height / 2)
+    if base_name == 'a':
+        width_position = frame_width
+    else:
+        width_position = bbox_width - frame_width - width
+
+    translate.set(width_position, height_position)
