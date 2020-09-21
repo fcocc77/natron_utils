@@ -1,7 +1,7 @@
 import NatronEngine
 
 
-def back_and_forth_animation(param, duration, start_frame, values):
+def back_and_forth_animation(param, duration, start_frame, values, dimension=None):
     # transicion ida y vuelta
 
     first_frame = start_frame
@@ -11,7 +11,12 @@ def back_and_forth_animation(param, duration, start_frame, values):
     value_a = values[0]
     value_b = values[1]
 
-    for dimension in range(param.getNumDimensions()):
+    if dimension == None:
+        dimensions = range(param.getNumDimensions())
+    else:
+        dimensions = [dimension]
+
+    for dimension in dimensions:
         param.restoreDefaultValue(dimension)
 
         param.setValueAtTime(value_a, first_frame, dimension)
