@@ -62,8 +62,8 @@ def refresh(thisNode):
         dimension = 0
 
     elif direction == 2:  # Up
-        values_a = [0, height]
-        values_b = [-height, 0]
+        values_a = [0, -height]
+        values_b = [height, 0]
         dimension = 1
 
     elif direction == 3:  # Down
