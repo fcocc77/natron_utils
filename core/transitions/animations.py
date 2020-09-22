@@ -29,12 +29,31 @@ def back_and_forth_animation(param, duration, start_frame, values, dimension=Non
         param.setInterpolationAtTime(last_frame,  horizontal, dimension)
 
 
-def lineal_animation(param, start_frame, duration, values, dimension=None):
-    if not dimension == None:
-        directional_animation(param, duration, start_frame, values, [0, 0], dimension)
+def simple_animation(param, duration, start_frame, values, interpolation=[True, True], restore=True, dimension=None):
+
+    if dimension == None:
+        dimensions = range(param.getNumDimensions())
     else:
-        for dimension in range(param.getNumDimensions()):
-            directional_animation(param, duration, start_frame, values, [0, 0], dimension)
+        dimensions = [dimension]
+
+    for dimension in dimensions:
+        first_frame = start_frame
+        last_frame = first_frame + duration
+
+        value_a = float(values[0])
+        value_b = float(values[1])
+
+        if restore:
+            param.restoreDefaultValue(dimension)
+
+        param.setValueAtTime(value_a, first_frame, dimension)
+        param.setValueAtTime(value_b, last_frame, dimension)
+
+        horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
+        if interpolation[0]:
+            param.setInterpolationAtTime(first_frame, horizontal, dimension)
+        if interpolation[1]:
+            param.setInterpolationAtTime(last_frame, horizontal, dimension)
 
 
 def exaggerated_animation(
