@@ -148,7 +148,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Vertical")
     lastNode.orientation = param
     del param
 
@@ -230,10 +229,9 @@ def createInstance(app,group):
 
     param = lastNode.getParam("color0")
     if param is not None:
-        param.setValue(0, 0)
-        param.setValue(0, 1)
-        param.setValue(0, 2)
-        param.setValue(0, 3)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
+        param.setValue(1, 2)
         del param
 
     param = lastNode.getParam("color1")
@@ -245,9 +243,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("color2")
     if param is not None:
-        param.setValue(1, 0)
-        param.setValue(1, 1)
-        param.setValue(1, 2)
+        param.setValue(0, 0)
+        param.setValue(0, 1)
+        param.setValue(0, 2)
+        param.setValue(0, 3)
         del param
 
     param = lastNode.getParam("color3")
@@ -288,6 +287,11 @@ def createInstance(app,group):
         param.set("stencil")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge3"
 
@@ -302,7 +306,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(10, 0)
+        param.setValue(10, 1)
         del param
 
     del lastNode
