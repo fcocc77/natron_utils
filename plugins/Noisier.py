@@ -332,6 +332,18 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
+    param = lastNode.createBooleanParam("noise_invert", "Invert")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.noise_invert = param
+    del param
+
     param = lastNode.createDoubleParam("noise_size", "Noise Size")
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
@@ -391,7 +403,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(1237, 569)
+    lastNode.setPosition(1237, 638)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -431,7 +443,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.KeyerPlugin", 1, group)
     lastNode.setScriptName("keyer")
     lastNode.setLabel("keyer")
-    lastNode.setPosition(1237, 300)
+    lastNode.setPosition(1237, 286)
     lastNode.setSize(104, 55)
     lastNode.setColor(0, 1, 0)
     groupkeyer = lastNode
@@ -480,7 +492,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("alpha_to_rgb")
     lastNode.setLabel("alpha_to_rgb")
-    lastNode.setPosition(1237, 444)
+    lastNode.setPosition(1237, 506)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupalpha_to_rgb = lastNode
@@ -503,11 +515,48 @@ def createInstance(app,group):
     del lastNode
     # End of node "alpha_to_rgb"
 
+    # Start of node "invert"
+    lastNode = app.createNode("net.sf.openfx.Invert", 2, group)
+    lastNode.setScriptName("invert")
+    lastNode.setLabel("invert")
+    lastNode.setPosition(1237, 410)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupinvert = lastNode
+
+    param = lastNode.getParam("NatronOfxParamProcessR")
+    if param is not None:
+        param.setValue(False)
+        del param
+
+    param = lastNode.getParam("NatronOfxParamProcessG")
+    if param is not None:
+        param.setValue(False)
+        del param
+
+    param = lastNode.getParam("NatronOfxParamProcessB")
+    if param is not None:
+        param.setValue(False)
+        del param
+
+    param = lastNode.getParam("mix")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "invert"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupalpha_to_rgb)
     groupnoise.connectInput(0, groupbackground)
     groupkeyer.connectInput(0, groupnoise)
-    groupalpha_to_rgb.connectInput(0, groupkeyer)
+    groupalpha_to_rgb.connectInput(0, groupinvert)
+    groupinvert.connectInput(0, groupkeyer)
+
+    param = groupinvert.getParam("mix")
+    param.setExpression("thisGroup.noise_invert.get()", False, 0)
+    del param
 
     try:
         extModule = sys.modules["NoisierExt"]
