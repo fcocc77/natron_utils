@@ -1,9 +1,11 @@
 from nx import alert, warning, getNode, restore_default
 from vina import get_videovina
 from general import formats, rscale
-
-import NatronGui
 import NatronEngine
+try:
+    import NatronGui
+except:
+    None
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
