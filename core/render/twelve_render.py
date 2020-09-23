@@ -43,7 +43,7 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
     prefix_name = prefix + '_' + name
     render_dir = prefix_dir + '/' + prefix_name
 
-    image_input = getNode(thisNode, 'Image_4K')
+    image_input = getNode(thisNode, 'Image')
 
     # reformat node
     reformat_name = 'reformat_' + name
