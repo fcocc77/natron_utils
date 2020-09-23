@@ -2,7 +2,7 @@
 # HD Medio, Full Hd y 4K; Lento, Normal y Rapido
 import os
 import NatronEngine
-from nx import getNode, alert, absolute, createNode, node_delete
+from nx import getNode, alert, absolute, createNode, node_delete, get_connected_nodes
 from vina import value_by_durations
 from general import formats
 from base import link_to_parent
@@ -88,16 +88,20 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
 
 
 def refresh_source_speed(thisNode, speed):
-    # Actaualiza el nodo que se va a renderizar, a la velocidad correspondiente.
-    source_node = thisNode.getInput(0)
-    speed_param = source_node.getParam('speed')
-    refresh_param = source_node.getParam('refresh')
+    # Actaualiza todos los nodos que de que tengan los atributos de videovina
+    # a la velocidad correspondiente.
 
-    if not speed_param:
-        return
+    connected_nodes = get_connected_nodes(thisNode, parent_include=False)
 
-    speed_param.set(speed)
-    refresh_param.trigger()
+    for node in connected_nodes:
+        speed_param = node.getParam('speed')
+        refresh_param = node.getParam('refresh')
+
+        if not speed_param:
+            continue
+
+        speed_param.set(speed)
+        refresh_param.trigger()
 
 
 def render(thisNode):

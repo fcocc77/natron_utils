@@ -368,7 +368,7 @@ def get_select_node(_type=None):
     return None
 
 
-def get_connected_nodes(parent):
+def get_connected_nodes(parent, parent_include=True):
     if not parent:
         return []
 
@@ -389,7 +389,8 @@ def get_connected_nodes(parent):
                     nodes.append(node)
                     add(node)
 
-    nodes.append(parent)
+    if parent_include:
+        nodes.append(parent)
     add(parent)
 
     return nodes
