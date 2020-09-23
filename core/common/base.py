@@ -14,10 +14,11 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     children_refresh(thisParam, thisNode)
 
 
-def link_to_parent(thisNode, thisParam, thisGroup):
+def link_to_parent(thisNode, thisParam, thisGroup, force=False):
     # vincula algunos parametros al nodo padre
-    if not thisParam.getScriptName() == 'link':
-        return
+    if not force:
+        if not thisParam.getScriptName() == 'link':
+            return
 
     # si el grupo es el root 'app', hace la vinculacion al nodo de videovina
     node_for_expression = 'thisGroup'
@@ -65,10 +66,11 @@ def link_to_parent(thisNode, thisParam, thisGroup):
             if page.getScriptName() == 'control':
                 params_count += link(param.getScriptName())
 
-    if params_count > 0:
-        alert('Se vincularon ' + str(params_count) + ' parametros.')
-    else:
-        warning('Link Error', 'El nodo padre no tiene los atributos para vincularlo')
+    if not force:
+        if params_count > 0:
+            alert('Se vincularon ' + str(params_count) + ' parametros.')
+        else:
+            warning('Link Error', 'El nodo padre no tiene los atributos para vincularlo')
 
 
 def children_refresh(thisParam, thisNode):

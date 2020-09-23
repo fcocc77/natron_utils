@@ -22,4 +22,4 @@ def export_pyplugs():
 
 
 NatronGui.natron.addMenuCommand('Videovina/Export Plugin', 'export_pyplugs.export_pyplugs',
-                                QtCore.Qt.Key.Key_E, QtCore.Qt.KeyboardModifier.ShiftModifier)
+                                QtCore.Qt.Key.Key_O, QtCore.Qt.KeyboardModifier.ShiftModifier)
