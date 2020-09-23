@@ -112,6 +112,18 @@ def createInstance(app,group):
     lastNode.link = param
     del param
 
+    param = lastNode.createButtonParam("link_to_connected", "Link To Connected")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Vincula todos los nodos conectados que tengan,\nlos atributos de videovina.")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link_to_connected = param
+    del param
+
     param = lastNode.createSeparatorParam("sep5", "")
 
     # Add the param to the page
@@ -295,20 +307,20 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Image_4K"
+    # Start of node "Image"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Image_4K")
-    lastNode.setLabel("Image_4K")
-    lastNode.setPosition(767, 121)
+    lastNode.setScriptName("Image")
+    lastNode.setLabel("Image")
+    lastNode.setPosition(767, 117)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupImage_4K = lastNode
+    groupImage = lastNode
 
     del lastNode
-    # End of node "Image_4K"
+    # End of node "Image"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupImage_4K)
+    groupOutput1.connectInput(0, groupImage)
 
     try:
         extModule = sys.modules["TwelveRenderExt"]

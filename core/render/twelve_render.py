@@ -17,11 +17,15 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'render':
         render(thisNode)
+    if knob_name == 'link_to_connected':
+        link_to_connected(thisNode)
 
 
 def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinarender=False, thisNode=False):
     # ajusta los parametros de un nodo de videovina dependiendo de
     # la velocidad y resolucion, luego lo envia a render.
+
+    refresh_connected_nodes(thisNode, speed, format)
 
     prefix_dir = '[Project]/../footage/' + prefix
     absolule_path = absolute(prefix_dir)
@@ -87,21 +91,28 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
     node_delete(reformat)
 
 
-def refresh_source_speed(thisNode, speed):
+def refresh_connected_nodes(thisNode, speed, format):
     # Actaualiza todos los nodos que de que tengan los atributos de videovina
     # a la velocidad correspondiente.
+    thisNode.format.set(format)
+    thisNode.speed.set(speed)
+
+    connected_nodes = get_connected_nodes(thisNode, parent_include=False)
+    for node in connected_nodes:
+        refresh_param = node.getParam('refresh')
+
+        if not refresh_param:
+            continue
+
+        refresh_param.trigger()
+
+
+def link_to_connected(thisNode):
 
     connected_nodes = get_connected_nodes(thisNode, parent_include=False)
 
     for node in connected_nodes:
-        speed_param = node.getParam('speed')
-        refresh_param = node.getParam('refresh')
-
-        if not speed_param:
-            continue
-
-        speed_param.set(speed)
-        refresh_param.trigger()
+        link_to_parent(node, thisNode, thisNode, force=True)
 
 
 def render(thisNode):
@@ -119,13 +130,11 @@ def render(thisNode):
     current_speed = thisNode.getParam('speed').get()
 
     if current_state:
-        refresh_source_speed(thisNode, current_speed)
         send_vinarender_state(durations, current_speed, prefix, current_format, thisNode=thisNode)
     elif current_speed_render:
         for format_index in range(3):
             send_vinarender_state(durations, current_speed, prefix, format_index + 1, thisNode=thisNode)
     else:
         for speed in range(3):
-            refresh_source_speed(thisNode, speed)
             for format_index in range(3):
                 send_vinarender_state(durations, speed, prefix, format_index + 1, thisNode=thisNode)
