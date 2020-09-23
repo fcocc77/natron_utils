@@ -69,13 +69,11 @@ def twist_lines(thisNode, width, height):
     getNode(thisNode, 'lines').getParam('refresh').trigger()
     #
 
-
     # Noisier
     noisier = getNode(thisNode, 'noisier')
     evolution = noisier.getParam('evolution')
 
     evolution.set(thisNode.velocity.get() / 100)
-
 
     noisier.getParam('refresh').trigger()
     #
@@ -98,17 +96,43 @@ def twist_transition(thisNode, rscale, duration, durations, width, height, start
     radial_bottom_left.set(0, radial_bottom)
     #
 
+    # Repetir Transicion
+    repeat_switch = getNode(thisNode, 'repeat_switch').getParam('which')
+    repeat_switch.restoreDefaultValue()
+
+    if thisNode.repeat_transition.get():
+        last_frame = start_frame + duration - 1
+        mid_duration = durations[thisNode.speed.get()] / 2
+
+        frame_range = getNode(thisNode, 'frame_range').getParam('frameRange')
+        frame_range.set(start_frame, last_frame)
+
+        repeat_switch.setValueAtTime(0, mid_duration)
+        repeat_switch.setValueAtTime(1, mid_duration + 1)
+
+        #
+
+        duration = thisNode.repeat_duration.get() * (duration / 2) / 100
+        start_frame_a = start_frame
+
+    else:
+        start_frame_a = start_frame
+        repeat_switch.set(0)
+    #
+
     # Transform
     transform = getNode(thisNode, 'transform')
     scale = transform.getParam('scale')
+    center = transform.getParam('center')
 
-    scale_y = 0.7
+    center.set(width / 2, height / 2)
+
+    scale_y = 0.8
     scale_x = scale_y * thisNode.long.get()
     interpolation = [True, False]
 
-    simple_animation(scale, duration, start_frame, [0, scale_x], interpolation, dimension=0)
-    simple_animation(scale, duration, start_frame, [0, scale_y], interpolation, dimension=1)
-    #
+    simple_animation(scale, duration, start_frame_a, [0, scale_x], interpolation, dimension=0)
+    simple_animation(scale, duration, start_frame_a, [0, scale_y], interpolation, dimension=1)
 
     # Edge Time
     edge_separation = thisNode.edge_separation.get()
@@ -123,5 +147,16 @@ def twist_transition(thisNode, rscale, duration, durations, width, height, start
 
         edge_inside.getParam('timeOffset').set(edge_separation)
         edge_outside.getParam('timeOffset').set(-edge_separation)
+
+        #
+
+        erode_inside = getNode(thisNode, 'erode_inside')
+        erode_outside = getNode(thisNode, 'erode_outside')
+
+        erode_size = 4 * rscale
+
+        erode_inside.getParam('size').set(erode_size, erode_size)
+        erode_outside.getParam('size').set(erode_size, erode_size)
+
     else:
         edges_switch.set(0)
