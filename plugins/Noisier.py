@@ -235,6 +235,19 @@ def createInstance(app,group):
     lastNode.evolution = param
     del param
 
+    param = lastNode.createSeparatorParam("sep7", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep7 = param
+    del param
+
     param = lastNode.createBooleanParam("input_transition", "Input Transition")
 
     # Add the param to the page
@@ -257,6 +270,37 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.output_transition = param
+    del param
+
+    param = lastNode.createBooleanParam("repeat_transition", "Repeat Transition")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.repeat_transition = param
+    del param
+
+    param = lastNode.createIntParam("repeat_duration", "Repeat Duration %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(50, 0)
+    lastNode.repeat_duration = param
     del param
 
     param = lastNode.createSeparatorParam("sep6", "")

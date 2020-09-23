@@ -41,7 +41,20 @@ def refresh(thisNode):
     evolution = value_by_durations(evolution, durations, reverse=True)[thisNode.speed.get()]
 
     z_slope.set(evolution)
+    #
 
+    # Repetir Transicion
+    if thisNode.repeat_transition.get():
+        duration = thisNode.repeat_duration.get() * (duration / 2) / 100
+
+        start_frame_a = start_frame
+        last_frame_a = start_frame_a + duration
+
+        start_frame_b = last_frame - duration
+        last_frame_b = start_frame_b + duration
+    else:
+        start_frame_a = start_frame
+        last_frame_a = last_frame
     #
 
     # Keyer
@@ -56,11 +69,16 @@ def refresh(thisNode):
     tolerance_lower.set(-tolerance)
 
     if thisNode.input_transition.get():
-        simple_animation(tolerance_lower, transition_duration, start_frame, [-1, -tolerance])
+        simple_animation(tolerance_lower, transition_duration, start_frame_a, [-1, -tolerance])
     if thisNode.output_transition.get():
-        simple_animation(tolerance_lower, transition_duration, last_frame - transition_duration, [-tolerance, -1], restore=False)
+        simple_animation(tolerance_lower, transition_duration, last_frame_a - transition_duration, [-tolerance, -1], restore=False)
+
+    if thisNode.repeat_transition.get():
+        if thisNode.output_transition.get():
+            simple_animation(tolerance_lower, transition_duration, start_frame_b, [-1, -tolerance], restore=False)
+        if thisNode.input_transition.get():
+            simple_animation(tolerance_lower, transition_duration, last_frame_b - transition_duration, [-tolerance, -1], restore=False)
 
     smoothness = -thisNode.smoothness.get() / 2
     softness_lower.set(smoothness)
-
     #
