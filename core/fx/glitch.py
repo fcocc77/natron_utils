@@ -49,6 +49,8 @@ def refresh(thisNode):
 
 def chromatic_aberration(thisNode, start_frame, duration, rscale, vertical=False):
 
+    last_frame = start_frame + duration
+
     red_translate = getNode(thisNode, 'red_position').getParam('translate')
     blue_translate = getNode(thisNode, 'blue_position').getParam('translate')
 
@@ -61,7 +63,13 @@ def chromatic_aberration(thisNode, start_frame, duration, rscale, vertical=False
     else:
         dimension = 0
 
-    duration /= 2
+    duration /= 4
 
+    # Entrada
     simple_animation(red_translate, duration, start_frame, [-separation, 0], dimension=dimension)
     simple_animation(blue_translate, duration, start_frame, [separation, 0], dimension=dimension)
+
+    # Salida
+    start_frame_output = last_frame - duration
+    simple_animation(red_translate, duration, start_frame_output, [0, -separation], restore=False, dimension=dimension)
+    simple_animation(blue_translate, duration, start_frame_output, [0, separation], restore=False, dimension=dimension)
