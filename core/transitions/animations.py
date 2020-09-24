@@ -1,7 +1,7 @@
 import NatronEngine
 
 
-def back_and_forth_animation(param, duration, start_frame, values, transition=100, dimension=None):
+def back_and_forth_animation(param, duration, start_frame, values, transition=100, input=True, output=True, dimension=None):
     # transicion ida y vuelta
 
     last_frame = start_frame + duration
@@ -29,25 +29,28 @@ def back_and_forth_animation(param, duration, start_frame, values, transition=10
         horizontal = NatronEngine.Natron.KeyframeTypeEnum.eKeyframeTypeHorizontal
 
         if transition < 100:
-            param.setValueAtTime(value_a, a_first_frame, dimension)
-            param.setValueAtTime(value_b, a_last_frame, dimension)
-
-            param.setValueAtTime(value_b, b_first_frame, dimension)
-            param.setValueAtTime(value_a, b_last_frame, dimension)
-
-            param.setInterpolationAtTime(a_first_frame,  horizontal, dimension)
-            param.setInterpolationAtTime(a_last_frame,  horizontal, dimension)
-            param.setInterpolationAtTime(b_first_frame,  horizontal, dimension)
-            param.setInterpolationAtTime(b_last_frame,  horizontal, dimension)
+            if input:
+                param.setValueAtTime(value_a, a_first_frame, dimension)
+                param.setValueAtTime(value_b, a_last_frame, dimension)
+                param.setInterpolationAtTime(a_first_frame,  horizontal, dimension)
+                param.setInterpolationAtTime(a_last_frame,  horizontal, dimension)
+            if output:
+                param.setValueAtTime(value_b, b_first_frame, dimension)
+                param.setValueAtTime(value_a, b_last_frame, dimension)
+                param.setInterpolationAtTime(b_first_frame,  horizontal, dimension)
+                param.setInterpolationAtTime(b_last_frame,  horizontal, dimension)
 
         else:
-            param.setValueAtTime(value_a, start_frame, dimension)
-            param.setValueAtTime(value_b, central_frame, dimension)
-            param.setValueAtTime(value_a, last_frame, dimension)
+            if input:
+                param.setValueAtTime(value_a, start_frame, dimension)
+                param.setInterpolationAtTime(start_frame,  horizontal, dimension)
 
-            param.setInterpolationAtTime(start_frame,  horizontal, dimension)
+            param.setValueAtTime(value_b, central_frame, dimension)
             param.setInterpolationAtTime(central_frame,  horizontal, dimension)
-            param.setInterpolationAtTime(last_frame,  horizontal, dimension)
+
+            if output:
+                param.setValueAtTime(value_a, last_frame, dimension)
+                param.setInterpolationAtTime(last_frame,  horizontal, dimension)
 
 
 def simple_animation(param, duration, start_frame, values, interpolation=[True, True], restore=True, dimension=None):
