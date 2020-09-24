@@ -410,10 +410,12 @@ def node_delete(nodes):
     # natron no borra el nodo
     if type(nodes) is list:
         for n in nodes:
-            n.setPosition(10000, 10000)
-            n.destroy()
+            if n:
+                n.setPosition(10000, 10000)
+                n.destroy()
         for n in nodes:
-            n.destroy()
+            if n:
+                n.destroy()
     else:
         # mueve el nodo a otro lado, por que a veces queda el nodo en el node graph
         nodes.setPosition(10000, 10000)
