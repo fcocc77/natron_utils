@@ -27,51 +27,60 @@ videovina:
     ✔ crear alguna forma de dividir el proyecto con un maximo de 7 slide, para que abra mas rapido y que en vinarender detecte que proyecto dividido corresponde al rango de frames. @today @done (7/23/2020, 11:33:49 AM)
 Templates:
     birthday_01:
+        ☐ draw
+        ☐ que se dibuje una torta, vela o un regalo
     birthday_02:
-    birthday_03:    
+        ☐ photos-1
+    birthday_03:   
+        ☐ glitch
     baby_01:
+        ☐ blurred
+        ☐ cambiar background con estolo de bebe
     baby_02:
+        ☐ photos-1
     baby_03:
-    christmas_01:
-    christmas_02:
-    christmas_03:
-    family_01:
-        ☐ ink
-    family_02:
         ☐ glass
-    family_03:
+    christmas_01:
+        ☐ photos-1
+        ☐ poner figuras de adorno navideños
+    christmas_02:
+        ☐ draw
+    christmas_03:
+        ☐ ink
+    others_01:
+        ☐ ink
+    others_02:
+        ☐ blurred
+    others_03:
+        ☐ glitch
     kid_01:
+        ☐ draw ( muy colorido )
     kid_02:
+        ☐ glitch
     kid_03:
+        ☐ blurred
     travel_01:
-        ✔ cambiar nombre de vacaciones po viaje @done (8/6/2020, 12:19:47 PM)
         ☐ ink
     travel_02:
         ☐ glass
     travel_03:
+        ☐ glitch
     love_01:
-        ☐ vidrios con corazones
+        ☐ glass ( con corazones )
     love_02:
-        ☐ ink con corazones
+        ☐ ink ( en vez de los hexagono, cambiar por corazon )
     love_03:
+        ☐ draw
     wedding_01:
-        ☐ Sacar fotos con hojas y flores
+        ☐ photos-1
     wedding_02:
-        ☐ color rojiso de atardecer
+        ☐ blurred
     wedding_03:
+        ☐ glass
 Templates Bases:
     blurred:
         ✔ opcion para las letras random en el nodo de 'letter_animation' @done (9/13/2020, 3:58:56 PM)
         ☐ terminar la transicion de flare con blur 'FlareTransition'
-    clippings:
-        ☐ ... @low 
-        ☐ crear transicion con 1 input para cambiar las formas
-    cloud:
-        ☐ ... @low 
-    depth:
-        ☐ mejorar nodo 'Depth_Separation'
-        ☐ crear nodo de texto, con 3 opciones de formas como las que estan en la referencia
-        ☐ crear transicion de profundidad y slide con 4 direcciones; derecha ,izquierda, superior e inferior, y incluir 2 adicionales con rotacion
     draw:
         ☐ crear nodo, que convierta una imagen de dibujo en una imagen real, como una transicion pero no es la transicion ( archivo draw.ntp hay avance )
     glass:
@@ -94,7 +103,18 @@ Templates Bases:
         ☐ crear nodo similar al 'SubtleMove' con 2 input de imagen para dar la sensacion de 3D, pero que contenga un modo random de movimiento.
         ☐ nodo de formato de foto antiguas
         ☐ crear nodo que simule las luces 'spotlight', que funcione en random, y que tenga un parametro de velocidad
+    clippings:
+        ☐ ... @low 
+        ☐ crear transicion con 1 input para cambiar las formas
+    cloud:
+        ☐ ... @low 
+    depth:
+        ☐ ... @low
+        ☐ mejorar nodo 'Depth_Separation'
+        ☐ crear nodo de texto, con 3 opciones de formas como las que estan en la referencia
+        ☐ crear transicion de profundidad y slide con 4 direcciones; derecha ,izquierda, superior e inferior, y incluir 2 adicionales con rotacion
     photos-2:
+        ☐ ... @low
         ☐ crear texto encuadrado en color y que el texto tenga mas estilo con colores
     photos-3:
         ☐ ... @low 
