@@ -398,7 +398,13 @@ def refresh_text_fit(workarea):
 
     text_fit.getParam('refresh').trigger()
 
-    return separate_text(text_fit, workarea)
+    title_node, subtitle_node = separate_text(text_fit, workarea)
+
+    # actualizacion de colores
+    title_node.getParam('color').copy(workarea.title_color)
+    subtitle_node.getParam('color').copy(workarea.subtitle_color)
+
+    return [title_node, subtitle_node]
 
 
 def calcule_text_transform(transform_title, transform, position):

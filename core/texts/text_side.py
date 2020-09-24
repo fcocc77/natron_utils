@@ -80,12 +80,6 @@ def refresh(thisNode):
 
     title_node, subtitle_node = refresh_text_fit(thisNode)
 
-    title_color = thisNode.title_color
-    subtitle_color = thisNode.subtitle_color
-
-    title_node.getParam('color').copy(title_color)
-    subtitle_node.getParam('color').copy(subtitle_color)
-
     text_fit = getNode(thisNode, 'TextFit1')
 
     rectangle_separation, rectangle_width = update_rectangle(thisNode, text_fit)
