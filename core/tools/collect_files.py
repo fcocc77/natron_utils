@@ -37,8 +37,8 @@ def collect_files():
     app = NatronGui.natron.getGuiInstance(0)
 
     project_path = os.path.dirname(os.path.dirname(app.getProjectParam('projectPath').get()))
-    footage = project_path + '/footage'
-    relative_base = '[Project]/../footage'
+    assets = project_path + '/assets'
+    relative_base = '[Project]/../assets'
 
     reconect_files = ''
     index = 0
@@ -55,12 +55,12 @@ def collect_files():
             basename = os.path.basename(filename)
 
             # si el archivo ya esta en el directorio del proyecto, no lo copia
-            if not footage in filename:
-                dst_dir = footage + '/' + dirname
+            if not assets in filename:
+                dst_dir = assets + '/' + dirname
                 file_copy(filename, basename, dst_dir)
                 relative = relative_base + '/' + dirname + '/' + basename
             else:
-                relative = relative_base + filename.replace(footage, '')
+                relative = relative_base + filename.replace(assets, '')
 
             filename_param.set(relative)
 

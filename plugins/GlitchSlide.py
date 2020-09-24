@@ -4062,7 +4062,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/textures/letters_soup.jpg")
+        param.setValue("[Project]/../assets/textures/letters_soup.jpg")
         del param
 
     param = lastNode.getParam("filePremult")
@@ -5076,7 +5076,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/footage/glitchs/glitch_10/glitch_10_###.jpg")
+        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/assets/glitchs/glitch_10/glitch_10_###.jpg")
         del param
 
     param = lastNode.getParam("before")
@@ -5518,7 +5518,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/footage/glitchs/glitch_01/glitch_01_###.jpg")
+        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/assets/glitchs/glitch_01/glitch_01_###.jpg")
         del param
 
     param = lastNode.getParam("before")
@@ -5629,7 +5629,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/footage/glitchs/glitch_11/glitch_11_###.jpg")
+        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/assets/glitchs/glitch_11/glitch_11_###.jpg")
         del param
 
     param = lastNode.getParam("before")
@@ -6123,7 +6123,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/footage/glitchs/glitch_15/glitch_15_###.jpg")
+        param.setValue("/home/pancho/Documents/GitHub/videovina/private/templates_base/glitch/assets/glitchs/glitch_15/glitch_15_###.jpg")
         del param
 
     param = lastNode.getParam("before")

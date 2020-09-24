@@ -1152,7 +1152,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/shapes/shape_02.jpg")
+        param.setValue("[Project]/../assets/shapes/shape_02.jpg")
         del param
 
     param = lastNode.getParam("outputLayerChoice")
@@ -1251,7 +1251,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/shapes/cross_02.jpg")
+        param.setValue("[Project]/../assets/shapes/cross_02.jpg")
         del param
 
     param = lastNode.getParam("outputLayerChoice")
@@ -1677,7 +1677,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/ink_mask/ink_mask_01_normal/ink_mask_01_normal_###.jpg")
+        param.setValue("[Project]/../assets/ink_mask/ink_mask_01_normal/ink_mask_01_normal_###.jpg")
         del param
 
     param = lastNode.getParam("startingTime")
@@ -1832,7 +1832,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/textures/IMG_20200821_143327.jpg")
+        param.setValue("[Project]/../assets/textures/IMG_20200821_143327.jpg")
         del param
 
     param = lastNode.getParam("filePremult")
@@ -2031,7 +2031,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/ink_mask/ink_mask_01_slow/ink_mask_01_slow_###.jpg")
+        param.setValue("[Project]/../assets/ink_mask/ink_mask_01_slow/ink_mask_01_slow_###.jpg")
         del param
 
     param = lastNode.getParam("startingTime")
@@ -2088,7 +2088,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/ink_mask/ink_mask_01_fast/ink_mask_01_fast_###.jpg")
+        param.setValue("[Project]/../assets/ink_mask/ink_mask_01_fast/ink_mask_01_fast_###.jpg")
         del param
 
     param = lastNode.getParam("startingTime")
@@ -2960,7 +2960,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/textures/pergamin_border.jpg")
+        param.setValue("[Project]/../assets/textures/pergamin_border.jpg")
         del param
 
     param = lastNode.getParam("filePremult")
@@ -6189,7 +6189,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("[Project]/../footage/textures/anyrgb.jpg")
+        param.setValue("[Project]/../assets/textures/anyrgb.jpg")
         del param
 
     param = lastNode.getParam("filePremult")

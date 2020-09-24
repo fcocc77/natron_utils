@@ -40,7 +40,7 @@ def create_multi_project():
     videovina_project = private_project_dir + '/project.json'
     base_projects_dir = env.assets + '/templates_base/' + project_type + '/comp/ntp'  # Remplazar 'templates_base' solo por 'templates'
 
-    # Copia footage, project.json de amazon S3 y lo copia en el directorio compartido local
+    # Copia assets, project.json de amazon S3 y lo copia en el directorio compartido local
     project_json = project_dir + '/project.json'
     shutil.copy(videovina_project, project_json)
 
@@ -54,11 +54,11 @@ def create_multi_project():
     format_name = ['quarter', 'mid', 'hd', '4k'][_format]
 
     if _format == 1:
-        s3_footage = public_project_dir + '/footage/' + format_name
+        s3_footage = public_project_dir + '/assets/' + format_name
     else:
-        s3_footage = private_project_dir + '/footage/' + format_name
+        s3_footage = private_project_dir + '/assets/' + format_name
 
-    local_footage = project_dir + '/footage'
+    local_footage = project_dir + '/assets'
     makedirs(local_footage)
 
     for photo in os.listdir(s3_footage):

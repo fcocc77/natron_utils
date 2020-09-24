@@ -167,7 +167,7 @@ def get_videovina_project(videovina_node):
     project_file = videovina_node.getParam('videovina_project').get()
     project = jread(project_file)
 
-    footage = os.path.dirname(project_file) + '/footage'
+    assets = os.path.dirname(project_file) + '/assets'
 
     # el formato en el proyecto, solo se inserta en el modulo api,
     # asi que cuando se esta en desarrollo no aparece, y queda
@@ -195,7 +195,7 @@ def get_videovina_project(videovina_node):
         user_songs=project.states.music.user_songs,
         global_font=project.states.app.font,
         user_fonts=project.states.timeline.custom_fonts,
-        footage=footage,
+        assets=assets,
         format=_format
     )
 
@@ -223,7 +223,7 @@ def update_videovina_project(videovina_node, app, workarea):
 
     for photo in pj.timeline:
         basename = photo.name.rsplit('.', 1)[0]
-        url = pj.footage + '/' + basename + '.jpg'
+        url = pj.assets + '/' + basename + '.jpg'
         photos.append(url)
 
     def font_path(font_name):

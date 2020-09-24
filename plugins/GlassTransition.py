@@ -368,7 +368,7 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Nombre del prefijo de los render de la transicion que quedaran en footage")
+    param.setHelp("Nombre del prefijo de los render de la transicion que quedaran en assets")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue("transition_01")
@@ -1136,7 +1136,7 @@ def createInstance(app,group):
     # Set param properties
     param.setHelp("")
     param.setAddNewLine(True)
-    param.setValue("[Project]/../footage/transition_01/transition_01_fast_4k/transition_01_fast_4k_###.png")
+    param.setValue("[Project]/../assets/transition_01/transition_01_fast_4k/transition_01_fast_4k_###.png")
     lastNode.filename = param
     del param
 
