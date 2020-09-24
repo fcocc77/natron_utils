@@ -54,7 +54,7 @@ def chromatic_aberration(thisNode, start_frame, duration, rscale, vertical=False
     red_translate = getNode(thisNode, 'red_position').getParam('translate')
     blue_translate = getNode(thisNode, 'blue_position').getParam('translate')
 
-    amount = 20
+    amount = 10
 
     separation = amount * rscale
 
