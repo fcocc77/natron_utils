@@ -1,15 +1,15 @@
-from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, get_start_frame, get_durations
+from base import get_rscale, get_duration, get_format, get_start_frame, get_durations
 from animations import simple_animation
 from nx import getNode
+
+from slide_common import setup
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
 
-    knob_name = thisParam.getScriptName()
-    link_to_parent(thisNode, thisParam, thisGroup)
-    # children_refresh(thisParam, thisNode)
+    setup(thisParam, thisNode)
 
     if knob_name == 'refresh':
         refresh(thisNode)
