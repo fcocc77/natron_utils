@@ -343,19 +343,6 @@ def createInstance(app,group):
     lastNode.subtitle = param
     del param
 
-    param = lastNode.createSeparatorParam("sep8", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep8 = param
-    del param
-
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
