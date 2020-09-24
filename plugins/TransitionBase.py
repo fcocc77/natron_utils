@@ -100,6 +100,18 @@ def createInstance(app,group):
     lastNode.speed = param
     del param
 
+    param = lastNode.createButtonParam("clean", "Clean")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.clean = param
+    del param
+
     param = lastNode.createButtonParam("refresh", "Refresh")
 
     # Add the param to the page

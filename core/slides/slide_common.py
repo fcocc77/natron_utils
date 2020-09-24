@@ -1,6 +1,6 @@
 # funciones en comun que comparten todas las slides
 from nx import getNode, createNode, warning
-from base import children_refresh, get_duration
+from base import children_refresh, get_duration, clean
 
 
 def setup(thisParam, thisNode):
@@ -15,6 +15,9 @@ def setup(thisParam, thisNode):
 
     if knob_name == 'refresh':
         set_frame_range(thisNode)
+
+    if knob_name == 'clean':
+        clean(thisNode)
 
 
 def twelve_render(thisNode):

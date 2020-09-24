@@ -1,4 +1,4 @@
-from nx import alert, warning, getNode, restore_default
+from nx import alert, warning, getNode, restore_default, question, get_connected_nodes, node_delete, get_nodes_by_type
 from vina import get_videovina
 from general import formats, rscale
 import NatronEngine
@@ -14,6 +14,23 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     link_to_parent(thisNode, thisParam, thisGroup)
     children_refresh(thisParam, thisNode)
+
+
+def clean(thisNode, force=False):
+    # elimina todos los nodos que solo se usan para el desarrollo, dejando los nodos necesarios
+
+    def action():
+        twelve_render_nodes = get_nodes_by_type(thisNode, 'vv.TwelveRender')
+
+        for twelve_render in twelve_render_nodes:
+            nodes = get_connected_nodes(twelve_render)
+            node_delete(nodes)
+
+    if force:
+        action()
+    else:
+        if question("Esta seguro que desea borrar los nodos de desarollo ?", 'Limpiar Nodos'):
+            action()
 
 
 def link_to_parent(thisNode, thisParam, thisGroup, force=False):
