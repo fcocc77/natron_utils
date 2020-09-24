@@ -34,7 +34,7 @@ def refresh(thisNode):
     ext = ['png', 'jpg'][sequence_type]
 
     filename_param = read.getParam('filename')
-    filename = '[Project]/../footage/' + prefix + '/' + prefix_name + '/' + prefix_name + '_####.' + ext
+    filename = '[Project]/../production/states/' + prefix + '/' + prefix_name + '/' + prefix_name + '_####.' + ext
 
     if filename_param.get() == filename:
         filename_param.reloadFile()

@@ -27,7 +27,7 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
 
     refresh_connected_nodes(thisNode, speed, format)
 
-    prefix_dir = '[Project]/../footage/' + prefix
+    prefix_dir = '[Project]/../production/states/' + prefix
     absolule_path = absolute(prefix_dir)
     if not os.path.isdir(absolule_path):
         os.makedirs(absolule_path)
