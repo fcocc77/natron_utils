@@ -36,10 +36,8 @@ def refresh(thisNode):
     filename_param = read.getParam('filename')
     filename = '[Project]/../production/states/' + prefix + '/' + prefix_name + '/' + prefix_name + '_####.' + ext
 
-    if filename_param.get() == filename:
-        filename_param.reloadFile()
-    else:
-        filename_param.set(filename)
+    filename_param.set(filename)
+    filename_param.reloadFile()
 
     read.getParam('outputPremult').set(0)
 
