@@ -26,7 +26,7 @@ def getVersion():
     return 1
 
 def getIconPath():
-    return "Aberration.png"
+    return "ChromaticAberration.png"
 
 def getGrouping():
     return "videovina/Filter"
@@ -39,7 +39,7 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("base.main")
+        param.setValue("chromatic_aberration.main")
         del param
 
 
@@ -81,6 +81,25 @@ def createInstance(app,group):
     lastNode.format = param
     del param
 
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.speed = param
+    del param
+
     param = lastNode.createButtonParam("link", "Link To Parent")
 
     # Add the param to the page
@@ -91,6 +110,18 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
     del param
 
     param = lastNode.createSeparatorParam("sep5", "")
@@ -104,6 +135,100 @@ def createInstance(app,group):
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep5 = param
+    del param
+
+    param = lastNode.createStringParam("time_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    TIME :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.time_label = param
+    del param
+
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
+    del param
+
+    param = lastNode.createInt3DParam("durations", "Durations")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    lastNode.durations = param
+    del param
+
+    param = lastNode.createIntParam("transition_duration", "Transition Duration")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.transition_duration = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep6", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep6 = param
     del param
 
     param = lastNode.createStringParam("settings_label", "")
@@ -122,11 +247,11 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
-    param = lastNode.createDoubleParam("amount", "Amount")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(10, 0)
+    param = lastNode.createChoiceParam("orientation", "Orientation")
+    entries = [ ("Horizontal", ""),
+    ("Vertical", "")]
+    param.setOptions(entries)
+    del entries
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -135,8 +260,37 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.amount = param
+    lastNode.orientation = param
+    del param
+
+    param = lastNode.createBooleanParam("with_animation", "With Animation")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.with_animation = param
+    del param
+
+    param = lastNode.createIntParam("separation", "Separation")
+    param.setMinimum(0, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(10, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(10, 0)
+    lastNode.separation = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -147,7 +301,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(1954, 1032)
+    lastNode.setPosition(1174, 753)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -159,7 +313,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Image")
     lastNode.setLabel("Image")
-    lastNode.setPosition(1954, 61)
+    lastNode.setPosition(1174, -229)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupImage = lastNode
@@ -171,7 +325,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("red")
     lastNode.setLabel("red")
-    lastNode.setPosition(920, 411)
+    lastNode.setPosition(140, 110)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupred = lastNode
@@ -203,8 +357,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("green")
     lastNode.setLabel("green")
-    lastNode.setPosition(1111, 415)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(331, 116)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupgreen = lastNode
 
@@ -235,8 +389,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("blue")
     lastNode.setLabel("blue")
-    lastNode.setPosition(1330, 402)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(550, 101)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupblue = lastNode
 
@@ -267,8 +421,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(1111, 609)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(331, 306)
+    lastNode.setSize(104, 50)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
@@ -294,7 +448,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
-    lastNode.setPosition(1156, 309)
+    lastNode.setPosition(376, 9)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
@@ -302,45 +456,11 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot1"
 
-    # Start of node "Position1"
-    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("Position1")
-    lastNode.setLabel("Position1")
-    lastNode.setPosition(1111, 477)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupPosition1 = lastNode
-
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(-5, 0)
-        del param
-
-    del lastNode
-    # End of node "Position1"
-
-    # Start of node "Position2"
-    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("Position2")
-    lastNode.setLabel("Position2")
-    lastNode.setPosition(1330, 483)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupPosition2 = lastNode
-
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValue(5, 0)
-        del param
-
-    del lastNode
-    # End of node "Position2"
-
     # Start of node "Dot2"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
-    lastNode.setPosition(965, 309)
+    lastNode.setPosition(185, 9)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
@@ -352,7 +472,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
-    lastNode.setPosition(1375, 309)
+    lastNode.setPosition(595, 9)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
@@ -364,7 +484,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
-    lastNode.setPosition(965, 624)
+    lastNode.setPosition(185, 324)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
@@ -376,7 +496,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot5")
     lastNode.setLabel("Dot5")
-    lastNode.setPosition(1375, 626)
+    lastNode.setPosition(595, 326)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot5 = lastNode
@@ -388,8 +508,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
-    lastNode.setPosition(1954, 876)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1174, 576)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
 
@@ -405,7 +525,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot7")
     lastNode.setLabel("Dot7")
-    lastNode.setPosition(1156, 217)
+    lastNode.setPosition(376, -83)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot7 = lastNode
@@ -417,7 +537,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot8")
     lastNode.setLabel("Dot8")
-    lastNode.setPosition(1999, 217)
+    lastNode.setPosition(1219, -83)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot8 = lastNode
@@ -429,7 +549,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot9")
     lastNode.setLabel("Dot9")
-    lastNode.setPosition(1156, 733)
+    lastNode.setPosition(376, 433)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot9 = lastNode
@@ -441,8 +561,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("copy_alpha")
     lastNode.setLabel("copy_alpha")
-    lastNode.setPosition(1489, 724)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(709, 424)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupcopy_alpha = lastNode
 
@@ -458,7 +578,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot6")
     lastNode.setLabel("Dot6")
-    lastNode.setPosition(1534, 217)
+    lastNode.setPosition(754, -83)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot6 = lastNode
@@ -470,8 +590,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Mask")
     lastNode.setLabel("Mask")
-    lastNode.setPosition(1856, 724)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1076, 424)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupMask = lastNode
 
@@ -482,8 +602,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.KeyMix", 1, group)
     lastNode.setScriptName("KeyMix1")
     lastNode.setLabel("KeyMix1")
-    lastNode.setPosition(1708, 724)
-    lastNode.setSize(80, 32)
+    lastNode.setPosition(928, 424)
+    lastNode.setSize(80, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupKeyMix1 = lastNode
 
@@ -494,7 +614,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot10")
     lastNode.setLabel("Dot10")
-    lastNode.setPosition(1741, 217)
+    lastNode.setPosition(961, -83)
     lastNode.setSize(15, 15)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot10 = lastNode
@@ -506,8 +626,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch3")
     lastNode.setLabel("Switch3")
-    lastNode.setPosition(1696, 876)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(916, 576)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch3 = lastNode
 
@@ -519,21 +639,63 @@ def createInstance(app,group):
     del lastNode
     # End of node "Switch3"
 
+    # Start of node "red_position"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("red_position")
+    lastNode.setLabel("red_position")
+    lastNode.setPosition(140, 165)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupred_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(-10, 0)
+        del param
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(959.4000000000001, 0)
+        del param
+
+    del lastNode
+    # End of node "red_position"
+
+    # Start of node "blue_position"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("blue_position")
+    lastNode.setLabel("blue_position")
+    lastNode.setPosition(550, 162)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    groupblue_position = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValue(10, 0)
+        del param
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(959.4000000000001, 0)
+        del param
+
+    del lastNode
+    # End of node "blue_position"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupSwitch1)
     groupred.connectInput(0, groupDot2)
     groupgreen.connectInput(0, groupDot1)
     groupblue.connectInput(0, groupDot3)
     groupMerge1.connectInput(0, groupDot4)
-    groupMerge1.connectInput(1, groupPosition1)
+    groupMerge1.connectInput(1, groupgreen)
     groupMerge1.connectInput(3, groupDot5)
     groupDot1.connectInput(0, groupDot7)
-    groupPosition1.connectInput(0, groupgreen)
-    groupPosition2.connectInput(0, groupblue)
     groupDot2.connectInput(0, groupDot1)
     groupDot3.connectInput(0, groupDot1)
-    groupDot4.connectInput(0, groupred)
-    groupDot5.connectInput(0, groupPosition2)
+    groupDot4.connectInput(0, groupred_position)
+    groupDot5.connectInput(0, groupblue_position)
     groupSwitch1.connectInput(0, groupDot8)
     groupSwitch1.connectInput(1, groupSwitch3)
     groupDot7.connectInput(0, groupDot6)
@@ -548,16 +710,9 @@ def createInstance(app,group):
     groupDot10.connectInput(0, groupDot8)
     groupSwitch3.connectInput(0, groupcopy_alpha)
     groupSwitch3.connectInput(1, groupKeyMix1)
+    groupred_position.connectInput(0, groupred)
+    groupblue_position.connectInput(0, groupblue)
 
-    param = groupPosition1.getParam("translate")
-    param.setExpression("-thisGroup.amount.getValue() * thisGroup.rscale.get()", False, 0)
-    del param
-    param = groupPosition2.getParam("translate")
-    param.setExpression("thisGroup.amount.get() * thisGroup.rscale.get()", False, 0)
-    del param
-    param = groupSwitch1.getParam("which")
-    param.setExpression("1 if thisGroup.amount.getValue() else 0", False, 0)
-    del param
     param = groupSwitch3.getParam("which")
     param.setExpression("1 if thisGroup.getInput(1) else 0", False, 0)
     del param
