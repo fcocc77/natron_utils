@@ -19,3 +19,4 @@ def refresh(thisNode):
     duration = get_duration(thisNode)
     width, height = get_format(thisNode)
     start_frame = get_start_frame(thisNode)
+    last_frame = start_frame + duration

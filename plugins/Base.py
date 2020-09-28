@@ -196,6 +196,25 @@ def createInstance(app,group):
     lastNode.durations = param
     del param
 
+    param = lastNode.createIntParam("transition_duration", "Transition Duration")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.transition_duration = param
+    del param
+
     param = lastNode.createSeparatorParam("sep6", "")
 
     # Add the param to the page

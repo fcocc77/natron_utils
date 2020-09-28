@@ -14,7 +14,7 @@ import sort
 
 
 def reload_nodes():
-    repo = '/home/pancho/Documents/GitHub/natron_utils'
+    repo = '/home/pancho/Documents/develop/natron_utils'
     natron_plugins = '/usr/share/Natron/Plugins'
 
     os.system('sh ' + repo + '/install.sh')

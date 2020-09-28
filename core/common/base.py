@@ -150,6 +150,19 @@ def get_duration(node, base=False):
     return duration_percent * duration / 100
 
 
+def get_transition_duration(node):
+    transition_duration_param = node.transition_duration.get()
+
+    if not transition_duration_param:
+        return
+
+    duration = get_duration(node)
+
+    transition_duration = (duration / 2) * transition_duration_param / 100
+
+    return transition_duration
+
+
 def get_start_frame(node):
     speed_param = node.getParam('speed')
     duration_percent_param = node.getParam('duration_percent')
