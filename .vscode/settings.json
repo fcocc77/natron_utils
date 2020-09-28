@@ -3,5 +3,6 @@
     // para que el formato de python no quebre la codigo
     "python.formatting.autopep8Args": [
         "--max-line-length=200"
-    ]
+    ],
+    "python.linting.enabled": false
 }
