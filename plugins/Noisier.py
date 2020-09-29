@@ -395,6 +395,48 @@ def createInstance(app,group):
     lastNode.smoothness = param
     del param
 
+    param = lastNode.createSeparatorParam("sep9", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep9 = param
+    del param
+
+    param = lastNode.createBooleanParam("self_stencil", "Self Stencil")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.self_stencil = param
+    del param
+
+    param = lastNode.createIntParam("stencil_offset", "Offset")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(10, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.stencil_offset = param
+    del param
+
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -403,7 +445,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(1237, 638)
+    lastNode.setPosition(1237, 844)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -444,7 +486,7 @@ def createInstance(app,group):
     lastNode.setScriptName("keyer")
     lastNode.setLabel("keyer")
     lastNode.setPosition(1237, 286)
-    lastNode.setSize(104, 55)
+    lastNode.setSize(104, 50)
     lastNode.setColor(0, 1, 0)
     groupkeyer = lastNode
 
@@ -456,6 +498,11 @@ def createInstance(app,group):
     param = lastNode.getParam("toleranceLower")
     if param is not None:
         param.setValue(-0.5, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(Luminance)</Natron>")
         del param
 
     del lastNode
@@ -492,7 +539,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("alpha_to_rgb")
     lastNode.setLabel("alpha_to_rgb")
-    lastNode.setPosition(1237, 506)
+    lastNode.setPosition(1237, 502)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupalpha_to_rgb = lastNode
@@ -547,12 +594,89 @@ def createInstance(app,group):
     del lastNode
     # End of node "invert"
 
+    # Start of node "offset_stencil"
+    lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
+    lastNode.setScriptName("offset_stencil")
+    lastNode.setLabel("offset_stencil")
+    lastNode.setPosition(1514, 502)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.7, 0.65, 0.35)
+    groupoffset_stencil = lastNode
+
+    param = lastNode.getParam("timeOffset")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
+    del lastNode
+    # End of node "offset_stencil"
+
+    # Start of node "Merge1"
+    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
+    lastNode.setScriptName("Merge1")
+    lastNode.setLabel("Merge1")
+    lastNode.setPosition(1514, 578)
+    lastNode.setSize(104, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupMerge1 = lastNode
+
+    param = lastNode.getParam("operation")
+    if param is not None:
+        param.set("from")
+        del param
+
+    del lastNode
+    # End of node "Merge1"
+
+    # Start of node "Clamp1"
+    lastNode = app.createNode("net.sf.openfx.Clamp", 2, group)
+    lastNode.setScriptName("Clamp1")
+    lastNode.setLabel("Clamp1")
+    lastNode.setPosition(1517, 695)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.48, 0.66, 1)
+    groupClamp1 = lastNode
+
+    del lastNode
+    # End of node "Clamp1"
+
+    # Start of node "stencil_switch"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("stencil_switch")
+    lastNode.setLabel("stencil_switch")
+    lastNode.setPosition(1237, 695)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupstencil_switch = lastNode
+
+    del lastNode
+    # End of node "stencil_switch"
+
+    # Start of node "Dot1"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot1")
+    lastNode.setLabel("Dot1")
+    lastNode.setPosition(1282, 598)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot1 = lastNode
+
+    del lastNode
+    # End of node "Dot1"
+
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupalpha_to_rgb)
+    groupOutput1.connectInput(0, groupstencil_switch)
     groupnoise.connectInput(0, groupbackground)
     groupkeyer.connectInput(0, groupnoise)
     groupalpha_to_rgb.connectInput(0, groupinvert)
     groupinvert.connectInput(0, groupkeyer)
+    groupoffset_stencil.connectInput(0, groupalpha_to_rgb)
+    groupMerge1.connectInput(0, groupDot1)
+    groupMerge1.connectInput(1, groupoffset_stencil)
+    groupClamp1.connectInput(0, groupMerge1)
+    groupstencil_switch.connectInput(0, groupDot1)
+    groupstencil_switch.connectInput(1, groupClamp1)
+    groupDot1.connectInput(0, groupalpha_to_rgb)
 
     param = groupinvert.getParam("mix")
     param.setExpression("thisGroup.noise_invert.get()", False, 0)

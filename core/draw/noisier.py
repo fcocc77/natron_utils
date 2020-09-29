@@ -82,3 +82,14 @@ def refresh(thisNode):
     smoothness = -thisNode.smoothness.get() / 2
     softness_lower.set(smoothness)
     #
+
+    # Self Stencil
+    stencil_offset = getNode(thisNode, 'offset_stencil').getParam('timeOffset')
+    offset = thisNode.stencil_offset.get()
+
+    offset = value_by_durations(offset, durations)[thisNode.speed.get()]
+    stencil_offset.set(offset)
+
+    stencil_switch = getNode(thisNode, 'stencil_switch').getParam('which')
+    stencil_switch.set(thisNode.self_stencil.get())
+    #
