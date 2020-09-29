@@ -101,7 +101,7 @@ Templates Bases:
         ☐ crear overlap de particulas y polvo
     photos-1:
         ☐ crear nodo similar al 'SubtleMove' con 2 input de imagen para dar la sensacion de 3D, pero que contenga un modo random de movimiento.
-        ☐ nodo de formato de foto antiguas
+        ✔ nodo de formato de foto antiguas @done (9/29/2020, 12:15:57 PM)
         ☐ crear nodo que simule las luces 'spotlight', que funcione en random, y que tenga un parametro de velocidad
     clippings:
         ☐ ... @low 
