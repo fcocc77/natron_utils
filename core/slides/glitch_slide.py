@@ -24,7 +24,6 @@ def refresh(thisNode):
     start_frame = get_start_frame(thisNode)
     last_frame = start_frame + duration
 
-    chromatic_aberration(thisNode, start_frame, duration, rscale)
     #
 
     # Lines
@@ -45,31 +44,3 @@ def refresh(thisNode):
 
     lines_noisier_durations.setValue(lines_duration, speed)
     lines_twist_durations.setValue(lines_duration, speed)
-
-
-def chromatic_aberration(thisNode, start_frame, duration, rscale, vertical=False):
-
-    last_frame = start_frame + duration
-
-    red_translate = getNode(thisNode, 'red_position').getParam('translate')
-    blue_translate = getNode(thisNode, 'blue_position').getParam('translate')
-
-    amount = 10
-
-    separation = amount * rscale
-
-    if vertical:
-        dimension = 1
-    else:
-        dimension = 0
-
-    duration /= 4
-
-    # Entrada
-    simple_animation(red_translate, duration, start_frame, [-separation, 0], dimension=dimension)
-    simple_animation(blue_translate, duration, start_frame, [separation, 0], dimension=dimension)
-
-    # Salida
-    start_frame_output = last_frame - duration
-    simple_animation(red_translate, duration, start_frame_output, [0, -separation], restore=False, dimension=dimension)
-    simple_animation(blue_translate, duration, start_frame_output, [0, separation], restore=False, dimension=dimension)
