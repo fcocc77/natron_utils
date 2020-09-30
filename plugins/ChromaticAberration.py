@@ -214,7 +214,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
+    param.setValue(50, 0)
     lastNode.transition_duration = param
     del param
 
@@ -504,14 +504,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot5"
 
-    # Start of node "Switch1"
+    # Start of node "switch"
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("Switch1")
-    lastNode.setLabel("Switch1")
+    lastNode.setScriptName("switch")
+    lastNode.setLabel("switch")
     lastNode.setPosition(1174, 576)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupSwitch1 = lastNode
+    groupswitch = lastNode
 
     param = lastNode.getParam("which")
     if param is not None:
@@ -519,7 +519,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Switch1"
+    # End of node "switch"
 
     # Start of node "Dot7"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -684,7 +684,7 @@ def createInstance(app,group):
     # End of node "blue_position"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupSwitch1)
+    groupOutput1.connectInput(0, groupswitch)
     groupred.connectInput(0, groupDot2)
     groupgreen.connectInput(0, groupDot1)
     groupblue.connectInput(0, groupDot3)
@@ -696,8 +696,8 @@ def createInstance(app,group):
     groupDot3.connectInput(0, groupDot1)
     groupDot4.connectInput(0, groupred_position)
     groupDot5.connectInput(0, groupblue_position)
-    groupSwitch1.connectInput(0, groupDot8)
-    groupSwitch1.connectInput(1, groupSwitch3)
+    groupswitch.connectInput(0, groupDot8)
+    groupswitch.connectInput(1, groupSwitch3)
     groupDot7.connectInput(0, groupDot6)
     groupDot8.connectInput(0, groupImage)
     groupDot9.connectInput(0, groupMerge1)
