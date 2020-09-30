@@ -92,7 +92,7 @@ Templates Bases:
     glitch:
         ☐ crear nodo de efecto con glish sutiles para la slide
         ☐ crear transicion como la referencia
-        ☐ crear nodo de texto como la referencia
+        ✔ crear nodo de texto como la referencia @done (9/29/2020, 9:42:53 PM)
     ink:
         ☐ crear background con textura de pergamino
         ✔ falta calcar 2 formas mas @today @done (9/14/2020, 9:04:44 AM)
