@@ -90,7 +90,7 @@ Templates Bases:
         ☐ crear slide de glass base ( ya estan todos los elementos necesarios )
         ☐ crear 5 slide con el glass base, y 1 que contenga varias imagen como vidrio
     glitch:
-        ☐ crear nodo de efecto con glish sutiles para la slide
+        ✔ crear nodo de efecto con glish sutiles para la slide @done (9/30/2020, 10:52:47 AM)
         ☐ crear transicion como la referencia
         ✔ crear nodo de texto como la referencia @done (9/29/2020, 9:42:53 PM)
     ink:
