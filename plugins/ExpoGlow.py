@@ -409,7 +409,7 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("premult")
+    param = lastNode.getParam("premultChanged")
     if param is not None:
         param.setValue(True)
         del param
