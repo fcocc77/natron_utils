@@ -32,11 +32,20 @@ def refresh(thisNode):
     blue_translate.restoreDefaultValue(0)
     blue_translate.restoreDefaultValue(1)
 
+    reverse_separation = thisNode.reverse_separation.get()
+
     # Animacion
+    transition_duration = thisNode.transition_duration.get()
     if thisNode.with_animation.get():
-        transition_duration = thisNode.transition_duration.get()
-        back_and_forth_animation(red_translate, duration, start_frame, [-separation, 0], transition_duration, dimension=orientation)
-        back_and_forth_animation(blue_translate, duration, start_frame, [separation, 0], transition_duration, dimension=orientation)
+        if not reverse_separation:
+            red_values = [-separation, 0]
+            blue_value = [separation, 0]
+        else:
+            red_values = [0, -separation]
+            blue_value = [0, separation]
+
+        back_and_forth_animation(red_translate, duration, start_frame, red_values, transition_duration, dimension=orientation)
+        back_and_forth_animation(blue_translate, duration, start_frame, blue_value, transition_duration, dimension=orientation)
     else:
         red_translate.setValue(-separation, orientation)
         blue_translate.setValue(separation, orientation)
@@ -45,15 +54,16 @@ def refresh(thisNode):
     # Switch
     switch = getNode(thisNode, 'switch').getParam('which')
     switch.restoreDefaultValue()
+    switch.set(1)
     if thisNode.with_animation.get():
-        transition_duration = get_transition_duration(thisNode)
-        switch_frame_a = start_frame + transition_duration
-        switch.setValueAtTime(1, switch_frame_a)
-        switch.setValueAtTime(0, switch_frame_a + 1)
+        if not reverse_separation:
+            if transition_duration < 100:
+                transition_duration = get_transition_duration(thisNode)
+                switch_frame_a = start_frame + transition_duration
+                switch.setValueAtTime(1, switch_frame_a)
+                switch.setValueAtTime(0, switch_frame_a + 1)
 
-        switch_frame_b = last_frame - transition_duration
+                switch_frame_b = last_frame - transition_duration
 
-        switch.setValueAtTime(0, switch_frame_b)
-        switch.setValueAtTime(1, switch_frame_b + 1)
-    else:
-        switch.set(1)
+                switch.setValueAtTime(0, switch_frame_b)
+                switch.setValueAtTime(1, switch_frame_b + 1)

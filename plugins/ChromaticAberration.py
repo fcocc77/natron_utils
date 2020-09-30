@@ -275,6 +275,18 @@ def createInstance(app,group):
     lastNode.with_animation = param
     del param
 
+    param = lastNode.createBooleanParam("reverse_separation", "Reverse Separation")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.reverse_separation = param
+    del param
+
     param = lastNode.createIntParam("separation", "Separation")
     param.setMinimum(0, 0)
     param.setDisplayMinimum(0, 0)
