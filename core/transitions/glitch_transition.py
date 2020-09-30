@@ -61,7 +61,6 @@ def refresh(thisNode):
     back_and_forth_animation(ray_blur_param, duration, start_frame,  [0, ray_blur_amount], dimension=blur_dimension)
 
     adjust_edge_mask(thisNode, start_frame, duration)
-    chromatic_aberration(thisNode, start_frame, duration, vertical, rscale)
 
     # erode
     erode = getNode(thisNode, 'erode').getParam('size')
@@ -75,22 +74,6 @@ def refresh(thisNode):
 
     back_and_forth_animation(erode, duration, start_frame,  [0, -50], dimension=erode_dimension[0])
     back_and_forth_animation(erode, duration, start_frame,  [0, -20], dimension=erode_dimension[1])
-
-
-def chromatic_aberration(thisNode, start_frame, duration, vertical, rscale):
-
-    green_translate = getNode(thisNode, 'green_position').getParam('translate')
-    blue_translate = getNode(thisNode, 'blue_position').getParam('translate')
-
-    separation = 10 * rscale
-
-    if vertical:
-        dimension = 1
-    else:
-        dimension = 0
-
-    back_and_forth_animation(green_translate, duration, start_frame,  [0, separation], dimension=dimension)
-    back_and_forth_animation(blue_translate, duration, start_frame,  [0, -separation], dimension=dimension)
 
 
 def adjust_edge_mask(thisNode,  start_frame, duration):
