@@ -1,5 +1,5 @@
 from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, get_start_frame, get_durations, limit_transition
-from nx import getNode
+from nx import getNode, reload_all_read
 from animations import back_and_forth_animation, exaggerated_animation
 from vina import value_by_durations
 
@@ -224,3 +224,4 @@ def refresh(thisNode):
     #
 
     limit_transition(thisNode)
+    reload_all_read(thisNode)

@@ -705,3 +705,28 @@ def restore_default(param):
                 param.restoreDefaultValue(dimension)
         else:
             param.restoreDefaultValue()
+
+
+def reload_read(read_node):
+    filename_param = read_node.getParam('filename')
+    filename = filename_param.get()
+
+    before_param = read_node.getParam('before')
+    after_param = read_node.getParam('after')
+    if before_param and after_param:
+        before = before_param.get()
+        after = after_param.get()
+
+    filename_param.reloadFile()
+    filename_param.reloadFile()
+
+    if before_param and after_param:
+        before_param.set(before)
+        after_param.set(after)
+
+
+def reload_all_read(node):
+    # recarga todos los archivos 'read' del grupo
+    for n in node.getChildren():
+        if n.getPluginID() == 'fr.inria.built-in.Read':
+            reload_read(n)
