@@ -225,7 +225,7 @@ def limit_transition(node):
     switch = switch_param.getParam('which')
 
     duration = get_duration(node)
-    start_frame = get_start_frame(node)
+    start_frame = get_start_frame(node) - 1
     last_frame = start_frame + duration
 
     switch.restoreDefaultValue()
