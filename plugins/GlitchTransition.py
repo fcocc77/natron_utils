@@ -448,14 +448,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "lens_distort"
 
-    # Start of node "KeyMix2"
+    # Start of node "key_mix_2"
     lastNode = app.createNode("net.sf.openfx.KeyMix", 1, group)
-    lastNode.setScriptName("KeyMix2")
-    lastNode.setLabel("KeyMix2")
+    lastNode.setScriptName("key_mix_2")
+    lastNode.setLabel("key_mix_2")
     lastNode.setPosition(-164, 476)
     lastNode.setSize(80, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupKeyMix2 = lastNode
+    groupkey_mix_2 = lastNode
 
     param = lastNode.getParam("enableMask_Mask")
     if param is not None:
@@ -463,7 +463,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "KeyMix2"
+    # End of node "key_mix_2"
 
     # Start of node "Grade6"
     lastNode = app.createNode("net.sf.openfx.GradePlugin", 2, group)
@@ -535,7 +535,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.ChromaticAberration", 1, group)
     lastNode.setScriptName("ChromaticAberration4")
     lastNode.setLabel("ChromaticAberration4")
-    lastNode.setPosition(-176, 1287)
+    lastNode.setPosition(-176, 1290)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupChromaticAberration4 = lastNode
@@ -582,7 +582,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     param.setEnabled(False, 0)
     lastNode.format = param
     del param
@@ -929,14 +928,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "crop_a"
 
-    # Start of node "KeyMix3"
+    # Start of node "key_mix"
     lastNode = app.createNode("net.sf.openfx.KeyMix", 1, group)
-    lastNode.setScriptName("KeyMix3")
-    lastNode.setLabel("KeyMix3")
+    lastNode.setScriptName("key_mix")
+    lastNode.setLabel("key_mix")
     lastNode.setPosition(-164, -429)
     lastNode.setSize(80, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupKeyMix3 = lastNode
+    groupkey_mix = lastNode
 
     param = lastNode.getParam("enableMask_Mask")
     if param is not None:
@@ -949,7 +948,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "KeyMix3"
+    # End of node "key_mix"
 
     # Start of node "noise"
     lastNode = app.createNode("net.sf.openfx.SeNoise", 1, group)
@@ -1296,7 +1295,6 @@ def createInstance(app,group):
     # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     param.setEnabled(False, 0)
     lastNode.format = param
     del param
@@ -1586,7 +1584,6 @@ def createInstance(app,group):
     # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     param.setEnabled(False, 0)
     lastNode.format = param
     del param
@@ -1739,7 +1736,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("Shuffle1")
     lastNode.setLabel("Shuffle1")
-    lastNode.setPosition(634, 931)
+    lastNode.setPosition(634, 933)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle1 = lastNode
@@ -1820,7 +1817,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     param.setEnabled(False, 0)
     lastNode.format = param
     del param
@@ -2298,19 +2294,19 @@ def createInstance(app,group):
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, grouplimit)
     grouplens_distort.connectInput(0, groupcrop_a)
-    groupKeyMix2.connectInput(0, grouplens_distort)
-    groupKeyMix2.connectInput(1, groupmix_transform)
-    groupKeyMix2.connectInput(2, groupDot2)
+    groupkey_mix_2.connectInput(0, grouplens_distort)
+    groupkey_mix_2.connectInput(1, groupmix_transform)
+    groupkey_mix_2.connectInput(2, groupDot2)
     groupGrade6.connectInput(0, groupRead7)
-    groupMerge5.connectInput(0, groupKeyMix2)
+    groupMerge5.connectInput(0, groupkey_mix_2)
     groupMerge5.connectInput(1, groupDot6)
     groupcrop_b.connectInput(0, groupChromaticAberration4)
     groupChromaticAberration4.connectInput(0, groupMerge5)
     groupmix_transform.connectInput(0, grouplens_distort)
-    groupcrop_a.connectInput(0, groupKeyMix3)
-    groupKeyMix3.connectInput(0, groupDot1)
-    groupKeyMix3.connectInput(1, grouptransform_b)
-    groupKeyMix3.connectInput(2, groupDot5)
+    groupcrop_a.connectInput(0, groupkey_mix)
+    groupkey_mix.connectInput(0, groupDot1)
+    groupkey_mix.connectInput(1, grouptransform_b)
+    groupkey_mix.connectInput(2, groupDot5)
     groupnoise.connectInput(0, groupnoise_background)
     groupnoise_keyer.connectInput(0, groupnoise)
     groupnoise_blur.connectInput(0, groupnoise_keyer)

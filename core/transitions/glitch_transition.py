@@ -215,4 +215,12 @@ def refresh(thisNode):
     crop_b.getParam('size').set(width, height)
     #
 
+    #
+
+    # Correccion mask channels
+    getNode(thisNode, 'key_mix').getParam('maskChannel_Mask').set(3)  # blue
+    getNode(thisNode, 'key_mix_2').getParam('maskChannel_Mask').set(4)  # alpha
+
+    #
+
     limit_transition(thisNode)
