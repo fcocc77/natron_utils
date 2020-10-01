@@ -16,16 +16,16 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     link_to_parent(thisNode, thisParam, thisGroup)
 
     if knob_name == 'render':
-        render(thisNode)
+        render(thisNode, thisGroup)
     if knob_name == 'link_to_connected':
         link_to_connected(thisNode)
 
 
-def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinarender=False, thisNode=False):
+def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinarender=False, thisNode=None, thisGroup=None):
     # ajusta los parametros de un nodo de videovina dependiendo de
     # la velocidad y resolucion, luego lo envia a render.
 
-    refresh_connected_nodes(thisNode, speed, format)
+    refresh_connected_nodes(thisNode, thisGroup, speed, format)
 
     prefix_dir = '[Project]/../production/states/' + prefix
     absolule_path = absolute(prefix_dir)
@@ -91,7 +91,7 @@ def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinaren
     node_delete(reformat)
 
 
-def refresh_connected_nodes(thisNode, speed, format):
+def refresh_connected_nodes(thisNode, thisGroup, speed, format):
     # Actaualiza todos los nodos que de que tengan los atributos de videovina
     # a la velocidad correspondiente.
     thisNode.format.set(format)
@@ -106,6 +106,12 @@ def refresh_connected_nodes(thisNode, speed, format):
 
         refresh_param.trigger()
 
+    # actualiza el nodo padre
+    thisGroup.format.set(format)
+    thisGroup.speed.set(speed)
+
+    thisGroup.refresh.trigger()
+
 
 def link_to_connected(thisNode):
 
@@ -115,7 +121,7 @@ def link_to_connected(thisNode):
         link_to_parent(node, thisNode, thisNode, force=True)
 
 
-def render(thisNode):
+def render(thisNode, thisGroup):
 
     if not thisNode.getInput(0):
         alert('Debe conectar la imagen 4K')
@@ -130,11 +136,11 @@ def render(thisNode):
     current_speed = thisNode.getParam('speed').get()
 
     if current_state:
-        send_vinarender_state(durations, current_speed, prefix, current_format, thisNode=thisNode)
+        send_vinarender_state(durations, current_speed, prefix, current_format, thisGroup, thisNode=thisNode, thisGroup=thisGroup)
     elif current_speed_render:
         for format_index in range(3):
-            send_vinarender_state(durations, current_speed, prefix, format_index + 1, thisNode=thisNode)
+            send_vinarender_state(durations, current_speed, prefix, format_index + 1, thisNode=thisNode, thisGroup=thisGroup)
     else:
         for speed in range(3):
             for format_index in range(3):
-                send_vinarender_state(durations, speed, prefix, format_index + 1, thisNode=thisNode)
+                send_vinarender_state(durations, speed, prefix, format_index + 1, thisNode=thisNode, thisGroup=thisGroup)
