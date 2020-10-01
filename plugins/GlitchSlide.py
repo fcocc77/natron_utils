@@ -39,7 +39,7 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("slide_base.main")
+        param.setValue("glitch_slide.main")
         del param
 
 
@@ -640,6 +640,25 @@ def createInstance(app,group):
     lastNode.time_label = param
     del param
 
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(25, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(25, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
+    del param
+
     param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
@@ -885,6 +904,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.set("PNG")
     param.setEnabled(False, 0)
     lastNode.sequence_type = param
     del param
@@ -1136,6 +1156,11 @@ def createInstance(app,group):
         param.set("mask")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge7"
 
@@ -1147,6 +1172,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge8 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge8"
@@ -1197,6 +1227,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("mask")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -1408,11 +1443,6 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("outputLayerChoice")
-    if param is not None:
-        param.setValue("Color.RGB")
-        del param
-
     param = lastNode.getParam("ocioInputSpace")
     if param is not None:
         param.setValue("sRGB")
@@ -1498,7 +1528,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -1528,6 +1557,11 @@ def createInstance(app,group):
     param = lastNode.getParam("BChannelsA")
     if param is not None:
         param.setValue(False)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -1599,17 +1633,22 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameHold1 = lastNode
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(frame 0)</Natron>")
+        del param
+
     del lastNode
     # End of node "FrameHold1"
 
-    # Start of node "Grade6"
+    # Start of node "pixels_grade"
     lastNode = app.createNode("net.sf.openfx.GradePlugin", 2, group)
-    lastNode.setScriptName("Grade6")
-    lastNode.setLabel("Grade6")
+    lastNode.setScriptName("pixels_grade")
+    lastNode.setLabel("pixels_grade")
     lastNode.setPosition(1558, -1088)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.48, 0.66, 1)
-    groupGrade6 = lastNode
+    grouppixels_grade = lastNode
 
     param = lastNode.getParam("multiply")
     if param is not None:
@@ -1630,7 +1669,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Grade6"
+    # End of node "pixels_grade"
 
     # Start of node "Merge11"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
@@ -1644,6 +1683,11 @@ def createInstance(app,group):
     param = lastNode.getParam("operation")
     if param is not None:
         param.set("stencil")
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -1666,6 +1710,11 @@ def createInstance(app,group):
     param = lastNode.getParam("toleranceLower")
     if param is not None:
         param.setValue(-0.5, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(Luminance)</Natron>")
         del param
 
     del lastNode
@@ -1776,14 +1825,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot10"
 
-    # Start of node "Merge5"
+    # Start of node "shapes_merge"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge5")
-    lastNode.setLabel("Merge5")
+    lastNode.setScriptName("shapes_merge")
+    lastNode.setLabel("shapes_merge")
     lastNode.setPosition(1563, -398)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge5 = lastNode
+    groupshapes_merge = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
@@ -1795,35 +1844,25 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("maskChannel_Mask")
-    if param is not None:
-        param.set("uk.co.thefoundry.OfxImagePlaneColour.R")
-        del param
-
     del lastNode
-    # End of node "Merge5"
+    # End of node "shapes_merge"
 
-    # Start of node "Merge6"
+    # Start of node "letter_merge"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge6")
-    lastNode.setLabel("Merge6")
+    lastNode.setScriptName("letter_merge")
+    lastNode.setLabel("letter_merge")
     lastNode.setPosition(1563, -662)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge6 = lastNode
+    groupletter_merge = lastNode
 
     param = lastNode.getParam("enableMask_Mask")
     if param is not None:
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("maskChannel_Mask")
-    if param is not None:
-        param.set("uk.co.thefoundry.OfxImagePlaneColour.G")
-        del param
-
     del lastNode
-    # End of node "Merge6"
+    # End of node "letter_merge"
 
     # Start of node "Dot13"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -1916,11 +1955,6 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("outputLayerChoice")
-    if param is not None:
-        param.setValue("Color.RGB")
-        del param
-
     param = lastNode.getParam("ocioInputSpace")
     if param is not None:
         param.setValue("sRGB")
@@ -1929,14 +1963,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Read5"
 
-    # Start of node "Merge6_2"
+    # Start of node "edge_noise_merge"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge6_2")
-    lastNode.setLabel("Merge6_2")
+    lastNode.setScriptName("edge_noise_merge")
+    lastNode.setLabel("edge_noise_merge")
     lastNode.setPosition(1558, -1668)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge6_2 = lastNode
+    groupedge_noise_merge = lastNode
 
     param = lastNode.getParam("operation")
     if param is not None:
@@ -1948,13 +1982,8 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
-    param = lastNode.getParam("maskChannel_Mask")
-    if param is not None:
-        param.set("uk.co.thefoundry.OfxImagePlaneColour.B")
-        del param
-
     del lastNode
-    # End of node "Merge6_2"
+    # End of node "edge_noise_merge"
 
     # Start of node "Dot4_3"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -1992,6 +2021,11 @@ def createInstance(app,group):
         param.setValue(0.053, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge3"
 
@@ -1999,7 +2033,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Read", 1, group)
     lastNode.setScriptName("Read6")
     lastNode.setLabel("Read6")
-    lastNode.setPosition(1907, 30)
+    lastNode.setPosition(1909, 30)
     lastNode.setSize(128, 78)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupRead6 = lastNode
@@ -2042,11 +2076,6 @@ def createInstance(app,group):
     param = lastNode.getParam("ParamExistingInstance")
     if param is not None:
         param.setValue(True)
-        del param
-
-    param = lastNode.getParam("outputLayerChoice")
-    if param is not None:
-        param.setValue("Color.RGB")
         del param
 
     param = lastNode.getParam("ocioInputSpace")
@@ -2353,6 +2382,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0.7, 0)
     lastNode.exaggeration = param
     del param
 
@@ -2517,6 +2547,11 @@ def createInstance(app,group):
     param = lastNode.getParam("mix")
     if param is not None:
         param.setValue(0.7, 0)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -2892,6 +2927,11 @@ def createInstance(app,group):
         param.set("mask")
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge14"
 
@@ -3199,7 +3239,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -3581,6 +3620,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0.2, 0)
     lastNode.smoothness = param
     del param
 
@@ -4940,6 +4980,11 @@ def createInstance(app,group):
         param.setValue(0.333, 0)
         del param
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "Merge1"
 
@@ -5081,7 +5126,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -5190,6 +5234,7 @@ def createInstance(app,group):
     # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.input_transition = param
     del param
 
@@ -5241,7 +5286,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -5585,7 +5629,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -5694,6 +5737,7 @@ def createInstance(app,group):
     # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.input_transition = param
     del param
 
@@ -5745,7 +5789,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -6089,7 +6132,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -6250,7 +6292,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
@@ -6512,6 +6553,11 @@ def createInstance(app,group):
     lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupFrameHold2 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(frame 0)</Natron>")
+        del param
 
     del lastNode
     # End of node "FrameHold2"
@@ -6782,6 +6828,18 @@ def createInstance(app,group):
     lastNode.with_animation = param
     del param
 
+    param = lastNode.createBooleanParam("reverse_separation", "Reverse Separation")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.reverse_separation = param
+    del param
+
     param = lastNode.createIntParam("separation", "Separation")
     param.setMinimum(0, 0)
     param.setDisplayMinimum(0, 0)
@@ -7023,7 +7081,6 @@ def createInstance(app,group):
     # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("")
     param.setEnabled(False, 0)
     lastNode.font = param
     del param
@@ -7537,8 +7594,8 @@ def createInstance(app,group):
     groupGrade3.connectInput(0, groupEdgeDetect1)
     groupDot3.connectInput(0, groupImage)
     groupFrameHold1.connectInput(0, groupGrade3)
-    groupGrade6.connectInput(0, groupMerge6_2)
-    groupGrade6.connectInput(1, groupDot6)
+    grouppixels_grade.connectInput(0, groupedge_noise_merge)
+    grouppixels_grade.connectInput(1, groupDot6)
     groupMerge11.connectInput(0, groupfrom_alpha)
     groupMerge11.connectInput(1, groupDot9)
     groupKeyer1.connectInput(0, groupDot3)
@@ -7549,23 +7606,23 @@ def createInstance(app,group):
     groupDot7.connectInput(0, groupDot1)
     groupDot8.connectInput(0, groupDot7)
     groupDot10.connectInput(0, groupDot8)
-    groupMerge5.connectInput(0, groupMerge6)
-    groupMerge5.connectInput(1, groupDot14)
-    groupMerge5.connectInput(2, groupGrade2)
-    groupMerge6.connectInput(0, groupDot4)
-    groupMerge6.connectInput(1, groupTransform1)
-    groupMerge6.connectInput(2, groupDot8)
+    groupshapes_merge.connectInput(0, groupletter_merge)
+    groupshapes_merge.connectInput(1, groupDot14)
+    groupshapes_merge.connectInput(2, groupGrade2)
+    groupletter_merge.connectInput(0, groupDot4)
+    groupletter_merge.connectInput(1, groupTransform1)
+    groupletter_merge.connectInput(2, groupDot8)
     groupDot13.connectInput(0, groupDot4)
     groupDot14.connectInput(0, groupTransform1)
     groupIDistort1_2.connectInput(0, groupTwist5)
     groupIDistort1_2.connectInput(1, groupFormat2)
-    groupMerge6_2.connectInput(0, groupDot3)
-    groupMerge6_2.connectInput(1, groupDot4_3)
-    groupMerge6_2.connectInput(2, groupDot1)
+    groupedge_noise_merge.connectInput(0, groupDot3)
+    groupedge_noise_merge.connectInput(1, groupDot4_3)
+    groupedge_noise_merge.connectInput(2, groupDot1)
     groupDot4_3.connectInput(0, groupFrameHold1)
-    groupMerge3.connectInput(0, groupMerge5)
+    groupMerge3.connectInput(0, groupshapes_merge)
     groupMerge3.connectInput(1, groupRead6)
-    groupSubtleMove1.connectInput(0, groupGrade6)
+    groupSubtleMove1.connectInput(0, grouppixels_grade)
     groupMerge10.connectInput(0, groupTwist3)
     groupMerge10.connectInput(1, groupTwist4)
     groupMerge14.connectInput(0, groupMerge7)
