@@ -82,7 +82,7 @@ Templates Bases:
         ✔ opcion para las letras random en el nodo de 'letter_animation' @done (9/13/2020, 3:58:56 PM)
         ☐ terminar la transicion de flare con blur 'FlareTransition'
     draw:
-        ☐ crear nodo, que convierta una imagen de dibujo en una imagen real, como una transicion pero no es la transicion ( archivo draw.ntp hay avance )
+        ✔ crear nodo, que convierta una imagen de dibujo en una imagen real, como una transicion pero no es la transicion ( archivo draw.ntp hay avance ) @done (10/2/2020, 5:15:26 PM)
     glass:
         ☐ textura de rasguños
         transition:
