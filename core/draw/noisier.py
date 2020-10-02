@@ -63,21 +63,22 @@ def refresh(thisNode):
     softness_lower = keyer.getParam('softnessLower')
 
     transition_duration = thisNode.transition_duration.get() * (duration / 2) / 100
-    tolerance = 1 - thisNode.tolerance.get()
+    tolerance = 1.2 - thisNode.tolerance.get()
+    minumun = -0.8
 
     tolerance_lower.restoreDefaultValue()
     tolerance_lower.set(-tolerance)
 
     if thisNode.input_transition.get():
-        simple_animation(tolerance_lower, transition_duration, start_frame_a, [-1, -tolerance])
+        simple_animation(tolerance_lower, transition_duration, start_frame_a, [minumun, -tolerance])
     if thisNode.output_transition.get():
-        simple_animation(tolerance_lower, transition_duration, last_frame_a - transition_duration, [-tolerance, -1], restore=False)
+        simple_animation(tolerance_lower, transition_duration, last_frame_a - transition_duration, [-tolerance, minumun], restore=False)
 
     if thisNode.repeat_transition.get():
         if thisNode.output_transition.get():
-            simple_animation(tolerance_lower, transition_duration, start_frame_b, [-1, -tolerance], restore=False)
+            simple_animation(tolerance_lower, transition_duration, start_frame_b, [minumun, -tolerance], restore=False)
         if thisNode.input_transition.get():
-            simple_animation(tolerance_lower, transition_duration, last_frame_b - transition_duration, [-tolerance, -1], restore=False)
+            simple_animation(tolerance_lower, transition_duration, last_frame_b - transition_duration, [-tolerance, minumun], restore=False)
 
     smoothness = -thisNode.smoothness.get() / 2
     softness_lower.set(smoothness)
