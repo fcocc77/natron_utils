@@ -321,7 +321,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
     lastNode.setScriptName("position")
     lastNode.setLabel("position")
-    lastNode.setPosition(1136, 717)
+    lastNode.setPosition(1136, 724)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupposition = lastNode
@@ -338,7 +338,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("reformat")
     lastNode.setLabel("reformat")
-    lastNode.setPosition(1136, 812)
+    lastNode.setPosition(1136, 808)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupreformat = lastNode
@@ -376,7 +376,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
     lastNode.setScriptName("crop")
     lastNode.setLabel("crop")
-    lastNode.setPosition(1136, 759)
+    lastNode.setPosition(1136, 766)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupcrop = lastNode
@@ -418,7 +418,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.FrameRange", 1, group)
     lastNode.setScriptName("frame_range")
     lastNode.setLabel("frame_range")
-    lastNode.setPosition(1437, 795)
+    lastNode.setPosition(1136, 850)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupframe_range = lastNode
@@ -426,6 +426,11 @@ def createInstance(app,group):
     param = lastNode.getParam("frameRange")
     if param is not None:
         param.setValue(100, 1)
+        del param
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(1 - 1)</Natron>")
         del param
 
     del lastNode
@@ -471,15 +476,28 @@ def createInstance(app,group):
     del lastNode
     # End of node "mirror"
 
+    # Start of node "Dot1"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot1")
+    lastNode.setLabel("Dot1")
+    lastNode.setPosition(1481, 870)
+    lastNode.setSize(15, 15)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot1 = lastNode
+
+    del lastNode
+    # End of node "Dot1"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupmirror)
     groupreformat.connectInput(0, groupcrop)
     groupcrop.connectInput(0, groupposition)
-    groupRetime1.connectInput(0, groupframe_range)
+    groupRetime1.connectInput(0, groupDot1)
     groupframe_range.connectInput(0, groupreformat)
-    grouptime_switch.connectInput(0, groupreformat)
+    grouptime_switch.connectInput(0, groupframe_range)
     grouptime_switch.connectInput(1, groupRetime1)
     groupmirror.connectInput(0, grouptime_switch)
+    groupDot1.connectInput(0, groupframe_range)
 
     try:
         extModule = sys.modules["StrokeExt"]
