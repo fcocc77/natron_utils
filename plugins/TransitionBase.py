@@ -100,18 +100,6 @@ def createInstance(app,group):
     lastNode.speed = param
     del param
 
-    param = lastNode.createButtonParam("clean", "Clean")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.clean = param
-    del param
-
     param = lastNode.createButtonParam("refresh", "Refresh")
 
     # Add the param to the page
@@ -278,38 +266,6 @@ def createInstance(app,group):
     lastNode.prerender_label = param
     del param
 
-    param = lastNode.createIntParam("seed", "Random Seed")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.seed = param
-    del param
-
-    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.motion_blur = param
-    del param
-
     param = lastNode.createStringParam("prefix", "Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
@@ -323,6 +279,30 @@ def createInstance(app,group):
     lastNode.prefix = param
     del param
 
+    param = lastNode.createBooleanParam("prerender_read", "Read")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.prerender_read = param
+    del param
+
+    param = lastNode.createBooleanParam("motion_blur", "MBlur")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
+    del param
+
     param = lastNode.createBooleanParam("current_state", "Current State")
 
     # Add the param to the page
@@ -333,6 +313,18 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.current_state = param
+    del param
+
+    param = lastNode.createButtonParam("clean", "Clean")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.clean = param
     del param
 
     param = lastNode.createButtonParam("render", "Render")
