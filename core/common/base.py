@@ -22,9 +22,13 @@ def clean(thisNode, force=False):
     def action():
         twelve_render_nodes = get_nodes_by_type(thisNode, 'vv.TwelveRender')
 
+        nodes = []
         for twelve_render in twelve_render_nodes:
-            nodes = get_connected_nodes(twelve_render)
-            node_delete(nodes)
+            for node in get_connected_nodes(twelve_render):
+                if not node.getPluginID() == 'fr.inria.built-in.Input':
+                    nodes.append(node)
+
+        node_delete(nodes)
 
     if force:
         action()

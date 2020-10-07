@@ -1,4 +1,4 @@
-from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, get_start_frame
+from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, get_start_frame, clean
 from nx import getNode
 from text_fit import refresh_text_fit
 from text_base import transfer_transform
@@ -14,6 +14,10 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'refresh':
         refresh(thisNode)
+    if knob_name == 'render':
+        getNode(thisNode, 'TwelveRender').getParam('render').trigger()
+    if knob_name == 'clean':
+        clean(thisNode)
 
 
 def refresh(thisNode):
@@ -25,15 +29,16 @@ def refresh(thisNode):
 
     refresh_text_fit(thisNode)
 
-    # Stroke Transform
-    parent_transform = thisNode.getInput(0)
-    stroke_transform = getNode(thisNode, 'stroke_transform')
-    transfer_transform(parent_transform, stroke_transform)
-    #
-
     # Color de trazo
     grade = getNode(thisNode, 'grade')
     white = grade.getParam('white')
     for dimension in range(3):
         color = thisNode.subtitle_color.getValue(dimension)
         white.setValue(color, dimension)
+
+    # Stroke Transform
+    parent_transform = thisNode.getInput(0)
+    stroke_transform = getNode(thisNode, 'stroke_transform')
+    if stroke_transform:
+        transfer_transform(parent_transform, stroke_transform)
+    #
