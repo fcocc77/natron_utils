@@ -4,6 +4,12 @@ first_frame=$3
 last_frame=$4
 extra=$5
 
+# si el proyecto no esta, sale del script
+if [ ! -f "$project" ]; then
+    echo 'Project Not Found: ' \"$project\"
+    exit
+fi
+
 # borra la extencion .ntp, para poder meterlo como argumento
 # sin que lo reconosca el NatronRenderer
 project="${project::-4}"
