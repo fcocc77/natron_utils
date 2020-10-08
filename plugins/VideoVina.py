@@ -448,44 +448,6 @@ def createInstance(app,group):
     lastNode.develop_slide = param
     del param
 
-    param = lastNode.createChoiceParam("slide", "Slide")
-    entries = [ ("SlideBase", ""),
-    ("GlassSlide", ""),
-    ("InkSlide", ""),
-    ("", ""),
-    ("", "")]
-    param.setOptions(entries)
-    del entries
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.slide = param
-    del param
-
-    param = lastNode.createChoiceParam("transition", "Transition")
-    entries = [ ("FlareTransition", ""),
-    ("GlassTransition", ""),
-    ("ZoomTransition", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("ZoomTransition")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.transition = param
-    del param
-
     param = lastNode.createIntParam("amount_slide", "Base Slide")
     param.setMinimum(0, 0)
     param.setMaximum(20, 0)

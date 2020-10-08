@@ -93,7 +93,6 @@ def refresh():
         speed_slide.set(speed)
         format_slide.set(_format)
 
-        slide.getParam('prefix').set('slide_' + str(index))
         slide.getParam('refresh').trigger()
 
         durations_slide.set(
@@ -129,11 +128,8 @@ def refresh():
 def generate_base_slides(thisNode, app, workarea):
     count = thisNode.amount_slide.get()
 
-    filter_dot = getNode(workarea, 'filter_dot')
-    if not filter_dot:
-        filter_dot = app.createNode('fr.inria.built-in.Dot', 2, workarea)
-        filter_dot.setLabel('filter_dot')
-        filter_dot.setPosition(-300, 100)
+    filter_dot = createNode('dot', 'filter_dot', workarea, force=False)
+    filter_dot.setPosition(-300, 100)
 
     # slides existentes
     slides = get_slides(workarea)
@@ -165,38 +161,26 @@ def generate_base_slides(thisNode, app, workarea):
     else:
         width, hight = get_resolution(thisNode)
         posx = 0 - xdistance
-        last_transition = getNode(
-            workarea, 'slide_' + str(slides_count - 1) + '_transition')
+        last_transition = None
         last_dot = getNode(workarea, 'slide_' + str(slides_count - 1) + '_dot')
 
         for i in range(count):
             posx += xdistance
 
-            # si la slide ya fue generada, omite la creacion de la slide y pasa a la siguiente
-            if slides_count - 1 >= i:
-                continue
-            # -------------------
             current_slides += 1
 
-            slide_param = thisNode.getParam('slide')
-            slide_id = 'vv.' + slide_param.getOption(slide_param.get())
-            slide = app.createNode(slide_id, 2, workarea)
             slide_name = 'slide_' + str(i)
-            slide.setLabel(slide_name)
+            slide = createNode('slide_base', slide_name, workarea, force=False)
             slide.setPosition(posx, 0)
 
-            transition_param = thisNode.getParam('transition')
-            transition_id = 'vv.' + transition_param.getOption(transition_param.get())
-            transition = app.createNode(transition_id, 2, workarea)
             transition_name = 'slide_' + str(i) + '_transition'
-            transition.setLabel(transition_name)
+            transition = createNode('zoom_transition', transition_name, workarea, force=False)
             transition.setColor(.4, .5, .4)
             transition.setPosition(posx, 200)
             transition.connectInput(1, slide)
 
-            dot = app.createNode('fr.inria.built-in.Dot', 2, workarea)
             dot_name = 'slide_' + str(i) + '_dot'
-            dot.setLabel(dot_name)
+            dot = createNode('dot', dot_name, workarea, force=False)
             dot.setPosition(posx - 50, 100)
 
             transition.connectInput(2, dot)
@@ -208,8 +192,6 @@ def generate_base_slides(thisNode, app, workarea):
 
             if last_transition:
                 transition.connectInput(0, last_transition)
-            else:
-                None
 
             last_transition = transition
             last_dot = dot
@@ -218,7 +200,7 @@ def generate_base_slides(thisNode, app, workarea):
     refresh()
 
     if current_slides:
-        alert('Se han creado ' + str(current_slides) +
+        alert('Se han actualizado ' + str(current_slides) +
               ' Slides base.', 'VideoVina')
 
 
@@ -245,7 +227,6 @@ def update_post_fx(thisNode=None, workarea=None):
         first_constant = createNode(
             node='constant',
             label='FirstBlack',
-            position=[first_posx - 200, 200],
             color=[.5, .5, .5],
             output=[0, first_transition],
             group=workarea
@@ -254,7 +235,8 @@ def update_post_fx(thisNode=None, workarea=None):
         first_constant.getParam('reformat').set(True)
         first_constant.getParam('size').set(width, hight)
         first_constant.getParam('color').set(0, 0, 0, 1)
-    # ---------------------
+    first_constant.setPosition(first_posx - 200, 200)
+    #
 
     # Ultimo negro
     last_constant = getNode(workarea, 'LastBlack')
@@ -288,25 +270,14 @@ def update_post_fx(thisNode=None, workarea=None):
     dissolve.connectInput(1, last_constant)
     # -------------------------
 
-    post_fx = getNode(workarea, 'PostFX')
-    post_fx_dot = getNode(workarea, 'post_fx_dot')
-
-    if not post_fx:
-        post_fx = createNode(
-            node='backdrop',
-            label='PostFX',
-            color=[.5, .4, .4],
-            group=workarea
-        )
-        post_fx.getParam('Label').set(
-            'Aqui van todos los efectos para el video completo.')
-        post_fx.setSize(400, 500)
-        post_fx_dot = createNode('dot', 'post_fx_dot', workarea)
-
-    post_fx.setPosition(last_posx + 50, 300)
+    post_fx_dot = createNode('dot', 'post_fx_dot', workarea, force=False)
     post_fx_dot.setPosition(last_posx + 243, 900)
+    post_fx_dot_last_input = post_fx_dot.getInput(0)
     post_fx_dot.disconnectInput(0)
-    post_fx_dot.connectInput(0, dissolve)
+    if post_fx_dot_last_input:
+        post_fx_dot.connectInput(0, post_fx_dot_last_input)
+    else:
+        post_fx_dot.connectInput(0, dissolve)
 
     # VideoVina nodo como ultimo
     thisNode.setPosition(last_posx + 200, 1100)

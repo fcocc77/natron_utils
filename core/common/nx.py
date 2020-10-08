@@ -310,6 +310,8 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
         'switch': 'net.sf.openfx.switchPlugin',
         'ntprender': 'vv.NtpRender',
         'videovina': 'vv.VideoVina',
+        'slide_base': 'vv.SlideBase',
+        'zoom_transition': 'vv.ZoomTransition',
         'statistics': 'net.sf.openfx.ImageStatistics'
     }
 
