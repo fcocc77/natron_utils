@@ -112,18 +112,6 @@ def createInstance(app,group):
     lastNode.link = param
     del param
 
-    param = lastNode.createButtonParam("link_to_connected", "Link To Connected")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Vincula todos los nodos conectados que tengan,\nlos atributos de videovina.")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.link_to_connected = param
-    del param
-
     param = lastNode.createSeparatorParam("sep5", "")
 
     # Add the param to the page
@@ -153,25 +141,6 @@ def createInstance(app,group):
     lastNode.time_label = param
     del param
 
-    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
-    param.setMinimum(25, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(25, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration_percent = param
-    del param
-
     param = lastNode.createInt3DParam("durations", "Durations")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
@@ -191,7 +160,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(False)
+    param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(150, 0)
     param.setValue(100, 1)
