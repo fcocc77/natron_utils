@@ -1,5 +1,5 @@
 # funciones en comun que comparten todas las slides
-from nx import getNode, createNode, warning
+from nx import getNode, createNode, warning, reload_all_read
 from base import children_refresh, get_duration, clean
 
 
@@ -15,6 +15,7 @@ def setup(thisParam, thisNode):
 
     if knob_name == 'refresh':
         set_frame_range(thisNode)
+        reload_all_read(thisNode)
 
     if knob_name == 'clean':
         clean(thisNode)
