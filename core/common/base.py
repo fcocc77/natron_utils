@@ -217,19 +217,22 @@ def reformat_update(node, reformat):
     reformat.getParam('boxSize').set(current_format[0], current_format[1])
 
 
-def limit_transition(node):
+def limit_transition(node, start_frame=None):
     # limita con un switch llamado 'limit', el fx de la transicion,
     # para que no cargue mas alla de la duracion de la transicion.
 
     switch_param = getNode(node, 'limit')
-
     if not switch_param:
         return
 
     switch = switch_param.getParam('which')
 
+    if not start_frame:
+        start_frame = get_start_frame(node)
+
+    start_frame -= 1
+
     duration = get_duration(node)
-    start_frame = get_start_frame(node) - 1
     last_frame = start_frame + duration
 
     switch.restoreDefaultValue()
