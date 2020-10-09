@@ -11,7 +11,7 @@ def back_and_forth_animation(param, duration, start_frame, values, transition=10
         transition_duration = ((duration / 2) * transition) / 100
 
         a_first_frame = start_frame
-        a_last_frame = transition_duration
+        a_last_frame = a_first_frame + transition_duration
 
         b_first_frame = last_frame - transition_duration
         b_last_frame = last_frame
