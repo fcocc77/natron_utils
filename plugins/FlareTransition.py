@@ -418,6 +418,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge = lastNode
 
+    param = lastNode.getParam("OutputChannelsA")
+    if param is not None:
+        param.setValue(False)
+        del param
+
     param = lastNode.getParam("aChannelsChanged")
     if param is not None:
         param.setValue(True)
@@ -434,11 +439,6 @@ def createInstance(app,group):
         param.setValueAtTime(1, 26, 0)
         param.setValueAtTime(1, 76, 0)
         param.setValueAtTime(0, 101, 0)
-        del param
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
