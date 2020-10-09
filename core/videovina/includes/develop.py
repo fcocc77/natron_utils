@@ -234,7 +234,7 @@ def update_post_fx(thisNode=None, workarea=None):
         first_constant.getParam('extent').set(1)
         first_constant.getParam('reformat').set(True)
         first_constant.getParam('size').set(width, hight)
-        first_constant.getParam('color').set(0, 0, 0, 1)
+        first_constant.getParam('color').set(0, 0, 0, 0)
     first_constant.setPosition(first_posx - 200, 200)
     #
 
