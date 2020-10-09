@@ -1,13 +1,18 @@
 from general import formats
-from nx import question, run
+from nx import question, trigger
 from slides import get_slides
 
 
 def clean(thisNode, workarea):
     if question("Esta seguro que desea aligerar todos las slides ?", 'Limpiar Slides'):
         for slide in get_slides(workarea):
-            transition = slide['transition']
-            run(transition, 'clean', (transition, False))
+            slide_clean = slide['slide'].getParam('clean')
+            if slide_clean:
+                trigger(slide_clean)
+
+            transition_clean = slide['transition'].getParam('clean')
+            if transition_clean:
+                trigger(transition_clean)
 
 
 def color_if_has_text(thisNode, thisParam):

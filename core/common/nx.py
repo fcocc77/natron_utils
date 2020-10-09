@@ -31,6 +31,24 @@ def is_gui():
 
 
 gui = is_gui()
+_disable_dialog = False
+
+
+def disable_dialog(disable):
+    # si 'disable' es True, los dialogos 'alert', 'warning' y 'question' quedan desabilitados,
+    # y el dialogo 'question' retorna siempre 'True'
+    global _disable_dialog
+    _disable_dialog = disable
+
+
+def trigger(buttom, dialog=False):
+    # llama a un buttom con 'trigger' pero sin dialogos si es que los tiene.
+    if not dialog:
+        disable_dialog(True)
+        buttom.trigger()
+        disable_dialog(False)
+    else:
+        buttom.trigger()
 
 
 def copy(node, group=None):
@@ -199,7 +217,8 @@ def saveProject():
 
 
 def run(node, func_name, args=[]):
-    # esta funcion llama a una funcion del plugin
+    # 'run' llama a una funcion que pertenece
+    # al nodo, el modulo esta en el parametro 'onParamChanged'
 
     onParamChanged = node.getParam('onParamChanged')
     func = False
@@ -229,20 +248,6 @@ def switch(thisNode, checkbox, input, output1, output2):
         _input.connectInput(0, getNode(thisNode, output2))
     else:
         _input.connectInput(0, getNode(thisNode, output1))
-
-
-def question(_question, message):
-    msgBox = QMessageBox()
-    msgBox.setText(message)
-    msgBox.setInformativeText(_question)
-    msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-    msgBox.setDefaultButton(QMessageBox.Ok)
-    ret = msgBox.exec_()
-
-    if ret == QMessageBox.Ok:
-        return True
-    else:
-        return False
 
 
 def get_node_by_label(label=None, group=None):
@@ -336,13 +341,43 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
 
 
 def alert(message, title='Alert'):
-    if gui:
-        NatronGui.natron.informationDialog(title, str(message))
+    if not gui:
+        return
+
+    if _disable_dialog:
+        return
+
+    NatronGui.natron.informationDialog(title, str(message))
 
 
 def warning(title, message):
-    if gui:
-        NatronGui.natron.warningDialog(title, message)
+    if not gui:
+        return
+
+    if _disable_dialog:
+        return
+
+    NatronGui.natron.warningDialog(title, message)
+
+
+def question(_question, message):
+    if not gui:
+        return True
+
+    if _disable_dialog:
+        return True
+
+    msgBox = QMessageBox()
+    msgBox.setText(message)
+    msgBox.setInformativeText(_question)
+    msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+    msgBox.setDefaultButton(QMessageBox.Ok)
+    ret = msgBox.exec_()
+
+    if ret == QMessageBox.Ok:
+        return True
+    else:
+        return False
 
 
 def get_all_nodes(group=None):
