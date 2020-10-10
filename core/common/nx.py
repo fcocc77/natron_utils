@@ -768,3 +768,19 @@ def reload_all_read(node):
     for n in node.getChildren():
         if n.getPluginID() == 'fr.inria.built-in.Read':
             reload_read(n)
+
+
+def get_current_choice(choice_param):
+    index = choice_param.getValue()
+    option = choice_param.getOption(index)
+
+    return option.split('- ')[-1].replace(' ', '_').lower()
+
+
+def set_choice_list(choice_param, list):
+    items = []
+    for i, item_name in enumerate(sorted(list)):
+        name = str(i + 1) + ' - ' + item_name.replace('_', ' ').capitalize()
+        items.append((name, item_name))
+
+    choice_param.setOptions(items)

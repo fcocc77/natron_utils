@@ -139,18 +139,18 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("flares", "Flares")
-    entries = [ ("1 - Red flare", "red_flare"),
-    ("2 - Frantic wipes transitions", "frantic_wipes_transitions"),
-    ("3 - Two flares blue and red", "two_flares_blue_and_red"),
-    ("4 - Warm rays", "warm_rays"),
-    ("5 - Warm artifacts", "warm_artifacts"),
-    ("6 - More spectral colour flares", "more_spectral_colour_flares"),
-    ("7 - Cool flare bokeh wipes", "cool_flare_bokeh_wipes"),
-    ("8 - Corner flares bokeh", "corner_flares_bokeh"),
-    ("9 - Flare color gradient", "flare_color_gradient"),
-    ("10 - Colourful optical flares", "colourful_optical_flares"),
-    ("11 - Flare bokeh wipes", "flare_bokeh_wipes"),
-    ("12 - Spectral colour flares", "spectral_colour_flares")]
+    entries = [ ("1 - Colourful optical flares", "colourful_optical_flares"),
+    ("2 - Cool flare bokeh wipes", "cool_flare_bokeh_wipes"),
+    ("3 - Corner flares bokeh", "corner_flares_bokeh"),
+    ("4 - Flare bokeh wipes", "flare_bokeh_wipes"),
+    ("5 - Flare color gradient", "flare_color_gradient"),
+    ("6 - Frantic wipes transitions", "frantic_wipes_transitions"),
+    ("7 - More spectral colour flares", "more_spectral_colour_flares"),
+    ("8 - Red flare", "red_flare"),
+    ("9 - Spectral colour flares", "spectral_colour_flares"),
+    ("10 - Two flares blue and red", "two_flares_blue_and_red"),
+    ("11 - Warm artifacts", "warm_artifacts"),
+    ("12 - Warm rays", "warm_rays")]
     param.setOptions(entries)
     del entries
 
@@ -294,12 +294,12 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(red_flare_0680.jpg)</Natron>")
+        param.setValue("<Natron>(colourful_optical_flares_0346.jpg)</Natron>")
         del param
 
     param = lastNode.getParam("filename")
     if param is not None:
-        param.setValue("/home/pancho/Documents/develop/videovina/private/assets/flares/red_flare/red_flare_####.jpg")
+        param.setValue("/home/pancho/Documents/develop/videovina/private/assets/flares/colourful_optical_flares/colourful_optical_flares_####.jpg")
         del param
 
     param = lastNode.getParam("before")
@@ -335,6 +335,11 @@ def createInstance(app,group):
     param = lastNode.getParam("ocioInputSpace")
     if param is not None:
         param.setValue("sRGB")
+        del param
+
+    param = lastNode.getParam("outputLayerChoice")
+    if param is not None:
+        param.setValue("Color.RGB")
         del param
 
     del lastNode

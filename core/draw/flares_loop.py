@@ -1,7 +1,6 @@
 from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format
-from nx import getNode, reload_read
+from nx import getNode, reload_read, get_current_choice, set_choice_list
 import os
-from texture_overlay import get_current_choice, set_choice_list
 from animations import back_and_forth_animation
 
 
