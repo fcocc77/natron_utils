@@ -134,7 +134,7 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
-    param = lastNode.createColorParam("color", "Color", True)
+    param = lastNode.createColorParam("constant_color", "Color", True)
     param.setMinimum(-2147483648, 0)
     param.setMaximum(2147483647, 0)
     param.setDisplayMinimum(0, 0)
@@ -163,7 +163,7 @@ def createInstance(app,group):
     param.setValue(0.5, 1)
     param.setValue(0.5, 2)
     param.setValue(0.5, 3)
-    lastNode.color = param
+    lastNode.constant_color = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -186,7 +186,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
     lastNode.setScriptName("constant")
     lastNode.setLabel("constant")
-    lastNode.setPosition(767, 253)
+    lastNode.setPosition(767, 254)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupconstant = lastNode
@@ -221,10 +221,10 @@ def createInstance(app,group):
     groupOutput1.connectInput(0, groupconstant)
 
     param = groupconstant.getParam("color")
-    param.slaveTo(group.getParam("color"), 0, 0)
-    param.slaveTo(group.getParam("color"), 1, 1)
-    param.slaveTo(group.getParam("color"), 2, 2)
-    param.slaveTo(group.getParam("color"), 3, 3)
+    param.slaveTo(group.getParam("constant_color"), 0, 0)
+    param.slaveTo(group.getParam("constant_color"), 1, 1)
+    param.slaveTo(group.getParam("constant_color"), 2, 2)
+    param.slaveTo(group.getParam("constant_color"), 3, 3)
     del param
 
     try:
