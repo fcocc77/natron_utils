@@ -1,17 +1,20 @@
 import NatronEngine
 from nx import getNode
 from animations import exaggerated_animation
-from base import get_rscale, get_duration, reformat_update, get_format
+from base import get_rscale, get_duration, reformat_update, get_format, limit_transition, children_refresh
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
     if not userEdited:
         return
 
+    children_refresh(thisParam, thisNode)
     name = thisParam.getScriptName()
 
     if name == 'refresh':
         refresh(thisNode)
+    if name == 'reload_flares':
+        getNode(thisNode, 'FlareTransition').getParam('reload_flares').trigger()
 
 
 def refresh(thisNode):
@@ -56,3 +59,5 @@ def refresh(thisNode):
     dst_scale_param = dst_transform.getParam('scale')
     dst_scale = thisNode.getParam('dst_scale').get()
     exaggerated_animation(dst_scale_param, duration, start_frame, [dst_scale, 1.0])
+
+    limit_transition(thisNode, start_frame)
