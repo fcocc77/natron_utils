@@ -44,7 +44,7 @@ def get_current_choice(choice_param):
 
 def set_choice_list(choice_param, list):
     items = []
-    for i, item_name in enumerate(list):
+    for i, item_name in enumerate(sorted(list)):
         name = str(i + 1) + ' - ' + item_name.replace('_', ' ').capitalize()
         items.append((name, item_name))
 
