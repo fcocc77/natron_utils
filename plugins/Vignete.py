@@ -134,7 +134,34 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
-    param = lastNode.createDoubleParam("opacity", "Opacity")
+    param = lastNode.createColorParam("radial_color", "Color", False)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.1, 0)
+    param.setValue(0.1, 1)
+    param.setValue(0.1, 2)
+    lastNode.radial_color = param
+    del param
+
+    param = lastNode.createDoubleParam("radial_expand", "Radial Expand")
     param.setMinimum(0, 0)
     param.setMaximum(1, 0)
     param.setDisplayMinimum(0, 0)
@@ -147,8 +174,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    lastNode.opacity = param
+    param.setValue(0.3, 0)
+    lastNode.radial_expand = param
     del param
 
     param = lastNode.createDoubleParam("softness", "Softness")
@@ -194,7 +221,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(30, 0)
+    param.setValue(50, 0)
     lastNode.blur = param
     del param
 
@@ -211,59 +238,19 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
+    param.setValue(0.7, 0)
     lastNode.blur_mix = param
     del param
 
-    lastNode.exp = lastNode.createPageParam("exp", "Exp")
-    param = lastNode.createInt2DParam("current_format", "Current Format")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.current_format = param
-    del param
-
-    param = lastNode.createDoubleParam("rscale", "Rscale")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.exp.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.rscale = param
-    del param
-
     # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'exp', 'Node', 'Settings'])
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
 
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(1433, 551)
+    lastNode.setPosition(1433, 552)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -275,8 +262,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Image")
     lastNode.setLabel("Image")
-    lastNode.setPosition(1433, 92)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(1433, 89)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupImage = lastNode
 
@@ -287,7 +274,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Radial", 2, group)
     lastNode.setScriptName("Radial")
     lastNode.setLabel("Radial")
-    lastNode.setPosition(1181, 185)
+    lastNode.setPosition(1181, 191)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupRadial = lastNode
@@ -307,11 +294,6 @@ def createInstance(app,group):
         param.setValue(False)
         del param
 
-    param = lastNode.getParam("reformat")
-    if param is not None:
-        param.setValue(True)
-        del param
-
     param = lastNode.getParam("NatronParamFormatChoice")
     if param is not None:
         param.set("PC_Video")
@@ -323,6 +305,18 @@ def createInstance(app,group):
         param.setValue(1080, 1)
         del param
 
+    param = lastNode.getParam("bottomLeft")
+    if param is not None:
+        param.setValue(-288, 0)
+        param.setValue(-288, 1)
+        del param
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValue(2496, 0)
+        param.setValue(1656, 1)
+        del param
+
     param = lastNode.getParam("softness")
     if param is not None:
         param.setValue(0.7, 0)
@@ -331,41 +325,19 @@ def createInstance(app,group):
     del lastNode
     # End of node "Radial"
 
-    # Start of node "Merge2"
-    lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
-    lastNode.setScriptName("Merge2")
-    lastNode.setLabel("Merge2")
-    lastNode.setPosition(1433, 264)
-    lastNode.setSize(104, 55)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupMerge2 = lastNode
-
-    param = lastNode.getParam("bbox")
-    if param is not None:
-        param.set("b")
-        del param
-
-    param = lastNode.getParam("mix")
-    if param is not None:
-        param.setValue(0.5, 0)
-        del param
-
-    del lastNode
-    # End of node "Merge2"
-
     # Start of node "Blur1"
     lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
     lastNode.setScriptName("Blur1")
-    lastNode.setLabel("Blur1")
-    lastNode.setPosition(1433, 406)
+    lastNode.setLabel("blur")
+    lastNode.setPosition(1433, 419)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur1 = lastNode
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(30, 0)
-        param.setValue(30, 1)
+        param.setValue(50, 0)
+        param.setValue(50, 1)
         del param
 
     param = lastNode.getParam("boundary")
@@ -383,9 +355,14 @@ def createInstance(app,group):
         param.setValue(False)
         del param
 
+    param = lastNode.getParam("maskInvert")
+    if param is not None:
+        param.setValue(True)
+        del param
+
     param = lastNode.getParam("mix")
     if param is not None:
-        param.setValue(0.5, 0)
+        param.setValue(0.7, 0)
         del param
 
     param = lastNode.getParam("enableMask_Mask")
@@ -396,85 +373,54 @@ def createInstance(app,group):
     del lastNode
     # End of node "Blur1"
 
-    # Start of node "FrameHold1"
-    lastNode = app.createNode("net.sf.openfx.FrameHold", 1, group)
-    lastNode.setScriptName("FrameHold1")
-    lastNode.setLabel("FrameHold1")
-    lastNode.setPosition(1181, 269)
-    lastNode.setSize(104, 45)
-    lastNode.setColor(0.7, 0.65, 0.35)
-    groupFrameHold1 = lastNode
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(frame 0)</Natron>")
-        del param
-
-    del lastNode
-    # End of node "FrameHold1"
-
-    # Start of node "Invert2"
-    lastNode = app.createNode("net.sf.openfx.Invert", 2, group)
-    lastNode.setScriptName("Invert2")
-    lastNode.setLabel("Invert2")
-    lastNode.setPosition(1181, 227)
-    lastNode.setSize(104, 32)
+    # Start of node "Grade1"
+    lastNode = app.createNode("net.sf.openfx.GradePlugin", 2, group)
+    lastNode.setScriptName("Grade1")
+    lastNode.setLabel("Grade1")
+    lastNode.setPosition(1435, 191)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.48, 0.66, 1)
-    groupInvert2 = lastNode
+    groupGrade1 = lastNode
 
-    param = lastNode.getParam("NatronOfxParamProcessR")
+    param = lastNode.getParam("white")
     if param is not None:
-        param.setValue(False)
+        param.setValue(0.1, 0)
+        param.setValue(0.1, 1)
+        param.setValue(0.1, 2)
         del param
 
-    param = lastNode.getParam("NatronOfxParamProcessG")
+    param = lastNode.getParam("maskInvert")
     if param is not None:
-        param.setValue(False)
+        param.setValue(True)
         del param
 
-    param = lastNode.getParam("NatronOfxParamProcessB")
-    if param is not None:
-        param.setValue(False)
-        del param
-
-    param = lastNode.getParam("premultChanged")
+    param = lastNode.getParam("enableMask_Mask")
     if param is not None:
         param.setValue(True)
         del param
 
     del lastNode
-    # End of node "Invert2"
+    # End of node "Grade1"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupBlur1)
-    groupMerge2.connectInput(0, groupImage)
-    groupMerge2.connectInput(1, groupFrameHold1)
-    groupBlur1.connectInput(0, groupMerge2)
-    groupBlur1.connectInput(1, groupFrameHold1)
-    groupFrameHold1.connectInput(0, groupInvert2)
-    groupInvert2.connectInput(0, groupRadial)
+    groupBlur1.connectInput(0, groupGrade1)
+    groupBlur1.connectInput(1, groupRadial)
+    groupGrade1.connectInput(0, groupImage)
+    groupGrade1.connectInput(1, groupRadial)
 
     param = groupRadial.getParam("softness")
-    param.setExpression("thisGroup.softness.get()", False, 0)
-    del param
-    param = groupMerge2.getParam("mix")
-    param.setExpression("thisGroup.opacity.get()", False, 0)
-    del param
-    param = groupBlur1.getParam("size")
-    param.setExpression("thisGroup.blur.get() * thisGroup.rscale.get()", False, 0)
-    param.setExpression("thisGroup.blur.get() * thisGroup.rscale.get()", False, 1)
+    param.slaveTo(group.getParam("softness"), 0, 0)
     del param
     param = groupBlur1.getParam("mix")
-    param.setExpression("thisGroup.blur_mix.get()", False, 0)
+    param.slaveTo(group.getParam("blur_mix"), 0, 0)
+    del param
+    param = groupGrade1.getParam("white")
+    param.slaveTo(group.getParam("radial_color"), 0, 0)
+    param.slaveTo(group.getParam("radial_color"), 1, 1)
+    param.slaveTo(group.getParam("radial_color"), 2, 2)
     del param
 
-    param = group.getParam("current_format")
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 0)
-    param.setExpression("index = thisNode.format.get()\nret = general.formats[index][dimension]", True, 1)
-    del param
-    param = group.getParam("rscale")
-    param.setExpression("index = thisNode.format.get()\nret = general.rscale[index]", True, 0)
-    del param
     try:
         extModule = sys.modules["VigneteExt"]
     except KeyError:
