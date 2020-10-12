@@ -205,6 +205,7 @@ def generate_base_slides(thisNode, app, workarea):
 
 
 def update_post_fx(thisNode=None, workarea=None):
+
     if not thisNode:
         thisNode = get_videovina()
     if not workarea:
@@ -214,10 +215,13 @@ def update_post_fx(thisNode=None, workarea=None):
     if not len(slides):
         return
 
+    nodes_position_y = 1500
+
     # obtiene el primer y el ultimo nodo de transition
     first_transition = slides[0]['transition']
     last_transition = slides[-1]['transition']
-    # -----------------------
+    #
+    #
 
     # Primer negro
     width, hight = get_resolution(thisNode)
@@ -237,6 +241,7 @@ def update_post_fx(thisNode=None, workarea=None):
         first_constant.getParam('color').set(0, 0, 0, 0)
     first_constant.setPosition(first_posx - 200, 200)
     #
+    #
 
     # Ultimo negro
     last_constant = getNode(workarea, 'LastBlack')
@@ -253,7 +258,8 @@ def update_post_fx(thisNode=None, workarea=None):
         last_constant.getParam('size').set(width, hight)
         last_constant.getParam('color').set(0, 0, 0, 1)
     last_constant.setPosition(last_posx + 200, 100)
-    # ---------------------
+    #
+    #
 
     # la ultima transition es un dissolve
     dissolve = getNode(workarea, 'last_transition')
@@ -268,10 +274,11 @@ def update_post_fx(thisNode=None, workarea=None):
     dissolve.disconnectInput(0)
     dissolve.connectInput(0, last_transition)
     dissolve.connectInput(1, last_constant)
-    # -------------------------
+    #
+    #
 
     post_fx_dot = createNode('dot', 'post_fx_dot', workarea, force=False)
-    post_fx_dot.setPosition(last_posx + 243, 900)
+    post_fx_dot.setPosition(last_posx + 243, nodes_position_y)
     post_fx_dot_last_input = post_fx_dot.getInput(0)
     post_fx_dot.disconnectInput(0)
     if post_fx_dot_last_input:
@@ -280,7 +287,7 @@ def update_post_fx(thisNode=None, workarea=None):
         post_fx_dot.connectInput(0, dissolve)
 
     # VideoVina nodo como ultimo
-    thisNode.setPosition(last_posx + 200, 1100)
+    thisNode.setPosition(last_posx + 200, nodes_position_y + 200)
     thisNode.disconnectInput(0)
     thisNode.connectInput(0, post_fx_dot)
 
@@ -292,7 +299,7 @@ def update_post_fx(thisNode=None, workarea=None):
             group=workarea
         )
         vinarender.setLabel('vinarender')
-    vinarender.setPosition(last_posx + 200, 1200)
+    vinarender.setPosition(last_posx + 200, nodes_position_y + 300)
     vinarender.connectInput(0, thisNode)
     vinarender.setLabel('vinarender')
     vinarender.getParam('rgbonly').set(True)
@@ -306,7 +313,7 @@ def update_post_fx(thisNode=None, workarea=None):
             group=workarea
         )
         ntprender.setLabel('ntprender')
-    ntprender.setPosition(last_posx + 450, 1100)
+    ntprender.setPosition(last_posx + 450, nodes_position_y + 200)
     ntprender.connectInput(0, thisNode)
 
     # si es que existe un viewer lo posiciona correctamente
@@ -314,11 +321,12 @@ def update_post_fx(thisNode=None, workarea=None):
     for i in range(10):
         viewer = workarea.getNode('Viewer' + str(i))
         if viewer:
-            viewer.setPosition(last_posx + 450, 895)
+            viewer.setPosition(last_posx + 450, nodes_position_y - 6)
             viewer.disconnectInput(0)
             viewer.connectInput(0, post_fx_dot)
             break
-    # ---------------------
+    #
+    #
 
     # conecta el primer slide al primer dot y negro
     first_slide = get_first_slide(workarea)
