@@ -1,4 +1,5 @@
 from slide_common import setup
+from base import get_rscale, get_format
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -13,4 +14,5 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 
 def refresh(thisNode):
-    None
+    rscale = get_rscale(thisNode)
+    width, height = get_format(thisNode)
