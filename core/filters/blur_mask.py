@@ -33,7 +33,7 @@ def refresh(thisNode):
     for i in range(samples):
         tolerance -= sample
         tolerance = round(tolerance, 3)
-        # cuando es '-1.0' en keyer desaparece, por eso se pone '0.98'
+        # cuando es '-1.0' en keyer desaparece, por eso se pone '0.90'
         if tolerance < -0.90:
             tolerance = -0.90
 
