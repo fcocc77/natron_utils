@@ -317,7 +317,9 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
         'videovina': 'vv.VideoVina',
         'slide_base': 'vv.SlideBase',
         'zoom_transition': 'vv.ZoomTransition',
-        'statistics': 'net.sf.openfx.ImageStatistics'
+        'statistics': 'net.sf.openfx.ImageStatistics',
+        'keyer': 'net.sf.openfx.KeyerPlugin'
+
     }
 
     if node in nodes.keys():
