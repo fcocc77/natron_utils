@@ -1,7 +1,7 @@
 import os
 import shutil
 import json
-from util import jread, hash_generator
+from util import jread, hash_generator, makedir, fread, fwrite
 from nx import get_connected_nodes, saveProject, absolute, warning, alert, get_node_path
 from vina import get_ranges, get_last_frame, videovina_data
 
@@ -164,6 +164,36 @@ def multi_project_render(thisNode, app):
     render(thisNode, app, divided_project=True)
 
 
+def duplicate_project(project):
+
+    dirname = os.path.dirname(project)
+    basename = os.path.basename(project)
+
+    renders_project = dirname + '/renders'
+    makedir(renders_project)
+
+    # copia el proyecto con un nombre que no exista
+    for i in range(1000):
+        # encuentra version disponible
+        new_project = renders_project + '/__' + basename[:-4] + '_render_' + str(i + 1) + '.ntp'
+        if not os.path.isfile(new_project):
+            break
+
+    shutil.copy(project, new_project)
+    #
+    #
+
+    # modifica el proyecto con rutas relativas ../ a ../../
+    # adicional ya que el proyecto estara una carpeta mas adentro
+    project_read = fread(new_project)
+    project_read = project_read.replace('[Project]/../', '[Project]/../../')
+    fwrite(new_project, project_read)
+    #
+    #
+
+    return new_project
+
+
 def render(thisNode, app, divided_project=False):
     videovina_node = thisNode.getInput(0)
     if not videovina_node:
@@ -200,17 +230,7 @@ def render(thisNode, app, divided_project=False):
         first_frame = thisNode.getParam('range').getValue(0)
         last_frame = thisNode.getParam('range').getValue(1)
 
-        # guarda el proyecto antes de enviar, y crea uno nuevo
-        for i in range(1000):
-            # encuentra version disponible
-            dirname = os.path.dirname(project)
-            basename = os.path.basename(project)
-            new_project = dirname + '/__' + \
-                basename[:-4] + '_render_' + str(i + 1) + '.ntp'
-            if not os.path.isfile(new_project):
-                break
-        shutil.copy(project, new_project)
-        project = new_project
+        project = duplicate_project(project)
 
         extra = {
             'divided_project': False,

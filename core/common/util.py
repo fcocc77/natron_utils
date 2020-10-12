@@ -69,3 +69,8 @@ def hash_generator(keyLen):
 def makedirs(_dir):
     if not os.path.isdir(_dir):
         os.makedirs(_dir)
+
+
+def makedir(_dir):
+    if not os.path.isdir(_dir):
+        os.mkdir(_dir)
