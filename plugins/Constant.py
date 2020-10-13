@@ -159,10 +159,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.5, 0)
-    param.setValue(0.5, 1)
-    param.setValue(0.5, 2)
-    param.setValue(0.5, 3)
     lastNode.constant_color = param
     del param
 
@@ -208,10 +204,10 @@ def createInstance(app,group):
 
     param = lastNode.getParam("color")
     if param is not None:
-        param.setValue(0.5, 0)
-        param.setValue(0.5, 1)
-        param.setValue(0.5, 2)
-        param.setValue(0.5, 3)
+        param.setValue(0, 0)
+        param.setValue(0, 1)
+        param.setValue(0, 2)
+        param.setValue(0, 3)
         del param
 
     del lastNode
