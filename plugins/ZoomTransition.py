@@ -29,7 +29,7 @@ def getIconPath():
     return "Transition.png"
 
 def getGrouping():
-    return "videovina/Transition"
+    return "videovina/Transitions"
 
 def createInstance(app,group):
     # Create all nodes in the group
