@@ -230,7 +230,8 @@ def render(thisNode, app, divided_project=False):
         first_frame = thisNode.getParam('range').getValue(0)
         last_frame = thisNode.getParam('range').getValue(1)
 
-        project = duplicate_project(project)
+        if thisNode.duplicate_project.get():
+            project = duplicate_project(project)
 
         extra = {
             'divided_project': False,
