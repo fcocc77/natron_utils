@@ -39,7 +39,7 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("base.main")
+        param.setValue("reformat.main")
         del param
 
 
@@ -54,6 +54,7 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
@@ -61,13 +62,20 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("format", "Format")
-    param.setDefaultValue(2)
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
     param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     lastNode.format = param
@@ -103,10 +111,24 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep5 = param
+    del param
+
+    param = lastNode.createChoiceParam("reformatresize", "Resize Type")
+    param.setDefaultValue(1)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    lastNode.reformatresize = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -129,22 +151,22 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Image")
     lastNode.setLabel("Image")
-    lastNode.setPosition(719, -61)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(694, 406)
+    lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupImage = lastNode
 
     del lastNode
     # End of node "Image"
 
-    # Start of node "HD"
+    # Start of node "reformat"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("HD")
-    lastNode.setLabel("HD")
-    lastNode.setPosition(576, 187)
+    lastNode.setScriptName("reformat")
+    lastNode.setLabel("reformat")
+    lastNode.setPosition(694, 446)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupHD = lastNode
+    groupreformat = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
@@ -168,226 +190,14 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "HD"
-
-    # Start of node "FormatSwitch1"
-    lastNode = app.createNode("vv.FormatSwitch", 1, group)
-    lastNode.setScriptName("FormatSwitch1")
-    lastNode.setLabel("FormatSwitch1")
-    lastNode.setPosition(694, 355)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupFormatSwitch1 = lastNode
-
-    param = lastNode.getParam("onParamChanged")
-    if param is not None:
-        param.setValue("format_switch.main")
-        del param
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createStringParam("state_label", "State")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("- - - - - - - >    STATE :")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    param.setEnabled(False, 0)
-    lastNode.state_label = param
-    del param
-
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
-    param.setEnabled(False, 0)
-    lastNode.format = param
-    del param
-
-    param = lastNode.createButtonParam("link", "Link To Parent")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.link = param
-    del param
-
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep5", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    param.setEnabled(False, 0)
-    lastNode.sep5 = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "FormatSwitch1"
-
-    # Start of node "Mid_HD"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Mid_HD")
-    lastNode.setLabel("Mid HD")
-    lastNode.setPosition(776, 187)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupMid_HD = lastNode
-
-    param = lastNode.getParam("reformatType")
-    if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(960, 0)
-        param.setValue(540, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Mid_HD"
-
-    # Start of node "Quarter"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Quarter")
-    lastNode.setLabel("Quarter")
-    lastNode.setPosition(1024, 185)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupQuarter = lastNode
-
-    param = lastNode.getParam("reformatType")
-    if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(480, 0)
-        param.setValue(270, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Quarter"
-
-    # Start of node "p4K"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("p4K")
-    lastNode.setLabel("4K")
-    lastNode.setPosition(356, 187)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupp4K = lastNode
-
-    param = lastNode.getParam("reformatType")
-    if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(3840, 0)
-        param.setValue(2160, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "p4K"
+    # End of node "reformat"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupFormatSwitch1)
-    groupHD.connectInput(0, groupImage)
-    groupFormatSwitch1.connectInput(0, groupMid_HD)
-    groupFormatSwitch1.connectInput(1, groupHD)
-    groupFormatSwitch1.connectInput(2, groupp4K)
-    groupFormatSwitch1.connectInput(3, groupQuarter)
-    groupMid_HD.connectInput(0, groupImage)
-    groupQuarter.connectInput(0, groupImage)
-    groupp4K.connectInput(0, groupImage)
+    groupOutput1.connectInput(0, groupreformat)
+    groupreformat.connectInput(0, groupImage)
 
-    param = groupFormatSwitch1.getParam("state_label")
-    group.getParam("state_label").setAsAlias(param)
-    del param
-    param = groupFormatSwitch1.getParam("format")
-    group.getParam("format").setAsAlias(param)
-    del param
-    param = groupFormatSwitch1.getParam("sep5")
-    group.getParam("sep5").setAsAlias(param)
+    param = groupreformat.getParam("resize")
+    group.getParam("reformatresize").setAsAlias(param)
     del param
 
     try:
