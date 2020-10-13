@@ -8,6 +8,7 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         return
 
     knob_name = thisParam.getScriptName()
+
     setup(thisParam, thisNode)
 
     if knob_name == 'refresh':
@@ -18,17 +19,21 @@ def refresh(thisNode):
     rscale = get_rscale(thisNode)
     width, height = get_format(thisNode)
 
+    hard_shape = thisNode.hard_shape.get()
+
     # Rectangle Mask
+    rectangle_mask = getNode(thisNode, 'mask_rectangle')
 
-    rectangle_mask = getNode(thisNode, 'rectangle_mask')
-    rectangle_mask_size = rectangle_mask.getParam('size')
-    rectangle_mask_bottom_left = rectangle_mask.getParam('bottomLeft')
+    width_percent = 80
+    rectangle_mask.getParam('width').set(width_percent)
 
-    mask_width = width / 1.25
+    softness_param = rectangle_mask.getParam('softness')
+    if hard_shape:
+        softness_param.set(0)
+    else:
+        softness_param.set(500)
 
-    rectangle_mask_size.set(mask_width, height)
-    mask_left = (width - mask_width) / 2
-    rectangle_mask_bottom_left.set(mask_left, 0)
+    rectangle_mask.getParam('refresh').trigger()
     #
     #
 
@@ -38,7 +43,15 @@ def refresh(thisNode):
     image_transform = getNode(thisNode, 'image_transform')
     image_translate = image_transform.getParam('translate')
     image_transform.getParam('center').set(width / 2, height / 2)
-    image_transform.getParam('scale').set(0.8, 0.8)
+    image_scale = image_transform.getParam('scale')
+
+    if hard_shape:
+        image_scale.set(.8, .8)
+    else:
+        image_scale.set(1, 1)
+
+    mask_left = width - (width * width_percent / 100)
+    mask_left /= 2
     if direction == 0:
         image_translate.set(-mask_left, 0)
     else:
@@ -53,11 +66,21 @@ def refresh(thisNode):
     back_translate = background_transform.getParam('translate')
 
     back_center.set(width / 2, height / 2)
-    back_scale.set(3, 3)
+    scale_size = 2
+    back_scale.set(scale_size, scale_size)
     back_position_x = width / 3
     if direction == 0:
         back_translate.set(back_position_x, 0)
     else:
         back_translate.set(-back_position_x, 0)
+    #
+    #
+
+    # omni_reflect switch
+    omni_reflect = getNode(thisNode, 'omni_reflect_switch').getParam('which')
+    if hard_shape:
+        omni_reflect.set(0)
+    else:
+        omni_reflect.set(1)
     #
     #
