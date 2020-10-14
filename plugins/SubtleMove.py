@@ -483,7 +483,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Image")
     lastNode.setLabel("Image")
-    lastNode.setPosition(767, 116)
+    lastNode.setPosition(767, 171)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupImage = lastNode
@@ -495,7 +495,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("Transform")
     lastNode.setLabel("Transform")
-    lastNode.setPosition(767, 211)
+    lastNode.setPosition(767, 253)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupTransform = lastNode
@@ -508,9 +508,27 @@ def createInstance(app,group):
     del lastNode
     # End of node "Transform"
 
+    # Start of node "RunScript1"
+    lastNode = app.createNode("fr.inria.openfx.RunScript", 1, group)
+    lastNode.setScriptName("RunScript1")
+    lastNode.setLabel("RunScript1")
+    lastNode.setPosition(767, 211)
+    lastNode.setSize(104, 32)
+    lastNode.setColor(0.3, 0.5, 0.2)
+    groupRunScript1 = lastNode
+
+    param = lastNode.getParam("validate")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "RunScript1"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupTransform)
-    groupTransform.connectInput(0, groupImage)
+    groupTransform.connectInput(0, groupRunScript1)
+    groupRunScript1.connectInput(0, groupImage)
 
     try:
         extModule = sys.modules["SubtleMoveExt"]
