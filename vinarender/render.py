@@ -1,7 +1,7 @@
 from sys import argv
 import NatronEngine
 from vina import get_videovina_render
-from nx import set_option
+from nx import set_option, get_all_nodes, change_read_filename
 import json
 
 app = app1
@@ -14,6 +14,8 @@ output = data['output']
 output_quality = data['output_quality']
 fps = data['fps']
 rgb_only = data['rgb_only']
+src_path = data['src_path']
+dst_path = data['dst_path']
 
 ext = output.split('.')[-1]
 
@@ -64,3 +66,21 @@ if ext == 'mov' or ext == 'mp4':
     codec_param = writer.getParam('codec')
     codec_index = codec_param.getOptions().index(codec)
     codec_param.set(codec_index)
+#
+#
+
+
+# Cambia todas las rutas del proyecto a las que corresponda al entorno.
+for node in get_all_nodes():
+    node_id = node.getPluginID()
+
+    if node_id == 'fr.inria.built-in.Read':
+        filename = node.getParam('filename')
+        filename_value = filename.get().replace(src_path, dst_path)
+        change_read_filename(node, filename_value)
+
+    if node_id == 'net.fxarena.openfx.Text':
+        custom = node.getParam('custom')
+        custom_value = custom.get().replace(src_path, dst_path)
+        if not custom.get() == custom_value:
+            custom.set(custom_value)

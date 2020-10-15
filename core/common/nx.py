@@ -387,6 +387,23 @@ def get_all_nodes(group=None):
         group = app()
     nodes = []
     for a in group.getChildren():
+        nodes.append(a)
+        for b in a.getChildren():
+            nodes.append(b)
+            for c in b.getChildren():
+                nodes.append(c)
+                for d in c.getChildren():
+                    nodes.append(d)
+                    for e in d.getChildren():
+                        nodes.append(e)
+    return nodes
+
+
+def get_all_path_nodes(group=None):
+    if not group:
+        group = app()
+    nodes = []
+    for a in group.getChildren():
         a_path = a.getScriptName()
         nodes.append([a, a_path])
         for b in a.getChildren():
@@ -538,7 +555,7 @@ def get_parent(node):
 
 def get_output_nodes(node):
     nodes = []
-    for n, path in get_all_nodes():
+    for n, path in get_all_path_nodes():
         for i in range(n.getMaxInputCount()):
             input_node = n.getInput(i)
             if input_node:
@@ -770,6 +787,41 @@ def reload_all_read(node):
     for n in node.getChildren():
         if n.getPluginID() == 'fr.inria.built-in.Read':
             reload_read(n)
+
+
+def change_read_filename(read_node, value):
+
+    filename = read_node.getParam('filename')
+
+    # si la ruta es igual a la existete retorna para no gastar recursos
+    if filename.get() == value:
+        return
+
+    # obtiene parametros actuales antes de cambiar la ruta, por que si se
+    # cambia el 'filename' todos estos parametros quedan por defecto.
+    before_param = read_node.getParam('before')
+    after_param = read_node.getParam('after')
+    if before_param and after_param:
+        before = before_param.get()
+        after = after_param.get()
+
+    first_frame_param = read_node.getParam('firstFrame')
+    last_frame_param = read_node.getParam('lastFrame')
+    if first_frame_param and last_frame_param:
+        first_frame = first_frame_param.get()
+        last_frame = last_frame_param.get()
+
+    # cambia ruta
+    filename.set(value)
+
+    # deja estos parametros con los valores anteriores
+    if before_param and after_param:
+        before_param.set(before)
+        after_param.set(after)
+
+    if first_frame_param and last_frame_param:
+        first_frame_param.set(first_frame)
+        last_frame_param.set(last_frame)
 
 
 def get_current_choice(choice_param):
