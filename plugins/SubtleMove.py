@@ -508,27 +508,27 @@ def createInstance(app,group):
     del lastNode
     # End of node "Transform"
 
-    # Start of node "RunScript1"
-    lastNode = app.createNode("fr.inria.openfx.RunScript", 1, group)
-    lastNode.setScriptName("RunScript1")
-    lastNode.setLabel("RunScript1")
-    lastNode.setPosition(767, 211)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.3, 0.5, 0.2)
-    groupRunScript1 = lastNode
+    # Start of node "Modulate1"
+    lastNode = app.createNode("net.fxarena.openfx.Modulate", 1, group)
+    lastNode.setScriptName("Modulate1")
+    lastNode.setLabel("Modulate1")
+    lastNode.setPosition(769, 211)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupModulate1 = lastNode
 
-    param = lastNode.getParam("validate")
+    param = lastNode.getParam("hostMix")
     if param is not None:
-        param.setValue(True)
+        param.setValue(0, 0)
         del param
 
     del lastNode
-    # End of node "RunScript1"
+    # End of node "Modulate1"
 
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupTransform)
-    groupTransform.connectInput(0, groupRunScript1)
-    groupRunScript1.connectInput(0, groupImage)
+    groupTransform.connectInput(0, groupModulate1)
+    groupModulate1.connectInput(0, groupImage)
 
     try:
         extModule = sys.modules["SubtleMoveExt"]

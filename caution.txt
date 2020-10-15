@@ -11,7 +11,7 @@
         solo puede haber un 'Switch' pero swichiado hacia un nodo 'Read'
 
         - Solucion:
-            . Usar nodo 'RunScript' antes del nodo 'Transform'
+            . Usar nodo 'RunScript' o 'Modulate' con 'mix' en 0 para que no tenga ningun efecto, posicionarlo antes del nodo 'Transform'
 
 
 - Precauciones:
