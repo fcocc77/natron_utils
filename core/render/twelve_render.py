@@ -17,6 +17,8 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'render':
         render(thisNode, thisGroup)
+    if knob_name == 'link_to_connected':
+        link_to_connected(thisNode)
 
 
 def send_vinarender_state(durations, speed=1, prefix='render', format=1, vinarender=False, thisNode=None, thisGroup=None):
@@ -95,11 +97,29 @@ def refresh_connected_nodes(thisNode, thisGroup, speed, format):
     thisNode.format.set(format)
     thisNode.speed.set(speed)
 
-    # actualiza el nodo padre
-    thisGroup.format.set(format)
-    thisGroup.speed.set(speed)
+    connected_nodes = get_connected_nodes(thisNode, parent_include=False)
+    for node in connected_nodes:
+        refresh_param = node.getParam('refresh')
 
-    thisGroup.refresh.trigger()
+        if not refresh_param:
+            continue
+
+        refresh_param.trigger()
+
+    # actualiza el nodo padre.
+    if type(thisGroup) == NatronEngine.Effect:
+        thisGroup.format.set(format)
+        thisGroup.speed.set(speed)
+
+        thisGroup.refresh.trigger()
+
+
+def link_to_connected(thisNode):
+
+    connected_nodes = get_connected_nodes(thisNode, parent_include=False)
+
+    for node in connected_nodes:
+        link_to_parent(node, thisNode, thisNode, force=True)
 
 
 def render(thisNode, thisGroup):

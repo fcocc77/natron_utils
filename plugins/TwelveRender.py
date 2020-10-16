@@ -112,6 +112,18 @@ def createInstance(app,group):
     lastNode.link = param
     del param
 
+    param = lastNode.createButtonParam("link_to_connected", "Link To Connected")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link_to_connected = param
+    del param
+
     param = lastNode.createSeparatorParam("sep5", "")
 
     # Add the param to the page
