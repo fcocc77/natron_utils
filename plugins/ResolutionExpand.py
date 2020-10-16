@@ -36,7 +36,7 @@ def createInstance(app,group):
 
     # Create the parameters of the group node the same way we did for all internal nodes
     lastNode = group
-    lastNode.setColor(0.5, 0.4, 0.4)
+    lastNode.setColor(0.7, 0.7, 0.7)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
         param.setValue("resolution_expand.main")
@@ -45,39 +45,44 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createInt2DParam("boxSize", "Size")
-    param.setDefaultValue(200, 0)
-    param.restoreDefaultValue(0)
-    param.setDefaultValue(200, 1)
-    param.restoreDefaultValue(1)
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    param.setValue(1920, 0)
-    param.setValue(1080, 1)
-    lastNode.boxSize = param
+    lastNode.state_label = param
     del param
 
-    param = lastNode.createIntParam("blur", "Background Blur")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
+    param = lastNode.createChoiceParam("format", "Format")
+    param.setDefaultValue(2)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.blur = param
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")
@@ -87,7 +92,7 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
-    param.setAddNewLine(True)
+    param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
     lastNode.refresh = param
     del param
@@ -100,72 +105,34 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(1447, 539)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(1434, 780)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 
     del lastNode
     # End of node "Output1"
 
-    # Start of node "Input1"
+    # Start of node "Image"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("Input1")
-    lastNode.setLabel("Input1")
-    lastNode.setPosition(913, -117)
-    lastNode.setSize(104, 30)
+    lastNode.setScriptName("Image")
+    lastNode.setLabel("Image")
+    lastNode.setPosition(900, 67)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupInput1 = lastNode
+    groupImage = lastNode
 
     del lastNode
-    # End of node "Input1"
+    # End of node "Image"
 
-    # Start of node "reformat"
+    # Start of node "reformat_low"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("reformat")
-    lastNode.setLabel("reformat")
-    lastNode.setPosition(1169, 145)
-    lastNode.setSize(104, 32)
+    lastNode.setScriptName("reformat_low")
+    lastNode.setLabel("reformat_low")
+    lastNode.setPosition(902, 353)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupreformat = lastNode
-
-    param = lastNode.getParam("reformatType")
-    if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("resize")
-    if param is not None:
-        param.set("height")
-        del param
-
-    del lastNode
-    # End of node "reformat"
-
-    # Start of node "Reformat2"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat2")
-    lastNode.setLabel("Reformat2")
-    lastNode.setPosition(913, 199)
-    lastNode.setSize(104, 30)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat2 = lastNode
+    groupreformat_low = lastNode
 
     param = lastNode.getParam("reformatType")
     if param is not None:
@@ -194,16 +161,16 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Reformat2"
+    # End of node "reformat_low"
 
-    # Start of node "Blur1"
+    # Start of node "background_blur"
     lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
-    lastNode.setScriptName("Blur1")
-    lastNode.setLabel("Blur1")
-    lastNode.setPosition(913, 290)
-    lastNode.setSize(104, 30)
+    lastNode.setScriptName("background_blur")
+    lastNode.setLabel("background_blur")
+    lastNode.setPosition(900, 415)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.8, 0.5, 0.3)
-    groupBlur1 = lastNode
+    groupbackground_blur = lastNode
 
     param = lastNode.getParam("size")
     if param is not None:
@@ -217,14 +184,14 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Blur1"
+    # End of node "background_blur"
 
     # Start of node "Merge1"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(1169, 364)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(1156, 521)
+    lastNode.setSize(100, 50)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
@@ -250,10 +217,15 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("Reformat3")
     lastNode.setLabel("Reformat3")
-    lastNode.setPosition(913, 370)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(900, 530)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat3 = lastNode
+
+    param = lastNode.getParam("useRoD")
+    if param is not None:
+        param.setValue(True)
+        del param
 
     param = lastNode.getParam("reformatType")
     if param is not None:
@@ -276,6 +248,11 @@ def createInstance(app,group):
         param.setValue(True)
         del param
 
+    param = lastNode.getParam("resize")
+    if param is not None:
+        param.set("distort")
+        del param
+
     del lastNode
     # End of node "Reformat3"
 
@@ -283,8 +260,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("Reformat4")
     lastNode.setLabel("Reformat4")
-    lastNode.setPosition(1447, 149)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1434, 306)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat4 = lastNode
 
@@ -316,7 +293,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
-    lastNode.setPosition(1492, 32)
+    lastNode.setPosition(1479, 189)
     lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
@@ -328,7 +305,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
-    lastNode.setPosition(958, 154)
+    lastNode.setPosition(945, 311)
     lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
@@ -340,37 +317,25 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("Switch1")
     lastNode.setLabel("Switch1")
-    lastNode.setPosition(1447, 371)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(1434, 530)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupSwitch1 = lastNode
 
-    del lastNode
-    # End of node "Switch1"
-
-    # Start of node "FrameHold1"
-    lastNode = app.createNode("net.sf.openfx.FrameHold", 1, group)
-    lastNode.setScriptName("FrameHold1")
-    lastNode.setLabel("FrameHold1")
-    lastNode.setPosition(1447, 438)
-    lastNode.setSize(104, 45)
-    lastNode.setColor(0.7, 0.65, 0.35)
-    groupFrameHold1 = lastNode
-
-    param = lastNode.getParam("userTextArea")
+    param = lastNode.getParam("which")
     if param is not None:
-        param.setValue("<Natron>(frame 0)</Natron>")
+        param.setValue(1, 0)
         del param
 
     del lastNode
-    # End of node "FrameHold1"
+    # End of node "Switch1"
 
     # Start of node "Reformat5"
     lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
     lastNode.setScriptName("Reformat5")
     lastNode.setLabel("Reformat5")
-    lastNode.setPosition(1766, 149)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(1755, 307)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupReformat5 = lastNode
 
@@ -407,7 +372,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
-    lastNode.setPosition(1811, 32)
+    lastNode.setPosition(1798, 189)
     lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
@@ -419,7 +384,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
-    lastNode.setPosition(1811, 379)
+    lastNode.setPosition(1798, 536)
     lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
@@ -431,7 +396,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("dot_input")
     lastNode.setLabel("dot_input")
-    lastNode.setPosition(958, 32)
+    lastNode.setPosition(945, 189)
     lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupdot_input = lastNode
@@ -439,28 +404,255 @@ def createInstance(app,group):
     del lastNode
     # End of node "dot_input"
 
+    # Start of node "Format1"
+    lastNode = app.createNode("vv.Format", 1, group)
+    lastNode.setScriptName("Format1")
+    lastNode.setLabel("Format1")
+    lastNode.setPosition(1156, 302)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupFormat1 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("reformat.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createChoiceParam("reformatresize", "Resize Type")
+    param.setDefaultValue(1)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(False)
+    param.set("height")
+    lastNode.reformatresize = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Format1"
+
+    # Start of node "CropFormat1"
+    lastNode = app.createNode("vv.CropFormat", 1, group)
+    lastNode.setScriptName("CropFormat1")
+    lastNode.setLabel("CropFormat1")
+    lastNode.setPosition(1434, 606)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupCropFormat1 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("crop_format.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Full HD - 1920 x 1080")
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "CropFormat1"
+
+    # Start of node "FrameHold1_2"
+    lastNode = app.createNode("net.sf.openfx.FrameHold", 1, group)
+    lastNode.setScriptName("FrameHold1_2")
+    lastNode.setLabel("FrameHold1_2")
+    lastNode.setPosition(1434, 671)
+    lastNode.setSize(100, 50)
+    lastNode.setColor(0.7, 0.65, 0.35)
+    groupFrameHold1_2 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(frame 0)</Natron>")
+        del param
+
+    del lastNode
+    # End of node "FrameHold1_2"
+
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupFrameHold1)
-    groupreformat.connectInput(0, groupDot2)
-    groupReformat2.connectInput(0, groupDot2)
-    groupBlur1.connectInput(0, groupReformat2)
+    groupOutput1.connectInput(0, groupFrameHold1_2)
+    groupreformat_low.connectInput(0, groupDot2)
+    groupbackground_blur.connectInput(0, groupreformat_low)
     groupMerge1.connectInput(0, groupReformat3)
-    groupMerge1.connectInput(1, groupreformat)
-    groupReformat3.connectInput(0, groupBlur1)
+    groupMerge1.connectInput(1, groupFormat1)
+    groupReformat3.connectInput(0, groupbackground_blur)
     groupReformat4.connectInput(0, groupDot1)
     groupDot1.connectInput(0, groupdot_input)
     groupDot2.connectInput(0, groupdot_input)
     groupSwitch1.connectInput(0, groupReformat4)
     groupSwitch1.connectInput(1, groupMerge1)
     groupSwitch1.connectInput(2, groupDot4)
-    groupFrameHold1.connectInput(0, groupSwitch1)
     groupReformat5.connectInput(0, groupDot3)
     groupDot3.connectInput(0, groupDot1)
     groupDot4.connectInput(0, groupReformat5)
-    groupdot_input.connectInput(0, groupInput1)
+    groupdot_input.connectInput(0, groupImage)
+    groupFormat1.connectInput(0, groupDot2)
+    groupCropFormat1.connectInput(0, groupSwitch1)
+    groupFrameHold1_2.connectInput(0, groupCropFormat1)
 
-    param = groupreformat.getParam("boxSize")
-    group.getParam("boxSize").setAsAlias(param)
+    param = groupFormat1.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupFormat1.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupCropFormat1.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupCropFormat1.getParam("format")
+    group.getParam("format").setAsAlias(param)
     del param
 
     try:
