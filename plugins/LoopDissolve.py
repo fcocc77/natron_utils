@@ -86,7 +86,25 @@ def createInstance(app,group):
     lastNode.settings_label = param
     del param
 
-    param = lastNode.createIntParam("frames", "Frames")
+    param = lastNode.createIntParam("input_frames", "Input Frames")
+    param.setMinimum(10, 0)
+    param.setDisplayMinimum(10, 0)
+    param.setDisplayMaximum(1000, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.input_frames = param
+    del param
+
+    param = lastNode.createIntParam("output_frames", "Output Frames")
     param.setMinimum(10, 0)
     param.setDisplayMinimum(10, 0)
     param.setDisplayMaximum(1000, 0)
@@ -101,7 +119,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(500, 0)
-    lastNode.frames = param
+    lastNode.output_frames = param
     del param
 
     param = lastNode.createIntParam("transition_duration", "Transition Duration")
@@ -138,17 +156,17 @@ def createInstance(app,group):
     del lastNode
     # End of node "Output1"
 
-    # Start of node "ReadNode"
+    # Start of node "Image"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("ReadNode")
-    lastNode.setLabel("ReadNode")
+    lastNode.setScriptName("Image")
+    lastNode.setLabel("Image")
     lastNode.setPosition(2064, -569)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupReadNode = lastNode
+    groupImage = lastNode
 
     del lastNode
-    # End of node "ReadNode"
+    # End of node "Image"
 
     # Start of node "offset_b"
     lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
@@ -161,7 +179,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("timeOffset")
     if param is not None:
-        param.setValue(470, 0)
+        param.setValue(20, 0)
         del param
 
     del lastNode
@@ -178,7 +196,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("timeOffset")
     if param is not None:
-        param.setValue(-500, 0)
+        param.setValue(-50, 0)
         del param
 
     del lastNode
@@ -195,8 +213,8 @@ def createInstance(app,group):
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValueAtTime(0, 470, 0)
-        param.setValueAtTime(1, 500, 0)
+        param.setValueAtTime(0, 20, 0)
+        param.setValueAtTime(1, 50, 0)
         del param
 
     del lastNode
@@ -207,18 +225,18 @@ def createInstance(app,group):
     lastNode.setScriptName("frame_range")
     lastNode.setLabel("frame_range")
     lastNode.setPosition(763, -159)
-    lastNode.setSize(100, 55)
+    lastNode.setSize(100, 50)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupframe_range = lastNode
 
     param = lastNode.getParam("frameRange")
     if param is not None:
-        param.setValue(970, 1)
+        param.setValue(70, 1)
         del param
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(1 - 1)</Natron>")
+        param.setValue("<Natron>(1 - 70)</Natron>")
         del param
 
     del lastNode
@@ -236,7 +254,14 @@ def createInstance(app,group):
     param = lastNode.getParam("which")
     if param is not None:
         param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(1, 971, 0)
+        param.setValueAtTime(1, 71, 0)
+        param.setValueAtTime(2, 141, 0)
+        param.setValueAtTime(3, 211, 0)
+        param.setValueAtTime(4, 281, 0)
+        param.setValueAtTime(5, 351, 0)
+        param.setValueAtTime(6, 421, 0)
+        param.setValueAtTime(7, 491, 0)
+        param.setValueAtTime(8, 561, 0)
         del param
 
     del lastNode
@@ -352,8 +377,8 @@ def createInstance(app,group):
     groupdissolve2.connectInput(0, groupoffset_a2)
     groupdissolve2.connectInput(1, groupoffset_b2)
     groupfinal_range.connectInput(0, groupdissolve2)
-    groupDot1.connectInput(0, groupReadNode)
-    groupoutput_dot.connectInput(0, groupReadNode)
+    groupDot1.connectInput(0, groupImage)
+    groupoutput_dot.connectInput(0, groupImage)
 
     try:
         extModule = sys.modules["LoopDissolveExt"]

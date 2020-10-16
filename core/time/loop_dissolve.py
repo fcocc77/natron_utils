@@ -1,4 +1,4 @@
-from nx import getNode, warning, createNode, node_delete
+from nx import getNode, createNode, node_delete
 from animations import simple_animation
 from math import ceil
 
@@ -42,34 +42,20 @@ def loop(thisNode, offset_a_name, offset_b_name, dissolve_name, frame_range_name
 
 
 def refresh(thisNode):
-    input_node = thisNode.getInput(0)
     output_switch = getNode(thisNode, 'output_switch')
 
-    # Warning
-    ok = True
-    if not input_node:
-        ok = False
-    elif input_node.getPluginID() != 'fr.inria.built-in.Read':
-        ok = False
-
-    if not ok:
-        warning('Error de Coneccion', '!Debe Conectar un nodo "Read"')
-        return
-    #
-    #
-
     # Loop
-    input_frames = input_node.getParam('lastFrame').get()
+    input_frames = thisNode.input_frames.get()
     transition_duration = thisNode.transition_duration.get()
-    output_frames = thisNode.frames.get()
+    output_frames = thisNode.output_frames.get()
 
     total_frames = output_frames + transition_duration
 
     output_dot = getNode(thisNode, 'output_dot')
     output_dot.disconnectInput(0)
     if input_frames >= total_frames:
-        read_node_input = getNode(thisNode, 'ReadNode')
-        output_dot.connectInput(0, read_node_input)
+        image_node_input = getNode(thisNode, 'Image')
+        output_dot.connectInput(0, image_node_input)
     else:
         output_dot.connectInput(0, output_switch)
 
