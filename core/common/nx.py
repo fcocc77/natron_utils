@@ -318,8 +318,8 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
         'slide_base': 'vv.SlideBase',
         'zoom_transition': 'vv.ZoomTransition',
         'statistics': 'net.sf.openfx.ImageStatistics',
-        'keyer': 'net.sf.openfx.KeyerPlugin'
-
+        'keyer': 'net.sf.openfx.KeyerPlugin',
+        'time_offset': 'net.sf.openfx.timeOffset'
     }
 
     if node in nodes.keys():
