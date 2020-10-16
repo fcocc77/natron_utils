@@ -1,4 +1,3 @@
-from base import link_to_parent, children_refresh, get_rscale, get_format
 from nx import getNode, warning, createNode, node_delete
 from animations import simple_animation
 from math import ceil
@@ -12,9 +11,6 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     if knob_name == 'refresh':
         refresh(thisNode)
-
-    link_to_parent(thisNode, thisParam, thisGroup)
-    children_refresh(thisParam, thisNode)
 
 
 def loop(thisNode, offset_a_name, offset_b_name, dissolve_name, frame_range_name, frames):
@@ -46,9 +42,6 @@ def loop(thisNode, offset_a_name, offset_b_name, dissolve_name, frame_range_name
 
 
 def refresh(thisNode):
-    rscale = get_rscale(thisNode)
-    width, height = get_format(thisNode)
-
     input_node = thisNode.getInput(0)
     output_switch = getNode(thisNode, 'output_switch')
 
