@@ -22,7 +22,7 @@ def get_slide(workarea=None, index=None):
         production = True
     # --------------------
 
-    if not slide:
+    if not slide or not transition or not dot:
         return None
 
     return {
