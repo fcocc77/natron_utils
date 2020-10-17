@@ -4,6 +4,7 @@
 from nx import copy, warning, alert, question
 from slides import get_slides, delete_slide, get_slide, get_last_slide
 from develop import update_post_fx, xdistance, refresh
+from base import clean_project
 
 
 def divide_project(thisNode, workarea):
@@ -28,6 +29,8 @@ def production_slides(thisNode, app, workarea):
     generated = generate_production_slides(thisNode, app, workarea, slides_range)
     if not generated:
         return
+
+    clean_project()
 
     update_post_fx(thisNode, workarea)
     refresh()

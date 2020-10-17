@@ -1,4 +1,4 @@
-from nx import alert, warning, getNode, restore_default, question, get_connected_nodes, node_delete, get_nodes_by_type
+from nx import alert, warning, getNode, restore_default, question, get_connected_nodes, node_delete, get_nodes_by_type, get_all_nodes
 from vina import get_videovina
 from general import formats, rscale
 import NatronEngine
@@ -35,6 +35,18 @@ def clean(thisNode, force=False):
     else:
         if question("Esta seguro que desea borrar los nodos de desarollo ?", 'Limpiar Nodos'):
             action()
+
+
+def clean_project():
+    # elimina todos los nodos pre-renderizados del proyecto, para 'produccion'
+    for node in get_all_nodes():
+        if node.getPluginID() == 'vv.TwelveRender':
+            nodes_to_delete = []
+            for node_to_delete in get_connected_nodes(node):
+                if not node_to_delete.getPluginID() == 'fr.inria.built-in.Input':
+                    nodes_to_delete.append(node_to_delete)
+
+            node_delete(nodes_to_delete)
 
 
 def link_to_parent(thisNode, thisParam, thisGroup, force=False):
