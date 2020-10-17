@@ -82,3 +82,9 @@ def refresh(thisNode):
         omni_reflect.set(1)
     #
     #
+
+    # Global blur
+    global_blur = getNode(thisNode, 'global_blur').getParam('size')
+    blur_size = 100 * rscale
+    global_blur.set(blur_size, blur_size)
+    #
