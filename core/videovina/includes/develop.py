@@ -2,7 +2,7 @@ from nx import getNode, createNode, alert, copy, warning, question, app
 from vina import get_videovina, get_ranges, videovina_data, get_transition_duration, get_last_frame, value_by_durations
 from slides import get_slides, get_slide, delete_slide, get_first_slide
 from vv_misc import get_resolution
-from animations import directional_animation
+from animations import simple_animation
 from pictures import get_picture, get_index_last_picture
 import os
 import random
@@ -59,7 +59,8 @@ def refresh():
 
     last_black = getNode(workarea, 'LastBlack')
     last_black.getParam('size').set(width, hight)
-    # ---------------------
+    #
+    #
 
     transition_duration = get_transition_duration()
     double_transition_duration = transition_duration * 2
@@ -67,16 +68,20 @@ def refresh():
     slide_duration = durations[speed] + double_transition_duration
     video_last_frame = get_last_frame()
 
-    # dissolve a negro en la ultima slide
+    # dissolve a negro al principio y al final
     dissolve_start_frame = video_last_frame - transition_duration - 5
     dissolve = getNode(workarea, 'last_transition').getParam('which')
-    directional_animation(dissolve, transition_duration, dissolve_start_frame, [0, 1], [0.5, 0.5])
-    # -------------------
+
+    simple_animation(dissolve, transition_duration, 1, [1, 0])
+    simple_animation(dissolve, transition_duration, dissolve_start_frame, [0, 1], restore=False)
+    #
+    #
 
     # cambia el rango de 'Project Settings', dependiendo de la cantidad de slides
     # le sumamos 'transition_duration' que equivale a 2 mitades de transicion, la inicial y la final
     _app.getProjectParam('frameRange').set(1, video_last_frame)
-    # --------------------
+    #
+    #
 
     frame_range_list = get_ranges(slide_count, speed)
 
