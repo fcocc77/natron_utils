@@ -221,6 +221,7 @@ def update_post_fx(thisNode=None, workarea=None):
     first_transition = slides[0]['transition']
     last_transition = slides[-1]['transition']
     #
+
     #
 
     # Primer negro
@@ -241,11 +242,32 @@ def update_post_fx(thisNode=None, workarea=None):
         first_constant.getParam('color').set(0, 0, 0, 0)
     first_constant.setPosition(first_posx - 200, 200)
     #
+
+    #
+
+    # Dots
+    last_posx = last_transition.getPosition()[0]
+
+    dot_start = createNode('dot', 'dot_start', workarea, force=False)
+    dot_start.setPosition(last_posx + 43, 300)
+    dot_start.disconnectInput(0)
+    dot_start.connectInput(0, last_transition)
+
+    dot_end = createNode('dot', 'dot_end', workarea, force=False)
+    dot_end.setPosition(last_posx + 43, nodes_position_y)
+    dot_end_last_input = dot_end.getInput(0)
+    dot_end.disconnectInput(0)
+    if dot_end_last_input:
+        dot_end.connectInput(0, dot_end_last_input)
+    else:
+        dot_end.connectInput(0, dot_start)
+    #
+
     #
 
     # Ultimo negro
     last_constant = getNode(workarea, 'LastBlack')
-    last_posx = last_transition.getPosition()[0]
+
     if not last_constant:
         last_constant = createNode(
             node='constant',
@@ -257,8 +279,9 @@ def update_post_fx(thisNode=None, workarea=None):
         last_constant.getParam('reformat').set(True)
         last_constant.getParam('size').set(width, hight)
         last_constant.getParam('color').set(0, 0, 0, 1)
-    last_constant.setPosition(last_posx + 200, 100)
+    last_constant.setPosition(last_posx - 200, nodes_position_y + 100)
     #
+
     #
 
     # la ultima transition es un dissolve
@@ -270,26 +293,21 @@ def update_post_fx(thisNode=None, workarea=None):
             workarea,
             color=[.4, .5, .4]
         )
-    dissolve.setPosition(last_posx + 200, 200)
+    dissolve.setPosition(last_posx, nodes_position_y + 100)
     dissolve.disconnectInput(0)
-    dissolve.connectInput(0, last_transition)
+    dissolve.connectInput(0, dot_end)
     dissolve.connectInput(1, last_constant)
     #
+
     #
 
-    post_fx_dot = createNode('dot', 'post_fx_dot', workarea, force=False)
-    post_fx_dot.setPosition(last_posx + 243, nodes_position_y)
-    post_fx_dot_last_input = post_fx_dot.getInput(0)
-    post_fx_dot.disconnectInput(0)
-    if post_fx_dot_last_input:
-        post_fx_dot.connectInput(0, post_fx_dot_last_input)
-    else:
-        post_fx_dot.connectInput(0, dissolve)
-
     # VideoVina nodo como ultimo
-    thisNode.setPosition(last_posx + 200, nodes_position_y + 200)
+    thisNode.setPosition(last_posx, nodes_position_y + 200)
     thisNode.disconnectInput(0)
-    thisNode.connectInput(0, post_fx_dot)
+    thisNode.connectInput(0, dissolve)
+    #
+
+    #
 
     # nodo de vinarender
     vinarender = getNode(workarea, 'vinarender')
@@ -299,11 +317,14 @@ def update_post_fx(thisNode=None, workarea=None):
             group=workarea
         )
         vinarender.setLabel('vinarender')
-    vinarender.setPosition(last_posx + 200, nodes_position_y + 300)
+    vinarender.setPosition(last_posx, nodes_position_y + 300)
     vinarender.connectInput(0, thisNode)
     vinarender.setLabel('vinarender')
     vinarender.getParam('rgbonly').set(True)
     vinarender.getParam('project_frame_range').trigger()
+    #
+
+    #
 
     # nodo ntp render
     ntprender = getNode(workarea, 'ntprender')
@@ -313,17 +334,20 @@ def update_post_fx(thisNode=None, workarea=None):
             group=workarea
         )
         ntprender.setLabel('ntprender')
-    ntprender.setPosition(last_posx + 450, nodes_position_y + 200)
+    ntprender.setPosition(last_posx + 250, nodes_position_y + 200)
     ntprender.connectInput(0, thisNode)
+    #
+
+    #
 
     # si es que existe un viewer lo posiciona correctamente
     viewer = None
     for i in range(10):
         viewer = workarea.getNode('Viewer' + str(i))
         if viewer:
-            viewer.setPosition(last_posx + 450, nodes_position_y - 6)
+            viewer.setPosition(last_posx + 250, nodes_position_y - 6)
             viewer.disconnectInput(0)
-            viewer.connectInput(0, post_fx_dot)
+            viewer.connectInput(0, dot_end)
             break
     #
     #
