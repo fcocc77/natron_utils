@@ -34,5 +34,11 @@ def refresh(thisNode):
     blur = getNode(thisNode, 'blur')
     blur_size = thisNode.blur.get() * rscale
     blur.getParam('size').set(blur_size, blur_size)
+
+    disable_node = blur.getParam('disableNode')
+    if not thisNode.blur.get() or not thisNode.blur_mix.get():
+        disable_node.set(True)
+    else:
+        disable_node.set(False)
     #
     #
