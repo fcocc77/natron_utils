@@ -31,52 +31,36 @@ Templates:
         ☐ que se dibuje una torta, vela o un regalo
     birthday_02:
         ☐ photos-1
-    birthday_03:   
-        ☐ glitch
     baby_01:
         ☐ blurred
         ☐ cambiar background con estolo de bebe
     baby_02:
-        ☐ photos-1
-    baby_03:
         ☐ glass
     christmas_01:
         ☐ photos-1
         ☐ poner figuras de adorno navideños
     christmas_02:
         ☐ draw
-    christmas_03:
-        ☐ ink
     others_01:
         ☐ ink
     others_02:
-        ☐ blurred
-    others_03:
         ☐ glitch
     kid_01:
-        ☐ draw ( muy colorido )
+        ☐ blurred
     kid_02:
         ☐ glitch
-    kid_03:
-        ☐ blurred
     travel_01:
         ☐ ink
     travel_02:
         ☐ glass
-    travel_03:
-        ☐ glitch
     love_01:
         ☐ glass ( con corazones )
     love_02:
-        ☐ ink ( en vez de los hexagono, cambiar por corazon )
-    love_03:
         ☐ draw
     wedding_01:
         ☐ photos-1
     wedding_02:
         ☐ blurred
-    wedding_03:
-        ☐ glass
 Templates Bases:
     blurred:
         ✔ opcion para las letras random en el nodo de 'letter_animation' @done (9/13/2020, 3:58:56 PM)
