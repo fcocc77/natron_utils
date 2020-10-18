@@ -410,7 +410,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("A")
     lastNode.setLabel("A")
-    lastNode.setPosition(757, 197)
+    lastNode.setPosition(757, 140)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupA = lastNode
@@ -422,7 +422,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("B")
     lastNode.setLabel("B")
-    lastNode.setPosition(1148, 194)
+    lastNode.setPosition(1148, 154)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupB = lastNode
@@ -454,8 +454,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
     lastNode.setScriptName("src_transform")
     lastNode.setLabel("src_transform")
-    lastNode.setPosition(757, 273)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(757, 286)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupsrc_transform = lastNode
 
@@ -553,7 +553,7 @@ def createInstance(app,group):
     lastNode.setScriptName("reformat")
     lastNode.setLabel("reformat")
     lastNode.setPosition(981, 246)
-    lastNode.setSize(104, 30)
+    lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupreformat = lastNode
 
@@ -621,9 +621,9 @@ def createInstance(app,group):
         param.set("screen")
         del param
 
-    param = lastNode.getParam("mix")
+    param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue(1, 0)
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -867,7 +867,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("1 - Colourful optical flares")
     param.setEnabled(False, 0)
     lastNode.flares = param
     del param
@@ -890,19 +889,55 @@ def createInstance(app,group):
     del lastNode
     # End of node "FlareTransition"
 
+    # Start of node "Modulate1"
+    lastNode = app.createNode("net.fxarena.openfx.Modulate", 1, group)
+    lastNode.setScriptName("Modulate1")
+    lastNode.setLabel("Modulate1")
+    lastNode.setPosition(1150, 292)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupModulate1 = lastNode
+
+    param = lastNode.getParam("hostMix")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Modulate1"
+
+    # Start of node "Modulate1_2"
+    lastNode = app.createNode("net.fxarena.openfx.Modulate", 1, group)
+    lastNode.setScriptName("Modulate1_2")
+    lastNode.setLabel("Modulate1_2")
+    lastNode.setPosition(759, 229)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupModulate1_2 = lastNode
+
+    param = lastNode.getParam("hostMix")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Modulate1_2"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, grouplimit)
     groupDissolve1.connectInput(0, groupsrc_blur)
     groupDissolve1.connectInput(1, groupreformat)
     groupDissolve1.connectInput(3, groupdst_transform)
-    groupsrc_transform.connectInput(0, groupA)
-    groupdst_transform.connectInput(0, groupB)
+    groupsrc_transform.connectInput(0, groupModulate1_2)
+    groupdst_transform.connectInput(0, groupModulate1)
     groupsrc_blur.connectInput(0, groupsrc_transform)
     grouplimit.connectInput(0, groupA)
     grouplimit.connectInput(1, groupMerge1)
     grouplimit.connectInput(2, groupB)
     groupMerge1.connectInput(0, groupDissolve1)
     groupMerge1.connectInput(1, groupFlareTransition)
+    groupModulate1.connectInput(0, groupB)
+    groupModulate1_2.connectInput(0, groupA)
 
     param = groupMerge1.getParam("mix")
     param.slaveTo(group.getParam("flares_opacity"), 0, 0)
