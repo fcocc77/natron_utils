@@ -39,7 +39,7 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.7, 0.7)
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("reformat.main")
+        param.setValue("reformat_fx.main")
         del param
 
 
@@ -126,6 +126,7 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
     lastNode.reformatresize = param
