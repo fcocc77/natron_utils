@@ -30,8 +30,6 @@ def production_slides(thisNode, app, workarea):
     if not generated:
         return
 
-    clean_project()
-
     update_post_fx(thisNode, workarea)
     refresh()
 
@@ -128,5 +126,7 @@ def generate_production_slides(thisNode, app, workarea, slides_range, force=Fals
     for i in range(last_slide['index'] + 1):
         if not i in _slides_range:
             delete_slide(i)
+
+    clean_project()
 
     return True
