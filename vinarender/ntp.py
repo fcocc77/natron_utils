@@ -18,7 +18,17 @@ base_project = data['project']
 original_slides_range = data['slide']['range']
 slides_range = data['slide']['slides']
 output_folder = data['output_folder']
-# ----------------------
+src_path = data['src_path']
+dst_path = data['dst_path']
+#
+#
+
+# correccion de rutas
+base_project = base_project.replace(src_path, dst_path)
+output_folder = output_folder.replace(src_path, dst_path)
+#
+#
+
 
 base_project_name = os.path.basename(base_project)[:-4]
 
@@ -26,8 +36,7 @@ if not os.path.isdir(output_folder):
     os.makedirs(output_folder)
     os.system('chmod 777 -R ' + output_folder)
 
-project_name = base_project_name + '_' + \
-    str(original_slides_range[0]) + '-' + str(original_slides_range[1])
+project_name = base_project_name + '_' + str(original_slides_range[0]) + '-' + str(original_slides_range[1])
 
 project = output_folder + '/' + project_name + '.ntp'
 

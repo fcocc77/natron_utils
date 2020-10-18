@@ -12,7 +12,18 @@ def generate_random_pictures(thisNode, app, workarea):
     first_picture, last_picture = get_max_pictures()
 
     references_dir = thisNode.reference_pictures.get()
-    references_pictures = os.listdir(references_dir)
+
+    # crea un lista de imagenes de un directorio y si no existe,
+    # crea una lista con 50 item temporales.
+    references_pictures = []
+    if os.path.isdir(references_dir):
+        references_pictures = os.listdir(references_dir)
+    else:
+        for i in range(50):
+            references_pictures.append('image_path.jpg')
+    #
+    #
+
     references_count = len(references_pictures)
 
     indexs_without_repeat = random.sample(range(references_count), references_count)
@@ -66,11 +77,9 @@ def generate_pictures(pictures, pictures_amount=False, reformat_node=True):
         reformat_name = 'slide_' + str(index) + '_reformat'
         reformat = getNode(workarea, reformat_name)
         if reformat_node:
-            width, hight = get_resolution(vina_node)
             if not reformat:
                 reformat = _app.createNode('vv.ResolutionExpand', 2, workarea)
                 reformat.setLabel(reformat_name)
-                reformat.getParam('boxSize').set(width, hight)
                 reformat.setColor(.5, .4, .4)
 
             reformat.setPosition(posx, - 200)

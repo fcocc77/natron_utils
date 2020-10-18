@@ -114,7 +114,6 @@ def refresh():
         if picture:
             reformat = picture['reformat']
             if reformat:
-                reformat.getParam('boxSize').set(width, hight)
                 reformat.getParam('refresh').trigger()
 
         # Transition
