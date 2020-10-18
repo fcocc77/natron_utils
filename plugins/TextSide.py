@@ -661,7 +661,7 @@ def createInstance(app,group):
     lastNode.setScriptName("titles_merge")
     lastNode.setLabel("titles_merge")
     lastNode.setPosition(501, 437)
-    lastNode.setSize(104, 45)
+    lastNode.setSize(104, 50)
     lastNode.setColor(0.3, 0.37, 0.776)
     grouptitles_merge = lastNode
 
@@ -724,14 +724,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(918, 519)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(918, 517)
+    lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
-    param = lastNode.getParam("userTextArea")
+    param = lastNode.getParam("operation")
     if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
+        param.set("under")
         del param
 
     del lastNode
@@ -1204,6 +1204,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     param.setEnabled(False, 0)
     lastNode.bound = param
     del param
@@ -1630,6 +1631,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     param.setEnabled(False, 0)
     lastNode.bound = param
     del param
@@ -2057,6 +2059,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setValue(0, 0)
     param.setEnabled(False, 0)
     lastNode.bound = param
     del param
@@ -2267,7 +2270,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(False)
-    param.setValue("")
     param.setEnabled(False, 0)
     lastNode.font = param
     del param
@@ -2467,6 +2469,18 @@ def createInstance(app,group):
     param.set("Right")
     param.setEnabled(False, 0)
     lastNode.align = param
+    del param
+
+    param = lastNode.createBooleanParam("one_line", "One Line")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.one_line = param
     del param
 
     param = lastNode.createButtonParam("separate_text", "Separate Text")
