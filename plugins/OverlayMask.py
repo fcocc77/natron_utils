@@ -468,14 +468,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Mask"
 
-    # Start of node "Transform2"
+    # Start of node "transform_a"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform2")
-    lastNode.setLabel("Transform2")
-    lastNode.setPosition(-497, -159)
-    lastNode.setSize(100, 30)
+    lastNode.setScriptName("transform_a")
+    lastNode.setLabel("transform_a")
+    lastNode.setPosition(-495, -160)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform2 = lastNode
+    grouptransform_a = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
@@ -489,7 +489,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Transform2"
+    # End of node "transform_a"
 
     # Start of node "Dot1"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -524,24 +524,6 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "Merge2"
-
-    # Start of node "Blur2"
-    lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
-    lastNode.setScriptName("Blur2")
-    lastNode.setLabel("Blur2")
-    lastNode.setPosition(-308, 0)
-    lastNode.setSize(100, 30)
-    lastNode.setColor(0.8, 0.5, 0.3)
-    groupBlur2 = lastNode
-
-    param = lastNode.getParam("size")
-    if param is not None:
-        param.setValue(1, 0)
-        param.setValue(1, 1)
-        del param
-
-    del lastNode
-    # End of node "Blur2"
 
     # Start of node "Dot3"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -586,41 +568,6 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "channel_a"
-
-    # Start of node "Constant1"
-    lastNode = app.createNode("net.sf.openfx.ConstantPlugin", 1, group)
-    lastNode.setScriptName("Constant1")
-    lastNode.setLabel("Constant1")
-    lastNode.setPosition(2190, 60)
-    lastNode.setSize(100, 30)
-    lastNode.setColor(0.3, 0.5, 0.2)
-    groupConstant1 = lastNode
-
-    param = lastNode.getParam("extent")
-    if param is not None:
-        param.set("size")
-        del param
-
-    param = lastNode.getParam("reformat")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("color")
-    if param is not None:
-        param.setValue(0.5, 0)
-        param.setValue(0.5, 1)
-        param.setValue(0.5, 2)
-        param.setValue(0.5, 3)
-        del param
-
-    del lastNode
-    # End of node "Constant1"
 
     # Start of node "Merge3"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
@@ -695,8 +642,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("channel_c")
     lastNode.setLabel("channel_c")
-    lastNode.setPosition(1083, -532)
-    lastNode.setSize(100, 30)
+    lastNode.setPosition(1085, -533)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupchannel_c = lastNode
 
@@ -762,14 +709,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot2"
 
-    # Start of node "Transform2_2"
+    # Start of node "transform_b"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform2_2")
-    lastNode.setLabel("Transform2_2")
+    lastNode.setScriptName("transform_b")
+    lastNode.setLabel("transform_b")
     lastNode.setPosition(114, -111)
-    lastNode.setSize(100, 30)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform2_2 = lastNode
+    grouptransform_b = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
@@ -783,7 +730,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Transform2_2"
+    # End of node "transform_b"
 
     # Start of node "Dot1_2"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -823,8 +770,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
     lastNode.setScriptName("Blur2_2")
     lastNode.setLabel("Blur2_2")
-    lastNode.setPosition(306, 28)
-    lastNode.setSize(100, 30)
+    lastNode.setPosition(303, 27)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2_2 = lastNode
 
@@ -908,14 +855,14 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot2_2"
 
-    # Start of node "Transform2_3"
+    # Start of node "transform_c"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform2_3")
-    lastNode.setLabel("Transform2_3")
-    lastNode.setPosition(736, -147)
-    lastNode.setSize(100, 30)
+    lastNode.setScriptName("transform_c")
+    lastNode.setLabel("transform_c")
+    lastNode.setPosition(738, -147)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform2_3 = lastNode
+    grouptransform_c = lastNode
 
     param = lastNode.getParam("translate")
     if param is not None:
@@ -929,7 +876,7 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Transform2_3"
+    # End of node "transform_c"
 
     # Start of node "Dot1_3"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
@@ -948,7 +895,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge2_3")
     lastNode.setLabel("Merge2_3")
     lastNode.setPosition(925, -77)
-    lastNode.setSize(100, 50)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2_3 = lastNode
 
@@ -959,7 +906,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("userTextArea")
     if param is not None:
-        param.setValue("<Natron>(stencil)</Natron>")
+        param.setValue("<Natron>(over)</Natron>")
         del param
 
     del lastNode
@@ -970,7 +917,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Blur2_3")
     lastNode.setLabel("Blur2_3")
     lastNode.setPosition(928, 25)
-    lastNode.setSize(100, 30)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.8, 0.5, 0.3)
     groupBlur2_3 = lastNode
 
@@ -1099,29 +1046,6 @@ def createInstance(app,group):
 
     del lastNode
     # End of node "Dot4"
-
-    # Start of node "Crop3"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("Crop3")
-    lastNode.setLabel("Crop3")
-    lastNode.setPosition(-497, -104)
-    lastNode.setSize(100, 30)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupCrop3 = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("size")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    del lastNode
-    # End of node "Crop3"
 
     # Start of node "Merge7"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
@@ -1372,108 +1296,6 @@ def createInstance(app,group):
     del lastNode
     # End of node "Dot14"
 
-    # Start of node "Reformat3"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("Reformat3")
-    lastNode.setLabel("Reformat3")
-    lastNode.setPosition(2190, 112)
-    lastNode.setSize(100, 30)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupReformat3 = lastNode
-
-    param = lastNode.getParam("reformatType")
-    if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "Reformat3"
-
-    # Start of node "Crop3_2"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("Crop3_2")
-    lastNode.setLabel("Crop3_2")
-    lastNode.setPosition(114, -55)
-    lastNode.setSize(100, 30)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupCrop3_2 = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("size")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    del lastNode
-    # End of node "Crop3_2"
-
-    # Start of node "Crop3_3"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("Crop3_3")
-    lastNode.setLabel("Crop3_3")
-    lastNode.setPosition(736, -71)
-    lastNode.setSize(100, 30)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupCrop3_3 = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("size")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    del lastNode
-    # End of node "Crop3_3"
-
-    # Start of node "Crop3_3_2"
-    lastNode = app.createNode("net.sf.openfx.CropPlugin", 1, group)
-    lastNode.setScriptName("Crop3_3_2")
-    lastNode.setLabel("Crop3_3_2")
-    lastNode.setPosition(1927, -10)
-    lastNode.setSize(100, 30)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupCrop3_3_2 = lastNode
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("size")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1080, 1)
-        del param
-
-    del lastNode
-    # End of node "Crop3_3_2"
-
     # Start of node "Shadow3"
     lastNode = app.createNode("vv.Shadow", 1, group)
     lastNode.setScriptName("Shadow3")
@@ -1525,7 +1347,6 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
     param.setEnabled(False, 0)
     lastNode.format = param
     del param
@@ -2084,37 +1905,607 @@ def createInstance(app,group):
     del lastNode
     # End of node "Shadow5"
 
+    # Start of node "Crop1"
+    lastNode = app.createNode("vv.Crop", 1, group)
+    lastNode.setScriptName("Crop1")
+    lastNode.setLabel("Crop1")
+    lastNode.setPosition(1927, -18)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupCrop1 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("crop.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Crop1"
+
+    # Start of node "Constant2"
+    lastNode = app.createNode("vv.Constant", 1, group)
+    lastNode.setScriptName("Constant2")
+    lastNode.setLabel("Constant2")
+    lastNode.setPosition(2190, 112)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupConstant2 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("constant.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createColorParam("constant_color", "Color", True)
+    param.setMinimum(-2147483648, 0)
+    param.setMaximum(2147483647, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1, 0)
+    param.setMinimum(-2147483648, 1)
+    param.setMaximum(2147483647, 1)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(1, 1)
+    param.setMinimum(-2147483648, 2)
+    param.setMaximum(2147483647, 2)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(1, 2)
+    param.setMinimum(-2147483648, 3)
+    param.setMaximum(2147483647, 3)
+    param.setDisplayMinimum(0, 3)
+    param.setDisplayMaximum(1, 3)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(0.5, 0)
+    param.setValue(0.5, 1)
+    param.setValue(0.5, 2)
+    param.setValue(0.5, 3)
+    lastNode.constant_color = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Constant2"
+
+    # Start of node "Crop2"
+    lastNode = app.createNode("vv.Crop", 1, group)
+    lastNode.setScriptName("Crop2")
+    lastNode.setLabel("Crop2")
+    lastNode.setPosition(738, -68)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupCrop2 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("crop.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Crop2"
+
+    # Start of node "Crop4"
+    lastNode = app.createNode("vv.Crop", 1, group)
+    lastNode.setScriptName("Crop4")
+    lastNode.setLabel("Crop4")
+    lastNode.setPosition(114, -52)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupCrop4 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("crop.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Crop4"
+
+    # Start of node "Crop6"
+    lastNode = app.createNode("vv.Crop", 1, group)
+    lastNode.setScriptName("Crop6")
+    lastNode.setLabel("Crop6")
+    lastNode.setPosition(-308, 2)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupCrop6 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("crop.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Crop6"
+
+    # Start of node "Crop5"
+    lastNode = app.createNode("vv.Crop", 1, group)
+    lastNode.setScriptName("Crop5")
+    lastNode.setLabel("Crop5")
+    lastNode.setPosition(-495, -101)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupCrop5 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("crop.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Crop5"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupShuffle1)
-    groupTransform2.connectInput(0, groupDot3)
+    grouptransform_a.connectInput(0, groupDot3)
     groupDot1.connectInput(0, groupDot2)
     groupMerge2.connectInput(0, groupDot1)
-    groupMerge2.connectInput(1, groupCrop3)
-    groupBlur2.connectInput(0, groupMerge2)
+    groupMerge2.connectInput(1, groupCrop5)
     groupDot3.connectInput(0, groupDot1)
     groupchannel_a.connectInput(1, groupMask)
-    groupMerge3.connectInput(0, groupReformat3)
+    groupMerge3.connectInput(0, groupConstant2)
     groupMerge3.connectInput(1, groupMerge1)
     groupcolor_node.connectInput(0, groupDot2)
     groupchannel_b.connectInput(1, groupMask)
     groupchannel_c.connectInput(1, groupMask)
     groupMerge4.connectInput(0, groupcolor_node)
-    groupMerge4.connectInput(1, groupBlur2)
+    groupMerge4.connectInput(1, groupCrop6)
     groupDot2.connectInput(0, groupDot5)
-    groupTransform2_2.connectInput(0, groupDot3_2)
+    grouptransform_b.connectInput(0, groupDot3_2)
     groupDot1_2.connectInput(0, groupDot2_2)
     groupMerge2_2.connectInput(0, groupDot1_2)
-    groupMerge2_2.connectInput(1, groupCrop3_2)
+    groupMerge2_2.connectInput(1, groupCrop4)
     groupBlur2_2.connectInput(0, groupMerge2_2)
     groupDot3_2.connectInput(0, groupDot1_2)
     groupcolor_node_2.connectInput(0, groupDot2_2)
     groupMerge4_2.connectInput(0, groupcolor_node_2)
     groupMerge4_2.connectInput(1, groupBlur2_2)
     groupDot2_2.connectInput(0, groupDot7)
-    groupTransform2_3.connectInput(0, groupDot3_3)
+    grouptransform_c.connectInput(0, groupDot3_3)
     groupDot1_3.connectInput(0, groupDot2_3)
     groupMerge2_3.connectInput(0, groupDot1_3)
-    groupMerge2_3.connectInput(1, groupCrop3_3)
+    groupMerge2_3.connectInput(1, groupCrop2)
     groupBlur2_3.connectInput(0, groupMerge2_3)
     groupDot3_3.connectInput(0, groupDot1_3)
     groupcolor_node_3.connectInput(0, groupDot2_3)
@@ -2126,8 +2517,7 @@ def createInstance(app,group):
     groupMerge1.connectInput(3, groupShadow5)
     groupShuffle1.connectInput(0, groupMerge3)
     groupShuffle1.connectInput(1, groupDot4)
-    groupDot4.connectInput(0, groupCrop3_3_2)
-    groupCrop3.connectInput(0, groupTransform2)
+    groupDot4.connectInput(0, groupCrop1)
     groupMerge7.connectInput(0, groupMerge5_2)
     groupMerge7.connectInput(1, groupDot8)
     groupMerge7.connectInput(3, groupMerge5)
@@ -2150,21 +2540,18 @@ def createInstance(app,group):
     groupDot12.connectInput(0, groupchannel_c)
     groupDot13.connectInput(0, groupDot7)
     groupDot14.connectInput(0, groupDot13)
-    groupReformat3.connectInput(0, groupConstant1)
-    groupCrop3_2.connectInput(0, groupTransform2_2)
-    groupCrop3_3.connectInput(0, groupTransform2_3)
-    groupCrop3_3_2.connectInput(0, groupMerge7)
     groupShadow3.connectInput(0, groupMerge4)
     groupShadow4.connectInput(0, groupMerge4_2)
     groupShadow5.connectInput(0, groupMerge4_3)
+    groupCrop1.connectInput(0, groupMerge7)
+    groupCrop2.connectInput(0, grouptransform_c)
+    groupCrop4.connectInput(0, grouptransform_b)
+    groupCrop6.connectInput(0, groupMerge2)
+    groupCrop5.connectInput(0, grouptransform_a)
 
-    param = groupTransform2.getParam("translate")
-    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 0)
-    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 1)
-    del param
-    param = groupBlur2.getParam("size")
-    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 0)
-    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 1)
+    param = grouptransform_a.getParam("translate")
+    param.setExpression("__format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[__format]", True, 0)
+    param.setExpression("__format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[__format]", True, 1)
     del param
     param = groupchannel_a.getParam("outputR")
     param.setExpression("thisGroup.mask_channel_a.get()", False, 0)
@@ -2211,13 +2598,13 @@ def createInstance(app,group):
     param = groupMerge4.getParam("mix")
     param.setExpression("thisGroup.emboss.get()", False, 0)
     del param
-    param = groupTransform2_2.getParam("translate")
-    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 0)
-    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 1)
+    param = grouptransform_b.getParam("translate")
+    param.setExpression("__format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[__format]", True, 0)
+    param.setExpression("__format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[__format]", True, 1)
     del param
     param = groupBlur2_2.getParam("size")
-    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 0)
-    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 1)
+    param.setExpression("__format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[__format]", True, 0)
+    param.setExpression("__format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[__format]", True, 1)
     del param
     param = groupcolor_node_2.getParam("white")
     param.setExpression("thisGroup.color_b.get()[dimension]", False, 0)
@@ -2228,13 +2615,13 @@ def createInstance(app,group):
     param = groupMerge4_2.getParam("mix")
     param.setExpression("thisGroup.emboss.get()", False, 0)
     del param
-    param = groupTransform2_3.getParam("translate")
-    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 0)
-    param.setExpression("format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[format]", True, 1)
+    param = grouptransform_c.getParam("translate")
+    param.setExpression("__format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[__format]", True, 0)
+    param.setExpression("__format = thisGroup.format.get()\nret = -thisGroup.emboss_distance.get() * general.rscale[__format]", True, 1)
     del param
     param = groupBlur2_3.getParam("size")
-    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 0)
-    param.setExpression("format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[format]", True, 1)
+    param.setExpression("__format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[__format]", True, 0)
+    param.setExpression("__format = thisGroup.format.get()\nret = thisGroup.emboss_blur.get() * general.rscale[__format]", True, 1)
     del param
     param = groupcolor_node_3.getParam("white")
     param.setExpression("thisGroup.color_c.get()[dimension]", False, 0)
@@ -2245,10 +2632,6 @@ def createInstance(app,group):
     param = groupMerge4_3.getParam("mix")
     param.setExpression("thisGroup.emboss.get()", False, 0)
     del param
-    param = groupCrop3.getParam("size")
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
-    del param
     param = groupSwitch1.getParam("which")
     param.setExpression("thisGroup.channel_c_alpha.get()", False, 0)
     del param
@@ -2257,22 +2640,6 @@ def createInstance(app,group):
     del param
     param = groupSwitch3.getParam("which")
     param.setExpression("thisGroup.channel_a_alpha.get()", False, 0)
-    del param
-    param = groupReformat3.getParam("boxSize")
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
-    del param
-    param = groupCrop3_2.getParam("size")
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
-    del param
-    param = groupCrop3_3.getParam("size")
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
-    del param
-    param = groupCrop3_3_2.getParam("size")
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 0)
-    param.setExpression("index = thisGroup.format.get()\nformat = general.formats[index]\n\nif dimension == 0:\n\tret = format[0]\nelse:\n\tret = format[1]", True, 1)
     del param
     param = groupShadow3.getParam("state_label")
     group.getParam("state_label").setAsAlias(param)
@@ -2318,6 +2685,42 @@ def createInstance(app,group):
     del param
     param = groupShadow5.getParam("shadow_opacity")
     group.getParam("shadow_opacity").setAsAlias(param)
+    del param
+    param = groupCrop1.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupCrop1.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupConstant2.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupConstant2.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupCrop2.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupCrop2.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupCrop4.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupCrop4.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupCrop6.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupCrop6.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupCrop5.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupCrop5.getParam("format")
+    group.getParam("format").setAsAlias(param)
     del param
 
     try:

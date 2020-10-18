@@ -45,54 +45,45 @@ def createInstance(app,group):
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createBooleanParam("read_file", "Read File")
+    param = lastNode.createStringParam("state_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    param.setDefaultValue(2)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.read_file = param
+    lastNode.format = param
     del param
 
-    param = lastNode.createBooleanParam("display_map", "Show Transition Map")
+    param = lastNode.createChoiceParam("speed", "Speed")
+    param.setDefaultValue(1)
+    param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    lastNode.display_map = param
-    del param
-
-    param = lastNode.createBooleanParam("glass_fx", "Glass FX")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.glass_fx = param
-    del param
-
-    param = lastNode.createButtonParam("clean", "Clean")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Borra los nodos que ya no se usan despues de hacer el prerender.")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.clean = param
+    lastNode.speed = param
     del param
 
     param = lastNode.createButtonParam("refresh", "Refresh")
@@ -107,7 +98,7 @@ def createInstance(app,group):
     lastNode.refresh = param
     del param
 
-    param = lastNode.createSeparatorParam("sep3", "")
+    param = lastNode.createSeparatorParam("sep5", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -117,12 +108,12 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
+    lastNode.sep5 = param
     del param
 
-    param = lastNode.createStringParam("state", "")
+    param = lastNode.createStringParam("time_label", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("STATE:")
+    param.setDefaultValue("- - - - - - - >    TIME :")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -133,46 +124,7 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    lastNode.state = param
-    del param
-
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.format = param
-    del param
-
-    param = lastNode.createChoiceParam("speed", "Speed")
-    entries = [ ("Slow", ""),
-    ("Normal", ""),
-    ("Fast", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Normal")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.speed = param
+    lastNode.time_label = param
     del param
 
     param = lastNode.createIntParam("start_frame", "Start Frame")
@@ -188,8 +140,63 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(10, 0)
+    param.setValue(1, 0)
     lastNode.start_frame = param
+    del param
+
+    param = lastNode.createInt3DParam("durations", "Durations")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    lastNode.durations = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep6", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep6 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
     del param
 
     param = lastNode.createColorParam("color", "Color", False)
@@ -213,13 +220,42 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(0.8227858543395996, 0)
-    param.setValue(0.5209956169128418, 1)
-    param.setValue(0.3613067865371704, 2)
+    param.setValue(1, 0)
+    param.setValue(1, 1)
+    param.setValue(1, 2)
     lastNode.color = param
     del param
 
-    param = lastNode.createSeparatorParam("sep1", "")
+    param = lastNode.createChoiceParam("direction", "Direction")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Right")
+    lastNode.direction = param
+    del param
+
+    param = lastNode.createIntParam("random_seed", "Seed")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(14, 0)
+    lastNode.random_seed = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep7", "")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -229,12 +265,12 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
+    lastNode.sep7 = param
     del param
 
-    param = lastNode.createStringParam("prerender", "")
+    param = lastNode.createStringParam("prerender_label", "")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("PRE-RENDER:")
+    param.setDefaultValue("- - - - - - - >    PRE-RENDER :")
     param.restoreDefaultValue()
 
     # Add the param to the page
@@ -245,134 +281,45 @@ def createInstance(app,group):
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
-    lastNode.prerender = param
+    lastNode.prerender_label = param
     del param
 
-    param = lastNode.createInt3DParam("durations", "Durations")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-    param.setDisplayMinimum(0, 1)
-    param.setDisplayMaximum(100, 1)
-    param.setDefaultValue(0, 1)
-    param.restoreDefaultValue(1)
-    param.setDisplayMinimum(0, 2)
-    param.setDisplayMaximum(100, 2)
-    param.setDefaultValue(0, 2)
-    param.restoreDefaultValue(2)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Necesitamos las 3 duraciones, para saber a que velocidad hacer el render.")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(150, 0)
-    param.setValue(100, 1)
-    param.setValue(50, 2)
-    lastNode.durations = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Duration")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Esta duracion corresponde a la velocidad normal")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createIntParam("difference_with_mask", "Difference With Mask")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Diferencia de tiempo que hay con la mascara de transicion y las mascaras de vidrio")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(10, 0)
-    lastNode.difference_with_mask = param
-    del param
-
-    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.motion_blur = param
-    del param
-
-    param = lastNode.createIntParam("random_seed", "Random Seed")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.random_seed = param
-    del param
-
-    param = lastNode.createChoiceParam("direction", "Direction")
-    entries = [ ("Left", ""),
-    ("RIght", ""),
-    ("Up", ""),
-    ("Down", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("RIght")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.direction = param
-    del param
-
-    param = lastNode.createStringParam("prefix", "Render Prefix")
+    param = lastNode.createStringParam("prefix", "Prefix")
     param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Nombre del prefijo de los render de la transicion que quedaran en assets")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("transition_01")
+    param.setValue("glass_right")
     lastNode.prefix = param
+    del param
+
+    param = lastNode.createBooleanParam("prerender_read", "Read")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.prerender_read = param
+    del param
+
+    param = lastNode.createBooleanParam("motion_blur", "MBlur")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
     del param
 
     param = lastNode.createBooleanParam("current_state", "Current State")
@@ -381,13 +328,13 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("Solo renderiza el actual estado.")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
+    param.setValue(True)
     lastNode.current_state = param
     del param
 
-    param = lastNode.createButtonParam("render_shape", "render")
+    param = lastNode.createButtonParam("clean", "Clean")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -396,7 +343,19 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
-    lastNode.render_shape = param
+    lastNode.clean = param
+    del param
+
+    param = lastNode.createButtonParam("render", "Render")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.render = param
     del param
 
     # Refresh the GUI with the newly created parameters
@@ -404,47 +363,47 @@ def createInstance(app,group):
     lastNode.refreshUserParamsGUI()
     del lastNode
 
-    # Start of node "Output1"
+    # Start of node "Output1_2"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
-    lastNode.setLabel("Output")
-    lastNode.setPosition(233, 1628)
-    lastNode.setSize(104, 30)
+    lastNode.setLabel("Output_2")
+    lastNode.setPosition(-1209, 2969)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupOutput1 = lastNode
+    groupOutput1_2 = lastNode
 
     del lastNode
-    # End of node "Output1"
+    # End of node "Output1_2"
 
-    # Start of node "B"
+    # Start of node "B_2"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("B")
+    lastNode.setScriptName("B_2")
     lastNode.setLabel("A")
-    lastNode.setPosition(724, 371)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-1209, 1757)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupB = lastNode
+    groupB_2 = lastNode
 
     del lastNode
-    # End of node "B"
+    # End of node "B_2"
 
-    # Start of node "A"
+    # Start of node "A_2"
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
-    lastNode.setScriptName("A")
+    lastNode.setScriptName("A_2")
     lastNode.setLabel("B")
-    lastNode.setPosition(233, 361)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-705, 1767)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
-    groupA = lastNode
+    groupA_2 = lastNode
 
     del lastNode
-    # End of node "A"
+    # End of node "A_2"
 
     # Start of node "Dot3"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot3")
     lastNode.setLabel("Dot3")
-    lastNode.setPosition(1423, -507)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(-6, 784)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot3 = lastNode
 
@@ -455,8 +414,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot4")
     lastNode.setLabel("Dot4")
-    lastNode.setPosition(1654, -507)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(225, 784)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot4 = lastNode
 
@@ -467,15 +426,10 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("mix")
     lastNode.setLabel("mix")
-    lastNode.setPosition(724, 745)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(-705, 2031)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmix = lastNode
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
-        del param
 
     param = lastNode.getParam("enableMask_Mask")
     if param is not None:
@@ -489,14 +443,14 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.timeOffset", 1, group)
     lastNode.setScriptName("start_frame_node")
     lastNode.setLabel("start_frame_node")
-    lastNode.setPosition(1380, 643)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-49, 1936)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.65, 0.35)
     groupstart_frame_node = lastNode
 
     param = lastNode.getParam("timeOffset")
     if param is not None:
-        param.setValue(10, 0)
+        param.setValue(1, 0)
         del param
 
     del lastNode
@@ -506,37 +460,20 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("Shape")
     lastNode.setLabel("Shape")
-    lastNode.setPosition(1378, -698)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-51, 557)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupShape = lastNode
 
     del lastNode
     # End of node "Shape"
 
-    # Start of node "glass_fx_switch"
-    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("glass_fx_switch")
-    lastNode.setLabel("glass_fx_switch")
-    lastNode.setPosition(724, 1396)
-    lastNode.setSize(104, 30)
-    lastNode.setColor(0.3, 0.37, 0.776)
-    groupglass_fx_switch = lastNode
-
-    param = lastNode.getParam("which")
-    if param is not None:
-        param.setValue(1, 0)
-        del param
-
-    del lastNode
-    # End of node "glass_fx_switch"
-
     # Start of node "Merge5"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge5")
     lastNode.setLabel("Merge5")
-    lastNode.setPosition(1378, 1264)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(-47, 2556)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge5 = lastNode
 
@@ -545,22 +482,22 @@ def createInstance(app,group):
         param.set("overlay")
         del param
 
-    param = lastNode.getParam("userTextArea")
+    param = lastNode.getParam("enableMask_Mask")
     if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
+        param.setValue(True)
         del param
 
     del lastNode
     # End of node "Merge5"
 
-    # Start of node "Blur1"
+    # Start of node "glass_blur"
     lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
-    lastNode.setScriptName("Blur1")
-    lastNode.setLabel("Blur1")
-    lastNode.setPosition(1018, 935)
-    lastNode.setSize(104, 32)
+    lastNode.setScriptName("glass_blur")
+    lastNode.setLabel("glass_blur")
+    lastNode.setPosition(-411, 2226)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.8, 0.5, 0.3)
-    groupBlur1 = lastNode
+    groupglass_blur = lastNode
 
     param = lastNode.getParam("size")
     if param is not None:
@@ -569,27 +506,21 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Blur1"
+    # End of node "glass_blur"
 
-    # Start of node "Transform1"
+    # Start of node "glass_transform"
     lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
-    lastNode.setScriptName("Transform1")
-    lastNode.setLabel("Transform1")
-    lastNode.setPosition(1018, 1002)
-    lastNode.setSize(104, 32)
+    lastNode.setScriptName("glass_transform")
+    lastNode.setLabel("glass_transform")
+    lastNode.setPosition(-411, 2296)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.7, 0.3, 0.1)
-    groupTransform1 = lastNode
+    groupglass_transform = lastNode
 
     param = lastNode.getParam("scale")
     if param is not None:
         param.setValue(1.03, 0)
         param.setValue(1.03, 1)
-        del param
-
-    param = lastNode.getParam("center")
-    if param is not None:
-        param.setValue(960, 0)
-        param.setValue(540, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -598,21 +529,16 @@ def createInstance(app,group):
         del param
 
     del lastNode
-    # End of node "Transform1"
+    # End of node "glass_transform"
 
     # Start of node "Merge3"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge3")
     lastNode.setLabel("Merge3")
-    lastNode.setPosition(1018, 1076)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(-411, 2367)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
-        del param
 
     param = lastNode.getParam("enableMask_Mask")
     if param is not None:
@@ -626,22 +552,16 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.GradePlugin", 2, group)
     lastNode.setScriptName("colorize")
     lastNode.setLabel("colorize")
-    lastNode.setPosition(1380, 1186)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-47, 2464)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.48, 0.66, 1)
     groupcolorize = lastNode
 
     param = lastNode.getParam("white")
     if param is not None:
-        param.setValue(0.8227858543395996, 0)
-        param.setValue(0.5209956169128418, 1)
-        param.setValue(0.3613067865371704, 2)
-        param.setValue(0, 3)
-        del param
-
-    param = lastNode.getParam("enableMask_Mask")
-    if param is not None:
-        param.setValue(True)
+        param.setValue(1, 0)
+        param.setValue(1, 1)
+        param.setValue(1, 2)
         del param
 
     del lastNode
@@ -651,8 +571,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("to_blue")
     lastNode.setLabel("to_blue")
-    lastNode.setPosition(1380, 119)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-49, 1411)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupto_blue = lastNode
 
@@ -668,8 +588,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("red_to_map")
     lastNode.setLabel("red_to_map")
-    lastNode.setPosition(1380, 1087)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-47, 2376)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupred_to_map = lastNode
 
@@ -695,8 +615,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("alpha_to_green")
     lastNode.setLabel("alpha_to_green")
-    lastNode.setPosition(1380, 22)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(-49, 1315)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupalpha_to_green = lastNode
 
@@ -712,8 +632,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot14")
     lastNode.setLabel("Dot14")
-    lastNode.setPosition(1856, 249)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(427, 1540)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot14 = lastNode
 
@@ -724,8 +644,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("Shuffle4")
     lastNode.setLabel("Shuffle4")
-    lastNode.setPosition(1378, -247)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-49, 1044)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle4 = lastNode
 
@@ -751,8 +671,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot1")
     lastNode.setLabel("Dot1")
-    lastNode.setPosition(1654, -239)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(225, 1052)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot1 = lastNode
 
@@ -763,8 +683,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot2")
     lastNode.setLabel("Dot2")
-    lastNode.setPosition(1856, -507)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(427, 784)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot2 = lastNode
 
@@ -775,8 +695,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot5")
     lastNode.setLabel("Dot5")
-    lastNode.setPosition(769, 944)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(-660, 2235)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot5 = lastNode
 
@@ -787,8 +707,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot6")
     lastNode.setLabel("Dot6")
-    lastNode.setPosition(915, 944)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(-514, 2235)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot6 = lastNode
 
@@ -799,8 +719,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot7")
     lastNode.setLabel("Dot7")
-    lastNode.setPosition(915, 1096)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(-514, 2387)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot7 = lastNode
 
@@ -811,39 +731,22 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot8")
     lastNode.setLabel("Dot8")
-    lastNode.setPosition(1063, 1285)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(-366, 2576)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot8 = lastNode
 
     del lastNode
     # End of node "Dot8"
 
-    # Start of node "Dot9"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot9")
-    lastNode.setLabel("Dot9")
-    lastNode.setPosition(1423, 1405)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot9 = lastNode
-
-    del lastNode
-    # End of node "Dot9"
-
     # Start of node "Merge1"
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(1609, -6)
-    lastNode.setSize(104, 45)
+    lastNode.setPosition(182, 1282)
+    lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
-
-    param = lastNode.getParam("userTextArea")
-    if param is not None:
-        param.setValue("<Natron>(over)</Natron>")
-        del param
 
     del lastNode
     # End of node "Merge1"
@@ -852,8 +755,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot10")
     lastNode.setLabel("Dot10")
-    lastNode.setPosition(1654, 128)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(225, 1419)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot10 = lastNode
 
@@ -864,8 +767,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("transition_to_alpha")
     lastNode.setLabel("transition_to_alpha")
-    lastNode.setPosition(1380, 241)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-49, 1532)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     grouptransition_to_alpha = lastNode
 
@@ -881,8 +784,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.ShufflePlugin", 3, group)
     lastNode.setScriptName("Shuffle1")
     lastNode.setLabel("Shuffle1")
-    lastNode.setPosition(1201, 1087)
-    lastNode.setSize(104, 30)
+    lastNode.setPosition(-228, 2379)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle1 = lastNode
 
@@ -913,8 +816,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot11")
     lastNode.setLabel("Dot11")
-    lastNode.setPosition(1246, 763)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(-185, 2054)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot11 = lastNode
 
@@ -925,8 +828,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot12")
     lastNode.setLabel("Dot12")
-    lastNode.setPosition(1425, 763)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(-4, 2054)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot12 = lastNode
 
@@ -937,8 +840,8 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot13")
     lastNode.setLabel("Dot13")
-    lastNode.setPosition(1541, -383)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(112, 908)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot13 = lastNode
 
@@ -949,1586 +852,78 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
     lastNode.setScriptName("Dot15")
     lastNode.setLabel("Dot15")
-    lastNode.setPosition(1541, 9)
-    lastNode.setSize(15, 15)
+    lastNode.setPosition(112, 1300)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupDot15 = lastNode
 
     del lastNode
     # End of node "Dot15"
 
-    # Start of node "switch"
+    # Start of node "limit"
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("switch")
-    lastNode.setLabel("switch")
-    lastNode.setPosition(233, 1396)
-    lastNode.setSize(104, 30)
+    lastNode.setScriptName("limit")
+    lastNode.setLabel("limit")
+    lastNode.setPosition(-1209, 2686)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupswitch = lastNode
+    grouplimit = lastNode
 
     param = lastNode.getParam("which")
     if param is not None:
-        param.setValueAtTime(0, 9, 0)
-        param.setValueAtTime(1, 10, 0)
-        param.setValueAtTime(2, 61, 0)
+        param.setValueAtTime(0, 0, 0)
+        param.setValueAtTime(1, 1, 0)
+        param.setValueAtTime(1, 100, 0)
+        param.setValueAtTime(2, 101, 0)
         del param
 
     del lastNode
-    # End of node "switch"
+    # End of node "limit"
 
-    # Start of node "Dot16"
+    # Start of node "Dot19"
     lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot16")
-    lastNode.setLabel("Dot16")
-    lastNode.setPosition(573, 640)
-    lastNode.setSize(15, 15)
+    lastNode.setScriptName("Dot19")
+    lastNode.setLabel("Dot19")
+    lastNode.setPosition(-1166, 2051)
+    lastNode.setSize(14, 14)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot16 = lastNode
+    groupDot19 = lastNode
 
     del lastNode
-    # End of node "Dot16"
+    # End of node "Dot19"
 
-    # Start of node "Dot17"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot17")
-    lastNode.setLabel("Dot17")
-    lastNode.setPosition(573, 1327)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot17 = lastNode
-
-    del lastNode
-    # End of node "Dot17"
-
-    # Start of node "shape_format"
-    lastNode = app.createNode("net.sf.openfx.Reformat", 1, group)
-    lastNode.setScriptName("shape_format")
-    lastNode.setLabel("shape_format")
-    lastNode.setPosition(1378, -610)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupshape_format = lastNode
-
-    param = lastNode.getParam("reformatType")
-    if param is not None:
-        param.set("box")
-        del param
-
-    param = lastNode.getParam("NatronParamFormatChoice")
-    if param is not None:
-        param.set("PC_Video")
-        del param
-
-    param = lastNode.getParam("boxSize")
-    if param is not None:
-        param.setValue(1920, 0)
-        param.setValue(1920, 1)
-        del param
-
-    param = lastNode.getParam("boxFixed")
-    if param is not None:
-        param.setValue(True)
-        del param
-
-    del lastNode
-    # End of node "shape_format"
-
-    # Start of node "vinarender_xcf"
-    lastNode = app.createNode("vv.vinarender", 1, group)
-    lastNode.setScriptName("vinarender_xcf")
-    lastNode.setLabel("VinaRender")
-    lastNode.setPosition(1380, 410)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupvinarender_xcf = lastNode
-
-    param = lastNode.getParam("onParamChanged")
-    if param is not None:
-        param.setValue("vinarender.main")
-        del param
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createBooleanParam("readfile", "Read Render")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.readfile = param
-    del param
-
-    param = lastNode.createBooleanParam("rgbonly", "RGB Only")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.rgbonly = param
-    del param
-
-    param = lastNode.createBooleanParam("no_dialog", "No Show Message")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.no_dialog = param
-    del param
-
-    param = lastNode.createBooleanParam("duplicate_project", "Duplicate Project")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Duplica el proyecto y hace el renderizado sobre ese nuevo proyecto.")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.duplicate_project = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep4", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep4 = param
-    del param
-
-    param = lastNode.createStringParam("job_name", "Job Name")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue("glass_transition: fast_4k")
-    lastNode.job_name = param
-    del param
-
-    param = lastNode.createOutputFileParam("filename", "Filename")
-    param.setSequenceEnabled(False)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setValue("[Project]/../assets/transition_01/transition_01_fast_4k/transition_01_fast_4k_###.png")
-    lastNode.filename = param
-    del param
-
-    param = lastNode.createDoubleParam("fps", "FPS")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.fps = param
-    del param
-
-    param = lastNode.createButtonParam("render", "Render")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.render = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep3", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
-    del param
-
-    param = lastNode.createInt2DParam("range", "Frame Range")
-    param.setDefaultValue(1, 0)
-    param.restoreDefaultValue(0)
-    param.setDefaultValue(1, 1)
-    param.restoreDefaultValue(1)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(False)
-    param.setValue(25, 1)
-    lastNode.range = param
-    del param
-
-    param = lastNode.createButtonParam("project_frame_range", "Project Frame Range")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setEvaluateOnChange(False)
-    lastNode.project_frame_range = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep2", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
-    del param
-
-    param = lastNode.createIntParam("instances", "Instances")
-    param.setMinimum(1, 0)
-    param.setMaximum(10, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(10, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.instances = param
-    del param
-
-    param = lastNode.createIntParam("task_size", "Task Size")
-    param.setMinimum(1, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(10, 0)
-    lastNode.task_size = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "vinarender_xcf"
-
-    # Start of node "shape_glass_1"
-    lastNode = app.createNode("vv.ShapeTransition", 1, group)
-    lastNode.setScriptName("shape_glass_1")
-    lastNode.setLabel("shape_glass_1")
-    lastNode.setPosition(1378, -392)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupshape_glass_1 = lastNode
-
-    param = lastNode.getParam("onParamChanged")
-    if param is not None:
-        param.setValue("shape_transition.main")
-        del param
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep2", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
-    del param
-
-    param = lastNode.createStringParam("general", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("GENERAL:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.general = param
-    del param
-
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.format = param
-    del param
-
-    param = lastNode.createChoiceParam("direction", "Direction")
-    entries = [ ("Left", ""),
-    ("Right", ""),
-    ("Up", ""),
-    ("Down", "")]
-    param.setOptions(entries)
-    del entries
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Right")
-    lastNode.direction = param
-    del param
-
-    param = lastNode.createChoiceParam("sort", "Sort")
-    entries = [ ("Random", ""),
-    ("Uniform", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Uniform")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.set("Random")
-    lastNode.sort = param
-    del param
-
-    param = lastNode.createIntParam("repetitions", "Repetitions")
-    param.setMinimum(1, 0)
-    param.setMaximum(7, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(7, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.repetitions = param
-    del param
-
-    param = lastNode.createIntParam("seed", "Random Seed")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(14, 0)
-    lastNode.seed = param
-    del param
-
-    param = lastNode.createBooleanParam("lineal_animation", "Lineal Animation")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.lineal_animation = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep4", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep4 = param
-    del param
-
-    param = lastNode.createBooleanParam("stencil_self", "Stencil Self")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Hace un stencil en si mismo, enmascarandola y dejandola invisible a menos que desfasemos una de las dos capas")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.stencil_self = param
-    del param
-
-    param = lastNode.createIntParam("stencil_self_gap", "Stencil Self Gap")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.stencil_self_gap = param
-    del param
-
-    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.motion_blur = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep3", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
-    del param
-
-    param = lastNode.createStringParam("time_", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("TIME:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.time_ = param
-    del param
-
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setMinimum(0, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.start_frame = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Duration")
-    param.setMinimum(1, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createIntParam("gap", "Gap")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.gap = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep1", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
-    del param
-
-    param = lastNode.createStringParam("initial_shapes", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("INITIAL SHAPE:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.initial_shapes = param
-    del param
-
-    param = lastNode.createIntParam("initial_width", "Initial Width")
-    param.setMinimum(0, 0)
-    param.setMaximum(500, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(500, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_width = param
-    del param
-
-    param = lastNode.createIntParam("initial_translate", "Inicial Translate")
-    param.setMinimum(0, 0)
-    param.setMaximum(1920, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1920, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1000, 0)
-    lastNode.initial_translate = param
-    del param
-
-    param = lastNode.createIntParam("end_translate", "End Translate")
-    param.setMinimum(0, 0)
-    param.setMaximum(1920, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1920, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(500, 0)
-    lastNode.end_translate = param
-    del param
-
-    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
-    param.setMinimum(-45, 0)
-    param.setMaximum(45, 0)
-    param.setDisplayMinimum(-45, 0)
-    param.setDisplayMaximum(45, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_rotate = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "shape_glass_1"
-
-    # Start of node "shape_glass_2"
-    lastNode = app.createNode("vv.ShapeTransition", 1, group)
-    lastNode.setScriptName("shape_glass_2")
-    lastNode.setLabel("shape_glass_2")
-    lastNode.setPosition(1609, -382)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupshape_glass_2 = lastNode
-
-    param = lastNode.getParam("onParamChanged")
-    if param is not None:
-        param.setValue("shape_transition.main")
-        del param
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep2", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
-    del param
-
-    param = lastNode.createStringParam("general", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("GENERAL:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.general = param
-    del param
-
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.format = param
-    del param
-
-    param = lastNode.createChoiceParam("direction", "Direction")
-    entries = [ ("Left", ""),
-    ("Right", ""),
-    ("Up", ""),
-    ("Down", "")]
-    param.setOptions(entries)
-    del entries
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Right")
-    lastNode.direction = param
-    del param
-
-    param = lastNode.createChoiceParam("sort", "Sort")
-    entries = [ ("Random", ""),
-    ("Uniform", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Uniform")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.set("Random")
-    lastNode.sort = param
-    del param
-
-    param = lastNode.createIntParam("repetitions", "Repetitions")
-    param.setMinimum(1, 0)
-    param.setMaximum(7, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(7, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(6, 0)
-    lastNode.repetitions = param
-    del param
-
-    param = lastNode.createIntParam("seed", "Random Seed")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(21, 0)
-    lastNode.seed = param
-    del param
-
-    param = lastNode.createBooleanParam("lineal_animation", "Lineal Animation")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.lineal_animation = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep4", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep4 = param
-    del param
-
-    param = lastNode.createBooleanParam("stencil_self", "Stencil Self")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Hace un stencil en si mismo, enmascarandola y dejandola invisible a menos que desfasemos una de las dos capas")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(True)
-    lastNode.stencil_self = param
-    del param
-
-    param = lastNode.createIntParam("stencil_self_gap", "Stencil Self Gap")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.stencil_self_gap = param
-    del param
-
-    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.motion_blur = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep3", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
-    del param
-
-    param = lastNode.createStringParam("time_", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("TIME:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.time_ = param
-    del param
-
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setMinimum(0, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.start_frame = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Duration")
-    param.setMinimum(1, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createIntParam("gap", "Gap")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.gap = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep1", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
-    del param
-
-    param = lastNode.createStringParam("initial_shapes", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("INITIAL SHAPE:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.initial_shapes = param
-    del param
-
-    param = lastNode.createIntParam("initial_width", "Initial Width")
-    param.setMinimum(0, 0)
-    param.setMaximum(500, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(500, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_width = param
-    del param
-
-    param = lastNode.createIntParam("initial_translate", "Inicial Translate")
-    param.setMinimum(0, 0)
-    param.setMaximum(1920, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1920, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1000, 0)
-    lastNode.initial_translate = param
-    del param
-
-    param = lastNode.createIntParam("end_translate", "End Translate")
-    param.setMinimum(0, 0)
-    param.setMaximum(1920, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1920, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(500, 0)
-    lastNode.end_translate = param
-    del param
-
-    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
-    param.setMinimum(-45, 0)
-    param.setMaximum(45, 0)
-    param.setDisplayMinimum(-45, 0)
-    param.setDisplayMaximum(45, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_rotate = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "shape_glass_2"
-
-    # Start of node "transition_mask"
-    lastNode = app.createNode("vv.ShapeTransition", 1, group)
-    lastNode.setScriptName("transition_mask")
-    lastNode.setLabel("transition_mask")
-    lastNode.setPosition(1811, -379)
-    lastNode.setSize(104, 55)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    grouptransition_mask = lastNode
-
-    param = lastNode.getParam("onParamChanged")
-    if param is not None:
-        param.setValue("shape_transition.main")
-        del param
-
-
-    # Create the user parameters
-    lastNode.control = lastNode.createPageParam("control", "Control")
-    param = lastNode.createButtonParam("refresh", "Refresh")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    lastNode.refresh = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep2", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep2 = param
-    del param
-
-    param = lastNode.createStringParam("general", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("GENERAL:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.general = param
-    del param
-
-    param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.format = param
-    del param
-
-    param = lastNode.createChoiceParam("direction", "Direction")
-    entries = [ ("Left", ""),
-    ("Right", ""),
-    ("Up", ""),
-    ("Down", "")]
-    param.setOptions(entries)
-    del entries
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.set("Right")
-    lastNode.direction = param
-    del param
-
-    param = lastNode.createChoiceParam("sort", "Sort")
-    entries = [ ("Random", ""),
-    ("Uniform", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Uniform")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    lastNode.sort = param
-    del param
-
-    param = lastNode.createIntParam("repetitions", "Repetitions")
-    param.setMinimum(1, 0)
-    param.setMaximum(7, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(7, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(7, 0)
-    lastNode.repetitions = param
-    del param
-
-    param = lastNode.createIntParam("seed", "Random Seed")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(11, 0)
-    lastNode.seed = param
-    del param
-
-    param = lastNode.createBooleanParam("lineal_animation", "Lineal Animation")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.lineal_animation = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep4", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep4 = param
-    del param
-
-    param = lastNode.createBooleanParam("stencil_self", "Stencil Self")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("Hace un stencil en si mismo, enmascarandola y dejandola invisible a menos que desfasemos una de las dos capas")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.stencil_self = param
-    del param
-
-    param = lastNode.createIntParam("stencil_self_gap", "Stencil Self Gap")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(False)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.stencil_self_gap = param
-    del param
-
-    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
-    param.setMinimum(0, 0)
-    param.setMaximum(4, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(4, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(0, 0)
-    lastNode.motion_blur = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep3", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep3 = param
-    del param
-
-    param = lastNode.createStringParam("time_", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("TIME:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.time_ = param
-    del param
-
-    param = lastNode.createIntParam("start_frame", "Start Frame")
-    param.setMinimum(0, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1, 0)
-    lastNode.start_frame = param
-    del param
-
-    param = lastNode.createIntParam("duration", "Duration")
-    param.setMinimum(1, 0)
-    param.setDisplayMinimum(1, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(50, 0)
-    lastNode.duration = param
-    del param
-
-    param = lastNode.createIntParam("gap", "Gap")
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(5, 0)
-    lastNode.gap = param
-    del param
-
-    param = lastNode.createSeparatorParam("sep1", "")
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setPersistent(False)
-    param.setEvaluateOnChange(False)
-    lastNode.sep1 = param
-    del param
-
-    param = lastNode.createStringParam("initial_shapes", "")
-    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
-    param.setDefaultValue("INITIAL SHAPE:")
-    param.restoreDefaultValue()
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setEvaluateOnChange(False)
-    param.setAnimationEnabled(False)
-    lastNode.initial_shapes = param
-    del param
-
-    param = lastNode.createIntParam("initial_width", "Initial Width")
-    param.setMinimum(0, 0)
-    param.setMaximum(500, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(500, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_width = param
-    del param
-
-    param = lastNode.createIntParam("initial_translate", "Inicial Translate")
-    param.setMinimum(0, 0)
-    param.setMaximum(1920, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1920, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(1000, 0)
-    lastNode.initial_translate = param
-    del param
-
-    param = lastNode.createIntParam("end_translate", "End Translate")
-    param.setMinimum(0, 0)
-    param.setMaximum(1920, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(1920, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(500, 0)
-    lastNode.end_translate = param
-    del param
-
-    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
-    param.setMinimum(-45, 0)
-    param.setMaximum(45, 0)
-    param.setDisplayMinimum(-45, 0)
-    param.setDisplayMaximum(45, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.initial_rotate = param
-    del param
-
-    # Refresh the GUI with the newly created parameters
-    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
-    lastNode.refreshUserParamsGUI()
-    del lastNode
-    # End of node "transition_mask"
-
-    # Start of node "OverlayMask"
+    # Start of node "OverlayMask2"
     lastNode = app.createNode("vv.OverlayMask", 1, group)
-    lastNode.setScriptName("OverlayMask")
+    lastNode.setScriptName("OverlayMask2")
     lastNode.setLabel("OverlayMask")
-    lastNode.setPosition(1378, -119)
-    lastNode.setSize(104, 32)
+    lastNode.setPosition(-49, 1176)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupOverlayMask = lastNode
+    groupOverlayMask2 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("base.main")
+        del param
 
 
     # Create the user parameters
     lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.state_label = param
+    del param
+
     param = lastNode.createChoiceParam("format", "Format")
     entries = [ ("Quarter HD - 480 x 270", ""),
     ("Half HD - 960 x 540", ""),
@@ -2546,7 +941,32 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
     lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
     del param
 
     param = lastNode.createSeparatorParam("sep2", "")
@@ -2560,6 +980,22 @@ def createInstance(app,group):
     param.setPersistent(False)
     param.setEvaluateOnChange(False)
     lastNode.sep2 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
     del param
 
     param = lastNode.createChoiceParam("mask_channel_a", "Channel A")
@@ -2819,7 +1255,24 @@ def createInstance(app,group):
     lastNode.sep = param
     del param
 
-    param = lastNode.createDoubleParam("shadow", "Shadow")
+    param = lastNode.createIntParam("shadow_distance", "Shadow Discante")
+    param.setMinimum(0, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(30, 0)
+    lastNode.shadow_distance = param
+    del param
+
+    param = lastNode.createDoubleParam("shadow_opacity", "Shadow Opacity")
     param.setMinimum(0, 0)
     param.setMaximum(1, 0)
     param.setDisplayMinimum(0, 0)
@@ -2829,44 +1282,26 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     param.setValue(0.3, 0)
-    lastNode.shadow = param
+    lastNode.shadow_opacity = param
     del param
 
-    param = lastNode.createDoubleParam("shadow_distance", "Shadow Distance")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
+    param = lastNode.createIntParam("shadow_blur", "Shadow Blur")
+    param.setMinimum(0, 0)
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(30, 0)
-    lastNode.shadow_distance = param
-    del param
-
-    param = lastNode.createDoubleParam("shadow_blur", "Shadow Blur")
-    param.setMinimum(-2147483648, 0)
-    param.setMaximum(2147483647, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    param.setValue(85.8, 0)
+    param.setValue(85, 0)
     lastNode.shadow_blur = param
     del param
 
@@ -2874,16 +1309,1709 @@ def createInstance(app,group):
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "OverlayMask"
+    # End of node "OverlayMask2"
 
-    # Start of node "TwelveRead2"
-    lastNode = app.createNode("vv.TwelveRead", 1, group)
-    lastNode.setScriptName("TwelveRead2")
-    lastNode.setLabel("TwelveRead")
-    lastNode.setPosition(1675, 642)
-    lastNode.setSize(104, 32)
+    # Start of node "ShapeTransition6"
+    lastNode = app.createNode("vv.ShapeTransition", 1, group)
+    lastNode.setScriptName("ShapeTransition6")
+    lastNode.setLabel("shape_glass_1")
+    lastNode.setPosition(-49, 899)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
-    groupTwelveRead2 = lastNode
+    groupShapeTransition6 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("shape_transition.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("label_state", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.label_state = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    param.setDefaultValue(2)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep2", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep2 = param
+    del param
+
+    param = lastNode.createStringParam("time_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    TIME :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.time_label = param
+    del param
+
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
+    del param
+
+    param = lastNode.createInt3DParam("durations", "Durations")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    param.setEnabled(False, 0)
+    param.setEnabled(False, 1)
+    param.setEnabled(False, 2)
+    lastNode.durations = param
+    del param
+
+    param = lastNode.createIntParam("gap", "Gap")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.gap = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep1", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createChoiceParam("direction", "Direction")
+    entries = [ ("Left", ""),
+    ("Right", ""),
+    ("Up", ""),
+    ("Down", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Right")
+    param.setEnabled(False, 0)
+    lastNode.direction = param
+    del param
+
+    param = lastNode.createChoiceParam("sort", "Sort")
+    entries = [ ("Random", ""),
+    ("Uniform", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Uniform")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.set("Random")
+    lastNode.sort = param
+    del param
+
+    param = lastNode.createIntParam("repetitions", "Repetitions")
+    param.setMinimum(1, 0)
+    param.setMaximum(7, 0)
+    param.setDisplayMinimum(1, 0)
+    param.setDisplayMaximum(7, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.repetitions = param
+    del param
+
+    param = lastNode.createIntParam("seed", "Random Seed")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(14, 0)
+    lastNode.seed = param
+    del param
+
+    param = lastNode.createBooleanParam("lineal_animation", "Lineal Animation")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.lineal_animation = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
+    param = lastNode.createBooleanParam("stencil_self", "Stencil Self")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Hace un stencil en si mismo, enmascarandola y dejandola invisible a menos que desfasemos una de las dos capas")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.stencil_self = param
+    del param
+
+    param = lastNode.createIntParam("stencil_self_gap", "Stencil Self Gap")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.stencil_self_gap = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
+    param = lastNode.createStringParam("initial_shapes", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("INITIAL SHAPE:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.initial_shapes = param
+    del param
+
+    param = lastNode.createIntParam("initial_width", "Initial Width")
+    param.setMinimum(0, 0)
+    param.setMaximum(500, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(500, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_width = param
+    del param
+
+    param = lastNode.createIntParam("initial_translate", "Inicial Translate")
+    param.setMinimum(0, 0)
+    param.setMaximum(1920, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1920, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1000, 0)
+    lastNode.initial_translate = param
+    del param
+
+    param = lastNode.createIntParam("end_translate", "End Translate")
+    param.setMinimum(0, 0)
+    param.setMaximum(1920, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1920, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(500, 0)
+    lastNode.end_translate = param
+    del param
+
+    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
+    param.setMinimum(-45, 0)
+    param.setMaximum(45, 0)
+    param.setDisplayMinimum(-45, 0)
+    param.setDisplayMaximum(45, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_rotate = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "ShapeTransition6"
+
+    # Start of node "ShapeTransition7"
+    lastNode = app.createNode("vv.ShapeTransition", 1, group)
+    lastNode.setScriptName("ShapeTransition7")
+    lastNode.setLabel("shape_glass_2")
+    lastNode.setPosition(182, 903)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShapeTransition7 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("shape_transition.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("label_state", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.label_state = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    param.setDefaultValue(2)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep2", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep2 = param
+    del param
+
+    param = lastNode.createStringParam("time_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    TIME :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.time_label = param
+    del param
+
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
+    del param
+
+    param = lastNode.createInt3DParam("durations", "Durations")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    param.setEnabled(False, 0)
+    param.setEnabled(False, 1)
+    param.setEnabled(False, 2)
+    lastNode.durations = param
+    del param
+
+    param = lastNode.createIntParam("gap", "Gap")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.gap = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep1", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createChoiceParam("direction", "Direction")
+    entries = [ ("Left", ""),
+    ("Right", ""),
+    ("Up", ""),
+    ("Down", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Right")
+    param.setEnabled(False, 0)
+    lastNode.direction = param
+    del param
+
+    param = lastNode.createChoiceParam("sort", "Sort")
+    entries = [ ("Random", ""),
+    ("Uniform", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Uniform")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.set("Random")
+    lastNode.sort = param
+    del param
+
+    param = lastNode.createIntParam("repetitions", "Repetitions")
+    param.setMinimum(1, 0)
+    param.setMaximum(7, 0)
+    param.setDisplayMinimum(1, 0)
+    param.setDisplayMaximum(7, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(6, 0)
+    lastNode.repetitions = param
+    del param
+
+    param = lastNode.createIntParam("seed", "Random Seed")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(21, 0)
+    lastNode.seed = param
+    del param
+
+    param = lastNode.createBooleanParam("lineal_animation", "Lineal Animation")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.lineal_animation = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
+    param = lastNode.createBooleanParam("stencil_self", "Stencil Self")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Hace un stencil en si mismo, enmascarandola y dejandola invisible a menos que desfasemos una de las dos capas")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    lastNode.stencil_self = param
+    del param
+
+    param = lastNode.createIntParam("stencil_self_gap", "Stencil Self Gap")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.stencil_self_gap = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
+    param = lastNode.createStringParam("initial_shapes", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("INITIAL SHAPE:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.initial_shapes = param
+    del param
+
+    param = lastNode.createIntParam("initial_width", "Initial Width")
+    param.setMinimum(0, 0)
+    param.setMaximum(500, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(500, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_width = param
+    del param
+
+    param = lastNode.createIntParam("initial_translate", "Inicial Translate")
+    param.setMinimum(0, 0)
+    param.setMaximum(1920, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1920, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1000, 0)
+    lastNode.initial_translate = param
+    del param
+
+    param = lastNode.createIntParam("end_translate", "End Translate")
+    param.setMinimum(0, 0)
+    param.setMaximum(1920, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1920, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(500, 0)
+    lastNode.end_translate = param
+    del param
+
+    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
+    param.setMinimum(-45, 0)
+    param.setMaximum(45, 0)
+    param.setDisplayMinimum(-45, 0)
+    param.setDisplayMaximum(45, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_rotate = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "ShapeTransition7"
+
+    # Start of node "ShapeTransition8"
+    lastNode = app.createNode("vv.ShapeTransition", 1, group)
+    lastNode.setScriptName("ShapeTransition8")
+    lastNode.setLabel("transition_mask")
+    lastNode.setPosition(384, 887)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupShapeTransition8 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("shape_transition.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("label_state", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.label_state = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    param.setDefaultValue(2)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep2", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep2 = param
+    del param
+
+    param = lastNode.createStringParam("time_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    TIME :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.time_label = param
+    del param
+
+    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(100, 0)
+    lastNode.duration_percent = param
+    del param
+
+    param = lastNode.createInt3DParam("durations", "Durations")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    param.setEnabled(False, 0)
+    param.setEnabled(False, 1)
+    param.setEnabled(False, 2)
+    lastNode.durations = param
+    del param
+
+    param = lastNode.createIntParam("gap", "Gap")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.gap = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep1", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createChoiceParam("direction", "Direction")
+    entries = [ ("Left", ""),
+    ("Right", ""),
+    ("Up", ""),
+    ("Down", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.set("Right")
+    param.setEnabled(False, 0)
+    lastNode.direction = param
+    del param
+
+    param = lastNode.createChoiceParam("sort", "Sort")
+    entries = [ ("Random", ""),
+    ("Uniform", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Uniform")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.sort = param
+    del param
+
+    param = lastNode.createIntParam("repetitions", "Repetitions")
+    param.setMinimum(1, 0)
+    param.setMaximum(7, 0)
+    param.setDisplayMinimum(1, 0)
+    param.setDisplayMaximum(7, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(7, 0)
+    lastNode.repetitions = param
+    del param
+
+    param = lastNode.createIntParam("seed", "Random Seed")
+    param.setMinimum(0, 0)
+    param.setMaximum(100, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(28, 0)
+    lastNode.seed = param
+    del param
+
+    param = lastNode.createBooleanParam("lineal_animation", "Lineal Animation")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.lineal_animation = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep4", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep4 = param
+    del param
+
+    param = lastNode.createBooleanParam("stencil_self", "Stencil Self")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Hace un stencil en si mismo, enmascarandola y dejandola invisible a menos que desfasemos una de las dos capas")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.stencil_self = param
+    del param
+
+    param = lastNode.createIntParam("stencil_self_gap", "Stencil Self Gap")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(5, 0)
+    lastNode.stencil_self_gap = param
+    del param
+
+    param = lastNode.createDoubleParam("motion_blur", "Motion Blur")
+    param.setMinimum(0, 0)
+    param.setMaximum(4, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(4, 0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.motion_blur = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep3", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep3 = param
+    del param
+
+    param = lastNode.createStringParam("initial_shapes", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("INITIAL SHAPE:")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.initial_shapes = param
+    del param
+
+    param = lastNode.createIntParam("initial_width", "Initial Width")
+    param.setMinimum(0, 0)
+    param.setMaximum(500, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(500, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_width = param
+    del param
+
+    param = lastNode.createIntParam("initial_translate", "Inicial Translate")
+    param.setMinimum(0, 0)
+    param.setMaximum(1920, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1920, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1000, 0)
+    lastNode.initial_translate = param
+    del param
+
+    param = lastNode.createIntParam("end_translate", "End Translate")
+    param.setMinimum(0, 0)
+    param.setMaximum(1920, 0)
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(1920, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(500, 0)
+    lastNode.end_translate = param
+    del param
+
+    param = lastNode.createIntParam("initial_rotate", "Initial Rotate")
+    param.setMinimum(-45, 0)
+    param.setMaximum(45, 0)
+    param.setDisplayMinimum(-45, 0)
+    param.setDisplayMaximum(45, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.initial_rotate = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "ShapeTransition8"
+
+    # Start of node "TwelveRender"
+    lastNode = app.createNode("vv.TwelveRender", 1, group)
+    lastNode.setScriptName("TwelveRender")
+    lastNode.setLabel("TwelveRender")
+    lastNode.setPosition(-49, 1692)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupTwelveRender = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("twelve_render.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createChoiceParam("speed", "Speed")
+    entries = [ ("Slow", ""),
+    ("Normal", ""),
+    ("Fast", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Normal")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("link_to_connected", "Link To Connected")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link_to_connected = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep5", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep5 = param
+    del param
+
+    param = lastNode.createStringParam("time_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    TIME :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.time_label = param
+    del param
+
+    param = lastNode.createInt3DParam("durations", "Durations")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+    param.setDisplayMinimum(0, 1)
+    param.setDisplayMaximum(100, 1)
+    param.setDefaultValue(0, 1)
+    param.restoreDefaultValue(1)
+    param.setDisplayMinimum(0, 2)
+    param.setDisplayMaximum(100, 2)
+    param.setDefaultValue(0, 2)
+    param.restoreDefaultValue(2)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(150, 0)
+    param.setValue(100, 1)
+    param.setValue(50, 2)
+    param.setEnabled(False, 0)
+    param.setEnabled(False, 1)
+    param.setEnabled(False, 2)
+    lastNode.durations = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep6", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep6 = param
+    del param
+
+    param = lastNode.createStringParam("settings_label", "")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    SETTINGS :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    lastNode.settings_label = param
+    del param
+
+    param = lastNode.createChoiceParam("sequence_type", "Sequence Type")
+    entries = [ ("PNG", ""),
+    ("JPG", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.sequence_type = param
+    del param
+
+    param = lastNode.createChoiceParam("filter", "Reformat Filter")
+    entries = [ ("Cubic", ""),
+    ("Impulse", ""),
+    ("Notch", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.filter = param
+    del param
+
+    param = lastNode.createStringParam("prefix", "Prefix")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeDefault)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue("glass_right")
+    param.setEnabled(False, 0)
+    lastNode.prefix = param
+    del param
+
+    param = lastNode.createBooleanParam("current_state", "Current State")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(True)
+    param.setEnabled(False, 0)
+    lastNode.current_state = param
+    del param
+
+    param = lastNode.createBooleanParam("current_speed", "Current Speed")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("Renderiza solo una velocidad con los 3 formatos.")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.current_speed = param
+    del param
+
+    param = lastNode.createButtonParam("render", "Render")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.render = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "TwelveRender"
+
+    # Start of node "TwelveRead1"
+    lastNode = app.createNode("vv.TwelveRead", 1, group)
+    lastNode.setScriptName("TwelveRead1")
+    lastNode.setLabel("TwelveRead1")
+    lastNode.setPosition(206, 1830)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupTwelveRead1 = lastNode
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
@@ -2910,7 +3038,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Full HD - 1920 x 1080")
+    param.setEnabled(False, 0)
     lastNode.format = param
     del param
 
@@ -2928,10 +3056,51 @@ def createInstance(app,group):
 
     # Set param properties
     param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.speed = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createSeparatorParam("sep1", "")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setPersistent(False)
+    param.setEvaluateOnChange(False)
+    lastNode.sep1 = param
+    del param
+
+    param = lastNode.createChoiceParam("sequence_type", "Sequence Type")
+    entries = [ ("PNG", ""),
+    ("JPG", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.set("Normal")
-    lastNode.speed = param
+    lastNode.sequence_type = param
     del param
 
     param = lastNode.createStringParam("prefix", "Prefix")
@@ -2944,11 +3113,46 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue("transition_01")
+    param.setValue("glass_right")
+    param.setEnabled(False, 0)
     lastNode.prefix = param
     del param
 
-    param = lastNode.createButtonParam("reload", "Reload")
+    param = lastNode.createChoiceParam("before", "Before")
+    entries = [ ("Hold", ""),
+    ("Loop", ""),
+    ("Bounce", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.before = param
+    del param
+
+    param = lastNode.createChoiceParam("after", "After")
+    entries = [ ("Hold", ""),
+    ("Loop", ""),
+    ("Bounce", "")]
+    param.setOptions(entries)
+    del entries
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.after = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -2957,72 +3161,74 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setEvaluateOnChange(False)
-    lastNode.reload = param
+    lastNode.refresh = param
     del param
 
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
     del lastNode
-    # End of node "TwelveRead2"
+    # End of node "TwelveRead1"
 
-    # Start of node "Dot18"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot18")
-    lastNode.setLabel("Dot18")
-    lastNode.setPosition(278, 760)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot18 = lastNode
+    # Start of node "read_switch"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("read_switch")
+    lastNode.setLabel("read_switch")
+    lastNode.setPosition(-49, 1830)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupread_switch = lastNode
 
-    del lastNode
-    # End of node "Dot18"
-
-    # Start of node "Dot19"
-    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
-    lastNode.setScriptName("Dot19")
-    lastNode.setLabel("Dot19")
-    lastNode.setPosition(769, 640)
-    lastNode.setSize(15, 15)
-    lastNode.setColor(0.7, 0.7, 0.7)
-    groupDot19 = lastNode
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
 
     del lastNode
-    # End of node "Dot19"
+    # End of node "read_switch"
+
+    # Start of node "Dot16"
+    lastNode = app.createNode("fr.inria.built-in.Dot", 1, group)
+    lastNode.setScriptName("Dot16")
+    lastNode.setLabel("Dot16")
+    lastNode.setPosition(-4, 2695)
+    lastNode.setSize(14, 14)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupDot16 = lastNode
+
+    del lastNode
+    # End of node "Dot16"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupswitch)
-    groupDot3.connectInput(0, groupshape_format)
+    groupOutput1_2.connectInput(0, grouplimit)
+    groupDot3.connectInput(0, groupShape)
     groupDot4.connectInput(0, groupDot3)
     groupmix.connectInput(0, groupDot19)
-    groupmix.connectInput(1, groupDot18)
+    groupmix.connectInput(1, groupA_2)
     groupmix.connectInput(2, groupDot11)
-    groupstart_frame_node.connectInput(0, groupTwelveRead2)
-    groupglass_fx_switch.connectInput(0, groupDot5)
-    groupglass_fx_switch.connectInput(1, groupDot9)
+    groupstart_frame_node.connectInput(0, groupread_switch)
     groupMerge5.connectInput(0, groupDot8)
     groupMerge5.connectInput(1, groupcolorize)
-    groupBlur1.connectInput(0, groupDot6)
-    groupTransform1.connectInput(0, groupBlur1)
+    groupMerge5.connectInput(2, groupcolorize)
+    groupglass_blur.connectInput(0, groupDot6)
+    groupglass_transform.connectInput(0, groupglass_blur)
     groupMerge3.connectInput(0, groupDot7)
-    groupMerge3.connectInput(1, groupTransform1)
+    groupMerge3.connectInput(1, groupglass_transform)
     groupMerge3.connectInput(2, groupShuffle1)
     groupcolorize.connectInput(0, groupred_to_map)
-    groupcolorize.connectInput(1, groupred_to_map)
     groupto_blue.connectInput(0, groupalpha_to_green)
     groupto_blue.connectInput(1, groupDot10)
     groupred_to_map.connectInput(0, groupDot12)
-    groupalpha_to_green.connectInput(0, groupOverlayMask)
-    groupDot14.connectInput(0, grouptransition_mask)
-    groupShuffle4.connectInput(0, groupshape_glass_1)
+    groupalpha_to_green.connectInput(0, groupOverlayMask2)
+    groupDot14.connectInput(0, groupShapeTransition8)
+    groupShuffle4.connectInput(0, groupShapeTransition6)
     groupShuffle4.connectInput(1, groupDot1)
-    groupDot1.connectInput(0, groupshape_glass_2)
+    groupDot1.connectInput(0, groupShapeTransition7)
     groupDot2.connectInput(0, groupDot4)
     groupDot5.connectInput(0, groupmix)
     groupDot6.connectInput(0, groupDot5)
     groupDot7.connectInput(0, groupDot6)
     groupDot8.connectInput(0, groupMerge3)
-    groupDot9.connectInput(0, groupMerge5)
     groupMerge1.connectInput(0, groupDot1)
     groupMerge1.connectInput(1, groupDot15)
     groupDot10.connectInput(0, groupMerge1)
@@ -3031,77 +3237,103 @@ def createInstance(app,group):
     groupShuffle1.connectInput(0, groupDot11)
     groupDot11.connectInput(0, groupDot12)
     groupDot12.connectInput(0, groupstart_frame_node)
-    groupDot13.connectInput(0, groupshape_glass_1)
+    groupDot13.connectInput(0, groupShapeTransition6)
     groupDot15.connectInput(0, groupDot13)
-    groupswitch.connectInput(0, groupDot17)
-    groupswitch.connectInput(1, groupglass_fx_switch)
-    groupswitch.connectInput(2, groupDot18)
-    groupDot16.connectInput(0, groupDot19)
-    groupDot17.connectInput(0, groupDot16)
-    groupshape_format.connectInput(0, groupShape)
-    groupvinarender_xcf.connectInput(0, grouptransition_to_alpha)
-    groupshape_glass_1.connectInput(0, groupDot3)
-    groupshape_glass_2.connectInput(0, groupDot4)
-    grouptransition_mask.connectInput(0, groupDot2)
-    groupOverlayMask.connectInput(0, groupShuffle4)
-    groupDot18.connectInput(0, groupA)
-    groupDot19.connectInput(0, groupB)
+    grouplimit.connectInput(0, groupDot19)
+    grouplimit.connectInput(1, groupDot16)
+    grouplimit.connectInput(2, groupA_2)
+    groupDot19.connectInput(0, groupB_2)
+    groupOverlayMask2.connectInput(0, groupShuffle4)
+    groupShapeTransition6.connectInput(0, groupDot3)
+    groupShapeTransition7.connectInput(0, groupDot4)
+    groupShapeTransition8.connectInput(0, groupDot2)
+    groupTwelveRender.connectInput(0, grouptransition_to_alpha)
+    groupread_switch.connectInput(0, groupTwelveRender)
+    groupread_switch.connectInput(1, groupTwelveRead1)
+    groupDot16.connectInput(0, groupMerge5)
 
-    param = groupstart_frame_node.getParam("timeOffset")
-    param.setExpression("thisGroup.start_frame.get()", False, 0)
-    del param
-    param = groupglass_fx_switch.getParam("which")
-    param.setExpression("thisGroup.glass_fx.get()", False, 0)
-    del param
-    param = groupBlur1.getParam("size")
-    param.setExpression("index = thisGroup.format.get()\n\nvalue = 4\nret = value * general.rscale[index]", True, 0)
-    param.setExpression("index = thisGroup.format.get()\n\nvalue = 4\nret = value * general.rscale[index]", True, 1)
-    del param
-    param = groupTransform1.getParam("center")
-    param.setExpression("index = thisGroup.format.get()\nret = general.formats[index][dimension] / 2", True, 0)
-    param.setExpression("index = thisGroup.format.get()\nret = general.formats[index][dimension] / 2", True, 1)
-    del param
     param = groupcolorize.getParam("white")
-    param.setExpression("thisGroup.color.getValue(dimension)", False, 0)
-    param.setExpression("thisGroup.color.getValue(dimension)", False, 1)
-    param.setExpression("thisGroup.color.getValue(dimension)", False, 2)
-    param.setExpression("thisGroup.color.getValue(dimension)", False, 3)
+    param.slaveTo(group.getParam("color"), 0, 0)
+    param.slaveTo(group.getParam("color"), 1, 1)
+    param.slaveTo(group.getParam("color"), 2, 2)
     del param
-    param = groupshape_glass_1.getParam("direction")
-    param.setExpression("thisGroup.direction.get()", False, 0)
+    param = groupOverlayMask2.getParam("format")
+    group.getParam("format").setAsAlias(param)
     del param
-    param = groupshape_glass_1.getParam("seed")
+    param = groupShapeTransition6.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupShapeTransition6.getParam("speed")
+    group.getParam("speed").setAsAlias(param)
+    del param
+    param = groupShapeTransition6.getParam("durations")
+    group.getParam("durations").setAsAlias(param)
+    del param
+    param = groupShapeTransition6.getParam("direction")
+    group.getParam("direction").setAsAlias(param)
+    del param
+    param = groupShapeTransition6.getParam("seed")
+    param.setExpression("thisGroup.random_seed.get()", False, 0)
+    del param
+    param = groupShapeTransition7.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupShapeTransition7.getParam("speed")
+    group.getParam("speed").setAsAlias(param)
+    del param
+    param = groupShapeTransition7.getParam("durations")
+    group.getParam("durations").setAsAlias(param)
+    del param
+    param = groupShapeTransition7.getParam("direction")
+    group.getParam("direction").setAsAlias(param)
+    del param
+    param = groupShapeTransition7.getParam("seed")
+    param.setExpression("thisGroup.random_seed.get() + 7", False, 0)
+    del param
+    param = groupShapeTransition8.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
+    param = groupShapeTransition8.getParam("speed")
+    group.getParam("speed").setAsAlias(param)
+    del param
+    param = groupShapeTransition8.getParam("durations")
+    group.getParam("durations").setAsAlias(param)
+    del param
+    param = groupShapeTransition8.getParam("direction")
+    group.getParam("direction").setAsAlias(param)
+    del param
+    param = groupShapeTransition8.getParam("seed")
     param.setExpression("thisGroup.random_seed.get() + 14", False, 0)
     del param
-    param = groupshape_glass_1.getParam("motion_blur")
-    param.setExpression("thisGroup.motion_blur.get()", False, 0)
+    param = groupTwelveRender.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
     del param
-    param = groupshape_glass_2.getParam("direction")
-    param.setExpression("thisGroup.direction.get()", False, 0)
+    param = groupTwelveRender.getParam("format")
+    group.getParam("format").setAsAlias(param)
     del param
-    param = groupshape_glass_2.getParam("seed")
-    param.setExpression("thisGroup.random_seed.get() + 21", False, 0)
+    param = groupTwelveRender.getParam("speed")
+    group.getParam("speed").setAsAlias(param)
     del param
-    param = groupshape_glass_2.getParam("motion_blur")
-    param.setExpression("thisGroup.motion_blur.get()", False, 0)
+    param = groupTwelveRender.getParam("durations")
+    group.getParam("durations").setAsAlias(param)
     del param
-    param = grouptransition_mask.getParam("direction")
-    param.setExpression("thisGroup.direction.get()", False, 0)
+    param = groupTwelveRender.getParam("prefix")
+    group.getParam("prefix").setAsAlias(param)
     del param
-    param = grouptransition_mask.getParam("seed")
-    param.setExpression("thisGroup.random_seed.get() + 11", False, 0)
+    param = groupTwelveRender.getParam("current_state")
+    group.getParam("current_state").setAsAlias(param)
     del param
-    param = grouptransition_mask.getParam("motion_blur")
-    param.setExpression("thisGroup.motion_blur.get()", False, 0)
+    param = groupTwelveRead1.getParam("format")
+    group.getParam("format").setAsAlias(param)
     del param
-    param = groupTwelveRead2.getParam("format")
-    param.setExpression("thisGroup.format.get()", False, 0)
+    param = groupTwelveRead1.getParam("speed")
+    group.getParam("speed").setAsAlias(param)
     del param
-    param = groupTwelveRead2.getParam("speed")
-    param.setExpression("thisGroup.speed.get()", False, 0)
+    param = groupTwelveRead1.getParam("prefix")
+    group.getParam("prefix").setAsAlias(param)
     del param
-    param = groupTwelveRead2.getParam("prefix")
-    param.setExpression("thisGroup.prefix.get()", False, 0)
+    param = groupread_switch.getParam("which")
+    param.setExpression("thisGroup.prerender_read.get()", False, 0)
     del param
 
     try:
