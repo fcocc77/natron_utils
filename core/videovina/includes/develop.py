@@ -12,12 +12,9 @@ xdistance = 200
 # ----------------
 
 
-def transition_refresh(transition_node, start_frame, duration, format, speed, slide_durations):
+def transition_refresh(transition_node, start_frame, duration, format, speed, slide_durations, color):
     transition = transition_node
 
-    transition_prefix = transition.getParam('prefix')
-    if transition_prefix:
-        transition_prefix.set('transition_' + str(index))
     transition.getParam('start_frame').set(start_frame)
     transition.getParam('format').set(format)
     transition.getParam('speed').set(speed)
@@ -123,7 +120,8 @@ def refresh():
             transition_duration,
             _format,
             speed,
-            durations
+            durations,
+            color
         )
 
         connect_slide_inputs(workarea, index)

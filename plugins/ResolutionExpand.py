@@ -415,7 +415,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("onParamChanged")
     if param is not None:
-        param.setValue("reformat.main")
+        param.setValue("reformat_fx.main")
         del param
 
 
