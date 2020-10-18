@@ -1,3 +1,5 @@
+from base import link_to_parent, children_refresh, get_rscale, get_format, get_duration, get_start_frame
+from nx import getNode
 import random
 from animations import directional_animation
 
@@ -9,16 +11,24 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
     knob_name = thisParam.getScriptName()
 
     if knob_name == 'refresh':
-        distribute(thisNode)
+        refresh(thisNode)
+
+    link_to_parent(thisNode, thisParam, thisGroup)
+    children_refresh(thisParam, thisNode)
 
 
-def distribute(thisNode):
+def refresh(thisNode):
+
+    rscale = get_rscale(thisNode)
+    width, height = get_format(thisNode)
+
+    duration = get_duration(thisNode)
+    start_frame = get_start_frame(thisNode)
+    last_frame = start_frame + duration
 
     # parametros del grupo
     repetitions = thisNode.repetitions.get()
     gap = thisNode.gap.get()
-    start_frame = thisNode.start_frame.get()
-    duration = thisNode.duration.get()
     initial_translate = thisNode.initial_translate.get()
     end_translate = thisNode.end_translate.get()
     initial_rotate = thisNode.initial_rotate.get()
@@ -27,6 +37,16 @@ def distribute(thisNode):
     sort = thisNode.sort.get()
     seed = thisNode.seed.get()
     # ------------------------
+
+    # Crop y reformat
+    for letter in ['a', 'b']:
+        reformat = getNode(thisNode, 'reformat_' + letter)
+        reformat.getParam('boxSize').set(width, width)
+
+        crop = getNode(thisNode, 'crop_' + letter)
+        crop.getParam('size').set(width, width)
+    #
+    #
 
     # obtiene el desfase correcto dependiendo de la duracion
     gap = (duration * float(gap)) / 100
@@ -43,9 +63,6 @@ def distribute(thisNode):
         stencil_gap = (duration * float(stencil_gap)) / 50
         duration -= stencil_gap
     # ------------------
-
-    width = thisNode.reformat.boxSize.getValue(0)
-    hight = thisNode.reformat.boxSize.getValue(1)
 
     # ajusta la direccion de la forma
     rotate = thisNode.getNode('direction_transform').getParam('rotate')
@@ -102,27 +119,23 @@ def distribute(thisNode):
         thisNode.getNode('merge_' + str(i)).getParam('mix').set(1)
         _start_frame = start_frame + total_gap
 
-        directional_animation(rotate, duration, _start_frame, [rotate_src, rotate_dst],
-                              [exaggeration_time, exaggeration_value])
+        directional_animation(rotate, duration, _start_frame, [rotate_src, rotate_dst], [exaggeration_time, exaggeration_value])
 
         position_dst = -left_translate
         position_src = position_dst - initial_translate
-        directional_animation(translate, duration, _start_frame, [position_src, position_dst],
-                              [exaggeration_time, exaggeration_value])
+        directional_animation(translate, duration, _start_frame, [position_src, position_dst], [exaggeration_time, exaggeration_value])
 
         if sort == 1:  # Formas ordenadas
             width_src = -initial_width
             width_dst = -(part + 1)
-            directional_animation(width_translate, duration, _start_frame, [width_src, width_dst],
-                                  [exaggeration_time, exaggeration_value])
+            directional_animation(width_translate, duration, _start_frame, [width_src, width_dst], [exaggeration_time, exaggeration_value])
         else:  # Formas Random
             random.seed(seed + 100 * i)
             width_src = -random.randint(0, new_width / 5)
             random.seed(seed + 1000 * i)
             width_dst = -random.randint(0, new_width / 5)
 
-            directional_animation(width_translate, duration, _start_frame, [width_src, width_dst],
-                                  [exaggeration_time, exaggeration_value])
+            directional_animation(width_translate, duration, _start_frame, [width_src, width_dst], [exaggeration_time, exaggeration_value])
 
         total_gap += gap
         left_translate += part
