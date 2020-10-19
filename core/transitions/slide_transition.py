@@ -25,8 +25,14 @@ def refresh(thisNode):
     direction = thisNode.direction.get()
     gap = thisNode.gap.get() * duration / 100
 
-    translate_a = getNode(thisNode, 'position_a').getParam('translate')
-    translate_b = getNode(thisNode, 'position_b').getParam('translate')
+    transform_a = getNode(thisNode, 'transform_a')
+    transform_b = getNode(thisNode, 'transform_b')
+
+    transform_a.getParam('center').set(width / 2, height / 2)
+    transform_b.getParam('center').set(width / 2, height / 2)
+
+    translate_a = transform_a.getParam('translate')
+    translate_b = transform_b.getParam('translate')
 
     exaggeration = [0.7, 0.7]
 

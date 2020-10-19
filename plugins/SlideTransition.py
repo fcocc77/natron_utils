@@ -282,7 +282,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("A")
     lastNode.setLabel("A")
-    lastNode.setPosition(428, 166)
+    lastNode.setPosition(632, -4)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupA = lastNode
@@ -294,7 +294,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("B")
     lastNode.setLabel("B")
-    lastNode.setPosition(1431, 162)
+    lastNode.setPosition(1214, -1)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupB = lastNode
@@ -329,51 +329,11 @@ def createInstance(app,group):
     del lastNode
     # End of node "Merge1"
 
-    # Start of node "position_a"
-    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("position_a")
-    lastNode.setLabel("position_a")
-    lastNode.setPosition(663, 165)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupposition_a = lastNode
-
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValueAtTime(0, 1, 0)
-        param.setValueAtTime(-288.0000000000001, 36, 0)
-        param.setValueAtTime(-1632, 66, 0)
-        param.setValueAtTime(-1920, 101, 0)
-        del param
-
-    del lastNode
-    # End of node "position_a"
-
-    # Start of node "position_b"
-    lastNode = app.createNode("net.sf.openfx.Position", 1, group)
-    lastNode.setScriptName("position_b")
-    lastNode.setLabel("position_b")
-    lastNode.setPosition(1213, 162)
-    lastNode.setSize(104, 32)
-    lastNode.setColor(0.7, 0.3, 0.1)
-    groupposition_b = lastNode
-
-    param = lastNode.getParam("translate")
-    if param is not None:
-        param.setValueAtTime(1920, 1, 0)
-        param.setValueAtTime(1632, 36, 0)
-        param.setValueAtTime(288.0000000000001, 66, 0)
-        param.setValueAtTime(0, 101, 0)
-        del param
-
-    del lastNode
-    # End of node "position_b"
-
     # Start of node "limit"
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("limit")
     lastNode.setLabel("limit")
-    lastNode.setPosition(930, 483)
+    lastNode.setPosition(930, 481)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
     grouplimit = lastNode
@@ -389,15 +349,111 @@ def createInstance(app,group):
     del lastNode
     # End of node "limit"
 
+    # Start of node "transform_a"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("transform_a")
+    lastNode.setLabel("transform_a")
+    lastNode.setPosition(634, 135)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    grouptransform_a = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValueAtTime(0, 1, 0)
+        param.setValueAtTime(-288.0000000000001, 36, 0)
+        param.setValueAtTime(-1632, 66, 0)
+        param.setValueAtTime(-1920, 101, 0)
+        del param
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(540, 1)
+        del param
+
+    param = lastNode.getParam("transformCenterChanged")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "transform_a"
+
+    # Start of node "transform_b"
+    lastNode = app.createNode("net.sf.openfx.TransformPlugin", 1, group)
+    lastNode.setScriptName("transform_b")
+    lastNode.setLabel("transform_b")
+    lastNode.setPosition(1216, 110)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.3, 0.1)
+    grouptransform_b = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValueAtTime(1920, 1, 0)
+        param.setValueAtTime(1632, 36, 0)
+        param.setValueAtTime(288.0000000000001, 66, 0)
+        param.setValueAtTime(0, 101, 0)
+        del param
+
+    param = lastNode.getParam("center")
+    if param is not None:
+        param.setValue(540, 1)
+        del param
+
+    param = lastNode.getParam("transformCenterChanged")
+    if param is not None:
+        param.setValue(True)
+        del param
+
+    del lastNode
+    # End of node "transform_b"
+
+    # Start of node "Modulate1"
+    lastNode = app.createNode("net.fxarena.openfx.Modulate", 1, group)
+    lastNode.setScriptName("Modulate1")
+    lastNode.setLabel("Modulate1")
+    lastNode.setPosition(1216, 62)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupModulate1 = lastNode
+
+    param = lastNode.getParam("hostMix")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Modulate1"
+
+    # Start of node "Modulate2"
+    lastNode = app.createNode("net.fxarena.openfx.Modulate", 1, group)
+    lastNode.setScriptName("Modulate2")
+    lastNode.setLabel("Modulate2")
+    lastNode.setPosition(634, 72)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupModulate2 = lastNode
+
+    param = lastNode.getParam("hostMix")
+    if param is not None:
+        param.setValue(0, 0)
+        del param
+
+    del lastNode
+    # End of node "Modulate2"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, grouplimit)
-    groupMerge1.connectInput(0, groupposition_a)
-    groupMerge1.connectInput(1, groupposition_b)
-    groupposition_a.connectInput(0, groupA)
-    groupposition_b.connectInput(0, groupB)
+    groupMerge1.connectInput(0, grouptransform_a)
+    groupMerge1.connectInput(1, grouptransform_b)
     grouplimit.connectInput(0, groupA)
     grouplimit.connectInput(1, groupMerge1)
     grouplimit.connectInput(2, groupB)
+    grouptransform_a.connectInput(0, groupModulate2)
+    grouptransform_b.connectInput(0, groupModulate1)
+    groupModulate1.connectInput(0, groupB)
+    groupModulate2.connectInput(0, groupA)
 
     try:
         extModule = sys.modules["SlideTransitionExt"]
