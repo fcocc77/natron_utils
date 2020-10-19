@@ -54,7 +54,6 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setEvaluateOnChange(False)
     param.setAnimationEnabled(False)
@@ -62,20 +61,13 @@ def createInstance(app,group):
     del param
 
     param = lastNode.createChoiceParam("format", "Format")
-    entries = [ ("Quarter HD - 480 x 270", ""),
-    ("Half HD - 960 x 540", ""),
-    ("Full HD - 1920 x 1080", ""),
-    ("4K - 3840 x 2160", "")]
-    param.setOptions(entries)
-    del entries
-    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.setDefaultValue(2)
     param.restoreDefaultValue()
 
     # Add the param to the page
     lastNode.control.addParam(param)
 
     # Set param properties
-    param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
     lastNode.format = param
@@ -244,24 +236,6 @@ def createInstance(app,group):
     lastNode.direction = param
     del param
 
-    param = lastNode.createIntParam("gap", "Gap %")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
-    param.setDisplayMinimum(0, 0)
-    param.setDisplayMaximum(100, 0)
-    param.setDefaultValue(0, 0)
-    param.restoreDefaultValue(0)
-
-    # Add the param to the page
-    lastNode.control.addParam(param)
-
-    # Set param properties
-    param.setHelp("")
-    param.setAddNewLine(True)
-    param.setAnimationEnabled(True)
-    lastNode.gap = param
-    del param
-
     # Refresh the GUI with the newly created parameters
     lastNode.setPagesOrder(['control', 'Node', 'Settings'])
     lastNode.refreshUserParamsGUI()
@@ -270,7 +244,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(928, 606)
+    lastNode.setPosition(928, 674)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -306,7 +280,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.MergePlugin", 1, group)
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
-    lastNode.setPosition(928, 262)
+    lastNode.setPosition(928, 266)
     lastNode.setSize(104, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
@@ -333,7 +307,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
     lastNode.setScriptName("limit")
     lastNode.setLabel("limit")
-    lastNode.setPosition(930, 481)
+    lastNode.setPosition(930, 537)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
     grouplimit = lastNode
@@ -430,7 +404,7 @@ def createInstance(app,group):
     lastNode = app.createNode("net.fxarena.openfx.Modulate", 1, group)
     lastNode.setScriptName("Modulate2")
     lastNode.setLabel("Modulate2")
-    lastNode.setPosition(634, 72)
+    lastNode.setPosition(634, 73)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupModulate2 = lastNode
@@ -443,17 +417,140 @@ def createInstance(app,group):
     del lastNode
     # End of node "Modulate2"
 
+    # Start of node "Crop1"
+    lastNode = app.createNode("vv.Crop", 1, group)
+    lastNode.setScriptName("Crop1")
+    lastNode.setLabel("Crop1")
+    lastNode.setPosition(930, 350)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.7, 0.7, 0.7)
+    groupCrop1 = lastNode
+
+    param = lastNode.getParam("onParamChanged")
+    if param is not None:
+        param.setValue("crop.main")
+        del param
+
+
+    # Create the user parameters
+    lastNode.control = lastNode.createPageParam("control", "Control")
+    param = lastNode.createStringParam("state_label", "State")
+    param.setType(NatronEngine.StringParam.TypeEnum.eStringTypeLabel)
+    param.setDefaultValue("- - - - - - - >    STATE :")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setEvaluateOnChange(False)
+    param.setAnimationEnabled(False)
+    param.setEnabled(False, 0)
+    lastNode.state_label = param
+    del param
+
+    param = lastNode.createChoiceParam("format", "Format")
+    entries = [ ("Quarter HD - 480 x 270", ""),
+    ("Half HD - 960 x 540", ""),
+    ("Full HD - 1920 x 1080", ""),
+    ("4K - 3840 x 2160", "")]
+    param.setOptions(entries)
+    del entries
+    param.setDefaultValue("Full HD - 1920 x 1080")
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setEnabled(False, 0)
+    lastNode.format = param
+    del param
+
+    param = lastNode.createButtonParam("link", "Link To Parent")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.link = param
+    del param
+
+    param = lastNode.createButtonParam("refresh", "Refresh")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setEvaluateOnChange(False)
+    lastNode.refresh = param
+    del param
+
+    # Refresh the GUI with the newly created parameters
+    lastNode.setPagesOrder(['control', 'Node', 'Settings'])
+    lastNode.refreshUserParamsGUI()
+    del lastNode
+    # End of node "Crop1"
+
+    # Start of node "motion_blur"
+    lastNode = app.createNode("net.sf.cimg.CImgBlur", 4, group)
+    lastNode.setScriptName("motion_blur")
+    lastNode.setLabel("motion_blur")
+    lastNode.setPosition(930, 424)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.8, 0.5, 0.3)
+    groupmotion_blur = lastNode
+
+    param = lastNode.getParam("size")
+    if param is not None:
+        param.setValueAtTime(0, 1, 0)
+        param.setValueAtTime(20, 51, 0)
+        param.setValueAtTime(0, 101, 0)
+        del param
+
+    param = lastNode.getParam("boundary")
+    if param is not None:
+        param.set("nearest")
+        del param
+
+    param = lastNode.getParam("filter")
+    if param is not None:
+        param.set("box")
+        del param
+
+    del lastNode
+    # End of node "motion_blur"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, grouplimit)
     groupMerge1.connectInput(0, grouptransform_a)
     groupMerge1.connectInput(1, grouptransform_b)
     grouplimit.connectInput(0, groupA)
-    grouplimit.connectInput(1, groupMerge1)
+    grouplimit.connectInput(1, groupmotion_blur)
     grouplimit.connectInput(2, groupB)
     grouptransform_a.connectInput(0, groupModulate2)
     grouptransform_b.connectInput(0, groupModulate1)
     groupModulate1.connectInput(0, groupB)
     groupModulate2.connectInput(0, groupA)
+    groupCrop1.connectInput(0, groupMerge1)
+    groupmotion_blur.connectInput(0, groupCrop1)
+
+    param = groupCrop1.getParam("state_label")
+    group.getParam("state_label").setAsAlias(param)
+    del param
+    param = groupCrop1.getParam("format")
+    group.getParam("format").setAsAlias(param)
+    del param
 
     try:
         extModule = sys.modules["SlideTransitionExt"]

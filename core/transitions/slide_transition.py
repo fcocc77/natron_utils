@@ -1,6 +1,6 @@
 from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, limit_transition
 from nx import getNode
-from animations import exaggerated_animation
+from animations import exaggerated_animation, back_and_forth_animation
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -23,7 +23,6 @@ def refresh(thisNode):
     last_frame = start_frame + duration
 
     direction = thisNode.direction.get()
-    gap = thisNode.gap.get() * duration / 100
 
     transform_a = getNode(thisNode, 'transform_a')
     transform_b = getNode(thisNode, 'transform_b')
@@ -58,7 +57,25 @@ def refresh(thisNode):
 
     #
 
-    exaggerated_animation(translate_a, duration + gap, start_frame, values_a, exaggeration=exaggeration, dimension=dimension)
+    translate_a.restoreDefaultValue(0)
+    translate_a.restoreDefaultValue(1)
+    translate_b.restoreDefaultValue(0)
+    translate_b.restoreDefaultValue(1)
+
+    exaggerated_animation(translate_a, duration, start_frame, values_a, exaggeration=exaggeration, dimension=dimension)
     exaggerated_animation(translate_b, duration, start_frame, values_b, exaggeration=exaggeration, dimension=dimension)
+    #
+    #
+
+    # Motion Blur
+    motion_blur = getNode(thisNode, 'motion_blur').getParam('size')
+    motion_blur.restoreDefaultValue(0)
+    motion_blur.restoreDefaultValue(1)
+
+    # calcula el desenfoque a partir de la duracion
+    mv_size = 20 * 100 / duration
+    mv_size *= rscale
+
+    back_and_forth_animation(motion_blur, duration, start_frame, [0, mv_size], dimension=dimension)
 
     limit_transition(thisNode, start_frame)
