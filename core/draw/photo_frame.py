@@ -180,6 +180,7 @@ def adjust_metadata_text(thisNode, rscale, bbox_format, base_name):
     prefix = str(thisNode.getParam('meta_' + base_name + '_prefix').get())
     suffix = str(thisNode.getParam('meta_' + base_name + '_suffix').get())
 
+    random.seed(thisNode.seed.get())
     number = random.randint(10, 99)
     text = prefix + str(number)
     prefix_node.getParam('text').set(text)

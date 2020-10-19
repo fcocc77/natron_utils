@@ -325,6 +325,23 @@ def createInstance(app,group):
     lastNode.bottom_margin = param
     del param
 
+    param = lastNode.createIntParam("seed", "Seed")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.seed = param
+    del param
+
     param = lastNode.createSeparatorParam("sep9", "")
 
     # Add the param to the page
