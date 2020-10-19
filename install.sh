@@ -17,6 +17,8 @@ cp -rf ./testing $plugins
 
 cp -rf ./vinarender/* $vinarender
 
+cp ./utils/python/util.py $plugins
+
 # inserta la ruta de la instancia a init.py
 init="$plugins/core/init.py"
 sed -i "s|{path}|$plugins|g" $init
