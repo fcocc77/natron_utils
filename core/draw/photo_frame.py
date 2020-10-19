@@ -204,6 +204,10 @@ def adjust_metadata_text(thisNode, rscale, bbox_format, base_name):
     suffix_node.getParam('color').copy(thisNode.suffix_color)
     symbol_node.getParam('color').copy(thisNode.symbol_color)
 
+    # desabilita el simbolo para que actualice el color
+    symbol_node_disable = symbol_node.getParam('disableNode')
+    symbol_node_disable.set(True)
+    symbol_node_disable.set(False)
     #
 
     symbol_size = size * 2
