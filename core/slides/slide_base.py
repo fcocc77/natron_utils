@@ -1,5 +1,6 @@
 from slide_common import setup
 from base import get_rscale, get_format
+from nx import getNode
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -7,10 +8,11 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
         return
 
     knob_name = thisParam.getScriptName()
-    setup(thisParam, thisNode)
 
     if knob_name == 'refresh':
         refresh(thisNode)
+
+    setup(thisParam, thisNode)
 
 
 def refresh(thisNode):
