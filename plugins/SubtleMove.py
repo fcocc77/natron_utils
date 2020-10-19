@@ -235,6 +235,19 @@ def createInstance(app,group):
     lastNode.movement = param
     del param
 
+    param = lastNode.createChoiceParam("Transformfilter", "Filter")
+    param.setDefaultValue(3)
+    param.restoreDefaultValue()
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    lastNode.Transformfilter = param
+    del param
+
     param = lastNode.createDoubleParam("level", "Level")
     param.setMinimum(0, 0)
     param.setMaximum(10, 0)
@@ -558,6 +571,10 @@ def createInstance(app,group):
     groupOutput1.connectInput(0, groupTransform)
     groupTransform.connectInput(0, groupModulate1)
     groupModulate1.connectInput(0, groupImage)
+
+    param = groupTransform.getParam("filter")
+    group.getParam("Transformfilter").setAsAlias(param)
+    del param
 
     try:
         extModule = sys.modules["SubtleMoveExt"]
