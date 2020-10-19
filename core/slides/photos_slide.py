@@ -9,9 +9,10 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
     knob_name = thisParam.getScriptName()
 
-    setup(thisParam, thisNode)
     if knob_name == 'refresh':
         refresh(thisNode)
+
+    setup(thisParam, thisNode)
 
 
 def refresh(thisNode):
@@ -47,6 +48,5 @@ def refresh(thisNode):
     else:
         meta_a_suffix.set('4K')
         meta_b_suffix.set('3840 x 2160')
-
     #
     #
