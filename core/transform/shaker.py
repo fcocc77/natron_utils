@@ -36,7 +36,7 @@ def refresh(thisNode):
     shaker(thisNode, rotate, frequency, rotate=thisNode.rotate.get())
 
 
-def shaker(thisNode, param, frequency, scale=None, translate=None, rotate=None, restore=True):
+def shaker(thisNode, param, frequency, scale=None, translate=None, rotate=None, restore=True, seed=None):
 
     rscale = get_rscale(thisNode)
     duration = get_duration(thisNode)
@@ -74,6 +74,8 @@ def shaker(thisNode, param, frequency, scale=None, translate=None, rotate=None, 
 
     for frame in frames:
         if scale:
+            if seed:
+                random.seed(seed + frame + 1)
             scale_value = random.random() * scale - (scale / 2)
             scale_value *= rscale
             if not restore:
@@ -86,6 +88,8 @@ def shaker(thisNode, param, frequency, scale=None, translate=None, rotate=None, 
             param.setValueAtTime(scale_value, frame, 1)
 
         if translate:
+            if seed:
+                random.seed(seed + frame + 2)
             x_value = random.random() * translate - (translate / 2)
             x_value *= rscale
             if not restore:
@@ -100,6 +104,8 @@ def shaker(thisNode, param, frequency, scale=None, translate=None, rotate=None, 
             param.setValueAtTime(y_value, frame, 1)
 
         if rotate:
+            if seed:
+                random.seed(seed + frame + 3)
             rotate_value = random.random() * rotate - (rotate / 2)
             if not restore:
                 prev_value = prev_dimension_0_values[frame]

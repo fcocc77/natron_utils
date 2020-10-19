@@ -446,6 +446,35 @@ def createInstance(app,group):
     lastNode.sep10 = param
     del param
 
+    param = lastNode.createBooleanParam("seed", "Seed")
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(True)
+    param.setAnimationEnabled(True)
+    lastNode.seed = param
+    del param
+
+    param = lastNode.createIntParam("seed_amount", "Seed Amount")
+    param.setDisplayMinimum(0, 0)
+    param.setDisplayMaximum(100, 0)
+    param.setDefaultValue(0, 0)
+    param.restoreDefaultValue(0)
+
+    # Add the param to the page
+    lastNode.control.addParam(param)
+
+    # Set param properties
+    param.setHelp("")
+    param.setAddNewLine(False)
+    param.setAnimationEnabled(True)
+    param.setValue(1, 0)
+    lastNode.seed_amount = param
+    del param
+
     param = lastNode.createDoubleParam("frequency", "Frequency")
     param.setMinimum(1, 0)
     param.setMaximum(100, 0)
