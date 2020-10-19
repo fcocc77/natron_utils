@@ -1,5 +1,5 @@
 from base import link_to_parent, get_rscale, get_duration, get_format, reformat_update
-from nx import getNode
+from nx import getNode, warning
 from text_fit import separate_text, get_bbox_format, get_bbox
 import random
 
@@ -17,7 +17,13 @@ def main(thisParam, thisNode, thisGroup, app, userEdited):
 
 def refresh(thisNode):
     rscale = get_rscale(thisNode)
-    bbox_format = get_bbox_format(thisNode.getInput(0))
+
+    input_node = thisNode.getInput(0)
+    if input_node.getPluginID() == 'fr.inria.built-in.Input':
+        warning('error', 'El nodo a conectar no puede ser un "Input"')
+        return
+
+    bbox_format = get_bbox_format(input_node)
 
     shadow_node = getNode(thisNode, 'shadow')
     disable_shadow = shadow_node.getParam('disableNode')
