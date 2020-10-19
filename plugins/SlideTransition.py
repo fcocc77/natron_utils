@@ -153,9 +153,7 @@ def createInstance(app,group):
     lastNode.time_label = param
     del param
 
-    param = lastNode.createIntParam("duration_percent", "Duration Percent %")
-    param.setMinimum(0, 0)
-    param.setMaximum(100, 0)
+    param = lastNode.createIntParam("start_frame", "Start Frame")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -168,8 +166,8 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(100, 0)
-    lastNode.duration_percent = param
+    param.setValue(1, 0)
+    lastNode.start_frame = param
     del param
 
     param = lastNode.createInt3DParam("durations", "Durations")
@@ -272,7 +270,7 @@ def createInstance(app,group):
     # Start of node "Output1"
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
-    lastNode.setPosition(932, 576)
+    lastNode.setPosition(928, 606)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
@@ -284,7 +282,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("A")
     lastNode.setLabel("A")
-    lastNode.setPosition(661, 106)
+    lastNode.setPosition(428, 166)
     lastNode.setSize(104, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupA = lastNode
@@ -296,7 +294,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Input", 1, group)
     lastNode.setScriptName("B")
     lastNode.setLabel("B")
-    lastNode.setPosition(1213, 99)
+    lastNode.setPosition(1431, 162)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupB = lastNode
@@ -335,10 +333,18 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Position", 1, group)
     lastNode.setScriptName("position_a")
     lastNode.setLabel("position_a")
-    lastNode.setPosition(661, 165)
+    lastNode.setPosition(663, 165)
     lastNode.setSize(104, 32)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupposition_a = lastNode
+
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValueAtTime(0, 1, 0)
+        param.setValueAtTime(-288.0000000000001, 36, 0)
+        param.setValueAtTime(-1632, 66, 0)
+        param.setValueAtTime(-1920, 101, 0)
+        del param
 
     del lastNode
     # End of node "position_a"
@@ -352,38 +358,46 @@ def createInstance(app,group):
     lastNode.setColor(0.7, 0.3, 0.1)
     groupposition_b = lastNode
 
+    param = lastNode.getParam("translate")
+    if param is not None:
+        param.setValueAtTime(1920, 1, 0)
+        param.setValueAtTime(1632, 36, 0)
+        param.setValueAtTime(288.0000000000001, 66, 0)
+        param.setValueAtTime(0, 101, 0)
+        del param
+
     del lastNode
     # End of node "position_b"
 
-    # Start of node "switch"
+    # Start of node "limit"
     lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
-    lastNode.setScriptName("switch")
-    lastNode.setLabel("switch")
-    lastNode.setPosition(932, 423)
-    lastNode.setSize(104, 32)
+    lastNode.setScriptName("limit")
+    lastNode.setLabel("limit")
+    lastNode.setPosition(930, 483)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.3, 0.37, 0.776)
-    groupswitch = lastNode
+    grouplimit = lastNode
 
     param = lastNode.getParam("which")
     if param is not None:
         param.setValueAtTime(0, 0, 0)
         param.setValueAtTime(1, 1, 0)
-        param.setValueAtTime(1, 101, 0)
-        param.setValueAtTime(2, 102, 0)
+        param.setValueAtTime(1, 100, 0)
+        param.setValueAtTime(2, 101, 0)
         del param
 
     del lastNode
-    # End of node "switch"
+    # End of node "limit"
 
     # Now that all nodes are created we can connect them together, restore expressions
-    groupOutput1.connectInput(0, groupswitch)
+    groupOutput1.connectInput(0, grouplimit)
     groupMerge1.connectInput(0, groupposition_a)
     groupMerge1.connectInput(1, groupposition_b)
     groupposition_a.connectInput(0, groupA)
     groupposition_b.connectInput(0, groupB)
-    groupswitch.connectInput(0, groupposition_a)
-    groupswitch.connectInput(1, groupMerge1)
-    groupswitch.connectInput(2, groupposition_b)
+    grouplimit.connectInput(0, groupA)
+    grouplimit.connectInput(1, groupMerge1)
+    grouplimit.connectInput(2, groupB)
 
     try:
         extModule = sys.modules["SlideTransitionExt"]

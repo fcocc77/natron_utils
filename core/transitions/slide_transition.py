@@ -1,4 +1,4 @@
-from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, get_start_frame
+from base import link_to_parent, children_refresh, get_rscale, get_duration, get_format, limit_transition
 from nx import getNode
 from animations import exaggerated_animation
 
@@ -19,7 +19,7 @@ def refresh(thisNode):
     rscale = get_rscale(thisNode)
     duration = get_duration(thisNode)
     width, height = get_format(thisNode)
-    start_frame = get_start_frame(thisNode)
+    start_frame = thisNode.start_frame.get()
     last_frame = start_frame + duration
 
     direction = thisNode.direction.get()
@@ -27,27 +27,6 @@ def refresh(thisNode):
 
     translate_a = getNode(thisNode, 'position_a').getParam('translate')
     translate_b = getNode(thisNode, 'position_b').getParam('translate')
-
-    switch = getNode(thisNode, 'switch').getParam('which')
-
-    #
-
-    # restaurar valores
-    switch.restoreDefaultValue()
-
-    translate_a.restoreDefaultValue(0)
-    translate_a.restoreDefaultValue(1)
-
-    translate_b.restoreDefaultValue(0)
-    translate_b.restoreDefaultValue(1)
-
-    # switch
-    switch.setValueAtTime(0, start_frame - 1)
-    switch.setValueAtTime(1, start_frame)
-    switch.setValueAtTime(1, last_frame)
-    switch.setValueAtTime(2, last_frame + 1)
-
-    #
 
     exaggeration = [0.7, 0.7]
 
@@ -75,3 +54,5 @@ def refresh(thisNode):
 
     exaggerated_animation(translate_a, duration + gap, start_frame, values_a, exaggeration=exaggeration, dimension=dimension)
     exaggerated_animation(translate_b, duration, start_frame, values_b, exaggeration=exaggeration, dimension=dimension)
+
+    limit_transition(thisNode, start_frame)
