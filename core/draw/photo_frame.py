@@ -26,20 +26,24 @@ def refresh(thisNode):
     bbox_format = get_bbox_format(input_node)
 
     shadow_node = getNode(thisNode, 'shadow')
+    shadow_switch = getNode(thisNode, 'shadow_switch').getParam('which')
     disable_shadow = shadow_node.getParam('disableNode')
     inside_shadow_node = getNode(thisNode, 'shadow_inside')
-
-    shadow_node.getParam('refresh').trigger()
-    inside_shadow_node.getParam('refresh').trigger()
+    inside_shadow_switch = getNode(thisNode, 'shadow_inside_switch').getParam('which')
 
     # se desabilita la sombra, por que modifica el bbox,
     # y se descuadre todo lo demas.
-    disable_shadow.set(True)
+    shadow_switch.set(0)
+    inside_shadow_switch.set(0)
 
     to_frame(thisNode, rscale, bbox_format)
     adjust_metadata(thisNode, rscale, bbox_format)
 
-    disable_shadow.set(False)
+    shadow_switch.set(1)
+    inside_shadow_switch.set(1)
+
+    shadow_node.getParam('refresh').trigger()
+    inside_shadow_node.getParam('refresh').trigger()
 
 
 def get_frame_width(thisNode, bbox_format, rscale):

@@ -618,7 +618,7 @@ def createInstance(app,group):
     lastNode = app.createNode("fr.inria.built-in.Output", 1, group)
     lastNode.setLabel("Output")
     lastNode.setPosition(909, 1364)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupOutput1 = lastNode
 
@@ -630,7 +630,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Photo")
     lastNode.setLabel("Photo")
     lastNode.setPosition(910, 39)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupPhoto = lastNode
 
@@ -642,7 +642,7 @@ def createInstance(app,group):
     lastNode.setScriptName("photo_mask")
     lastNode.setLabel("photo_mask")
     lastNode.setPosition(1139, 236)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupphoto_mask = lastNode
 
@@ -677,7 +677,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Shuffle1")
     lastNode.setLabel("Shuffle1")
     lastNode.setPosition(910, 236)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.6, 0.24, 0.39)
     groupShuffle1 = lastNode
 
@@ -694,7 +694,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Premult1")
     lastNode.setLabel("Premult1")
     lastNode.setPosition(910, 331)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupPremult1 = lastNode
 
@@ -705,8 +705,8 @@ def createInstance(app,group):
     lastNode = app.createNode("net.sf.openfx.Rectangle", 2, group)
     lastNode.setScriptName("rectangle")
     lastNode.setLabel("rectangle")
-    lastNode.setPosition(647, 395)
-    lastNode.setSize(100, 29)
+    lastNode.setPosition(575, 387)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouprectangle = lastNode
 
@@ -745,7 +745,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge1")
     lastNode.setLabel("Merge1")
     lastNode.setPosition(910, 472)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(100, 50)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge1 = lastNode
 
@@ -802,7 +802,7 @@ def createInstance(app,group):
     lastNode.setScriptName("text_bbox")
     lastNode.setLabel("text_bbox")
     lastNode.setPosition(1181, 515)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouptext_bbox = lastNode
 
@@ -844,7 +844,7 @@ def createInstance(app,group):
     lastNode.setScriptName("merge")
     lastNode.setLabel("merge")
     lastNode.setPosition(910, 720)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(100, 50)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupmerge = lastNode
 
@@ -861,7 +861,7 @@ def createInstance(app,group):
     lastNode.setScriptName("text_fit")
     lastNode.setLabel("text_fit")
     lastNode.setPosition(1181, 573)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.7, 0.7)
     grouptext_fit = lastNode
 
@@ -1239,7 +1239,7 @@ def createInstance(app,group):
     lastNode.setScriptName("title_node")
     lastNode.setLabel("title_node")
     lastNode.setPosition(1381, 570)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     grouptitle_node = lastNode
 
@@ -1283,7 +1283,7 @@ def createInstance(app,group):
     lastNode.setScriptName("subtitle_node")
     lastNode.setLabel("subtitle_node")
     lastNode.setPosition(1581, 570)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.3, 0.5, 0.2)
     groupsubtitle_node = lastNode
 
@@ -1327,7 +1327,7 @@ def createInstance(app,group):
     lastNode.setScriptName("title_transform")
     lastNode.setLabel("title_transform")
     lastNode.setPosition(1381, 620)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     grouptitle_transform = lastNode
 
@@ -1356,7 +1356,7 @@ def createInstance(app,group):
     lastNode.setScriptName("subtitle_transform")
     lastNode.setLabel("subtitle_transform")
     lastNode.setPosition(1581, 620)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupsubtitle_transform = lastNode
 
@@ -1385,7 +1385,7 @@ def createInstance(app,group):
     lastNode.setScriptName("titles_merge")
     lastNode.setLabel("titles_merge")
     lastNode.setPosition(1581, 720)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(100, 50)
     lastNode.setColor(0.3, 0.37, 0.776)
     grouptitles_merge = lastNode
 
@@ -1402,7 +1402,7 @@ def createInstance(app,group):
     lastNode.setScriptName("photo_transform")
     lastNode.setLabel("photo_transform")
     lastNode.setPosition(910, 111)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupphoto_transform = lastNode
 
@@ -1425,7 +1425,7 @@ def createInstance(app,group):
     lastNode.setScriptName("reformat")
     lastNode.setLabel("reformat")
     lastNode.setPosition(667, 1227)
-    lastNode.setSize(100, 29)
+    lastNode.setSize(100, 30)
     lastNode.setColor(0.7, 0.3, 0.1)
     groupreformat = lastNode
 
@@ -1459,7 +1459,7 @@ def createInstance(app,group):
     lastNode.setScriptName("Merge2")
     lastNode.setLabel("Merge2")
     lastNode.setPosition(907, 1219)
-    lastNode.setSize(100, 45)
+    lastNode.setSize(100, 50)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge2 = lastNode
 
@@ -1495,11 +1495,6 @@ def createInstance(app,group):
         param.setValue("X28")
         del param
 
-    param = lastNode.getParam("name")
-    if param is not None:
-        param.set("M/Montserrat")
-        del param
-
     param = lastNode.getParam("font")
     if param is not None:
         param.setValue("Montserrat")
@@ -1528,6 +1523,11 @@ def createInstance(app,group):
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge3 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge3"
@@ -1559,11 +1559,6 @@ def createInstance(app,group):
     param = lastNode.getParam("text")
     if param is not None:
         param.setValue("Y13")
-        del param
-
-    param = lastNode.getParam("name")
-    if param is not None:
-        param.set("M/Montserrat")
         del param
 
     param = lastNode.getParam("font")
@@ -1599,6 +1594,11 @@ def createInstance(app,group):
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupMerge4 = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "Merge4"
@@ -1663,11 +1663,6 @@ def createInstance(app,group):
         param.setValue(" ➤ ")
         del param
 
-    param = lastNode.getParam("name")
-    if param is not None:
-        param.set("M/Montserrat")
-        del param
-
     param = lastNode.getParam("font")
     if param is not None:
         param.setValue("Montserrat")
@@ -1696,6 +1691,11 @@ def createInstance(app,group):
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupa_merge = lastNode
+
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
 
     del lastNode
     # End of node "a_merge"
@@ -1817,6 +1817,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupb_merge = lastNode
 
+    param = lastNode.getParam("userTextArea")
+    if param is not None:
+        param.setValue("<Natron>(over)</Natron>")
+        del param
+
     del lastNode
     # End of node "b_merge"
 
@@ -1892,7 +1897,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.Shadow", 1, group)
     lastNode.setScriptName("shadow")
     lastNode.setLabel("shadow")
-    lastNode.setPosition(647, 478)
+    lastNode.setPosition(575, 481)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupshadow = lastNode
@@ -2096,7 +2101,7 @@ def createInstance(app,group):
     lastNode = app.createNode("vv.Shadow", 1, group)
     lastNode.setScriptName("shadow_inside")
     lastNode.setLabel("shadow_inside")
-    lastNode.setPosition(910, 404)
+    lastNode.setPosition(1151, 330)
     lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     groupshadow_inside = lastNode
@@ -2297,13 +2302,37 @@ def createInstance(app,group):
     del lastNode
     # End of node "shadow_inside"
 
+    # Start of node "shadow_switch"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("shadow_switch")
+    lastNode.setLabel("shadow_switch")
+    lastNode.setPosition(754, 481)
+    lastNode.setSize(100, 32)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupshadow_switch = lastNode
+
+    del lastNode
+    # End of node "shadow_switch"
+
+    # Start of node "shadow_inside_switch"
+    lastNode = app.createNode("net.sf.openfx.switchPlugin", 1, group)
+    lastNode.setScriptName("shadow_inside_switch")
+    lastNode.setLabel("shadow_inside_switch")
+    lastNode.setPosition(910, 392)
+    lastNode.setSize(100, 55)
+    lastNode.setColor(0.3, 0.37, 0.776)
+    groupshadow_inside_switch = lastNode
+
+    del lastNode
+    # End of node "shadow_inside_switch"
+
     # Now that all nodes are created we can connect them together, restore expressions
     groupOutput1.connectInput(0, groupMerge2)
     groupShuffle1.connectInput(0, groupphoto_transform)
     groupShuffle1.connectInput(1, groupphoto_mask)
     groupPremult1.connectInput(0, groupShuffle1)
-    groupMerge1.connectInput(0, groupshadow_inside)
-    groupMerge1.connectInput(1, groupshadow)
+    groupMerge1.connectInput(0, groupshadow_inside_switch)
+    groupMerge1.connectInput(1, groupshadow_switch)
     grouptransform.connectInput(0, groupMerge4)
     groupmerge.connectInput(0, groupMerge1)
     groupmerge.connectInput(1, grouptitles_merge)
@@ -2333,6 +2362,10 @@ def createInstance(app,group):
     groupb_symbol_position.connectInput(0, groupsymbol)
     groupshadow.connectInput(0, grouprectangle)
     groupshadow_inside.connectInput(0, groupPremult1)
+    groupshadow_switch.connectInput(0, grouprectangle)
+    groupshadow_switch.connectInput(1, groupshadow)
+    groupshadow_inside_switch.connectInput(0, groupPremult1)
+    groupshadow_inside_switch.connectInput(1, groupshadow_inside)
 
     param = grouptext_fit.getParam("state_label")
     group.getParam("state_label").setAsAlias(param)
