@@ -90,6 +90,7 @@ def refresh():
         format_slide = slide.getParam('format')
         durations_slide = slide.getParam('durations')
         speed_slide = slide.getParam('speed')
+        seed_slide = slide.getParam('seed')
 
         color_slide.set(color[0], color[1], color[2], color[3])
         speed_slide.set(speed)
@@ -104,6 +105,12 @@ def refresh():
         first_frame, last_frame = frame_range_list[index]
 
         start_frame_slide.set(first_frame)
+
+        # seed, si es que la slide tiene el parametro
+        if seed_slide:
+            seed_slide.set(index * 7)
+        #
+        #
 
         picture = get_picture(workarea, index)
         if picture:
