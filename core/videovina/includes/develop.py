@@ -95,8 +95,6 @@ def refresh():
         speed_slide.set(speed)
         format_slide.set(_format)
 
-        slide.getParam('refresh').trigger()
-
         durations_slide.set(
             durations[0] + double_transition_duration,
             durations[1] + double_transition_duration,
@@ -112,6 +110,8 @@ def refresh():
             reformat = picture['reformat']
             if reformat:
                 reformat.getParam('refresh').trigger()
+
+        slide.getParam('refresh').trigger()
 
         # Transition
         transition_refresh(
