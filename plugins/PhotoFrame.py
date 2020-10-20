@@ -878,7 +878,7 @@ def createInstance(app,group):
     lastNode.setScriptName("text_fit")
     lastNode.setLabel("text_fit")
     lastNode.setPosition(1181, 573)
-    lastNode.setSize(100, 30)
+    lastNode.setSize(100, 32)
     lastNode.setColor(0.7, 0.7, 0.7)
     grouptext_fit = lastNode
 
@@ -1070,7 +1070,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(28, 0)
+    param.setValue(38, 0)
     lastNode.font_size_title = param
     del param
 
@@ -1091,8 +1091,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(706, 0)
-    param.setValue(3, 1)
+    param.setValue(698, 0)
     lastNode.title_position = param
     del param
 
@@ -1111,7 +1110,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(78, 0)
+    param.setValue(100, 0)
     lastNode.title_max_size = param
     del param
 
@@ -1143,7 +1142,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    param.setValue(36, 0)
+    param.setValue(38, 0)
     lastNode.font_size_subtitle = param
     del param
 
@@ -1164,8 +1163,7 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
-    param.setValue(832, 0)
-    param.setValue(1, 1)
+    param.setValue(847, 0)
     lastNode.subtitle_position = param
     del param
 
@@ -1267,7 +1265,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("TITLE")
+        param.setValue(" TITLE ")
         del param
 
     param = lastNode.getParam("custom")
@@ -1282,7 +1280,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(28, 0)
+        param.setValue(38, 0)
         del param
 
     param = lastNode.getParam("color")
@@ -1311,7 +1309,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("SUBTITLE")
+        param.setValue(" SUBTITLE ")
         del param
 
     param = lastNode.getParam("custom")
@@ -1326,7 +1324,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("size")
     if param is not None:
-        param.setValue(36, 0)
+        param.setValue(38, 0)
         del param
 
     param = lastNode.getParam("color")
@@ -1350,14 +1348,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(781, 0)
-        param.setValue(-13.5, 1)
+        param.setValue(773, 0)
+        param.setValue(-16.5, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(179, 0)
-        param.setValue(24, 1)
+        param.setValue(187, 0)
+        param.setValue(27, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1379,14 +1377,14 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(907, 0)
-        param.setValue(-15.5, 1)
+        param.setValue(922, 0)
+        param.setValue(-16.5, 1)
         del param
 
     param = lastNode.getParam("center")
     if param is not None:
-        param.setValue(53, 0)
-        param.setValue(26, 1)
+        param.setValue(38, 0)
+        param.setValue(27, 1)
         del param
 
     param = lastNode.getParam("transformCenterChanged")
@@ -1509,7 +1507,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("X28")
+        param.setValue("X22")
         del param
 
     param = lastNode.getParam("font")
@@ -1575,7 +1573,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("text")
     if param is not None:
-        param.setValue("Y13")
+        param.setValue("Y22")
         del param
 
     param = lastNode.getParam("font")
@@ -1649,7 +1647,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(1613, 0)
+        param.setValue(1608, 0)
         param.setValue(1026.5, 1)
         del param
 
@@ -1853,7 +1851,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(93, 0)
+        param.setValue(92, 0)
         del param
 
     del lastNode
@@ -1870,7 +1868,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(85, 0)
+        param.setValue(90, 0)
         del param
 
     del lastNode
@@ -1887,7 +1885,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(53, 0)
+        param.setValue(52, 0)
         del param
 
     del lastNode
@@ -1904,7 +1902,7 @@ def createInstance(app,group):
 
     param = lastNode.getParam("translate")
     if param is not None:
-        param.setValue(45, 0)
+        param.setValue(50, 0)
         del param
 
     del lastNode
@@ -2328,6 +2326,11 @@ def createInstance(app,group):
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshadow_switch = lastNode
 
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
+
     del lastNode
     # End of node "shadow_switch"
 
@@ -2339,6 +2342,11 @@ def createInstance(app,group):
     lastNode.setSize(100, 55)
     lastNode.setColor(0.3, 0.37, 0.776)
     groupshadow_inside_switch = lastNode
+
+    param = lastNode.getParam("which")
+    if param is not None:
+        param.setValue(1, 0)
+        del param
 
     del lastNode
     # End of node "shadow_inside_switch"

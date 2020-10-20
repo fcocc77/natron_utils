@@ -49,9 +49,11 @@ def refresh(thisNode):
         meta_a_suffix.set('4K')
         meta_b_suffix.set('3840 x 2160')
 
+    colorize = getNode(thisNode, 'colorize').getParam('white')
     for dimension in range(3):
         color = thisNode.color.getValue(dimension)
 
+        colorize.setValue(color, dimension)
         photo_frame.getParam('title_color').setValue(color, dimension)
         photo_frame.getParam('symbol_color').setValue(color, dimension)
     #
