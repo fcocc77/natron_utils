@@ -125,8 +125,11 @@ def one_line_fit(thisNode):
     title_node = getNode(thisNode, "title_node")
     subtitle_node = getNode(thisNode, "subtitle_node")
 
-    title = thisNode.title.get()
-    subtitle = thisNode.subtitle.get()
+    # un espacio al inicio y al final de cada palabra, por que algunas fuentes,
+    # quedan fuera del bbox y queda cortada la primera y ultima letra.
+    title = ' ' + thisNode.title.get() + ' '
+    subtitle = ' ' + thisNode.subtitle.get() + ' '
+    #
 
     font = thisNode.getParam('font').get()
     set_font(title_node, font)
@@ -193,31 +196,13 @@ def one_line_fit(thisNode):
     subtitle_size_y = subtitle_bbox.y2 - subtitle_bbox.y1
     subtitle_size_x = subtitle_bbox.x2 - subtitle_bbox.x1
 
-    # el tamanio de la palabra mas grande
-    if title_max_size < subtitle_max_size:
-        if subtitle:
-            y_max = subtitle_size_y
-        else:
-            y_max = title_size_y
-
-    else:
-        if title:
-            y_max = title_size_y
-        else:
-            y_max = subtitle_size_y
-
-    subtitle_pos_y = (current_format[1] / 2) - subtitle_bbox.y1 - (subtitle_size_y / 2)
-    subtitle_pos_y -= (y_max / 2) - (subtitle_size_y / 2)
     if title:
-        subtitle_pos_x = title_bbox.x2 + (join_text_size / 2)
+        subtitle_pos_x = title_bbox.x2
     else:
         subtitle_pos_x = title_bbox.x2
 
-    title_pos_y = (current_format[1] / 2) - title_bbox.y1 - (title_size_y / 2)
-    title_pos_y -= (y_max / 2) - (title_size_y / 2)
-
-    title_translate.set(0, title_pos_y)
-    subtitle_translate.set(subtitle_pos_x, subtitle_pos_y)
+    title_translate.set(0, 0)
+    subtitle_translate.set(subtitle_pos_x, 0)
 
     #
     #
@@ -280,8 +265,11 @@ def fit_text_to_box(thisNode):
     title_node = getNode(thisNode, "title_node")
     subtitle_node = getNode(thisNode, "subtitle_node")
 
-    title = thisNode.title.get()
-    subtitle = thisNode.subtitle.get()
+    # un espacio al inicio y al final de cada palabra, por que algunas fuentes,
+    # quedan fuera del bbox y queda cortada la primera y ultima letra.
+    title = ' ' + thisNode.title.get() + ' '
+    subtitle = ' ' + thisNode.subtitle.get() + ' '
+    #
 
     title_node.getParam('text').setValue(title)
     subtitle_node.getParam('text').setValue(subtitle)
@@ -437,8 +425,21 @@ def separate_text(fittext_node, parent=None):
     general_transform = getNode(fittext_node, 'General_Transform')
     scale = general_transform.getParam('scale').getValue()
 
+    # get titulos
     title = fittext_node.getParam('title').get()
     subtitle = fittext_node.getParam('subtitle').get()
+
+    is_title = False
+    is_subtitle = False
+    if title:
+        is_title = True
+    if subtitle:
+        is_subtitle = True
+
+    title = ' ' + title + ' '
+    subtitle = ' ' + subtitle + ' '
+    #
+    #
 
     title_size = fittext_node.getParam('font_size_title').get() * scale
     subtitle_size = fittext_node.getParam('font_size_subtitle').get() * scale
@@ -462,7 +463,7 @@ def separate_text(fittext_node, parent=None):
     set_font(title_node, font)
 
     disable_title = title_node.getParam('disableNode')
-    if title:
+    if is_title:
         disable_title.set(False)
     else:
         disable_title.set(True)
@@ -481,7 +482,7 @@ def separate_text(fittext_node, parent=None):
     set_font(subtitle_node, font)
 
     disable_subtitle = subtitle_node.getParam('disableNode')
-    if subtitle:
+    if is_subtitle:
         disable_subtitle.set(False)
     else:
         disable_subtitle.set(True)
