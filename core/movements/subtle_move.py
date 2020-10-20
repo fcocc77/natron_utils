@@ -97,11 +97,11 @@ def shaker_move(thisNode, scale_param, rotate_param, translate_param):
     scale = thisNode.scale_shaker.get()
     translate = thisNode.translate_shaker.get()
     rotate = thisNode.rotate_shaker.get()
-    seed_param = thisNode.getParam('seed')
+    seed_activate = thisNode.getParam('seed_activate')
     seed = None
-    if seed_param:
-        if seed_param.get():
-            seed = thisNode.getParam('seed_amount').get()
+    if seed_activate:
+        if seed_activate.get():
+            seed = thisNode.getParam('seed').get()
 
     if scale:
         shaker(thisNode, scale_param, frequency, scale=scale, restore=False, seed=seed)

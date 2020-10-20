@@ -243,6 +243,7 @@ def createInstance(app,group):
     lastNode.control.addParam(param)
 
     # Set param properties
+    param.setHelp("")
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     lastNode.Transformfilter = param
@@ -459,7 +460,7 @@ def createInstance(app,group):
     lastNode.sep10 = param
     del param
 
-    param = lastNode.createBooleanParam("seed", "Seed")
+    param = lastNode.createBooleanParam("seed_activate", "Seed")
 
     # Add the param to the page
     lastNode.control.addParam(param)
@@ -468,10 +469,10 @@ def createInstance(app,group):
     param.setHelp("")
     param.setAddNewLine(True)
     param.setAnimationEnabled(True)
-    lastNode.seed = param
+    lastNode.seed_activate = param
     del param
 
-    param = lastNode.createIntParam("seed_amount", "Seed Amount")
+    param = lastNode.createIntParam("seed", "Seed Amount")
     param.setDisplayMinimum(0, 0)
     param.setDisplayMaximum(100, 0)
     param.setDefaultValue(0, 0)
@@ -485,7 +486,7 @@ def createInstance(app,group):
     param.setAddNewLine(False)
     param.setAnimationEnabled(True)
     param.setValue(1, 0)
-    lastNode.seed_amount = param
+    lastNode.seed = param
     del param
 
     param = lastNode.createDoubleParam("frequency", "Frequency")
