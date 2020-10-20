@@ -1,5 +1,5 @@
 from base import link_to_parent, get_rscale, get_duration, get_format, reformat_update
-from nx import getNode, warning
+from nx import getNode, warning, set_hash_script_name
 from text_fit import separate_text, get_bbox_format, get_bbox
 import random
 
@@ -170,9 +170,17 @@ def adjust_metadata_text(thisNode, rscale, bbox_format, base_name):
     frame_width = get_frame_width(thisNode, bbox_format, rscale) / 2
     size = thisNode.meta_size.get() * rscale
 
-    prefix_node = getNode(thisNode, base_name + '_prefix')
-    suffix_node = getNode(thisNode, base_name + '_suffix')
-    symbol_node = getNode(thisNode, 'symbol')
+    prefix_node_name = base_name + '_prefix'
+    suffix_node_name = base_name + '_suffix'
+    symbol_name = 'symbol'
+
+    prefix_node = getNode(thisNode, prefix_node_name)
+    suffix_node = getNode(thisNode, suffix_node_name)
+    symbol_node = getNode(thisNode, symbol_name)
+
+    set_hash_script_name(prefix_node, prefix_node_name)
+    set_hash_script_name(suffix_node, suffix_node_name)
+    set_hash_script_name(symbol_node, symbol_name)
 
     suffix_translate = getNode(thisNode, base_name + '_suffix_position').getParam('translate')
     symbol_translate = getNode(thisNode, base_name + '_symbol_position').getParam('translate')
