@@ -454,7 +454,8 @@ def separate_text(fittext_node, parent=None):
         label='title_node',
         group=parent,
         position=[pos_x + 200, pos_y],
-        force=False
+        force=False,
+        script_hash=True
     )
 
     title_node.getParam('text').setValue(title)
@@ -473,7 +474,8 @@ def separate_text(fittext_node, parent=None):
         label='subtitle_node',
         group=parent,
         position=[pos_x + 400, pos_y],
-        force=False
+        force=False,
+        script_hash=True
     )
 
     subtitle_node.getParam('text').setValue(subtitle)

@@ -288,12 +288,21 @@ def get_nodes_by_type(workarea, type_name):
     return nodes
 
 
-def createNode(node, label=None, group=None, position=None, color=None, output=None, force=True):
+def createNode(node, label=None, group=None, position=None, color=None, output=None, force=True, script_hash=None):
+
+    def set_name(n, name):
+        if script_hash:
+            n.setScriptName(name + str(hash_generator(5)))
+        else:
+            n.setScriptName(name)
+        n.setLabel(name)
+        n.setLabel(name)
 
     if not force:
         # si el nodo existe, retorta ese nodo
         _node = getNode(group, label)
         if _node:
+            set_name(_node, label)
             return _node
 
     nodes = {
@@ -329,8 +338,7 @@ def createNode(node, label=None, group=None, position=None, color=None, output=N
 
     _node = app().createNode(_id, -1, group)
     if label:
-        _node.setScriptName(label)
-        _node.setLabel(label)
+        set_name(_node, label)
 
     if position:
         _node.setPosition(position[0], position[1])
