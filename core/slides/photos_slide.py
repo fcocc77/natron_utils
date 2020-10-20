@@ -1,6 +1,7 @@
 from slide_common import setup
 from base import get_rscale, get_format
 from nx import getNode
+import random
 
 
 def main(thisParam, thisNode, thisGroup, app, userEdited):
@@ -58,3 +59,45 @@ def refresh(thisNode):
         photo_frame.getParam('symbol_color').setValue(color, dimension)
     #
     #
+
+    # Fotos Extras
+    extra_colorize = getNode(thisNode, 'extra_colorize')
+    if not extra_colorize:
+        return
+    colorize_white = extra_colorize.getParam('white')
+    for dimension in range(3):
+        color = thisNode.color.getValue(dimension)
+        colorize_white.setValue(color, dimension)
+
+    extra_blur = getNode(thisNode, 'extra_blur')
+    blur_size = 2 * rscale
+    extra_blur.getParam('size').set(blur_size, blur_size)
+
+    i = 0
+    for name_transform in ['transform_1', 'transform_2']:
+
+        transform = getNode(thisNode, name_transform)
+        if not transform:
+            continue
+        translate = transform.getParam('translate')
+        rotate = transform.getParam('rotate')
+        scale = transform.getParam('scale')
+        center = transform.getParam('center')
+
+        center.set(width / 2, height / 2)
+        translate.set(0, 0)
+        scale.set(.4, .4)
+
+        random.seed(thisNode.seed.get() + i)
+        max_rotate = 20
+        rotate_value = random.randint(-max_rotate, max_rotate)
+        rotate.set(rotate_value)
+
+        # Separacion
+        separation = 700 * rscale
+        if i == 0:
+            translate.set(-separation, 0)
+        else:
+            translate.set(separation, 0)
+
+        i += 1
