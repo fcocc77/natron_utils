@@ -35,6 +35,7 @@ def videovina_data():
         speed=videovina_node.getParam('speed').get(),
         format=videovina_node.getParam('format').get(),
         color=videovina_node.getParam('color').get(),
+        font=videovina_node.getParam('font').get(),
         user=videovina_node.getParam('user').get(),
         project_name=videovina_node.getParam('project_name').get(),
         user_id=videovina_node.getParam('user_id').get(),

@@ -37,6 +37,7 @@ def refresh():
     vina = videovina_data()
 
     speed = vina.speed
+    font = vina.font
     _format = vina.format
     color = vina.color
     durations = vina.durations
@@ -88,6 +89,8 @@ def refresh():
         start_frame_slide = slide.getParam('start_frame')
         color_slide = slide.getParam('color')
         format_slide = slide.getParam('format')
+        font_param = slide.getParam('font')
+
         durations_slide = slide.getParam('durations')
         speed_slide = slide.getParam('speed')
         seed_slide = slide.getParam('seed')
@@ -95,6 +98,7 @@ def refresh():
         color_slide.set(color[0], color[1], color[2], color[3])
         speed_slide.set(speed)
         format_slide.set(_format)
+        font_param.set(font)
 
         durations_slide.set(
             durations[0] + double_transition_duration,
