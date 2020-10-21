@@ -44,6 +44,7 @@ def refresh(thisNode):
 
     shadow_node.getParam('refresh').trigger()
     inside_shadow_node.getParam('refresh').trigger()
+    #
 
 
 def get_frame_width(thisNode, bbox_format, rscale):
@@ -70,6 +71,10 @@ def to_frame(thisNode, rscale, bbox_format):
     rectangle.getParam('size').set(bbox_format[0], rectangle_height)
     rectangle.getParam('bottomLeft').set(0, -bottom_margin)
 
+    rectangle_color = rectangle.getParam('color1')
+    for dimension in range(3):
+        color = thisNode.frame_color.getValue(dimension)
+        rectangle_color.setValue(color, dimension)
     #
     #
 
