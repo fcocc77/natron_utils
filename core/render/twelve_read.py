@@ -34,8 +34,13 @@ def refresh(thisNode):
     ext = ['png', 'jpg'][sequence_type]
 
     filename_param = read.getParam('filename')
-    filename = '[Project]/../production/states/' + prefix + '/' + prefix_name + '/' + prefix_name + '_####.' + ext
 
+    # se vacia antes de poner el filename para que no se congele natron
+    filename_param.set("")
+    filename_param.reloadFile()
+    #
+
+    filename = '[Project]/../production/states/' + prefix + '/' + prefix_name + '/' + prefix_name + '_####.' + ext
     filename_param.set(filename)
 
     read.getParam('outputPremult').set(0)
