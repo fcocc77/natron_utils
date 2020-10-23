@@ -63,9 +63,22 @@ def refresh(thisNode):
     color_0 = rectangle.getParam('color0')
     color_1 = rectangle.getParam('color1')
 
-    if thisNode.invert.get():
-        color_0.set(1, 1, 1, 1)
-        color_1.set(0, 0, 0, 0)
+    color_param = thisNode.getParam('color_rectangle')
+
+    if color_param:
+        color = color_param.get()
+        if thisNode.invert.get():
+            color_0.set(color[0], color[1], color[2], 1)
+            color_1.set(0, 0, 0, 0)
+        else:
+            color_1.set(color[0], color[1], color[2], 1)
+            color_0.set(0, 0, 0, 0)
+
     else:
-        color_1.set(1, 1, 1, 1)
-        color_0.set(0, 0, 0, 0)
+
+        if thisNode.invert.get():
+            color_0.set(1, 1, 1, 1)
+            color_1.set(0, 0, 0, 0)
+        else:
+            color_1.set(1, 1, 1, 1)
+            color_0.set(0, 0, 0, 0)
