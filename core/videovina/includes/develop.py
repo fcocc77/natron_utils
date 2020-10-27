@@ -60,7 +60,7 @@ def refresh():
     #
     #
 
-    transition_duration = get_transition_duration()
+    transition_duration = get_transition_duration(speed)
     double_transition_duration = transition_duration * 2
 
     slide_duration = durations[speed] + double_transition_duration
@@ -100,11 +100,11 @@ def refresh():
         format_slide.set(_format)
         font_param.set(font)
 
-        durations_slide.set(
-            durations[0] + double_transition_duration,
-            durations[1] + double_transition_duration,
-            durations[2] + double_transition_duration
-        )
+        for dimension in range(3):
+            duration = durations[dimension]
+            db_transition_duration = ((duration * vina.transition_duration) / durations[1]) * 2
+            duration += db_transition_duration
+            durations_slide.setValue(duration, dimension)
 
         first_frame, last_frame = frame_range_list[index]
 
@@ -128,7 +128,7 @@ def refresh():
         transition_refresh(
             obj['transition'],
             last_frame - slide_duration + 1,
-            transition_duration,
+            vina.transition_duration,
             _format,
             speed,
             durations,

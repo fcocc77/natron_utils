@@ -1,7 +1,7 @@
 # Datos solo del nodo de videovina,
 # no incluir otras funcionalidades que no corresponda
 # al nodo de videovina.
-from nx import app
+from nx import app, alert
 from argparse import Namespace
 
 
@@ -43,11 +43,11 @@ def videovina_data():
     )
 
 
-def get_transition_duration():
+def get_transition_duration(speed=1):
     vina = videovina_data()
 
     normal_speed = vina.durations[1]
-    slide_duration = vina.durations[vina.speed]
+    slide_duration = vina.durations[speed]
 
     # esta velocidad de frames corresponde a la velocidad normal,
     # y calcula la velocidad final dependiendo de la velocidad de la slide
@@ -110,7 +110,7 @@ def get_ranges_with_transition(slide_count, speed=None):
     if not speed:
         speed = vina.speed
 
-    transition_frames = get_transition_duration()
+    transition_frames = get_transition_duration(speed)
 
     # le suma la duracion de la transicion de entrada y salida, a la duracion de la slide
     slide_duration = vina.durations[speed] + (transition_frames * 2)
